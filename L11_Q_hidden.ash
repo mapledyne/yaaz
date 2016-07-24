@@ -23,8 +23,24 @@ void do_liana()
 
   while(quest_status("questL11Business") < 0)
   {
-    dg_adventure($location[northeast]);
+    dg_adventure($location[An Overgrown Shrine (Northeast)]);
   }
+
+  while(quest_status("questL11Curses") < 0)
+  {
+    dg_adventure($location[An Overgrown Shrine (Northwest)]);
+  }
+
+  while(quest_status("questL11Doctor") < 0)
+  {
+    dg_adventure($location[An Overgrown Shrine (Southwest)]);
+  }
+
+  while(quest_status("questL11Spare") < 0)
+  {
+    dg_adventure($location[An Overgrown Shrine (Southeast)]);
+  }
+
 }
 
 void hidden_city()

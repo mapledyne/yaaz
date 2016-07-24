@@ -173,6 +173,11 @@ void use_things()
     use(1, $item[enchanted bean]);
   }
 
+  if (get_property("hiddenTavernUnlock").to_int() < my_ascensions() && item_amount($item[book of matches]) > 0)
+  {
+    use(1, $item[book of matches]);
+  }
+
 }
 
 void sell_all(item it, int keep)
