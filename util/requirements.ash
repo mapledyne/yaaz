@@ -129,6 +129,15 @@ void build_requirements()
     }
   }
 
+  while (item_amount($item[Talisman o' Namsilat]) == 0 && item_amount($item[gaudy key]) > 0)
+  {
+    use(1, $item[gaudy key]);
+  }
+
+  if (item_amount($item[unstable fulminate]) == 0 && creatable_amount($item[unstable fulminate]) > 0)
+  {
+    create(1, $item[unstable fulminate]);
+  }
 }
 
 void main()

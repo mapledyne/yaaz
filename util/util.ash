@@ -70,22 +70,6 @@ void pulverize_keep_if(item it, boolean keep_if)
 	}
 }
 
-
-boolean quest_status(string prop, string target) {
-   string currp = get_property(prop);
-   if (currp == "unstarted") return false;
-   if (target == currp || currp == "finished") return true;
-   string s;
-   for i from 0 upto 26 {  // nemesis quest has 26 steps (think it's the most atm)
-      s = (i == 0) ? "started" : "step"+to_string(i);
-      if (s == currp) break;
-      if (s == target) return true;
-   }
-   return false;
-}
-
-
-
 int quest_status(string quest)
 {
 	string progress = get_property(quest);

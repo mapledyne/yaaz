@@ -33,4 +33,10 @@ void main()
   log("Checking for any future quest requirements.");
   build_requirements();
   log("Day startup tasks complete.");
+
+  if (get_property("_detectiveCasesCompleted").to_int() < 3)
+  {
+    warning("You have detective cases you can complete at the precinct.");
+    warning("This isn't automated by this script.");
+  }
 }

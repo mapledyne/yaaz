@@ -97,9 +97,9 @@ void clear_cranny()
 
 		while (get_property("cyrptCrannyEvilness").to_int() > 0)
 		{
-			choose_familiar("noncombats");
+			choose_familiar("noncombat");
 			maximize("ml");
-			maximize("noncombats");
+			maximize("noncombat");
 			dg_adventure($location[The Defiled Cranny]);
 		}
 

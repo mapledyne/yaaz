@@ -294,6 +294,8 @@ void make_things()
   {
     log("Turning " + wrap("handfuls of sand", COLOR_ITEM) + " into " + wrap("bricks of sand", COLOR_ITEM) + ".");
     use_all($item[handful of sand]);
+    // for some reason, Mafia doesn't remove "used" sand when turned into bricks.
+    cli_execute("refresh inv");
   }
 
   // palm frond fans:

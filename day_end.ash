@@ -44,4 +44,10 @@ void main()
   check_item($slot[acc1]);
   check_item($slot[acc2]);
   check_item($slot[acc3]);
+
+  if (get_property("_detectiveCasesCompleted").to_int() < 3)
+  {
+    warning("You have detective cases you can complete at the precinct.");
+    warning("This isn't automated by this script.");
+  }
 }

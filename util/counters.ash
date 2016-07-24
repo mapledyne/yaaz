@@ -1,5 +1,4 @@
 import "util/print.ash";
-import "util/locations.ash";
 
 location pick_semi_rare_location()
 {
@@ -11,7 +10,7 @@ location pick_semi_rare_location()
   // Get some stone wool if useful:
   if (hidden_temple_unlocked() && item_amount($item[stone wool]) < 2)
   {
-    if (!quest_status("questL11Worship","step3"))
+    if (quest_status("questL11Worship") < 3)
       return $location[The Hidden Temple];
   }
 
