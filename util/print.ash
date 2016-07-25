@@ -1,8 +1,9 @@
 string COLOR_ITEM = "green";
 string COLOR_LOCATION = "blue";
-string COLOR_EFFECT = "purple";
-string COLOR_MONSTER = "purple";
-string COLOR_SKILL = "purple";
+string COLOR_EFFECT = "blue";
+string COLOR_MONSTER = "blue";
+string COLOR_SKILL = "green";
+string COLOR_COINMASTER = "blue";
 
 string COLOR_ERROR = "red";
 string COLOR_WARNING = "purple";
@@ -48,6 +49,11 @@ string wrap(location l)
 string wrap(effect e)
 {
   return wrap(e, COLOR_EFFECT);
+}
+
+string wrap(coinmaster c)
+{
+  return wrap(c, COLOR_COINMASTER);
 }
 
 void dg_print(string msg, string color)

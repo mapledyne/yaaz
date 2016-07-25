@@ -79,6 +79,11 @@ void buy_if_needed(item it)
 
 void keys()
 {
+  if (quest_status("questL13Final") > 3)
+  {
+    warning("Guessing at quest status for perplexing door. We should find the real quest level and fix in keys() in requirements.ash");
+    return;
+  }
   // keys for the door.
   string msg = "for the perplexing door.";
   make_if_needed($item[skeleton key], msg);
@@ -123,9 +128,11 @@ void build_requirements()
     } else {
       use(1, $item[disassembled clover]);
 
-			string protect = get_property("cloverProtectActive");
+      string protect = get_property("cloverProtectActive");
+      set_property("cloverProtectActive", false);
       dg_adventure($location[The Castle in the Clouds in the Sky (Basement)]);
 			set_property("cloverProtectActive", protect);
+      create(1, $item[wand of nagamar]);
     }
   }
 

@@ -45,19 +45,23 @@ void use_all(item it)
 
 void pulverize_all(item it)
 {
-	if (item_amount(it) > 0)
+	// artificial limiter - why make more wads if we're swimming in them?
+	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 0)
 		cli_execute("pulverize " + item_amount(it) + " " + it);
 }
 
 void pulverize_all_but_one(item it)
 {
-	if (item_amount(it) > 1)
+	// artificial limiter - why make more wads if we're swimming in them?
+	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 1)
 		cli_execute("pulverize " + (item_amount(it)-1) + " " + it);
 }
 
 void pulverize(item it)
 {
-	cli_execute("pulverize " + it);
+	// artificial limiter - why make more wads if we're swimming in them?
+	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 0)
+		cli_execute("pulverize 1 " + it);
 }
 
 void pulverize_keep_if(item it, boolean keep_if)

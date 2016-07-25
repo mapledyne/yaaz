@@ -4,6 +4,10 @@ import "util/memento.ash";
 import "util/maximize.ash";
 import "util/util.ash";
 
+void sell_coin_item(item it, int keep);
+void sell_coin_item(item it);
+
+
 float frequency_of_monster(location loc, monster mon)
 {
   foreach mob, freq in appearance_rates(loc)
@@ -85,17 +89,45 @@ void item_cast(skill sk)
 
 void cast_item_spells(location loc)
 {
-  if (loc == $location[none])
-    return;
-
-  // if loc in ...... return; // (for loc that isn't worth upping items)
+  foreach l in $locations[tower level 1, tower level 2, tower level 3, tower level 4]
+  {
+    if (l == loc)
+      return;
+  }
 
   item_cast($skill[Fat Leon's Phat Loot Lyric]);
 }
 
+void stock_coin_item(item it, int qty)
+{
+  if (!is_coinmaster_item(it))
+  {
+    return;
+  }
+
+  coinmaster master = it.seller;
+  if (!is_accessible(master))
+  {
+    return;
+  }
+  int total = qty - item_amount(it);
+  int price = sell_price(master, it);
+
+  while (total > 0 && master.available_tokens > price)
+  {
+    buy(master, 1, it);
+    total = total - 1;
+  }
+}
 
 void stock_item(item it, int qty)
 {
+  if (is_coinmaster_item(it))
+  {
+    stock_coin_item(it, qty);
+    return;
+  }
+
   int total = qty - item_amount(it);
   int price = npc_price(it);
   int meat_buffer = 10;
@@ -115,6 +147,11 @@ void stock_item(item it)
   stock_item(it, 1);
 }
 
+int total_shadow_helpers()
+{
+  return item_amount($item[gauze garter]) + item_amount($item[filthy poultice]);
+}
+
 void buy_things()
 {
   stock_item($item[anti-anti-antidote], 3);
@@ -125,6 +162,16 @@ void buy_things()
     stock_item($item[abridged dictionary]);
   }
 
+  stock_item($item[gauze garter], 10 - item_amount($item[filthy poultice]));
+  stock_item($item[filthy poultice], 10 - item_amount($item[gauze garter]));
+
+  if (total_shadow_helpers() >= 10)
+  {
+    coinmaster master = $item[gauze garter].seller;
+    int tokens = master. available_tokens;
+    int qty = tokens / (sell_price(master, $item[gauze garter]));
+    buy(master, qty, $item[gauze garter]);
+  }
 }
 
 void use_things()
@@ -178,10 +225,20 @@ void use_things()
     use(1, $item[book of matches]);
   }
 
+
+  // choiceAdventure778 <-- to make choices for the tonic djinn.
+
 }
 
 void sell_all(item it, int keep)
 {
+  // handle coinmaster items differently:
+  if (it.buyer != $coinmaster[none])
+  {
+    sell_coin_item(it, keep);
+    return;
+  }
+
   int qty = item_amount(it) - keep;
   if (qty <= 0)
     return;
@@ -243,6 +300,20 @@ void sell_things()
   sell_all($item[Windchimes]);
   sell_all($item[valuable trinket]);
 
+  // battlefield items for coins:
+  sell_all($item[bullet-proof corduroys], 1);
+  sell_all($item[communications windchimes]);
+  sell_all($item[didgeridooka]);
+  sell_all($item[green clay bead]);
+  sell_all($item[hippy protest button]);
+  sell_all($item[fire poi]);
+  sell_all($item[flowing hippy skirt]);
+  sell_all($item[oversized pipe]);
+  sell_all($item[pink clay bead]);
+  sell_all($item[purple clay bead]);
+  sell_all($item[reinforced beaded headband], 1);
+  sell_all($item[round purple sunglasses], 1);
+  sell_all($item[wicker shield]);
 
   sell_all($item[hot wing], 3);
 }
@@ -343,35 +414,47 @@ void pulverize_things()
     buy(1, $item[tenderizing hammer]);
   }
 
+  // Always pulverize:
+  pulverize_all($item[Lockenstock&trade; sandals]);
+  pulverize_all($item[gaia beads]);
+  pulverize_all($item[hippy medical kit]);
+  pulverize_all($item[wicker shield]);
+
+  // Always keep one:
+  pulverize_all_but_one($item[compression stocking]);
+  pulverize_all_but_one($item[goatskin umbrella]);
+  pulverize_all_but_one($item[little black book]);
+  pulverize_all_but_one($item[pygmy briefs]);
 
   // we may want some of these if not relying on muscle:
-  if (my_primestat() != $stat[moxie])
-  {
-    pulverize_all($item[armgun]);
-    pulverize_all($item[magilaser blastercannon]);
-    pulverize_all($item[punk rock jacket]);
-  }
+  pulverize_keep_if($item[punk rock jacket], my_primestat() != $stat[muscle]);
 
-  if (my_primestat() != $stat[muscle])
-  {
-    pulverize_all($item[wolf mask]);
-    pulverize_all($item[giant safety pin]);
-    pulverize_all($item[ridiculously huge sword]);
-    pulverize_all($item[black sword]);
-  } else {
-    pulverize_all_but_one($item[wolf mask]);
-    pulverize_all_but_one($item[giant safety pin]);
-    pulverize_all_but_one($item[ridiculously huge sword]);
-    pulverize_all_but_one($item[black sword]);
-  }
+  // Only keep if we're not playing mysticality:
+  pulverize_keep_if($item[giant gym membership card], my_primestat() != $stat[mysticality]);
 
-  if (my_primestat() != $stat[mysticality])
-  {
-    pulverize_all($item[giant artisanal rice peeler]);
-    pulverize_all($item[brown felt tophat]);
-  }
+  // Only keep if we're muscle:
+  pulverize_keep_if($item[black sword], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[giant cactus quill], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[giant safety pin], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[giant turkey leg], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[pointed stick], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[ridiculously huge sword], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[wolf mask], my_primestat() == $stat[muscle]);
 
-  pulverize_all_but_one($item[little black book]);
+  // Only keep if we're mysticality:
+  pulverize_keep_if($item[ancient ice cream scoop], my_primestat() == $stat[mysticality]);
+  pulverize_keep_if($item[big bad voodoo mask], my_primestat() == $stat[mysticality]);
+  pulverize_keep_if($item[brown felt tophat], my_primestat() == $stat[mysticality]);
+  pulverize_keep_if($item[giant artisanal rice peeler], my_primestat() == $stat[mysticality]);
+
+  // only keep if we're moxie:
+  pulverize_keep_if($item[armgun], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[buoybottoms], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[happiness], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[magilaser blastercannon], my_primestat() == $stat[moxie]);
+
+
+  // Stuff below this are things we'll pulverize based on quest status:
 
   // may be useful for the peak.
   if (get_property("booPeakProgress") > 0)
@@ -380,6 +463,16 @@ void pulverize_things()
   } else {
     pulverize_all($item[glowing red eye]);
   }
+
+  // Keep surgeonosity items if we haven't finished the L11 doc quest.
+  pulverize_keep_if($item[bloodied surgical dungarees], quest_status("questL11Doctor") < 10);
+  pulverize_keep_if($item[half-size scalpel], quest_status("questL11Doctor") < 10 || my_primestat() == $stat[muscle]);
+
+
+  // war items:
+  pulverize_keep_if($item[bullet-proof corduroys], quest_status("questL12War") < 10);
+  pulverize_keep_if($item[reinforced beaded headband], quest_status("questL12War") < 10);
+  pulverize_keep_if($item[round purple sunglasses], quest_status("questL12War") < 10);
 
   // some more aggressive work if we aren't flush in wads:
   if (wad_total() < spleen_limit())
@@ -409,17 +502,41 @@ void class_specific_prep(class cl)
 
 }
 
+void sell_coin_item(item it, int keep)
+{
+  if(it.buyer == $coinmaster[none])
+  {
+    warning("Trying to sell " + wrap(it) + " to a coinmaster, but it's not that sort of item.");
+    return;
+  }
+  coinmaster master = it.buyer;
+  if (!is_accessible(master))
+    return;
+
+  int qty = item_amount(it) - keep;
+  if (qty < 1)
+    return;
+
+  log("Selling " + wrap(it) + " to the " + wrap(master) + ".");
+  sell(master, qty, it);
+}
+
+void sell_coin_item(item it)
+{
+  sell_coin_item(it, 0);
+}
+
 void prep(location loc)
 {
   if (my_meat() > 300)
     hermit(999, $item[ten-leaf clover]);
 
   save_mementos();
+  pulverize_things();
+  sell_things();
   buy_things();
   use_things();
   make_things();
-  sell_things();
-  pulverize_things();
   cast_meat_spells(loc);
   cast_item_spells(loc);
   class_specific_prep(my_class());

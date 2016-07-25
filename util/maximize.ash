@@ -135,71 +135,89 @@ void effect_maintain(effect ef)
   }
 }
 
-void max_default()
+void do_maximize(string target, string outfit)
 {
-  maximize("mainstat, 0.4 hp  +effective, mp regen, +shield", false);
+  string max = target;
+  if (outfit != "")
+  {
+    if (max != "")
+    {
+      max = max + ", ";
+    }
+    max = max + "outfit " + outfit;
+  }
+  maximize(max, false);
 }
 
-void max_ml()
+void max_default(string outfit)
 {
-  maximize("ml", false);
+  do_maximize("mainstat, 0.4 hp  +effective, mp regen, +shield", outfit);
 }
 
-void max_noncombat()
+void max_ml(string outfit)
 {
-  maximize("-combat", false);
+  do_maximize("ml", outfit);
+}
+
+void max_noncombat(string outfit)
+{
+  do_maximize("-combat", outfit);
   effect_maintain($effect[Smooth Movements]);
   effect_maintain($effect[The Sonata of Sneakiness]);
 }
 
-void max_items()
+void max_items(string outfit)
 {
-  maximize("items", false);
+  do_maximize("items", outfit);
   get_accordion();
   effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
 }
 
-void max_init()
+void max_init(string outfit)
 {
-  maximize("init", false);
+  do_maximize("init", outfit);
   effect_maintain($effect[Sepia Tan]);
   effect_maintain($effect[Walberg\'s Dim Bulb]);
   effect_maintain($effect[Springy Fusilli]);
+  effect_maintain($effect[Song of Slowness]);
 
   // will silently skip if this can't be bought.
   effect_maintain($effect[Ticking Clock]);
-
-  effect_maintain($effect[Song of Slowness]);
 }
 
-void max_rollover()
+void max_rollover(string outfit)
 {
-  maximize("adv, pvp fights", false);
+  do_maximize("adv, pvp fights", outfit);
 }
 
-void maximize(string target)
+void maximize(string target, string outfit)
 {
   switch(target)
   {
     case "":
-      max_default();
+      max_default(outfit);
       break;
     case "items":
-      max_items();
+      max_items(outfit);
       break;
     case "init":
-      max_init();
+      max_init(outfit);
       break;
     case "noncombat":
-      max_noncombat();
+      max_noncombat(outfit);
       break;
     case "ml":
-      max_ml();
+      max_ml(outfit);
       break;
     case "rollover":
-      max_rollover();
+      max_rollover(outfit);
       break;
     default:
       warning("Tried to maximize '" + target+ "', but I don't understand that.");
   }
+}
+
+void maximize(string target)
+{
+  maximize(target, "");
 }
