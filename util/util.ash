@@ -101,3 +101,58 @@ int quest_status(string quest)
 	warning("Unable to determine quest status for quest " + quest + ". Progress status is set to " + progress + ".");
 	return -1;
 }
+
+int clover_cost() {
+  // estimate the cost of a clover:
+  item gum = $item[chewing gum on a string];
+  int cost = npc_price(gum);
+  item trinket = $item[worthless trinket];
+  item gewgaw = $item[worthless gewgaw];
+  item knick = $item[worthless knick-knack];
+
+  if ((item_amount(trinket) + item_amount(gewgaw) + item_amount(knick)) > 0) {
+    warning('To reduce clover cost, put your worthless items in the closet.');
+    warning('This script assumes you\'ll do this, and will calculate accordingly.');
+  }
+  int own = 0;
+  if (i_a("old sweatpants") > 0)
+    own = own + 1;
+  if (i_a("stolen accordion") > 0)
+    own = own + 1;
+  if (i_a("mariachi hat") > 0)
+    own = own + 1;
+  if (i_a("disco ball") > 0)
+    own = own + 1;
+  if (i_a("disco mask") > 0)
+    own = own + 1;
+  if (i_a("saucepan") > 0)
+    own = own + 1;
+  if (i_a("[Hollandaise helmet") > 0)
+    own = own + 1;
+  if (i_a("pasta spoon") > 0)
+    own = own + 1;
+  if (i_a("ravioli hat") > 0)
+    own = own + 1;
+  if (i_a("turtle totem") > 0)
+    own = own + 1;
+  if (i_a("helmet turtle") > 0)
+    own = own + 1;
+  if (i_a("seal-skull helmet") > 0)
+    own = own + 1;
+  if (i_a("seal-clubbing club") > 0)
+    own = own + 1;
+
+	int est_cost = (((16-own)*cost)/3);
+  return est_cost;
+}
+
+
+boolean check_clovers() {
+  //Hermit clovers
+  string body = visit_url("/hermit.php");
+  if(contains_text(body,"left in stock")) {
+    log("You can still get hermit clovers today. Approximate cost: " + clover_cost() + " meat.");
+    return true;
+  }
+  return false;
+}

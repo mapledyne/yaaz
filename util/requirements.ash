@@ -145,6 +145,18 @@ void build_requirements()
   {
     create(1, $item[unstable fulminate]);
   }
+
+  if (have_cubeling_items() && !get_property("dailyDungeonDone").to_boolean())
+  {
+    if (i_a($item[sneaky pete's key]) == 0 || i_a($item[boris's key]) == 0 || i_a($item[jarlsberg's key]) == 0)
+    {
+      maximize("", $item[ring of detect boring doors]);
+      while (!get_property("dailyDungeonDone").to_boolean())
+      {
+        dg_adventure($location[the daily dungeon]);
+      }
+    }
+  }
 }
 
 void main()

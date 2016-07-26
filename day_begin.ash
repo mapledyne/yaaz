@@ -5,9 +5,13 @@ void begin_day()
 
 // breakfast-y stuff...
 
-  witchess();
+  if (equipped_item($slot[weapon]) != $item[none])
+  {
+    witchess();
 
-  snojo();
+    snojo();
+  }
+
 
 
   if (to_boolean(get_property("chateauAvailable")) && !to_boolean(get_property("_chateauDeskHarvested")))

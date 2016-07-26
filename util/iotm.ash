@@ -25,6 +25,10 @@ void snojo()
   while(can_snojo())
   {
       dg_adventure($location[The X-32-F Combat Training Snowman]);
+      if (have_effect($effect[beaten up]) > 0)
+      {
+        break;
+      }
   }
 }
 

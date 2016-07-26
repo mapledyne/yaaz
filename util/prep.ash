@@ -52,7 +52,7 @@ void meat_cast(skill sk, effect ef, int avg)
 
   if (turns_per_cast(sk) == 0)
     return;
-    
+
   if (have_effect(ef) == 0)
   {
     float sk_cost = (mp_cost(sk)*1.0) / turns_per_cast(sk);
@@ -185,6 +185,7 @@ void use_things()
   use_all($item[bag of park garbage]);
   use_all($item[briefcase]);
   use_all($item[chest of the Bonerdagon]);
+  use_all($item[carton of astral energy drinks]);
   use_all($item[collection of tiny spooky objects]);
   use_all($item[CSA discount card]);
   use_all($item[dungeon dragon chest]);
