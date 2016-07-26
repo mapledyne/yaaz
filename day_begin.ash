@@ -5,19 +5,7 @@ void begin_day()
 
 // breakfast-y stuff...
 
-  if (equipped_item($slot[weapon]) != $item[none])
-  {
-    witchess();
-
-    snojo();
-  }
-
-
-
-  if (to_boolean(get_property("chateauAvailable")) && !to_boolean(get_property("_chateauDeskHarvested")))
-  {
-    visit_url("place.php?whichplace=chateau&action=chateau_desk2");
-  }
+  iotm();
 
 }
 

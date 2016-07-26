@@ -1,6 +1,5 @@
 import "util/print.ash";
 import "util/inventory.ash";
-import "util/memento.ash";
 import "util/maximize.ash";
 import "util/util.ash";
 
@@ -535,7 +534,6 @@ void prep(location loc)
   if (my_meat() > 300)
     hermit(999, $item[ten-leaf clover]);
 
-  save_mementos();
   pulverize_things();
   sell_things();
   buy_things();

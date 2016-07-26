@@ -8,6 +8,7 @@ string COLOR_COINMASTER = "blue";
 string COLOR_ERROR = "red";
 string COLOR_WARNING = "purple";
 string COLOR_LOG = "#CD853F";
+string COLOR_ADVICE = "purple";
 
 string pluralize(int count, item it)
 {
@@ -87,4 +88,9 @@ void warning(string msg)
 void warning_no_estimate()
 {
   warning("No estimated turns available for this step yet.");
+}
+
+void advice(string msg)
+{
+  dg_print(msg, COLOR_ADVICE);
 }
