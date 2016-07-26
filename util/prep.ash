@@ -50,6 +50,9 @@ void meat_cast(skill sk, effect ef, int avg)
   if (!have_skill(sk))
     return;
 
+  if (turns_per_cast(sk) == 0)
+    return;
+    
   if (have_effect(ef) == 0)
   {
     float sk_cost = (mp_cost(sk)*1.0) / turns_per_cast(sk);
