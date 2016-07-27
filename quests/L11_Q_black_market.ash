@@ -49,10 +49,13 @@ boolean market_loop()
       do_one_market_adv();
       return true;
     case 2:
-      buy(1, $item[forged identification documents]);
+      if (i_a($item[forged identification documents] == 0)
+      {
+        buy(1, $item[forged identification documents]);
+      } else {
+        dg_adventure($location[The Shore\, Inc. Travel Agency]);
+      }
       return true;
-    case 3:
-      abort("Need to use the shore, but that's not coded yet.");
     default:
       return false;
   }

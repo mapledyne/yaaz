@@ -3,6 +3,7 @@ import "util/iotm/snojo.ash";
 import "util/iotm/witchess.ash";
 import "util/iotm/terminal.ash";
 import "util/iotm/chateau.ash";
+import "util/iotm/deck.ash";
 
 void iotm()
 {

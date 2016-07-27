@@ -138,6 +138,10 @@ void build_requirements()
 
   while (item_amount($item[Talisman o' Namsilat]) == 0 && item_amount($item[gaudy key]) > 0)
   {
+    if (!have_equipped($item[pirate fledges]))
+    {
+      abort("Need to equip the pirate fledges!");
+    }
     use(1, $item[gaudy key]);
   }
 
