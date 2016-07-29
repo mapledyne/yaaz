@@ -1,11 +1,25 @@
 import "util/print.ash";
 import "util/maximize.ash";
 
+boolean can_extrude();
+int extrudes_remaining();
+boolean can_terminal();
+item terminal_extrude(item it);
+item terminal_extrude(string s);
+string terminal_enquiry(string enq);
+string terminal_enquiry();
+void terminal();
+void main();
+
 boolean can_extrude()
 {
-  int uses = get_property("_sourceTerminalExtrudes").to_int();
+  return extrudes_remaining() > 0;
+}
 
-  return (uses < 3);
+int extrudes_remaining()
+{
+  int uses = get_property("_sourceTerminalExtrudes").to_int();
+  return 3 - uses;
 }
 
 boolean can_terminal()
@@ -97,7 +111,14 @@ void terminal()
   {
     if (i_a($item[hacked gibson]) > 2)
     {
-      terminal_extrude("food");
+      if (i_a($item[browser cookie]) > 2)
+      {
+        warning("You seem flush in extruded food/booze. Not extruding anything else since it's not clear what to get. Extrude something!");
+        warning("You have " + extrudes_remaining() + " extrudes remaining.");
+        break;
+      } else {
+        terminal_extrude("food");
+      }
     } else {
       terminal_extrude("booze");
     }

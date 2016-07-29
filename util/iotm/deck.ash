@@ -14,7 +14,7 @@ void deck()
     return;
 
   log("Checking out your " + wrap($item[deck of every card]) + ".");
-  warn("Deck checking is not currently implemented.");
+  warning("Deck checking is not currently implemented.");
 }
 
 void main()

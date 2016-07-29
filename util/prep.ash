@@ -341,15 +341,13 @@ void consider_chrome_item()
   if (item_amount(chrome_weapon) > 0)
     return;
 
-  if (get_property("trapperOre") == "chrome ore")
+
+  if (get_property("questL08Trapper") == "unstarted" || get_property("questL08Trapper") == "step1" || get_property("trapperOre") != "chrome ore")
   {
-    if (get_property("questL08Trapper") == "unstarted" || get_property("questL08Trapper") == "step1")
+    // bail if we don't have surplus ore: trapper wants (or may want) chrome ore and we haven't turned it in yet.
+    if (i_a($item[chrome ore]) < 4)
     {
-      // bail if we don't have surplus ore: trapper wants chrome ore and we haven't turned it in yet.
-      if (i_a($item[chrome ore]) < 4)
-      {
-        return;
-      }
+      return;
     }
   }
 
