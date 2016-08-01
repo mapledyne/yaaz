@@ -90,8 +90,14 @@ void do_war(string side)
   }
   while(defeated() < 1000)
   {
+    string msg = "hippies defeated";
+    if (side == "hipppy")
+    {
+      msg = "fratboys defeated";
+    }
     maximize("", outfit);
     dg_adventure(battle);
+    progress(defeated(), 1000, msg);
   }
 
   // turn in any last items...

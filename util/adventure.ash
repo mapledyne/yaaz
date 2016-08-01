@@ -1,7 +1,22 @@
 import "util/prep.ash";
 import "util/counters.ash";
+import "util/progress.ash";
 
 int abort_on_advs_left = 5;
+
+void update_flyer_progress()
+{
+  if (get_property("questL12War") != "step1")
+    return;
+  if (get_property("sidequestArenaCompleted") != "none")
+    return;
+
+  if (item_amount($item[rock band flyers]) > 0 || $item_amount($item[jam band flyers]) > 0)
+  {
+    int flyerML = get_property("flyeredML").to_int() / 100;
+    progress(flyerML, "flyers delivered");
+  }
+}
 
 boolean dg_adventure(location loc)
 {
@@ -23,4 +38,6 @@ boolean dg_adventure(location loc)
   prep(loc);
 
   return adventure(1, loc);
+
+  update_flyer_progress();
 }
