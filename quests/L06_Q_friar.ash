@@ -34,7 +34,14 @@ boolean do_elbow()
 
 boolean do_stones()
 {
-  warning("I don't know how to do the stones yet. Find the URL!");
+  if (i_a($item[eldritch butterknife]) == 0 || i_a($item[box of birthday candles]) == 0 || i_a($item[dodecagram]) == 0)
+  {
+
+  } else {
+    log("Performing the ritual for the Friars.");
+    visit_url("friars.php?action=ritual&pwd=");
+    log("Ritual complete!");
+  }
   return false;
 }
 
