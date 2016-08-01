@@ -22,18 +22,27 @@ void open_pyramid()
   {
     maximize("noncombat");
     dg_adventure($location[The Upper Chamber]);
+    if (turners() > 0)
+    {
+      progress(turners(), 10, "wheel turning things")
+    }
   }
 
   while (quest_status("questL11Pyramid") < 3)
   {
     maximize("items");
     dg_adventure($location[The Middle Chamber]);
+    if (turners() > 0)
+    {
+      progress(turners(), 10, "wheel turning things")
+    }
   }
 
   while (turners() < 10)
   {
     maximize("items");
     dg_adventure($location[The Middle Chamber]);
+    progress(turners(), 10, "wheel turning things")
   }
 
 }

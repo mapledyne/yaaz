@@ -56,12 +56,100 @@ void misc_advice()
 
 void final_requirements()
 {
+  if (quest_status("questL11Black") > 0 && item_amount($item[beehive]) == 0)
+  {
+    advice("Get the " + wrap($item[beehive]) + " from the " + wrap($location[the black forest]) + ".");
+  }
+
   hero_keys();
 }
 
 void level_1_advice()
 {
 
+}
+
+void level_2_advice()
+{
+  switch (get_property("questL02Larva"))
+  {
+    case "finished":
+      return;
+    case "unstarted":
+      advice("Larva quest not started. Visit the council.");
+      break;
+    case "step1":
+      advice("Return the " + wrap($item[mosquito larva]) + " to the council.");
+      break;
+    case "started":
+      advice("Go get the " + wrap($item[mosquito larva]) + ".");
+      break;
+    default:
+      error("I don't know what our status is with the Larva quest. Status: " + get_property("questL02Larva"));
+      break;
+  }
+}
+
+void level_3_advice()
+{
+  switch(get_property("questL03Rat"))
+  {
+    case "unstarted":
+      advice("Typical Tavern quest not started. Visit the council.");
+      break;
+    case "started":
+      advice("Go talk to Bart Ender at the Typical Tavern.");
+      break;
+    case "step1":
+      advice("Find and turn off the Rat Faucet.");
+      break;
+    case "step2":
+      advice("Faucet turned off. Go talk to Bart.");
+      break;
+    case "finished":
+      break;
+    default:
+      error("I don't know what our status is with the Rat quest. Status: " + get_property("questL03Rat"));
+      break;
+
+  }
+}
+
+void level_12_advice()
+{
+  switch(get_property("questL12War"))
+  {
+    case "unstarted":
+      advice("War quest not started. Visit the council.");
+      break;
+    case "started":
+      advice("Go start the Mysterious Island War.");
+      break;
+    case "step1":
+      advice("War started.");
+      int frat = get_property("fratboysDefeated").to_int();
+      int hippy = get_property("hippiesDefeated").to_int();
+      if (frat + hippy == 0)
+      {
+        advice("No one killed on the battlefield yet.");
+        break;
+      }
+      string msg = "fratboys defeated";
+      int total = frat;
+      if (frat < hippy)
+      {
+        total = hippy;
+        msg = "hippies defeated";
+      }
+      progress(total, 100, msg);
+      break;
+    case "finished":
+      break;
+    default:
+      error("I don't know what our status is with the War quest. Status: " + get_property("questL12War"));
+      break;
+
+  }
 }
 
 
@@ -74,7 +162,7 @@ void get_advice()
     case 13:
       print("13");
     case 12:
-      print("12");
+      level_12_advice();
     case 11:
       print("11");
     case 10:
@@ -92,9 +180,9 @@ void get_advice()
     case 4:
       print("4");
     case 3:
-      print("3");
+      level_3_advice();
     case 2:
-      print("2");
+      level_2_advice();
     case 1:
       level_1_advice();
       final_requirements();

@@ -25,6 +25,7 @@ void do_one_market_adv()
   }
 
   dg_adventure($location[the black forest]);
+  progress(get_property("blackForestProgress"), 5, "")
 }
 
 boolean market_loop()
@@ -43,8 +44,6 @@ boolean market_loop()
       council();
       return true;
     case 0:
-      dg_adventure($location[the black forest]);
-      return true;
     case 1:
       do_one_market_adv();
       return true;
