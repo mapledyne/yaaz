@@ -232,7 +232,7 @@ void find_pyramid()
     }
 
     dg_adventure($location[The Arid\, Extra-Dry Desert]);
-    log("Desert exploration progress: " + get_property("desertExploration"));
+    progress(get_property("desertExploration").to_int(), "desert exploration")
   }
   if (get_property("desertExploration").to_int() < 100)
   {
