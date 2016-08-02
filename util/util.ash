@@ -16,7 +16,7 @@ int i_a(string name) {
 }
 
 boolean bit_flag(int progress, int c) {
-	return (progress & (1 << c)) == 0;
+	return (progress & (1 << c)) != 0;
 }
 
 boolean drunk()
@@ -31,7 +31,7 @@ boolean guild_class()
 
 int wad_total()
 {
-	return item_amount($item[cold wad]) + item_amount($item[hot wad]) + item_amount($item[spooky wad]) + item_amount($item[sleaze wad]) + item_amount($item[stench wad]);
+	return item_amount($item[twinkly wad]) + item_amount($item[cold wad]) + item_amount($item[hot wad]) + item_amount($item[spooky wad]) + item_amount($item[sleaze wad]) + item_amount($item[stench wad]);
 }
 
 void use_all(item it)

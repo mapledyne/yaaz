@@ -1,7 +1,15 @@
 import "util/main.ash";
 
+void aftercore_advice()
+{
+  advice("Ascend, or do something else.");
+}
+
 void hero_keys()
 {
+
+  if (quest_status("questL13Final") > 3)
+    return;
 
   string keys = "";
   foreach k in $items[jarlsberg's key, sneaky pete's key, boris's key]
@@ -56,7 +64,7 @@ void misc_advice()
 
 void final_requirements()
 {
-  if (quest_status("questL11Black") > 0 && item_amount($item[beehive]) == 0)
+  if (quest_status("questL11Black") > 0 && item_amount($item[beehive]) == 0 && quest_status("questL13Final") < 5)
   {
     advice("Get the " + wrap($item[beehive]) + " from the " + wrap($location[the black forest]) + ".");
   }
@@ -152,6 +160,59 @@ void level_12_advice()
   }
 }
 
+void level_13_advice()
+{
+  switch(get_property("questL13Final"))
+  {
+    case "unstarted":
+      advice("Go see the council to start the Naughty Sorceress quest.");
+      break;
+    case "started":
+      advice("Go check out the contest booth to see what entries are available.");
+      break;
+    case "step1":
+      advice("Attend the coronation ceremony.");
+      break;
+    case "step2":
+      advice("Go through the hedge maze.");
+      break;
+    case "step3":
+      advice("Open the tower door.");
+      break;
+    case "step4":
+      advice("Defeat the " + wrap($monster[wall of skin]) + ".");
+      break;
+    case "step5":
+      advice("Defeat the " + wrap($monster[wall of meat]) + ".");
+      break;
+    case "step6":
+      advice("Defeat the " + wrap($monster[wall of bones]) + ".");
+      if (item_amount($item[electric boning knife]) == 0)
+      {
+        advice("Get the " + wrap($item[electric boning knife]) + " from " + wrap($location[the castle in the clouds in the sky (ground floor)]) +  ".");
+      }
+      break;
+    case "step7":
+      advice("Gaze into the mirror (or don't).");
+      break;
+    case "step8":
+      advice("Defeat your shadow.");
+      break;
+    case "step9":
+      advice("Defeat " + $monster[naughty sorceress] + ".");
+      break;
+    case "step10":
+      advice("Break the prism.");
+      break;
+    case "finished":
+      aftercore_advice();
+      break;
+    default:
+      error("I don't know what our status is with the Sorceress quest. Status: " + get_property("questL13Final"));
+      break;
+  }
+}
+
 
 void get_advice()
 {
@@ -160,7 +221,7 @@ void get_advice()
     default: // do default first so anything higher than this will be captured
       print("d");
     case 13:
-      print("13");
+      level_13_advice();
     case 12:
       level_12_advice();
     case 11:

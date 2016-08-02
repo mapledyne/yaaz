@@ -12,7 +12,7 @@ boolean do_friar_area(location loc, item it)
     return false;
   }
   maximize("noncombat");
-  effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
+  max_effects("items");
   dg_adventure(loc);
   return true;
 }

@@ -264,8 +264,10 @@ void sell_things()
   sell_all($item[meat stack]);
 
   sell_all($item[Anticheese]);
+  sell_all($item[Antique greaves]);
   sell_all($item[Antique helmet]);
   sell_all($item[Antique spear]);
+  sell_all($item[Antique shield]);
   sell_all($item[Awful Poetry Journal]);
   sell_all($item[Beach Glass Bead]);
   sell_all($item[Blue Pixel]);
@@ -318,7 +320,13 @@ void sell_things()
   sell_all($item[round purple sunglasses], 1);
   sell_all($item[wicker shield]);
 
+  // keep three around for catburgling.
   sell_all($item[hot wing], 3);
+
+  if (!have_familiar($familiar[gluttonous green ghost]))
+  {
+    sell_all($item[pie man was not meant to eat]);
+  }
 }
 
 void consider_chrome_item()
@@ -388,16 +396,6 @@ void make_things()
   // Chrome items:
   consider_chrome_item();
 
-  // Cobb Goblin cake
-  if (creatable_amount($item[knob cake]) > 0 && get_property("questL05Goblin") != "finished")
-  {
-    create(1, $item[knob cake]);
-  }
-
-  if (creatable_amount($item[jar of oil]) > 0 && item_amount($item[jar of oil]) == 0 && bit_flag(get_property("twinPeakProgress").to_int(), 2))
-  {
-    create(1, $item[jar of oil]);
-  }
 }
 
 void pulverize_things()

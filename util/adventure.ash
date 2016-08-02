@@ -4,6 +4,15 @@ import "util/progress.ash";
 
 int abort_on_advs_left = 5;
 
+boolean can_adventure()
+{
+  if (my_adventures() <= abort_on_advs_left)
+    return false;
+  if (my_inebriety() >= inebriety_limit())
+    return false;
+  return true;
+}
+
 void update_flyer_progress()
 {
   if (get_property("questL12War") != "step1")

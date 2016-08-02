@@ -21,10 +21,16 @@ boolean wall_of_skin()
 
 boolean wall_of_bones()
 {
+  set_property("choiceAdventure1026",2);
   if (item_amount($item[electric boning knife]) == 0)
   {
-    warning("You're at the wall of bones without an electric bonig knife. Sad. I can't help you.");
-    return false;
+    log("First, going to get an " + wrap($item[electric boning knife]) + ".");
+  }
+  while (item_amount($item[electric boning knife]) == 0)
+  {
+    location ground = $location[the castle in the clouds in the sky (ground floor)];
+    maximize("noncombat");
+    dg_adventure(ground);
   }
 
   maximize("");
@@ -117,16 +123,16 @@ boolean loop_tower(int level)
       return false;
     case 6:
       return wall_of_skin();
-      case 7:
-        return wall_of_meat();
-      case 8:
-        return wall_of_bones();
-      case 9:
-        return mirror();
-      case 10:
-        return shadow();
-      case 11:
-        return sorceress();
+    case 7:
+      return wall_of_meat();
+    case 8:
+      return wall_of_bones();
+    case 9:
+      return mirror();
+    case 10:
+      return shadow();
+    case 11:
+      return sorceress();
     default:
       warning("Trying to do the Sorceress tower but I don't know where we are in the quest.");
       warning("We're at step " + level + ", which I don't recognize.");

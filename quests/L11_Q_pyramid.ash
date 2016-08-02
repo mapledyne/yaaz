@@ -24,7 +24,7 @@ void open_pyramid()
     dg_adventure($location[The Upper Chamber]);
     if (turners() > 0)
     {
-      progress(turners(), 10, "wheel turning things")
+      progress(turners(), 10, "wheel turning things");
     }
   }
 
@@ -34,7 +34,7 @@ void open_pyramid()
     dg_adventure($location[The Middle Chamber]);
     if (turners() > 0)
     {
-      progress(turners(), 10, "wheel turning things")
+      progress(turners(), 10, "wheel turning things");
     }
   }
 
@@ -42,7 +42,7 @@ void open_pyramid()
   {
     maximize("items");
     dg_adventure($location[The Middle Chamber]);
-    progress(turners(), 10, "wheel turning things")
+    progress(turners(), 10, "wheel turning things");
   }
 
 }

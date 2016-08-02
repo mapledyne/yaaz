@@ -81,7 +81,6 @@ void keys()
 {
   if (quest_status("questL13Final") > 3)
   {
-    warning("Guessing at quest status for perplexing door. We should find the real quest level and fix in keys() in requirements.ash");
     return;
   }
   // keys for the door.
@@ -100,13 +99,9 @@ void build_requirements()
   if (get_property("questL13Final") == "finished")
     return;
 
-  keys();
-
   buy_if_needed($item[frilly skirt], "so we can catburgle with the " + wrap($item[Orcish Frat House blueprints]) + ".");
 
   make_if_needed($item[unstable fulminate]);
-  make_if_needed($item[wand of nagamar]);
-
   if (my_meat() > 5000)
   {
     make_if_needed($item[bitchin' meatcar]);
@@ -117,7 +112,7 @@ void build_requirements()
     make_if_needed($item[wet stunt nut stew]);
   }
 
-  if (get_property("questL13Final") != "unstarted" && i_a($item[wand of nagamar]) == 0)
+  if (get_property("questL13Final") != "unstarted" && i_a($item[wand of nagamar]) == 0 && can_adventure())
   {
     if (creatable_amount($item[wand of nagamar]) > 0)
     {
@@ -126,6 +121,7 @@ void build_requirements()
     {
       warning("Note: you don't have the " + wrap($item[wand of nagamar]) + ", but are at the tower.");
     } else {
+      log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
       use(1, $item[disassembled clover]);
 
       string protect = get_property("cloverProtectActive");
@@ -150,7 +146,7 @@ void build_requirements()
     create(1, $item[unstable fulminate]);
   }
 
-  if (have_cubeling_items() && !get_property("dailyDungeonDone").to_boolean())
+  if (have_cubeling_items() && !get_property("dailyDungeonDone").to_boolean() && quest_status("questL13Final") < 3 && can_adventure())
   {
     if (i_a($item[sneaky pete's key]) == 0 || i_a($item[boris's key]) == 0 || i_a($item[jarlsberg's key]) == 0)
     {
@@ -161,6 +157,20 @@ void build_requirements()
       }
     }
   }
+
+  keys();
+
+  // Cobb Goblin cake
+  if (creatable_amount($item[knob cake]) > 0 && get_property("questL05Goblin") != "finished")
+  {
+    create(1, $item[knob cake]);
+  }
+
+  if (creatable_amount($item[jar of oil]) > 0 && item_amount($item[jar of oil]) == 0 && !bit_flag(get_property("twinPeakProgress").to_int(), 2))
+  {
+    create(1, $item[jar of oil]);
+  }
+
 }
 
 void main()
