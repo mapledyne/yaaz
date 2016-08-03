@@ -21,6 +21,8 @@ void progress(int percent, string msg)
 
 void progress(int qty, int total, string msg)
 {
+  if (qty > total)
+    qty = total;
 
   int percent = ((to_float(qty) / to_float(total)) * 100.0);
 

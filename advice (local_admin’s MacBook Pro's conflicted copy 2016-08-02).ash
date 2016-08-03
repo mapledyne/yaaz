@@ -1,15 +1,7 @@
 import "util/main.ash";
 
-void aftercore_advice()
-{
-  advice("Ascend, or do something else.");
-}
-
 void hero_keys()
 {
-
-  if (quest_status("questL13Final") > 3)
-    return;
 
   string keys = "";
   foreach k in $items[jarlsberg's key, sneaky pete's key, boris's key]
@@ -59,16 +51,12 @@ void hero_keys()
 
 void misc_advice()
 {
-  if (my_level() < 13)
-  {
-    progress(my_level(), 13, "levels earned.");
-  }
 
 }
 
 void final_requirements()
 {
-  if (quest_status("questL11Black") > 0 && item_amount($item[beehive]) == 0 && quest_status("questL13Final") < 5)
+  if (quest_status("questL11Black") > 0 && item_amount($item[beehive]) == 0)
   {
     advice("Get the " + wrap($item[beehive]) + " from the " + wrap($location[the black forest]) + ".");
   }
@@ -153,7 +141,7 @@ void level_12_advice()
         total = hippy;
         msg = "hippies defeated";
       }
-      progress(total, 100, msg);
+      progress(total, 1000, msg);
       break;
     case "finished":
       break;
@@ -164,78 +152,15 @@ void level_12_advice()
   }
 }
 
-void level_13_advice()
-{
-  if (get_property("questL13Final") != "finished")
-  {
-    advice("Naughty Sorceress quest progress:");
-    progress(quest_status("questL13Final") + 1, 12);
-  }
-
-  switch(get_property("questL13Final"))
-  {
-    case "unstarted":
-      advice("Up next: Go see the council to start the Naughty Sorceress quest.");
-      break;
-    case "started":
-      advice("Up next: Go check out the contest booth to see what entries are available.");
-      break;
-    case "step1":
-      advice("Up next: Attend the coronation ceremony.");
-      break;
-    case "step2":
-      advice("Up next: Go through the hedge maze.");
-      break;
-    case "step3":
-      advice("Up next: Open the tower door.");
-      break;
-    case "step4":
-      advice("Up next: Defeat the " + wrap($monster[wall of skin]) + ".");
-      break;
-    case "step5":
-      advice("Up next: Defeat the " + wrap($monster[wall of meat]) + ".");
-      break;
-    case "step6":
-      advice("Up next: Defeat the " + wrap($monster[wall of bones]) + ".");
-      if (item_amount($item[electric boning knife]) == 0)
-      {
-        advice("Get the " + wrap($item[electric boning knife]) + " from " + wrap($location[the castle in the clouds in the sky (ground floor)]) +  ".");
-      }
-      break;
-    case "step7":
-      advice("Up next: Gaze into the mirror (or don't).");
-      break;
-    case "step8":
-      advice("Up next: Defeat your shadow.");
-      break;
-    case "step11":
-      advice("Up next: Defeat " + $monster[naughty sorceress] + ".");
-      break;
-    case "step12":
-      advice("Up next: Break the prism.");
-      break;
-    case "finished":
-      aftercore_advice();
-      break;
-    default:
-      error("I don't know what our status is with the Sorceress quest. Status: " + get_property("questL13Final"));
-      break;
-  }
-}
-
-void default_advice()
-{
-
-}
 
 void get_advice()
 {
   switch(my_level())
   {
     default: // do default first so anything higher than this will be captured
-      default_advice();
+      print("d");
     case 13:
-      level_13_advice();
+      print("13");
     case 12:
       level_12_advice();
     case 11:
@@ -268,5 +193,4 @@ void get_advice()
 void main()
 {
   get_advice();
-  advice("Advice complete.");
 }

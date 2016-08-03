@@ -1,79 +1,13 @@
 import "util/print.ash";
 
-float frequency_of_monster(location loc, monster mon);
-int i_a(string name);
-int i_a(item it);
-boolean bit_flag(int progress, int c);
-boolean drunk();
-boolean guild_class();
-int wad_total();
-void use_all(item it);
-void pulverize_all(item it);
-void pulverize_all_but_one(item it);
-void pulverize(item it);
-void pulverize_keep_if(item it, boolean keep_if);
-int quest_status(string quest);
-int clover_cost();
-boolean check_clovers();
-float avg_meat_per_adv(location loc);
-float cost_per_mp();
-
-
-float cost_per_mp()
-{
-  if (my_class() == $class[Pastamancer] || my_class() == $class[Sauceror] || (my_class() == $class[accordion thief] && my_level() >= 9))
-  {
-    // has access to MMJ
-    int cost = npc_price($item[magical mystery juice]);
-    float restore =  (1.5 * my_level()) + 5;
-    return cost/restore;
-  }
-  return 17.5; // soda water
-}
-
-float avg_meat_per_adv(location loc)
-{
-  monster [int] monster_list = get_monsters(loc);
-  float avg_meat = 0;
-  int counter = 0;
-  foreach i in monster_list {
-     avg_meat += (meat_drop(monster_list[i]) * frequency_of_monster(loc, monster_list[i]) / 100);
-  }
-  return avg_meat;
-}
-
-float frequency_of_monster(location loc, monster mon)
-{
-  foreach mob, freq in appearance_rates(loc)
-  {
-    if (mob == mon)
-    {
-      return freq;
-    }
-  }
-  warning("Looking for monster (" + wrap(mon) + ") frequency at " + wrap(loc) + ", but couldn't find monster.");
-  return 0;
-}
-
-int i_a(string name)
-{
-	item it = to_item(name);
-	if (it == $item[none])
-	{
-		return 0;
-	}
-	return i_a(it);
-}
-
-int i_a(item i)
-{
+int i_a(string name) {
+	item i = to_item(name);
 	int a = item_amount(i) + closet_amount(i) + equipped_amount(i);
 
 	//Make a check for familiar equipment NOT equipped on the current familiar.
 	foreach fam in $familiars[] {
 		if (have_familiar(fam) && fam != my_familiar()) {
-			if (i == familiar_equipped_equipment(fam) && i != $item[none])
-      {
+			if (name == to_string(familiar_equipped_equipment(fam)) && name != "none") {
 				a = a + 1;
 			}
 		}
@@ -81,9 +15,8 @@ int i_a(item i)
 	return a;
 }
 
-boolean bit_flag(int progress, int c)
-{
-	return (progress & (1 << c)) != 0;
+boolean bit_flag(int progress, int c) {
+	return (progress & (1 << c)) == 0;
 }
 
 boolean drunk()
@@ -169,8 +102,7 @@ int quest_status(string quest)
 	return -1;
 }
 
-int clover_cost()
-{
+int clover_cost() {
   // estimate the cost of a clover:
   item gum = $item[chewing gum on a string];
   int cost = npc_price(gum);
@@ -215,8 +147,7 @@ int clover_cost()
 }
 
 
-boolean check_clovers()
-{
+boolean check_clovers() {
   //Hermit clovers
   string body = visit_url("/hermit.php");
   if(contains_text(body,"left in stock")) {

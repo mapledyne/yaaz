@@ -1,6 +1,100 @@
 import "util/print.ash";
 import "util/util.ash";
 
+void sell_coin_item(item it, int keep)
+{
+  if(it.buyer == $coinmaster[none])
+  {
+    warning("Trying to sell " + wrap(it) + " to a coinmaster, but it's not that sort of item.");
+    return;
+  }
+  coinmaster master = it.buyer;
+  if (!is_accessible(master))
+    return;
+
+  int qty = item_amount(it) - keep;
+  if (qty < 1)
+    return;
+
+  log("Selling " + wrap(it) + " to the " + wrap(master) + ".");
+  sell(master, qty, it);
+}
+
+void sell_coin_item(item it)
+{
+  sell_coin_item(it, 0);
+}
+
+void stock_coin_item(item it, int qty)
+{
+  if (!is_coinmaster_item(it))
+  {
+    return;
+  }
+
+  coinmaster master = it.seller;
+  if (!is_accessible(master))
+  {
+    return;
+  }
+  int total = qty - item_amount(it);
+  int price = sell_price(master, it);
+
+  while (total > 0 && master.available_tokens > price)
+  {
+    buy(master, 1, it);
+    total = total - 1;
+  }
+}
+
+void stock_item(item it, int qty)
+{
+  if (is_coinmaster_item(it))
+  {
+    stock_coin_item(it, qty);
+    return;
+  }
+
+  int total = qty - item_amount(it);
+  int price = npc_price(it);
+  int meat_buffer = 10;
+
+  if (total <= 0 || price == 0)
+    return;
+
+  if ((price * total) < (my_meat() * meat_buffer))
+  {
+    buy(total, it);
+  }
+
+}
+
+void stock_item(item it)
+{
+  stock_item(it, 1);
+}
+
+void sell_all(item it, int keep)
+{
+  // handle coinmaster items differently:
+  if (it.buyer != $coinmaster[none])
+  {
+    sell_coin_item(it, keep);
+    return;
+  }
+
+  int qty = item_amount(it) - keep;
+  if (qty <= 0)
+    return;
+  log("Selling " + qty + " " + wrap(pluralize(item_amount(it), it), COLOR_ITEM));
+  autosell(qty, it);
+}
+
+void sell_all(item it)
+{
+  sell_all(it, 0);
+}
+
 void get_one(item it)
 {
 	if (item_amount(it) > 0)
@@ -52,4 +146,9 @@ void get_saucepan()
 		use(1, $item[chewing gum on a string]);
 	}
 
+}
+
+int total_shadow_helpers()
+{
+  return item_amount($item[gauze garter]) + item_amount($item[filthy poultice]);
 }
