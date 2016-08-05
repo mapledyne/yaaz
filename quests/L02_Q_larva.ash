@@ -48,7 +48,7 @@ void collect_larva()
   } else {
     if (counter == 15)
     {
-      error("This quest took too long. Aborting.")
+      error("This quest took too long. Aborting.");
     } else {
       error("Mosquito quest not complete, but I don't know why.");
     }

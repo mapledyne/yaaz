@@ -1,5 +1,9 @@
 import "util/main.ash";
 
+int evil_progress(int p)
+{
+	return 25-(max(0,p-25));
+}
 
 float modern_zmobie_pct()
 {
@@ -10,7 +14,7 @@ int estimated_alcove_turns()
 {
 	float pct = modern_zmobie_pct();
 	float average = 1 * ((100-pct)/100) + 5 * (pct/100);
-	float turns = get_property("cyrptAlcoveEvilness").to_int() / average;
+	float turns = (max(0, get_property("cyrptAlcoveEvilness").to_int() - 25) / average;
 	return turns;
 }
 
@@ -19,9 +23,9 @@ void clear_alcove()
 	if(get_property("cyrptAlcoveEvilness").to_int() > 0)
 	{
 
-		choose_familiar("init");
 		maximize("noncombat");
-		maximize("init");
+		choose_familiar("init");
+		max_effects("init");
 
 		log("Undefiling " + wrap($location[The Defiled Alcove]) + ". " + wrap($monster[Modern Zmobie]) + " appearance " + modern_zmobie_pct() + "% at +" + initiative_modifier() + " init.");
 		int est = estimated_alcove_turns();
@@ -30,10 +34,10 @@ void clear_alcove()
 
 		while (get_property("cyrptAlcoveEvilness").to_int() > 0)
 		{
-			choose_familiar("init");
-			maximize("noncombat");
-			maximize("init");
+			maximize("init, noncombat");
 			dg_adventure($location[The Defiled Alcove]);
+			progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in Alcove.");
+
 		}
 		int total_turns = adv_count - my_adventures();
 		log("Actual turns to clear " + wrap($location[The Defiled Alcove]) + ": " + total_turns + ". We estimated " + est);
@@ -50,9 +54,10 @@ void clear_niche()
 
 		while (get_property("cyrptNicheEvilness").to_int() > 0)
 		{
-			choose_familiar("items");
 			maximize("items");
 			dg_adventure($location[The Defiled Niche]);
+			progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in Niche.");
+
 		}
 		int total_turns = adv_count - my_adventures();
 		log("Turns to clear " + wrap($location[The Defiled Niche]) + ": " + total_turns + ".");
@@ -70,13 +75,14 @@ void clear_nook()
 
 		while (get_property("cyrptNookEvilness").to_int() > 0)
 		{
-			choose_familiar("items");
 			maximize("items");
 			dg_adventure($location[The Defiled Nook]);
 			if(item_amount($item[evil eye]) > 0)
 			{
 				use(item_amount($item[evil eye]), $item[evil eye]);
 			}
+			progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in Nook.");
+
 		}
 		int total_turns = adv_count - my_adventures();
 		log("Turns to clear " + wrap($location[The Defiled Nook]) + ": " + total_turns + ".");
@@ -97,10 +103,9 @@ void clear_cranny()
 
 		while (get_property("cyrptCrannyEvilness").to_int() > 0)
 		{
-			choose_familiar("noncombat");
-			maximize("ml");
-			maximize("noncombat");
+			maximize("ml, noncombat");
 			dg_adventure($location[The Defiled Cranny]);
+			progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in Cranny.");
 		}
 
 		int total_turns = adv_count - my_adventures();

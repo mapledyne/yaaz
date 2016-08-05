@@ -79,7 +79,7 @@ familiar choose_familiar(string fam)
     case "rollover":
     case "stats":
     case "noncombat":
-      newbie = choose_familiar_from_list($familiars[rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, ]);
+      newbie = choose_familiar_from_list($familiars[rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, gelatinous cubeling]);
       break;
     case "meat":
       newbie = choose_familiar_from_list($familiars[adventurous spelunker, angry jung man, grimstone golem, leprechaun, cheshire bat, nervous tick, hobo monkey, he-boulder, coffee pixie]);
@@ -95,6 +95,9 @@ familiar choose_familiar(string fam)
       break;
     case "attack":
       newbie = choose_familiar_from_list($familiars[angry goat, flaming gravy fairy, mosquito, sabre-toothed lime]);
+      break;
+    case "combat":
+      newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
       break;
     default:
       error("Tried to choose familiar for '" + fam + "', but I don't understand that.");

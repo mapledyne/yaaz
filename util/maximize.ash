@@ -48,31 +48,29 @@ string default_maximize_string()
 
 void maximize(string target, string outfit, item it, familiar fam)
 {
+  string[int] split_map;
+  split_map = split_string(target, ", ");
+
   if (fam != $familiar[none])
     equip_familiar(fam);
   else
-    choose_familiar(target);
+    choose_familiar(split_map[0]);
 
-  switch(target)
+  if (target == 'rollover')
+    target = 'adv, pvp fights';
+
+  if (target == 'noncombat')
+    target = '-combat';
+
+  if (target == '')
+    target = default_maximize_string();
+
+  do_maximize(target, outfit, it);
+
+  foreach t in split_map
   {
-    case "":
-      do_maximize(default_maximize_string(), outfit, it);
-      break;
-    case "items":
-    case "init":
-    case "ml":
-      do_maximize(target, outfit, it);
-      break;
-    case "noncombat":
-      do_maximize("-combat", outfit, it);
-      break;
-    case "rollover":
-      do_maximize("adv, pvp fights", outfit, it);
-      break;
-    default:
-      warning("Tried to maximize '" + target+ "', but I don't understand that.");
+    max_effects(split_map[t]);
   }
-  max_effects(target);
 }
 
 void maximize(string target, item it)
@@ -110,7 +108,6 @@ void max_effects(string target)
   switch(target)
   {
     case "items":
-      get_accordion();
       effect_maintain($effect[eye of the seal]);
       effect_maintain($effect[ermine eyes]);
       effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
@@ -125,10 +122,16 @@ void max_effects(string target)
       effect_maintain($effect[Ticking Clock]);
       effect_maintain($effect[Walberg\'s Dim Bulb]);
       break;
+    case "-combat":
     case "noncombat":
       effect_maintain($effect[Fresh Scent]);
       effect_maintain($effect[Smooth Movements]);
       effect_maintain($effect[The Sonata of Sneakiness]);
+      break;
+    case "combat":
+      effect_maintain($effect[musk of the moose]);
+      effect_maintain($effect[Carlweather's Cantata of Confrontation]);
+      effect_maintain($effect[hippy stench]);
       break;
     case "ml":
       effect_maintain($effect[Drescher's Annoying Noise]);
@@ -136,11 +139,8 @@ void max_effects(string target)
       effect_maintain($effect[tortious]);
       effect_maintain($effect[eau d'enmity]);
       break;
-    case "":
-    case "rollover":
-      break;
     default:
-      warning("Tried to maximize effects for '" + target+ "', but I don't understand that.");
+      break;
   }
 
 }

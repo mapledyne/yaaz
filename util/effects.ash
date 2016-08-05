@@ -7,6 +7,7 @@ item effect_to_item(effect ef)
     case $effect[ermine eyes]:          return $item[eyedrops of the ermine];
     case $effect[eye of the seal]:      return $item[seal eyeball];
     case $effect[fresh scent]:          return $item[deodorant];
+    case $effect[hippy stench]:         return $item[reodorant];
     case $effect[ocelot eyes]:          return $item[eyedrops of the ocelot];
     case $effect[peeled eyeballs]:      return $item[knob goblin eyedrops];
     case $effect[Rushtacean\']:         return $item[armored prawn];
