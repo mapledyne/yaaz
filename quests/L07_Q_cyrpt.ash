@@ -14,7 +14,7 @@ int estimated_alcove_turns()
 {
 	float pct = modern_zmobie_pct();
 	float average = 1 * ((100-pct)/100) + 5 * (pct/100);
-	float turns = (max(0, get_property("cyrptAlcoveEvilness").to_int() - 25) / average;
+	float turns = (max(0, get_property("cyrptAlcoveEvilness").to_int() - 25) / average);
 	return turns;
 }
 
@@ -103,7 +103,7 @@ void clear_cranny()
 
 		while (get_property("cyrptCrannyEvilness").to_int() > 0)
 		{
-			maximize("ml, noncombat");
+			maximize("ml, -combat");
 			dg_adventure($location[The Defiled Cranny]);
 			progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in Cranny.");
 		}

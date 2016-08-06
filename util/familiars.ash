@@ -75,20 +75,11 @@ familiar choose_familiar(string fam)
 
   switch(fam)
   {
-    case "":
-    case "rollover":
-    case "stats":
-    case "noncombat":
-      newbie = choose_familiar_from_list($familiars[rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, gelatinous cubeling]);
-      break;
     case "meat":
       newbie = choose_familiar_from_list($familiars[adventurous spelunker, angry jung man, grimstone golem, leprechaun, cheshire bat, nervous tick, hobo monkey, he-boulder, coffee pixie]);
       break;
     case "init":
       newbie = choose_familiar_from_list($familiars[Happy Medium, Xiblaxian Holo-Companion, Oily Woim]);
-      break;
-    case "combat":
-      newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
       break;
     case "items":
       newbie = choose_familiar_from_list($familiars[Rockin\' Robin, Adventurous Spelunker, Grimstone Golem, ancient yuletide troll, Intergnat, Angry Jung Man, Bloovian Groose, Slimeling, Baby Gravy Fairy, green pixie, crimbo elf, flaming gravy fairy, dandy lion, coffee pixie, syncopated turtle]);
@@ -99,8 +90,9 @@ familiar choose_familiar(string fam)
     case "combat":
       newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
       break;
-    default:
-      error("Tried to choose familiar for '" + fam + "', but I don't understand that.");
+    default: // everything that doesnt't have a set items. Should usually be stat familiars.
+      newbie = choose_familiar_from_list($familiars[rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, gelatinous cubeling]);
+      break;
   }
 
   if (newbie == $familiar[none] && fam != "stats")
