@@ -25,7 +25,7 @@ void do_one_market_adv()
   }
 
   dg_adventure($location[the black forest]);
-  progress(get_property("blackForestProgress"), 5, "")
+  progress(get_property("blackForestProgress").to_int(), 5, "");
 }
 
 boolean market_loop()
@@ -48,7 +48,7 @@ boolean market_loop()
       do_one_market_adv();
       return true;
     case 2:
-      if (i_a($item[forged identification documents] == 0)
+      if (i_a($item[forged identification documents]) == 0)
       {
         buy(1, $item[forged identification documents]);
       } else {

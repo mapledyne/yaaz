@@ -6,7 +6,7 @@ void get_blasting()
 {
   if (quest_status("questL11Manor") < 1)
   {
-    error("Trying to work in the cellar, but the cellar isn't opened yet.");
+    error("Trying to work in the laundry room, but it isn't opened yet.");
     return;
   }
   if (quest_status("questL11Manor") >= 3)
@@ -16,16 +16,37 @@ void get_blasting()
 
   while (item_amount($item[blasting soda]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
   {
-    choose_familiar("items");
     maximize("items");
     dg_adventure($location[the haunted laundry room]);
   }
   build_requirements();
 }
 
+void get_vinegar()
+{
+  if (quest_status("questL11Manor") < 1)
+  {
+    error("Trying to work in the cellar, but it isn't opened yet.");
+    return;
+  }
+  if (quest_status("questL11Manor") >= 3)
+  {
+    return;
+  }
+
+  while (item_amount($item[bottle of Chateau de Vinegar]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
+  {
+    maximize("items");
+    dg_adventure($location[the haunted wine cellar]);
+  }
+  build_requirements();
+}
+
+
 void open_summoning()
 {
   get_blasting();
+  get_vinegar();
 }
 
 void main()
