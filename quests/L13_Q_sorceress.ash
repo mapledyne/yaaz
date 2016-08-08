@@ -114,12 +114,88 @@ boolean sorceress()
 
 }
 
+location get_challenge_loc(string challenge)
+{
+  switch(challenge)
+  {
+    case "Mysticality":
+      return $location[smartest adventurer contest];
+    case "Muscle":
+      return $location[strongest adventurer contest];
+    case "Moxie":
+      return $location[smoothest adventurer contest];
+    case "spooky":
+      return $location[spookiest adventurer contest];
+    default:
+      error("Unsure what challenge this is: " + challenge + ".");
+      abort();
+  }
+  return $location[none];
+}
+
+
+boolean contest_race()
+{
+  if (get_property("nsChallenge1") == "none" || get_property("nsChallenge2") == "none")
+  {
+    visit_url("place.php?whichplace=nstower&action=ns_01_contestbooth");
+    return true;
+  }
+  if (get_property("nsContestants1").to_int() > 0)
+  {
+    maximize();
+    dg_adventure($location[fastest adventurer contest]);
+    return true;
+  }
+
+  if (get_property("nsContestants2").to_int() > 0)
+  {
+    location loc = get_challenge_loc(get_property("nsChallenge1"));
+
+    maximize();
+    dg_adventure(loc);
+    return true;
+  }
+
+  if (get_property("nsContestants3").to_int() > 0)
+  {
+    location loc = get_challenge_loc(get_property("nsChallenge2"));
+
+    maximize();
+    dg_adventure(loc);
+    return true;
+  }
+
+  if (get_property("nsContestants1").to_int() < 0 || get_property("nsContestants2").to_int() < 0 || get_property("nsContestants3").to_int() < 0)
+  {
+    warning("Contests: Init, " + get_property("nsChallenge1") + ", " + get_property("nsChallenge2") + ". Maximizing for this isn't yet automated.");
+    return false;
+  }
+  log("All contestants have been defeated.");
+  return false;
+}
+
 boolean loop_tower(int level)
 {
   switch(level)
   {
     case -1:
-      warning("This script helps with the Sorceress tower, which isn't started.");
+      if (my_level() < 13)
+      {
+        error("You can't go after the Naughty Sorceress until you're level 13.");
+        return false;
+      }
+      log("Seeing the council to start the quest.");
+      council();
+      return true;
+    case 0:
+    case 1:
+      return contest_race();
+    case 2:
+      log("Claim your prize! This isn't automated yet.");
+      return false;
+    case 3:
+      log("Hedge Maze is not yet automated.");
       return false;
     case 6:
       return wall_of_skin();
@@ -143,11 +219,6 @@ boolean loop_tower(int level)
 
 void do_sorceress()
 {
-  if (quest_status("questL13Final") < 0)
-  {
-    warning("You haven't started the Sorceress quest yet.");
-    return;
-  }
 
   while (loop_tower(quest_status("questL13Final")))
   {

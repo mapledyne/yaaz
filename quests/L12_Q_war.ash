@@ -102,6 +102,24 @@ void do_war(string side)
 
   // turn in any last items...
   prep($location[none]);
+  log("Warriors defeated. Now on to the final boss.");
+  maximize("", outfit);
+
+  if (side == "hippy")
+  {
+    visit_url("bigisland.php?place=camp&whichcamp=2");
+  } else {
+    visit_url("bigisland.php?place=camp&whichcamp=1");
+  }
+  visit_url("bigisland.php?action=bossfight&pwd");
+  run_combat();
+  if (quest_status("questL12War") > 10)
+  {
+    log("War quest complete!");
+  } else {
+    warning("I wasn't able to complete the war quest.");
+  }
+
 }
 
 void do_war()

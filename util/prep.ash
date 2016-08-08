@@ -80,10 +80,10 @@ void buy_things()
 
   if (total_shadow_helpers() >= 10)
   {
-    coinmaster master = $item[gauze garter].seller;
+    coinmaster master = $item[commemorative war stein].seller;
     int tokens = master. available_tokens;
-    int qty = tokens / (sell_price(master, $item[gauze garter]));
-    buy(master, qty, $item[gauze garter]);
+    int qty = tokens / (sell_price(master, $item[commemorative war stein]));
+    buy(master, qty, $item[commemorative war stein]);
   }
 }
 
