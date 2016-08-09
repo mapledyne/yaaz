@@ -34,7 +34,7 @@ void clear_alcove()
 
 		while (get_property("cyrptAlcoveEvilness").to_int() > 0)
 		{
-			maximize("init, noncombat");
+			maximize("init, -combat");
 			dg_adventure($location[The Defiled Alcove]);
 			progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in Alcove.");
 
@@ -138,7 +138,7 @@ void defeat_cyrpt()
 
 	int timer = my_adventures();
 
-	if (item_amount($item[evilometer]) > 0)
+	if (item_amount($item[evilometer]) == 0)
 	{
 		log("We don't have an evilometer. Maybe we haven't started the quest yet?");
 		council();

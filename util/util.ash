@@ -1,5 +1,7 @@
 import "util/print.ash";
 
+int FINISHED = 100;
+
 float frequency_of_monster(location loc, monster mon);
 int i_a(string name);
 int i_a(item it);
@@ -17,7 +19,42 @@ int clover_cost();
 boolean check_clovers();
 float avg_meat_per_adv(location loc);
 float cost_per_mp();
+string setting(string value, string def);
+string setting(string value);
+item spooky_quest_item();
 
+item spooky_quest_item()
+{
+  switch (my_class())
+  {
+    case $class[seal clubber]:
+    case $class[avatar of boris]:
+      return $item[tattered wolf standard];
+    case $class[turtle tamer]:
+      return $item[tattered snake standard];
+    case $class[pastamancer]:
+    case $class[sauceror]:
+      return $item[english to a. f. u. e. dictionary];
+    case $class[disco bandit]:
+    case $class[accordion thief]:
+      return $item[bizarre illegible sheet music];
+    default:
+      return $item[none];
+  }
+}
+
+string setting(string value, string def)
+{
+  string prop = get_property("dg_" + value);
+  if (prop == "")
+    return def;
+  return prop;
+}
+
+string setting(string value)
+{
+  return setting(value, "");
+}
 
 float cost_per_mp()
 {
@@ -154,7 +191,7 @@ int quest_status(string quest)
 	}
 	if (progress == "finished")
 	{
-		return 100;
+		return FINISHED;
 	}
 
 	for i from 1 to 26

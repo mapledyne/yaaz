@@ -65,6 +65,10 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
 
 familiar choose_familiar(string fam)
 {
+  familiar solo = to_familiar(setting("100familiar"));
+  if (solo != $familiar[none])
+    return solo;
+
   familiar newbie = to_familiar(fam);
 
   if (newbie != $familiar[none])
