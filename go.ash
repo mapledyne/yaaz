@@ -106,11 +106,26 @@ void level_13_advice()
   }
 }
 
+void warning_one_step()
+{
+  warning("One step completed. Rerun this to go on to the next step.");
+}
+
+
 void do_next_thing()
 {
   if (!guild_store_open() && is_guild_class())
   {
     cli_execute("call quests/M_guild.ash");
+    warning_one_step();
+    return;
+  }
+
+  if (!hidden_temple_unlocked())
+  {
+    cli_execute("call quests/M_hidden_temple.ash");
+    warning_one_step();
+    return;
   }
 
   switch(my_level())
@@ -147,7 +162,7 @@ void do_next_thing()
     case 1:
       break;
   }
-  warning("One step completed. Rerun this to go on to the next step.");
+  warning_one_step();
 }
 
 void main()
