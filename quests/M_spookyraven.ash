@@ -120,11 +120,21 @@ void go_dancing()
     dg_adventure(gallery);
     progress(dancing_items(), 3, "dancing things found");
   }
-  
+
   set_property("louvreDesiredGoal", 10); // prime stat
 
-  log("Dancing items complete.");
+  if (dancing_items() != 3)
+  {
+    warning("Unsure what happened - we don't have all of Lady Spookyraven's dancing things.");
+    return;
+  }
 
+  log("Dancing items found. Returning them.");
+
+  visit_url("place.php?whichplace=manor2&action=manor2_ladys");
+
+  dg_adventure($location["the haunted ballroom"]);
+  log("Dancing complete!");
 }
 
 void main()
