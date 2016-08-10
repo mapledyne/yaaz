@@ -46,7 +46,7 @@ boolean dg_adventure(location loc)
 
   prep(loc);
 
-  boolean adv = adventure(1, loc);
+  boolean adv = adv1(loc, -1, "");
 
   update_flyer_progress();
 

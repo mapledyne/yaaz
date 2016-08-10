@@ -20,7 +20,7 @@ void do_one_bridge_adv()
 
 boolean bridge_loop()
 {
-  int status = quest_status("questL02Larva");
+  int status = quest_status("questL09Topping");
 
   switch (status)
   {

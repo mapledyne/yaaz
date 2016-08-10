@@ -1,4 +1,5 @@
 import "util/print.ash";
+import <zlib.ash>;
 
 int FINISHED = 100;
 
@@ -22,6 +23,52 @@ float cost_per_mp();
 string setting(string value, string def);
 string setting(string value);
 item spooky_quest_item();
+void add_attract(monster mon);
+void remove_attract(monster mon);
+boolean guild_store_open();
+
+boolean guild_store_open()
+{
+  return (get_property("lastGuildStoreOpen").to_int() == my_ascensions());
+}
+
+void add_attract(monster mon)
+{
+  if (mon == $monster[none])
+    return;
+
+  string attract_list = vars["BatMan_attract"];
+
+  if (contains_text(attract_list, mon))
+  {
+    return;
+  }
+  log("Adding " + wrap(mon) + " to the attract (olifact) list.");
+
+  attract_list = list_add(attract_list, mon);
+
+  vars["BatMan_attract"] = attract_list;
+  updatevars();
+}
+
+void remove_attract(monster mon)
+{
+  if (mon == $monster[none])
+    return;
+
+  string attract_list = vars["BatMan_attract"];
+
+  if (!contains_text(attract_list, mon))
+  {
+    return;
+  }
+
+  log("Removing " + wrap(mon) + " from the attract (olifact) list.");
+  attract_list = list_remove(attract_list, mon);
+  vars["BatMan_attract"] = attract_list;
+  updatevars();
+
+}
 
 item spooky_quest_item()
 {
