@@ -17,9 +17,11 @@ void pvp(string name, string swag, string attack)
     if (pvp_attacks_left() > 0)
     {
       cli_execute("checkpoint");
+      cli_execute("outfit birthday suit");
       cli_execute("pvp fame " + attack);
       cli_execute("outfit checkpoint");
     }
+    visit_url("peevpee.php?place=shop");
     log("PVP swagger: " + get_property("availableSwagger"));
     int totalSwag = to_int(get_property(swag));
     log(name + " swagger: " + totalSwag);

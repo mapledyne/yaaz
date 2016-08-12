@@ -1,4 +1,10 @@
 import "util/main.ash";
+string TRAPPER_URL="place.php?whichplace=mclargehuge&action=trappercabin"
+
+void visit_trapper()
+{
+  visit_url(TRAPPER_URL);
+}
 
 int get_cheese()
 {
@@ -50,8 +56,7 @@ void L08_Q_trapper()
 
     log("Three " + wrap($item[goat cheese]) + " and three " + wrap(ore) + " found.");
     log("Returning these to the trapper.");
-    error("Find URL for this!");
-    abort();
+    visit_trapper();
   }
 
 }

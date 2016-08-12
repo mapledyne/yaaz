@@ -27,7 +27,7 @@ void update_flyer_progress()
   }
 }
 
-boolean dg_adventure(location loc)
+boolean dg_adventure(location loc, string maximize)
 {
   if (my_inebriety() > inebriety_limit())
   {
@@ -43,7 +43,11 @@ boolean dg_adventure(location loc)
 
   // check for counters like semi-rare and dance cards.
   counters();
-
+  if (maximize != "none")
+  {
+    maximize(maximize);
+  }
+  
   prep(loc);
 
   boolean adv = adv1(loc, -1, "");
@@ -51,4 +55,9 @@ boolean dg_adventure(location loc)
   update_flyer_progress();
 
   return adv;
+}
+
+boolean dg_adventure(location loc)
+{
+  return dg_adventure(loc, "none");
 }

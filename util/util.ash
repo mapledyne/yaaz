@@ -2,6 +2,8 @@ import "util/print.ash";
 import <zlib.ash>;
 
 int FINISHED = 100;
+int UNSTARTED = -1;
+int STARTED = 0;
 
 float frequency_of_monster(location loc, monster mon);
 int i_a(string name);
@@ -26,6 +28,16 @@ item spooky_quest_item();
 void add_attract(monster mon);
 void remove_attract(monster mon);
 boolean guild_store_open();
+int smiles_remaining();
+
+
+int smiles_remaining()
+{
+  int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
+  int casts_used = to_int(get_property("_smilesOfMrA"));
+
+  return total_casts_available - casts_used;
+}
 
 boolean guild_store_open()
 {
@@ -101,6 +113,12 @@ string setting(string value, string def)
 string setting(string value)
 {
   return setting(value, "");
+}
+
+string save_setting(string key, string value)
+{
+  set_property("dg_" + key, value);
+  return value;
 }
 
 float cost_per_mp()

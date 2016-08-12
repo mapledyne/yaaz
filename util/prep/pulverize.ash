@@ -1,5 +1,10 @@
 import "util/inventory.ash";
 
+boolean can_pulverize()
+{
+  return have_skill($skill[pulverize]);
+}
+
 void pulverize_things()
 {
 

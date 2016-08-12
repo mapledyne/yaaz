@@ -114,8 +114,11 @@ void max_effects(string target)
       effect_maintain($effect[ocelot eyes]);
       effect_maintain($effect[peeled eyeballs]);
       effect_maintain($effect[singer's faithful ocelot]);
+      effect_maintain($effect[withered heart]);
       break;
     case "init":
+      effect_maintain($effect[adorable lookout]);
+      effect_maintain($effect[lustful heart]);
       effect_maintain($effect[Sepia Tan]);
       effect_maintain($effect[Song of Slowness]);
       effect_maintain($effect[Springy Fusilli]);

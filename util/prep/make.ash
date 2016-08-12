@@ -66,6 +66,54 @@ void make_things()
     }
   }
 
+  // turtlemail bits:
+  if (item_amount($item[turtlemail bits]) > 7 && have_skill($skill[torso awaregness]) && i_a($item[turtlemail hauberk]) == 0)
+  {
+    log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail hauberk]) + ".");
+    create(1, $item[turtlemail hauberk]);
+  }
+  if (item_amount($item[turtlemail bits]) > 5 && i_a($item[turtlemail breeches]) == 0)
+  {
+    log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail breeches]) + ".");
+    create(1, $item[turtlemail breeches]);
+  }
+  if (item_amount($item[turtlemail bits]) > 3 && i_a($item[turtlemail hauberk]) == 0)
+  {
+    log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail coif]) + ".");
+    create(1, $item[turtlemail coif]);
+  }
+  if (i_a($item[turtlemail hauberk]) > 0 && i_a($item[turtlemail breeches]) > 0 && i_a($item[turtlemail coif]) > 0)
+  {
+    sell_all($item[turtlemail bits]);
+  }
+
+  // turtle wax. Aught to make it into something useful.
+  if (item_amount($item[turtle wax]) > 0)
+  {
+    use(1, $item[turtle wax]);
+  }
+  if (i_a($item[turtle wax shield]) > 0 && i_a($item[turtle wax helmet]) == 0)
+  {
+    use(1, $item[turtle wax shield]);
+  }
+
+  // double-ice things:
+  if (item_amount($item[shard of double-ice]) > 5 && i_a($item[double-ice cap]) == 0)
+  {
+    log("Turning " + wrap($item[shard of double-ice]) + " into a " + wrap($item[double-ice cap]) + ".");
+    create(1, $item[double-ice cap]);
+  }
+  if (item_amount($item[shard of double-ice]) > 9 && i_a($item[double-ice britches]) == 0)
+  {
+    log("Turning " + wrap($item[shard of double-ice]) + " into a " + wrap($item[double-ice britches]) + ".");
+    create(1, $item[double-ice britches]);
+  }
+  if (item_amount($item[shard of double-ice]) > 7 && i_a($item[double-ice box]) == 0)
+  {
+    log("Turning " + wrap($item[shard of double-ice]) + " into a " + wrap($item[double-ice box]) + ".");
+    create(1, $item[double-ice box]);
+  }
+
   // Chrome items:
   consider_chrome_item();
 }

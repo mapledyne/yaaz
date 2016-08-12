@@ -1,6 +1,19 @@
 import "util/print.ash";
 import "util/util.ash";
 
+int hero_keys()
+{
+  int keys = 0;
+  if (item_amount($item[sneaky pete's key]) > 0)
+    keys += 1;
+  if (item_amount($item[boris's key]) > 0)
+    keys += 1;
+  if (item_amount($item[jarlsberg's key]) > 0)
+    keys += 1;
+
+  return keys;
+}
+
 void sell_coin_item(item it, int keep)
 {
   if(it.buyer == $coinmaster[none])

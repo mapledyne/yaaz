@@ -15,6 +15,8 @@ void use_things()
   use_all($item[dungeon dragon chest]);
   use_all($item[duct tape wallet]);
   use_all($item[fat wallet]);
+  use_all($item[gummi turtle]);
+  use_all($item[irradiated turtle]);
   use_all($item[kobold treasure hoard]);
   use_all($item[meat globe]);
   use_all($item[O'RLY manual]);

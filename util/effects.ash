@@ -2,18 +2,22 @@ item effect_to_item(effect ef)
 {
   switch(ef)
   {
+    case $effect[adorable lookout]:     return $item[giraffe-necked turtle];
+    case $effect[baited hook]:          return $item[wriggling worm];
     case $effect[Eau de Tortue]:        return $item[turtle pheromones];
     case $effect[Eau d'enmity]:         return $item[perfume of prejudice];
     case $effect[ermine eyes]:          return $item[eyedrops of the ermine];
     case $effect[eye of the seal]:      return $item[seal eyeball];
     case $effect[fresh scent]:          return $item[deodorant];
     case $effect[hippy stench]:         return $item[reodorant];
+    case $effect[lustful heart]:        return $item[love song of naughty innuendo];
     case $effect[ocelot eyes]:          return $item[eyedrops of the ocelot];
     case $effect[peeled eyeballs]:      return $item[knob goblin eyedrops];
     case $effect[Rushtacean\']:         return $item[armored prawn];
     case $effect[Sepia Tan]:            return $item[old bronzer];
     case $effect[Ticking Clock]:        return $item[cheap wind-up clock];
     case $effect[tortious]:             return $item[mocking turtle];
+    case $effect[withered heart]:       return $item[love song of disturbing obsession];
     default:                            return $item[none];
   }
 }

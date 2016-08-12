@@ -16,6 +16,7 @@ void sell_things()
   sell_all($item[Antique shield]);
   sell_all($item[Awful Poetry Journal]);
   sell_all($item[Beach Glass Bead]);
+  sell_all($item[Black Pixel]);
   sell_all($item[Blue Pixel]);
   sell_all($item[Clay Peace-Sign Bead]);
   sell_all($item[Decorative Fountain]);
@@ -51,6 +52,12 @@ void sell_things()
   sell_all($item[Windchimes]);
   sell_all($item[valuable trinket]);
 
+  sell_all($item[turtle totem], 1);
+  sell_all($item[seal-clubbing club], 1);
+  sell_all($item[saucepan], 1);
+  sell_all($item[stolen accordion], 1);
+  sell_all($item[disco ball], 1);
+
   // battlefield items for coins:
   sell_all($item[bullet-proof corduroys], 1);
   sell_all($item[communications windchimes]);
@@ -69,8 +76,30 @@ void sell_things()
   // keep three around for catburgling.
   sell_all($item[hot wing], 3);
 
+
+  if (my_primestat() == $stat[moxie])
+    sell_all($item[4-dimensional guitar]);
+  else
+    sell_all($item[4-dimensional guitar], 1);
+
+
+  if (quest_status("questM02Artist") == FINISHED)
+  {
+    sell_all($item[rat whisker]);
+  }
+
   if (!have_familiar($familiar[gluttonous green ghost]))
   {
     sell_all($item[pie man was not meant to eat]);
   }
+
+  if (have_familiar($familiar[wereturtle]))
+  {
+    sell_all($item[sleeping wereturtle]);
+  }
+  if (have_familiar($familiar[syncopated turtle]))
+  {
+    sell_all($item[syncopated turtle]);
+  }
+
 }

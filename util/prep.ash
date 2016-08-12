@@ -1,4 +1,5 @@
 import "util/print.ash";
+import "util/effects.ash";
 import "util/inventory.ash";
 import "util/maximize.ash";
 import "util/util.ash";
@@ -7,6 +8,7 @@ import "util/prep/buy.ash";
 import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
+import "util/iotm/floundry.ash";
 
 void meat_cast(skill sk, effect ef, int avg)
 {
@@ -65,27 +67,6 @@ void cast_item_spells(location loc)
   item_cast($skill[Fat Leon's Phat Loot Lyric]);
 }
 
-void buy_things()
-{
-  stock_item($item[anti-anti-antidote], 3);
-
-  stock_item($item[the big book of pirate insults]);
-  if ((item_amount($item[dictionary]) + item_amount($item[abridged dictionary])) == 0)
-  {
-    stock_item($item[abridged dictionary]);
-  }
-
-  stock_item($item[gauze garter], 10 - item_amount($item[filthy poultice]));
-  stock_item($item[filthy poultice], 10 - item_amount($item[gauze garter]));
-
-  if (total_shadow_helpers() >= 10)
-  {
-    coinmaster master = $item[commemorative war stein].seller;
-    int tokens = master. available_tokens;
-    int qty = tokens / (sell_price(master, $item[commemorative war stein]));
-    buy(master, qty, $item[commemorative war stein]);
-  }
-}
 
 
 void prep_turtle_tamer()
@@ -104,6 +85,42 @@ void class_specific_prep(class cl)
 
 }
 
+void consider_mall(item it)
+{
+  if (item_amount(it) == 0)
+    return;
+
+  log("You may want to give this to your clan, or maybe put in the mall: " + wrap(it) + ".");
+}
+
+void mall_or_clan()
+{
+  consider_mall($item[almost-dead walkie-talkie]);
+  consider_mall($item[gift card]);
+
+}
+
+void prep_fishing(location loc)
+{
+  if (is_fishing_hole(loc))
+  {
+    log("This location (" + wrap(loc) + ") may have floundry fish in it.");
+    effect_maintain($effect[baited hook]);
+  }
+  if (can_get_floundry_item())
+  {
+    log("You should get an item from the " + wrap("Floundry", COLOR_LOCATION) + ".");
+  }
+}
+
+void heart_stuff()
+{
+  if (smiles_remaining() > 0)
+  {
+    log("You have " + wrap(smiles_remaining(), COLOR_ITEM) + " smiles from your " + wrap($item[golden mr. accessory]) + " remaining. Send them out!");
+  }
+}
+
 void prep(location loc)
 {
   if (my_meat() > 300)
@@ -117,9 +134,20 @@ void prep(location loc)
   cast_meat_spells(loc);
   cast_item_spells(loc);
   class_specific_prep(my_class());
+  prep_fishing(loc);
+  mall_or_clan();
+
+  heart_stuff();
+
 }
+
+void prep()
+{
+  prep($location[none]);
+}
+
 
 void main()
 {
-  prep($location[none]);
+  prep();
 }
