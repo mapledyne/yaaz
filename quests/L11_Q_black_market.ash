@@ -17,11 +17,17 @@ void do_one_market_adv()
     set_property("choiceAdventure924", 1);
   }
 
+  string max = "items";
+  if (item_amount($item[beehive]) > 0)
+  {
+    max = "combat, 0.2 items";
+  }
+
   if (item_amount($item[reassembled blackbird]) == 0 && have_familiar($familiar[reassembled blackbird]))
   {
-    maximize("items", $familiar[reassembled blackbird]);
+    maximize(max, $familiar[reassembled blackbird]);
   } else {
-    maximize("items");
+    maximize(max);
   }
 
   dg_adventure($location[the black forest]);
@@ -71,7 +77,7 @@ void find_market()
     counter += 1;
   }
 
-  if (quest_status("questL11MacGuffin") > 1)
+  if (quest_status("questL11Black") == FINISHED)
   {
     int total = turns - my_adventures();
     log(wrap($item[your father's macguffin diary]) + " found. It took " + total + " turns.");

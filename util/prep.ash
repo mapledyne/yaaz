@@ -9,6 +9,7 @@ import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
 import "util/iotm/floundry.ash";
+import "util/iotm/bookshelf.ash";
 
 void meat_cast(skill sk, effect ef, int avg)
 {
@@ -121,11 +122,24 @@ void heart_stuff()
   }
 }
 
+
+
+void cast_things()
+{
+  // if it makes sense to cast another libram spell
+  while(libram())
+  {
+    
+  }
+}
+
+
 void prep(location loc)
 {
   if (my_meat() > 300)
     hermit(999, $item[ten-leaf clover]);
 
+  cast_things();
   pulverize_things();
   sell_things();
   buy_things();

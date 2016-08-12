@@ -29,7 +29,17 @@ void add_attract(monster mon);
 void remove_attract(monster mon);
 boolean guild_store_open();
 int smiles_remaining();
+int count_set(boolean[item] things);
 
+int count_set(boolean[item] things)
+{
+  int counter = 0;
+  foreach it in things
+  {
+    counter += item_amount(it);
+  }
+  return counter;
+}
 
 int smiles_remaining()
 {
@@ -49,6 +59,14 @@ void add_attract(monster mon)
   if (mon == $monster[none])
     return;
 
+  if (have_effect($effect[on the trail]) > 0)
+  {
+    if (to_monster(get_property("olfactedMonster")) != mon)
+    {
+      log("Trying to remove " + wrap($effect[on the trail]) + " since its smelling the wrong monster.");
+      cli_execute("uneffect on the trail");
+    }
+  }
   string attract_list = vars["BatMan_attract"];
 
   if (contains_text(attract_list, mon))
@@ -193,7 +211,7 @@ boolean drunk()
 	return my_inebriety() > inebriety_limit();
 }
 
-boolean guild_class()
+boolean is_guild_class()
 {
 	return ($classes[Seal Clubber, Turtle Tamer, Sauceror, Pastamancer, Disco Bandit, Accordion Thief] contains my_class());
 }

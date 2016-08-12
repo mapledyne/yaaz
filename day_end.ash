@@ -30,6 +30,9 @@ void main()
     snojo();
   }
 
+  // if there are any source terminal enhances left
+  consume_enhances();
+
   pvp();
 
   log("Dressing for rollover.");

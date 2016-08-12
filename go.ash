@@ -98,7 +98,6 @@ void level_13_advice()
       advice("Up next: Break the prism.");
       break;
     case "finished":
-      aftercore_advice();
       break;
     default:
       error("I don't know what our status is with the Sorceress quest. Status: " + get_property("questL13Final"));
@@ -136,7 +135,12 @@ void do_next_thing()
     case 12:
       level_12_advice();
     case 11:
-      print("11");
+      if (run_level_quest("questL11Black", "L11_Q_black_market"))
+        break;
+      if (run_level_quest("questL11Desert", "L11_Q_desert"))
+        break;
+      if (run_level_quest("questL11Manor", "L11_Q_summoning"))
+        break;
     case 10:
       print("10");
     case 9:

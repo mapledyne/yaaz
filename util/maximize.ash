@@ -2,6 +2,7 @@ import "util/print.ash";
 import "util/inventory.ash";
 import "util/effects.ash";
 import "util/familiars.ash";
+import "util/iotm/terminal.ash";
 
 void do_maximize(string target, string outfit, item it);
 void maximize(string target, string outfit, item it, familiar fam);
@@ -52,7 +53,7 @@ void maximize(string target, string outfit, item it, familiar fam)
   split_map = split_string(target, ", ");
 
   if (fam != $familiar[none])
-    equip_familiar(fam);
+    choose_familiar(fam);
   else
     choose_familiar(split_map[0]);
 
@@ -107,6 +108,10 @@ void max_effects(string target)
 {
   switch(target)
   {
+    case "meat":
+      effect_maintain($effect[polka of plenty]);
+      terminal_enhance($effect[meat.enh]);
+      break;
     case "items":
       effect_maintain($effect[eye of the seal]);
       effect_maintain($effect[ermine eyes]);
@@ -115,6 +120,7 @@ void max_effects(string target)
       effect_maintain($effect[peeled eyeballs]);
       effect_maintain($effect[singer's faithful ocelot]);
       effect_maintain($effect[withered heart]);
+      terminal_enhance($effect[items.enh]);
       break;
     case "init":
       effect_maintain($effect[adorable lookout]);
@@ -124,6 +130,7 @@ void max_effects(string target)
       effect_maintain($effect[Springy Fusilli]);
       effect_maintain($effect[Ticking Clock]);
       effect_maintain($effect[Walberg\'s Dim Bulb]);
+      terminal_enhance($effect[init.enh]);
       break;
     case "-combat":
     case "noncombat":
@@ -141,6 +148,13 @@ void max_effects(string target)
       effect_maintain($effect[pride of the puffin]);
       effect_maintain($effect[tortious]);
       effect_maintain($effect[eau d'enmity]);
+      break;
+    case "all res":
+      effect_maintain($effect[elemental saucesphere]);
+      effect_maintain($effect[astral shell]);
+      effect_maintain($effect[scarysauce]);
+      effect_maintain($effect[spiro gyro]);
+
       break;
     default:
       break;

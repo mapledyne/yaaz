@@ -10,6 +10,11 @@ boolean can_equip_compass() {
   return (my_path() != "Way of the Surprising Fist" && my_path() != "Avatar of Boris");
 }
 
+void desert_progress()
+{
+  progress(to_int(get_property("desertExploration")), "desert explored");
+}
+
 boolean pyramid_found()
 {
   if (!contains_text(visit_url("questlog.php?which=1"),"Just Deserts") || contains_text(visit_url("questlog.php?which=1"),"found the little pyramid") || contains_text(visit_url("questlog.php?which=1"),"found the hidden buried pyramid"))
@@ -94,6 +99,7 @@ int open_gnasir()
         adv_spent += 1;
       }
       dg_adventure(desert);
+      desert_progress();
       adv_spent += 1;
     }
     if (!is_gnasir_open())
@@ -206,16 +212,14 @@ void find_pyramid()
         use(1, $item[drum machine]);
       }
       else {
-      	cli_execute("goal clear");
-        cli_execute("goal add drum machine");
         log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
-        warning("Should this be +item or -combat anything?");
         wait(1);
         int count = 0;
         while (item_amount($item[drum machine]) == 0)
         {
           count = count + 1;
-          dg_adventure($location[The Oasis]);
+          dg_adventure($location[The Oasis], "combat,  0.5 items");
+          desert_progress();
           if (count > 10)
           {
             error ("Took too long finding the " + wrap($item[drum machine]) + ". Aborting so we can find out why.");
@@ -232,7 +236,7 @@ void find_pyramid()
     }
 
     dg_adventure($location[The Arid\, Extra-Dry Desert]);
-    progress(get_property("desertExploration").to_int(), "desert exploration");
+    desert_progress();
   }
   if (get_property("desertExploration").to_int() < 100)
   {

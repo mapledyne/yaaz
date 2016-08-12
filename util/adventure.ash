@@ -2,7 +2,7 @@ import "util/prep.ash";
 import "util/counters.ash";
 import "util/progress.ash";
 
-int abort_on_advs_left = 5;
+int abort_on_advs_left = 2;
 
 boolean can_adventure()
 {
@@ -47,7 +47,7 @@ boolean dg_adventure(location loc, string maximize)
   {
     maximize(maximize);
   }
-  
+
   prep(loc);
 
   boolean adv = adv1(loc, -1, "");

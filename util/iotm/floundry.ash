@@ -67,12 +67,33 @@ int floundry_item_no(item it)
   }
 }
 
+void maybe_use_fish(item it)
+{
+  switch(it)
+  {
+    default:
+      break;
+    case $item[fish hatchet]:
+      log("Using the " + wrap(it) + ".");
+      use(1, it);
+      break;
+    case $item[codpiece]:
+      log("Wringing out the " + wrap(it) + ".");
+      use (1, it);
+      break;
+    case $item[bass clarinet]:
+      log("Draining spit from the " + wrap(it) + ".");
+      use(1, it);
+      break;
+  }
+}
+
 item get_floundry_item(item it)
 {
   if (it == $item[none])
     return $item[none];
 
-  string url = 'clan_viplounge.php?preaction=buyfloundryitem&amp;whichitem=';
+  string url = 'clan_viplounge.php?preaction=buyfloundryitem&whichitem=';
   int num = floundry_item_no(it);
 
   if (num == 0)
@@ -83,13 +104,16 @@ item get_floundry_item(item it)
   int qty = item_amount(it);
 
   url += to_string(num);
+  log("Attempting to get a " + wrap(it) + " from the " + wrap("Floundry", COLOR_LOCATION) + ".");
   visit_url(url);
+
   if (qty < item_amount(it))
   {
-    log(wrap(it) + " made from the Floundry.");
+    log(wrap(it) + " made from the " + wrap("Floundry", COLOR_LOCATION) + ".");
+    maybe_use_fish(it);
     return it;
   } else {
-    log("Tried to get a " + log(it) + " from the Floundry, but I wasn't able to.");
+    log("Tried to get a " + wrap(it) + " from the " + wrap("Floundry", COLOR_LOCATION) + ", but I wasn't able to.");
     return $item[none];
   }
 }

@@ -5,6 +5,7 @@ import "util/iotm/terminal.ash";
 import "util/iotm/chateau.ash";
 import "util/iotm/deck.ash";
 import "util/iotm/floundry.ash";
+import "util/iotm/bookshelf.ash";
 
 void iotm()
 {
@@ -20,6 +21,11 @@ void iotm()
   deck();
 
   floundry();
+
+  while(libram())
+  {
+    // cast a few of these
+  }
 }
 
 void main()

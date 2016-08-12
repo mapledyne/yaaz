@@ -1,5 +1,5 @@
 import "util/print.ash";
-import "util/maximize.ash";
+import <zlib.ash>;
 
 boolean can_extrude();
 int extrudes_remaining();
@@ -8,8 +8,110 @@ item terminal_extrude(item it);
 item terminal_extrude(string s);
 string terminal_enquiry(string enq);
 string terminal_enquiry();
+void terminal_enhance(effect ef);
+string to_enhancement(effect ef);
+boolean have_enhancement(string enh);
+boolean can_enhance();
+int enhances_remaining();
 void terminal();
 void main();
+
+void terminal_enhance(effect ef)
+{
+  string enh = to_enhancement(ef);
+  if (enh == "")
+    return;
+
+  if (have_effect(ef) > 0)
+    return;
+
+  if (!have_enhancement(enh))
+    return;
+
+  if (!can_enhance())
+    return;
+
+  log("Using " + wrap($item[Source Terminal]) + " to enhance " + wrap(ef) + ".");
+  cli_execute("terminal enhance " + enh);
+
+}
+
+boolean have_enhancement(string enh)
+{
+  return list_contains(get_property("sourceTerminalEnhanceKnown"), enh, ",");
+}
+
+string to_enhancement(effect ef)
+{
+  if (contains_text(to_string(ef), ".enh"))
+  {
+    return to_string(ef);
+  }
+
+  warning("Unsure how to turn " + wrap(ef) + " into a Terminal enhancement.");
+  return "";
+}
+
+boolean consider_one_enhancement(effect ef)
+{
+  string ef_s = to_enhancement(ef);
+  if (have_effect(ef) > 0)
+    return false;
+  if (!have_enhancement(ef_s))
+    return false;
+  return true;
+}
+
+effect pick_one_enhancement()
+{
+  if (consider_one_enhancement($effect[items.enh]))
+    return $effect[items.enh];
+  if (consider_one_enhancement($effect[substats.enh]))
+    return $effect[substats.enh];
+  if (consider_one_enhancement($effect[init.enh]))
+    return $effect[init.enh];
+  if (my_meat() < 10000)
+  {
+    if (consider_one_enhancement($effect[meat.enh]))
+      return $effect[meat.enh];
+  }
+  if (consider_one_enhancement($effect[damage.enh]))
+    return $effect[damage.enh];
+  if (consider_one_enhancement($effect[critical.enh]))
+    return $effect[critical.enh];
+  return $effect[none];
+}
+
+void consume_enhances()
+{
+  while (can_enhance())
+  {
+    effect enh = pick_one_enhancement();
+    if (enh == $effect[none])
+      return;
+    terminal_enhance(enh);
+  }
+}
+
+boolean can_enhance()
+{
+  if (get_campground() contains $item[Source Terminal])
+  {
+    return (enhances_remaining() > 0);
+  }
+  return false;
+}
+
+int enhances_remaining()
+{
+  int max = 1;
+  if (list_contains(get_property("sourceTerminalChips"), "SCRAM", ","))
+    max += 1;
+  if (list_contains(get_property("sourceTerminalChips"), "CRAM", ","))
+    max += 1;
+
+  return max - to_int(get_property("_sourceTerminalEnhanceUses"));
+}
 
 boolean can_extrude()
 {
@@ -107,11 +209,11 @@ void terminal()
 
   log("Checking the " + $item[Source Terminal] + ".");
 
-  while(can_extrude() && i_a($item[source essence]) > 10)
+  while(can_extrude() && item_amount($item[source essence]) > 10)
   {
-    if (i_a($item[hacked gibson]) > 2)
+    if (item_amount($item[hacked gibson]) > 2)
     {
-      if (i_a($item[browser cookie]) > 2)
+      if (item_amount($item[browser cookie]) > 2)
       {
         warning("You seem flush in extruded food/booze. Not extruding anything else since it's not clear what to get. Extrude something!");
         warning("You have " + extrudes_remaining() + " extrudes remaining.");

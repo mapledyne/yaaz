@@ -67,7 +67,10 @@ familiar choose_familiar(string fam)
 {
   familiar solo = to_familiar(setting("100familiar"));
   if (solo != $familiar[none])
+  {
+    equip_familiar(solo);
     return solo;
+  }
 
   familiar newbie = to_familiar(fam);
 
