@@ -1,5 +1,15 @@
 import "util/util.ash";
 
+boolean have_colored_tongue()
+{
+  foreach ef in $effects[orange tongue, blue tongue, purple tongue, green tongue, red tongue, black tongue]
+  {
+    if (have_effect(ef) > 0)
+      return true;
+  }
+  return false;
+}
+
 int total_candy_hearts()
 {
   return count_set($items[white candy heart,

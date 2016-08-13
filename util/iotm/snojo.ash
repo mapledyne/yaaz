@@ -3,10 +3,12 @@ import "util/maximize.ash";
 import "util/adventure.ash";
 
 string bailedsetting = "snojo_bailed";
-string snojoday = "snojo_check";
 
 boolean can_snojo()
 {
+  if (!can_adventure())
+    return false;
+
   if (setting(bailedsetting) == "true")
   {
     return false;
@@ -27,11 +29,6 @@ boolean can_snojo()
 
 void snojo()
 {
-  if (to_int(setting(snojoday, 0)) != my_daycount())
-  {
-    save_setting(snojoday, my_daycount());
-    save_setting(bailedsetting, "");
-  }
 
   if (!can_snojo())
   {
@@ -42,15 +39,10 @@ void snojo()
   while(can_snojo())
   {
       dg_adventure($location[The X-32-F Combat Training Snowman], "");
-      if (have_effect($effect[beaten up]) > 0)
-      {
-        save_setting(bailedsetting, "true");
-        break;
-      }
       float thresh = my_maxhp() * 0.2;
-      if (my_hp() < thresh)
+      if (have_effect($effect[beaten up]) > 0 || my_hp() < thresh)
       {
-        save_setting(bailedsetting, "true");
+        save_daily_setting(bailedsetting, "true");
         break;
       }
   }

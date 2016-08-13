@@ -122,10 +122,16 @@ item spooky_quest_item()
 
 string setting(string value, string def)
 {
-  string prop = get_property("dg_" + value);
-  if (prop == "")
-    return def;
-  return prop;
+  // daily values override permanent ones:
+  string prop = get_property("_dg_" + value);
+  if (prop != "")
+    return prop;
+
+  prop = get_property("dg_" + value);
+  if (prop != "")
+    return prop;
+
+  return def;
 }
 
 string setting(string value)
@@ -136,6 +142,12 @@ string setting(string value)
 string save_setting(string key, string value)
 {
   set_property("dg_" + key, value);
+  return value;
+}
+
+string save_daily_setting(string key, string value)
+{
+  set_property("_dg_" + key, value);
   return value;
 }
 

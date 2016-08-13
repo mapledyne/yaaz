@@ -3,6 +3,7 @@ import "util/inventory.ash";
 import "util/effects.ash";
 import "util/familiars.ash";
 import "util/iotm/terminal.ash";
+import "util/iotm/bookshelf.ash";
 
 void do_maximize(string target, string outfit, item it);
 void maximize(string target, string outfit, item it, familiar fam);
@@ -111,6 +112,10 @@ void max_effects(string target)
     case "meat":
       effect_maintain($effect[polka of plenty]);
       terminal_enhance($effect[meat.enh]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[red tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[black tongue]);
       break;
     case "items":
       effect_maintain($effect[eye of the seal]);
@@ -121,6 +126,10 @@ void max_effects(string target)
       effect_maintain($effect[singer's faithful ocelot]);
       effect_maintain($effect[withered heart]);
       terminal_enhance($effect[items.enh]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[blue tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[black tongue]);
       break;
     case "init":
       effect_maintain($effect[adorable lookout]);
@@ -157,6 +166,12 @@ void max_effects(string target)
 
       break;
     default:
+      if (!have_colored_tongue())
+        effect_maintain($effect[orange tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[purple tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[green tongue]);
       break;
   }
 

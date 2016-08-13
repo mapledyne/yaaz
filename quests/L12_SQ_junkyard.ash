@@ -10,6 +10,7 @@ void get_junkyard_item()
   location loc = to_location(get_property("currentJunkyardLocation"));
   maximize("");
   dg_adventure(loc);
+  progress(junkyard_progress(), 4, "tools recovered");
 }
 
 void do_junkyard()
@@ -57,7 +58,6 @@ void do_junkyard()
     } else {
       get_junkyard_item();
     }
-    progress(junkyard_progress(), 4, "tools recovered");
   }
   log("Junkyard sidequest complete.");
 

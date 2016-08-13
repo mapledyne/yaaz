@@ -1,5 +1,6 @@
 import "util/main.ash";
 import "cleanup.ash";
+import "util/day_begin.ash";
 
 boolean run_level_quest(string quest, string ash)
 {
@@ -171,6 +172,7 @@ void do_next_thing()
 
 void main()
 {
+  day_begin();
   cleanup();
   do_next_thing();
   cleanup();

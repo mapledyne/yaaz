@@ -2,7 +2,7 @@ import "util/prep.ash";
 import "util/counters.ash";
 import "util/progress.ash";
 
-int abort_on_advs_left = 2;
+int abort_on_advs_left = 3;
 
 boolean can_adventure()
 {

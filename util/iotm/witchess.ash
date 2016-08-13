@@ -1,10 +1,10 @@
 import "util/print.ash";
 import "util/maximize.ash";
-
+import "util/adventure.ash";
 
 boolean can_witchess()
 {
-  if(get_campground() contains $item[Witchess Set] && get_property("_witchessFights").to_int() < 5)
+  if(can_adventure() && get_campground() contains $item[Witchess Set] && get_property("_witchessFights").to_int() < 5)
     return true;
   return false;
 }

@@ -125,17 +125,16 @@ item get_floundry_item()
 
 void floundry_daily_check()
 {
-  // skip if we've made our check today.
-  if (to_int(setting("floundry_check", 0)) == my_daycount())
-    return;
 
-  save_setting("floundry_check", my_daycount());
+	// if we have values already ...
+	if (setting("floundry_cod") != "")
+		return;
+
   location[string] fishing_holes = parse_holes();
   foreach f in fishing_holes
   {
-    save_setting("floundry_" + f, fishing_holes[f]);
+    save_daily_setting("floundry_" + f, fishing_holes[f]);
   }
-
 }
 
 void floundry()
