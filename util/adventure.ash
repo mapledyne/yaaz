@@ -1,6 +1,8 @@
 import "util/prep.ash";
 import "util/counters.ash";
 import "util/progress.ash";
+import "util/inventory.ash";
+import "util/iotm/protonic.ash";
 
 int abort_on_advs_left = 3;
 
@@ -20,7 +22,7 @@ void update_flyer_progress()
   if (get_property("sidequestArenaCompleted") != "none")
     return;
 
-  if (item_amount($item[rock band flyers]) > 0 || item_amount($item[jam band flyers]) > 0)
+  if (have_flyers())
   {
     int flyerML = get_property("flyeredML").to_int() / 100;
     progress(flyerML, "flyers delivered");
@@ -43,6 +45,7 @@ boolean dg_adventure(location loc, string maximize)
 
   // check for counters like semi-rare and dance cards.
   counters();
+
   if (maximize != "none")
   {
     maximize(maximize);
@@ -50,9 +53,13 @@ boolean dg_adventure(location loc, string maximize)
 
   prep(loc);
 
+  if (protonic())
+    return true;
+
   boolean adv = adv1(loc, -1, "");
 
   update_flyer_progress();
+
 
   return adv;
 }

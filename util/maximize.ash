@@ -157,6 +157,7 @@ void max_effects(string target)
       effect_maintain($effect[pride of the puffin]);
       effect_maintain($effect[tortious]);
       effect_maintain($effect[eau d'enmity]);
+      effect_maintain($effect[high colognic]);
       break;
     case "all res":
       effect_maintain($effect[elemental saucesphere]);

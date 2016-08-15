@@ -1,6 +1,11 @@
 import "util/print.ash";
 import "util/util.ash";
 
+boolean have_flyers()
+{
+  return (item_amount($item[rock band flyers]) > 0 || item_amount($item[jam band flyers]) > 0);
+}
+
 int hero_keys()
 {
   int keys = 0;

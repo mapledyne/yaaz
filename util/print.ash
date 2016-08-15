@@ -3,6 +3,7 @@ string COLOR_LOCATION = "blue";
 string COLOR_EFFECT = "blue";
 string COLOR_MONSTER = "blue";
 string COLOR_SKILL = "green";
+string COLOR_CLASS = "green";
 string COLOR_COINMASTER = "blue";
 
 string COLOR_ERROR = "red";
@@ -40,6 +41,11 @@ string wrap(monster m)
 string wrap(skill s)
 {
   return wrap(s, COLOR_SKILL);
+}
+
+string wrap(class c)
+{
+  return wrap(c, COLOR_CLASS);
 }
 
 string wrap(location l)

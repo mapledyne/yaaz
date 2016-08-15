@@ -1,3 +1,82 @@
+import "util/print.ash";
+
+boolean lame_avatar(item it) {
+    return $items[blob of acid, flayed mind, kobold kibble, Fitspiration&trade; poster, giant tube of black lipstick, punk patch, artisanal hand-squeezed wheatgrass juice, steampunk potion,
+    Gearhead Goo, Enchanted Plunger, Enchanted Flyswatter, Missing Eye Simulation Device, Gnollish Crossdress, gamer slurry]
+        contains it;
+}
+
+boolean is_avatar_potion( item it )
+{
+    return it.effect_modifier( "Effect" ).string_modifier( "Avatar" ) != "";
+}
+
+boolean has_avatar_active()
+{
+
+  if(my_path() == "Avatar of West of Loathing") return true;
+
+  if(have_effect($effect[Juiced and Jacked]) > 0) {
+      return true;
+  }
+  int [effect] currentEffects = my_effects(); // Array of current active effects
+  foreach buff in currentEffects{
+    if (buff.string_modifier( "Avatar" ) != "")
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+void maintain_avatar()
+{
+  int[item] inventory = get_inventory() ;
+  foreach it in inventory
+  {
+    if (is_avatar_potion(it))
+    {
+      put_closet(inventory[it], it);
+    }
+  }
+  // if we already have an avatar potion active, bail.
+  if (has_avatar_active())
+  {
+    return;
+  }
+
+  item[int] potions;
+  int count = 0;
+  foreach it in $items[]
+  {
+    if (is_avatar_potion(it))
+    {
+      if (closet_amount(it) > 0 && !lame_avatar(it))
+      {
+        potions[count] = it;
+        count += 1;
+      }
+    }
+  }
+  if (count( potions ) == 0)
+  {
+    return;
+  }
+
+  item avatar_potion = $item[none];
+
+  if (count( potions ) == 1)
+  {
+    avatar_potion = potions[0];
+  } else {
+    avatar_potion = potions[random(count(potions))];
+  }
+
+  take_closet(1, avatar_potion);
+  use(1, avatar_potion);
+
+}
+
 item effect_to_item(effect ef)
 {
   switch(ef)
@@ -13,6 +92,7 @@ item effect_to_item(effect ef)
     case $effect[eye of the seal]:      return $item[seal eyeball];
     case $effect[fresh scent]:          return $item[deodorant];
     case $effect[green tongue]:         return $item[green snowcone];
+    case $effect[high colognic]:        return $item[musk turtle];
     case $effect[hippy stench]:         return $item[reodorant];
     case $effect[lustful heart]:        return $item[love song of naughty innuendo];
     case $effect[ocelot eyes]:          return $item[eyedrops of the ocelot];

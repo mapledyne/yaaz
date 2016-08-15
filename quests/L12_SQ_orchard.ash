@@ -50,13 +50,15 @@ void do_orchard()
     return;
   }
 
+  outfit("frat warrior fatigues");
+  log("Visiting the grocer to start the quest.");
+  visit_url("bigisland.php?place=orchard&action=stand&pwd=");
+
   log("Completing the orchard quest.");
   while (i_a($item[heart of the filthworm queen]) == 0)
   {
     check_orchard_effects();
-
-    maximize("items");
-    dg_adventure(pick_orchard_location());
+    dg_adventure(pick_orchard_location(), "items");
   }
   outfit("frat warrior fatigues");
   log("Visiting the grocer to complete the quest.");

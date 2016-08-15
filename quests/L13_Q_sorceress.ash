@@ -126,6 +126,8 @@ location get_challenge_loc(string challenge)
       return $location[smoothest adventurer contest];
     case "spooky":
       return $location[spookiest adventurer contest];
+    case "cold":
+      return $location[coldest adventurer contest];
     default:
       error("Unsure what challenge this is: " + challenge + ".");
       abort();
@@ -192,8 +194,9 @@ boolean loop_tower(int level)
     case 1:
       return contest_race();
     case 2:
-      log("Claim your prize! This isn't automated yet.");
-      return false;
+      log("Claiming your prize.");
+      visit_url('place.php?whichplace=nstower&action=ns_01_contestbooth');
+      return true;
     case 3:
       log("Hedge Maze is not yet automated.");
       return false;

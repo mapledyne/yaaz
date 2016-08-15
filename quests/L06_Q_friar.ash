@@ -19,17 +19,17 @@ boolean do_friar_area(location loc, item it)
 
 boolean do_neck()
 {
-  return do_friar_area($location[dark neck of the woods], $item[dodecagram]);
+  return do_friar_area($location[the dark neck of the woods], $item[dodecagram]);
 }
 
 boolean do_heart()
 {
-  return do_friar_area($location[dark heart of the woods], $item[box of birthday candles]);
+  return do_friar_area($location[the dark heart of the woods], $item[box of birthday candles]);
 }
 
 boolean do_elbow()
 {
-  return do_friar_area($location[dark elbow of the woods], $item[eldritch butterknife]);
+  return do_friar_area($location[the dark elbow of the woods], $item[eldritch butterknife]);
 }
 
 boolean do_stones()

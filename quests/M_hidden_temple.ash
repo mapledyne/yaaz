@@ -8,6 +8,12 @@ void unlock_temple()
     return;
   }
 
+  if (quest_status("questL02Larva") == UNSTARTED)
+  {
+    log("Opening up the " + wrap($location[the spooky forest]) + " by starting the Larva quest.");
+    council();
+  }
+
   int count = my_adventures();
 
   log("Unlocking the hidden temple.");

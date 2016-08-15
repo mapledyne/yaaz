@@ -55,55 +55,6 @@ void level_13_advice()
     advice("Naughty Sorceress quest progress:");
     progress(quest_status("questL13Final") + 1, 12);
   }
-
-  switch(get_property("questL13Final"))
-  {
-    case "unstarted":
-      advice("Up next: Go see the council to start the Naughty Sorceress quest.");
-      break;
-    case "started":
-      advice("Up next: Go check out the contest booth to see what entries are available.");
-      break;
-    case "step1":
-      advice("Up next: Attend the coronation ceremony.");
-      break;
-    case "step2":
-      advice("Up next: Go through the hedge maze.");
-      break;
-    case "step3":
-      advice("Up next: Open the tower door.");
-      break;
-    case "step4":
-      advice("Up next: Defeat the " + wrap($monster[wall of skin]) + ".");
-      break;
-    case "step5":
-      advice("Up next: Defeat the " + wrap($monster[wall of meat]) + ".");
-      break;
-    case "step6":
-      advice("Up next: Defeat the " + wrap($monster[wall of bones]) + ".");
-      if (item_amount($item[electric boning knife]) == 0)
-      {
-        advice("Get the " + wrap($item[electric boning knife]) + " from " + wrap($location[the castle in the clouds in the sky (ground floor)]) +  ".");
-      }
-      break;
-    case "step7":
-      advice("Up next: Gaze into the mirror (or don't).");
-      break;
-    case "step8":
-      advice("Up next: Defeat your shadow.");
-      break;
-    case "step11":
-      advice("Up next: Defeat " + $monster[naughty sorceress] + ".");
-      break;
-    case "step12":
-      advice("Up next: Break the prism.");
-      break;
-    case "finished":
-      break;
-    default:
-      error("I don't know what our status is with the Sorceress quest. Status: " + get_property("questL13Final"));
-      break;
-  }
 }
 
 void warning_one_step()
@@ -114,6 +65,13 @@ void warning_one_step()
 
 void do_next_thing()
 {
+
+  if (quest_status("questL02Larva") == UNSTARTED)
+  {
+    log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
+    visit_url("tutorial.php?action=toot");
+  }
+
   if (!guild_store_open() && is_guild_class())
   {
     cli_execute("call quests/M_guild.ash");
@@ -132,7 +90,8 @@ void do_next_thing()
   {
     default: // anything higher than 13...
     case 13:
-      level_13_advice();
+      if (run_level_quest("questL13Final", "L13_Q_sorceress"))
+        break;
     case 12:
       level_12_advice();
     case 11:
@@ -152,15 +111,18 @@ void do_next_thing()
       if (run_level_quest("questL07Cyrptic", "L07_Q_cyrpt"))
         break;
     case 6:
-      if (run_level_quest("questL06Friar", "L07_Q_friar"))
+      if (run_level_quest("questL06Friar", "L06_Q_friar"))
         break;
     case 5:
       print("5");
     case 4:
       print("4");
     case 3:
-      if (run_level_quest("questL03Rat", "L03_Q_rats"))
-        break;
+      if (quest_status("questL02Larva") == FINISHED)
+      {
+        if (run_level_quest("questL03Rat", "L03_Q_rats"))
+          break;
+      }
     case 2:
       if (run_level_quest("questL02Larva", "L02_Q_larva"))
         break;

@@ -77,7 +77,7 @@ void make_things()
     log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail breeches]) + ".");
     create(1, $item[turtlemail breeches]);
   }
-  if (item_amount($item[turtlemail bits]) > 3 && i_a($item[turtlemail hauberk]) == 0)
+  if (item_amount($item[turtlemail bits]) > 3 && i_a($item[turtlemail coif]) == 0)
   {
     log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail coif]) + ".");
     create(1, $item[turtlemail coif]);
@@ -91,10 +91,6 @@ void make_things()
   if (item_amount($item[turtle wax]) > 0)
   {
     use(1, $item[turtle wax]);
-  }
-  if (i_a($item[turtle wax shield]) > 0 && i_a($item[turtle wax helmet]) == 0)
-  {
-    use(1, $item[turtle wax shield]);
   }
 
   // double-ice things:

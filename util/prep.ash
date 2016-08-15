@@ -129,7 +129,7 @@ void cast_things()
   // if it makes sense to cast another libram spell
   while(libram())
   {
-    
+
   }
 }
 
@@ -150,7 +150,14 @@ void prep(location loc)
   class_specific_prep(my_class());
   prep_fishing(loc);
   mall_or_clan();
-
+  if (setting("use_avatar_potions") == "")
+  {
+    save_setting("use_avatar_potions", "true");
+  }
+  if (setting("use_avatar_potions") == "true")
+  {
+    maintain_avatar();
+  }
   heart_stuff();
 
 }

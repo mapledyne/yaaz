@@ -1,6 +1,7 @@
 import "util/print.ash";
 import "util/iotm.ash";
-
+import "util/prep.ash";
+import "util/requirements.ash";
 
 void day_begin()
 {
@@ -28,11 +29,6 @@ void day_begin()
 
   log("Day startup tasks complete.");
 
-  if (get_property("_detectiveCasesCompleted").to_int() < 3)
-  {
-    warning("You have detective cases you can complete at the precinct.");
-    warning("This isn't automated by this script.");
-  }
   save_daily_setting("day_begin", "true");
 }
 

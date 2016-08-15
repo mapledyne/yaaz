@@ -48,6 +48,7 @@ boolean pick_a_card()
   if (my_meat() < 2000 && my_path() != "Way of the Surprising Fist")
   {
     cheat_deck("1952", "get some meat");
+    sell_all($item[1952 mickey mantle card]);
     return true;
   }
 

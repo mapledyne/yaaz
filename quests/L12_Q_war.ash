@@ -67,17 +67,77 @@ void do_war(string side)
   if (quest_status("questL12War") < 1)
   {
     warning("This script can't (yet) start the war. Go do that.");
-    abort();
+    return;
   }
-  if (quest_status("questL12War") > 10)
+  if (quest_status("questL12War") == FINISHED)
   {
     warning("War already ended. Good job!");
+    return;
   }
+
+  string sq = setting("war_junkyard");
+  if (sq == "")
+  {
+    setting("war_junkyard", "true");
+    sq = "true";
+  }
+  if (sq == "true")
+  {
+    if (get_property("sidequestJunkyardCompleted") == "none")
+    {
+      cli_execute("call quests/L12_SQ_junkyard.ash");
+      if (get_property("sidequestJunkyardCompleted") == "none")
+      {
+        warning("Couldn't complete the " + wrap("Junkyard", COLOR_LOCATION) + " for some reason.");
+        return;
+      }
+    }
+  }
+
+  sq = setting("war_arena");
+  if (sq == "")
+  {
+    setting("war_arena", "true");
+    sq = "true";
+  }
+  if (sq == "true")
+  {
+    if (get_property("sidequestArenaCompleted") == "none")
+    {
+      cli_execute("call quests/L12_SQ_arena.ash");
+      if (get_property("sidequestArenaCompleted") == "none")
+      {
+        warning("Can't continue the war until the " + wrap("Arena", COLOR_LOCATION) + " is complete.");
+        return;
+      }
+    }
+  }
+
+
+  sq = setting("war_lighthouse");
+  if (sq == "")
+  {
+    setting("war_lighthouse", "true");
+    sq = "true";
+  }
+  if (sq == "true")
+  {
+    if (get_property("sidequestLighthouseCompleted") == "none")
+    {
+      cli_execute("call quests/L12_SQ_lighthouse.ash");
+      if (get_property("sidequestLighthouseCompleted") == "none")
+      {
+        warning("Can't continue the war until the " + wrap("Lighthouse", COLOR_LOCATION) + " is complete.");
+        return;
+      }
+    }
+  }
+
 
   if (sidequests() < 5)
   {
     warning("This script doesn't handle the sidequests yet. You should do those before running this.");
-    abort();
+//    abort();
   }
 
   location battle = $location[The Battlefield (Frat Uniform)];

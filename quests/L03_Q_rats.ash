@@ -7,6 +7,13 @@ void clear_rats()
     log("You need to be at least level 3 before clearing the rats.");
     return;
   }
+
+  if (quest_status("questL02Larva") != FINISHED)
+  {
+    warning("You can't start the Rats quest until the Larva quest is complete.");
+    return;
+  }
+
   if (quest_status("questL03Rat") == FINISHED)
   {
     log("Rat faucet already turned off.");
@@ -20,7 +27,7 @@ void clear_rats()
   if (quest_status("questL03Rat") == 0)
   {
     log("Speaking to " + wrap("Bart Ender", COLOR_MONSTER) + " in the " + wrap("Typical Tavern", COLOR_LOCATION) + ".");
-    abort("What is Bart's URL?");
+    visit_url("tavern.php?place=barkeep");
   }
 
   if (quest_status("questL03Rat") < FINISHED)
@@ -33,7 +40,7 @@ void clear_rats()
   if (quest_status("questL03Rat") == 2)
   {
     log("Faucet turned off. Going to talk to Bart.");
-    abort("What is Bart's URL?");
+    visit_url("tavern.php?place=barkeep");
   }
 
 }

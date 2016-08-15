@@ -2,11 +2,10 @@ import "util/main.ash";
 
 boolean laugh_loop()
 {
-  if (item_amount($item[imp air]) > 4)
+  if (item_amount($item[imp air]) > 4 && i_a($item[observational glasses]) > 0)
     return false;
 
-  maximize("items");
-  dg_adventure($location[the laugh floor]);
+  dg_adventure($location[the laugh floor], "items");
   progress(item_amount($item[imp air]), 5, "imp airs");
   return true;
 }
