@@ -116,7 +116,8 @@ void do_next_thing()
     case 5:
       print("5");
     case 4:
-      print("4");
+      if (run_level_quest("questL04Bat", "L04_Q_bats"))
+        break;
     case 3:
       if (quest_status("questL02Larva") == FINISHED)
       {
