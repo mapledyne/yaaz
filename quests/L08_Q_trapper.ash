@@ -1,15 +1,16 @@
 import "util/main.ash";
-string TRAPPER_URL="place.php?whichplace=mclargehuge&action=trappercabin"
+string TRAPPER_URL="place.php?whichplace=mclargehuge&action=trappercabin";
 
 void visit_trapper()
 {
+  log("Visiting the Trapper.");
   visit_url(TRAPPER_URL);
 }
 
 int get_cheese()
 {
   item cheese = $item[goat cheese];
-  location goatlet = $location[goatlet];
+  location goatlet = $location[the goatlet];
 
   int qty = item_amount(cheese);
 
@@ -34,6 +35,7 @@ void L08_Q_trapper()
   {
     log("Quest isn't started yet. Talking to the council.");
     council();
+    visit_trapper();
   }
 
   if (quest_status("questL08Trapper") == 1)

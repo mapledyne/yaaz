@@ -52,14 +52,14 @@ void clear_niche()
 		log("Undefiling " + wrap($location[The Defiled Niche]) + ".");
 		int adv_count = my_adventures();
 
-		add_attract($monster[dirty old liche]);
+		add_attract($monster[dirty old lihc]);
 		while (get_property("cyrptNicheEvilness").to_int() > 0)
 		{
 			dg_adventure($location[The Defiled Niche], "items");
 			progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in Niche.");
 
 		}
-		remove_attract($monster[dirty old liche]);
+		remove_attract($monster[dirty old lihc]);
 		int total_turns = adv_count - my_adventures();
 		log("Turns to clear " + wrap($location[The Defiled Niche]) + ": " + total_turns + ".");
 		warning_no_estimate();

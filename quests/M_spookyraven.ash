@@ -47,7 +47,7 @@ void go_dancing()
     log("Going to get " + wrap($item[lady spookyraven's finest gown]) + " and other things from " + wrap($location[the haunted bedroom]) + ".");
   }
 
-  while (item_amount($item[lady spookyraven's finest gown]) == 0 || item_amount($item[lord spookyraven's spectacles]) == 0 || item_amount($item[disposable instant camera]) == 0)
+  while (item_amount($item[lady spookyraven's finest gown]) == 0 || i_a($item[lord spookyraven's spectacles]) == 0 || item_amount($item[disposable instant camera]) == 0)
   {
 
     location bed = $location[the haunted bedroom];
