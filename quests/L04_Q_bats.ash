@@ -56,7 +56,7 @@ void get_stench_res()
   log("Getting a " + wrap($item[Pine-Fresh air freshener]) + " for some stench resistance. Probably not optimal - go get some skills to help with this.");
   while (i_a($item[Pine-Fresh air freshener]) == 0)
   {
-    dg_adventure($location[entryway], "items");
+    dg_adventure($location[the bat hole entrance], "items");
   }
   equip($item[Pine-Fresh air freshener]);
 
@@ -71,15 +71,15 @@ void do_bats()
   }
   while(quest_status("questL04Bat") != FINISHED)
   {
-    switch(quest_status("questL04Bat")
+    switch(quest_status("questL04Bat"))
     {
-      case unstarted:
+      case UNSTARTED:
         log("Staring the " + wrap("Boss Bat", COLOR_LOCATION) + " quest.");
         council();
         break;
       case STARTED:
       case 1:
-        if (item_amount($item[sonar-in-a-buscuit]))
+        if (item_amount($item[sonar-in-a-biscuit]) > 0)
         {
           use(1, $item[sonar-in-a-biscuit]);
           break;
@@ -98,7 +98,7 @@ void do_bats()
           break;
         }
       case 2:
-        if (item_amount($item[sonar-in-a-buscuit]))
+        if (item_amount($item[sonar-in-a-biscuit]) > 0)
         {
           use(1, $item[sonar-in-a-biscuit]);
           break;
@@ -108,7 +108,7 @@ void do_bats()
         if (quest_status("questL04Bat") == 1)
         {
           // we fell through from the case above
-          loc = $location[guano junction]
+          loc = $location[guano junction];
           get_stench_res();
         }
         dg_adventure(loc);
@@ -137,7 +137,7 @@ void do_bats()
   log(wrap($monster[boss bat]) + " defeated.");
 }
 
-main()
+void main()
 {
   do_bats();
 }
