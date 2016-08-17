@@ -1,6 +1,16 @@
 import "util/print.ash";
 import "util/util.ash";
 
+boolean have_yellow_ray()
+{
+  return false;
+}
+
+item yellow_ray_item()
+{
+  return $item[none];
+}
+
 boolean have_flyers()
 {
   return (item_amount($item[rock band flyers]) > 0 || item_amount($item[jam band flyers]) > 0);

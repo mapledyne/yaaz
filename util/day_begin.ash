@@ -2,6 +2,7 @@ import "util/print.ash";
 import "util/iotm.ash";
 import "util/prep.ash";
 import "util/requirements.ash";
+import "util/consume.ash";
 
 void day_begin()
 {
@@ -21,6 +22,8 @@ void day_begin()
   log("Item of the Month and related work.");
   iotm();
 
+  spleen();
+  
   log("Doing basic prep.");
   prep($location[none]);
 

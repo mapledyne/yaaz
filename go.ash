@@ -108,7 +108,7 @@ void do_next_thing()
         break;
     case 10:
       // get the star key if still needed:
-      if (item_amount($item[steam-powered model rocketship]) > 0) && item_amount($item[richard's star key]) == 0)
+      if (item_amount($item[steam-powered model rocketship]) > 0 && item_amount($item[richard's star key]) == 0)
       {
         run_quest("M10_star_key");
         break;

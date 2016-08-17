@@ -73,14 +73,21 @@ void do_heart_thing(string player)
   if (smiles_remaining() > 0)
   {
     heart_msg(player, "casting " + wrap($skill[The Smile of Mr. A.]));
-//    use_skill(1, $skill[The Smile of Mr. A.], player);
+    use_skill(1, $skill[The Smile of Mr. A.], player);
     log("You have " + wrap(smiles_remaining(), COLOR_ITEM) + " smiles from your " + wrap($item[golden mr. accessory]) + " remaining today.");
+    return;
   }
 
 }
 
 void heart(boolean force)
 {
+  if (setting("do_heart") == "")
+    save_setting("do_heart", "true");
+
+  if (setting("do_heart") == "false")
+    return;
+
   int last = to_int(setting("last_heart", 0));
   int how_fast = to_int(setting("heart_speed", "10"));
 
@@ -91,6 +98,7 @@ void heart(boolean force)
   save_daily_setting("last_heart", my_turncount());
 
   do_heart_thing(pick_player());
+  wait(2);
 }
 
 void heart()

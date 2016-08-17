@@ -2,6 +2,8 @@ import "util/print.ash";
 
 location pick_semi_rare_location()
 {
+  location last = to_location(get_property("semirareLocation"));
+
   // if we don't have the KGE outfit, get it for dispensary access.
   foreach key,doodad in outfit_pieces("Knob Goblin Elite Guard Uniform")
     if (i_a(doodad) == 0)
