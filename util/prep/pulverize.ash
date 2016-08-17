@@ -45,6 +45,7 @@ void pulverize_things()
   pulverize_keep_if($item[giant turkey leg], my_primestat() == $stat[muscle]);
   pulverize_keep_if($item[pointed stick], my_primestat() == $stat[muscle]);
   pulverize_keep_if($item[ridiculously huge sword], my_primestat() == $stat[muscle]);
+  pulverize_keep_if($item[spiked femur], my_primestat() == $stat[muscle]);
   pulverize_keep_if($item[wolf mask], my_primestat() == $stat[muscle]);
 
   // Only keep if we're mysticality:
@@ -58,6 +59,7 @@ void pulverize_things()
   pulverize_keep_if($item[buoybottoms], my_primestat() == $stat[moxie]);
   pulverize_keep_if($item[happiness], my_primestat() == $stat[moxie]);
   pulverize_keep_if($item[magilaser blastercannon], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[frigid hanky&#363;], my_primestat() == $stat[moxie]);
 
 
   // Stuff below this are things we'll pulverize based on quest status:

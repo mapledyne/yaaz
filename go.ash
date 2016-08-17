@@ -2,12 +2,17 @@ import "util/main.ash";
 import "cleanup.ash";
 import "util/day_begin.ash";
 
+void run_quest(string ash)
+{
+  cli_execute("call quests/" + ash +".ash");
+}
+
 boolean run_level_quest(string quest, string ash)
 {
   if (quest_status(quest) == FINISHED)
     return false;
 
-  cli_execute("call quests/" + ash +".ash");
+  run_quest(ash);
   return true;
 }
 
@@ -102,7 +107,13 @@ void do_next_thing()
       if (run_level_quest("questL11Manor", "L11_Q_summoning"))
         break;
     case 10:
-      print("10");
+      // get the star key if still needed:
+      if (item_amount($item[steam-powered model rocketship]) > 0) && item_amount($item[richard's star key]) == 0)
+      {
+        run_quest("M10_star_key");
+        break;
+      }
+
     case 9:
       print("9");
     case 8:

@@ -60,22 +60,32 @@ void do_liana()
   maximize("");
   equip($item[antique machete]);
 
+  log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northeast)]) + ".")
   while(quest_status("questL11Business") < 0)
   {
     dg_adventure($location[An Overgrown Shrine (Northeast)]);
   }
 
+  log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northwest)]) + ".")
   while(quest_status("questL11Curses") < 0)
   {
     dg_adventure($location[An Overgrown Shrine (Northwest)]);
   }
 
+  log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southwest)]) + ".")
   while(quest_status("questL11Doctor") < 0)
   {
     dg_adventure($location[An Overgrown Shrine (Southwest)]);
   }
 
+  log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southeast)]) + ".")
   while(quest_status("questL11Spare") < 0)
+  {
+    dg_adventure($location[An Overgrown Shrine (Southeast)]);
+  }
+
+  log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".")
+  while ($location[A Massive Ziggurat].turns_spent < 3)
   {
     dg_adventure($location[An Overgrown Shrine (Southeast)]);
   }

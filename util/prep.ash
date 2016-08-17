@@ -3,6 +3,7 @@ import "util/effects.ash";
 import "util/inventory.ash";
 import "util/maximize.ash";
 import "util/util.ash";
+import "util/heart.ash";
 import "util/prep/sell.ash";
 import "util/prep/buy.ash";
 import "util/prep/make.ash";
@@ -68,8 +69,6 @@ void cast_item_spells(location loc)
   item_cast($skill[Fat Leon's Phat Loot Lyric]);
 }
 
-
-
 void prep_turtle_tamer()
 {
   effect_maintain($effect[Eau de Tortue]);
@@ -92,13 +91,20 @@ void consider_mall(item it)
     return;
 
   log("You may want to give this to your clan, or maybe put in the mall: " + wrap(it) + ".");
+  log("In the meantime, moving these to your closet until you decide.");
+  put_closet(item_amount(it), it);
 }
 
 void mall_or_clan()
 {
   consider_mall($item[almost-dead walkie-talkie]);
   consider_mall($item[gift card]);
-
+  consider_mall($item[stuffed astral badger]);
+  consider_mall($item[stuffed cheshire bitten]);
+  // should check for stuffed treasure chest and open them when possible:
+  consider_mall($item[stuffed key]);
+  consider_mall($item[stuffed mink]);
+  consider_mall($item[stuffed sleazy gravy fairy]);
 }
 
 void prep_fishing(location loc)
@@ -113,15 +119,6 @@ void prep_fishing(location loc)
     log("You should get an item from the " + wrap("Floundry", COLOR_LOCATION) + ".");
   }
 }
-
-void heart_stuff()
-{
-  if (smiles_remaining() > 0)
-  {
-    log("You have " + wrap(smiles_remaining(), COLOR_ITEM) + " smiles from your " + wrap($item[golden mr. accessory]) + " remaining. Send them out!");
-  }
-}
-
 
 
 void cast_things()
@@ -158,7 +155,7 @@ void prep(location loc)
   {
     maintain_avatar();
   }
-  heart_stuff();
+  heart();
 
 }
 

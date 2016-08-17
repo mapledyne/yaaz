@@ -36,6 +36,7 @@ void sell_things()
   sell_all($item[Meat Paste]);
   sell_all($item[Mineapple]);
   sell_all($item[Moxie Weed]);
+  sell_all($item[Ninja mop]);
   sell_all($item[Patchouli Incense Stick]);
   sell_all($item[Phat Turquoise Bead]);
   sell_all($item[Photoprotoneutron Torpedo]);
@@ -52,11 +53,16 @@ void sell_things()
   sell_all($item[Windchimes]);
   sell_all($item[valuable trinket]);
 
+  // keep one:
+  sell_all($item[cold ninja mask], 1);
+
+  // starter items (keep one):
   sell_all($item[turtle totem], 1);
   sell_all($item[seal-clubbing club], 1);
   sell_all($item[saucepan], 1);
   sell_all($item[stolen accordion], 1);
   sell_all($item[disco ball], 1);
+
 
   // battlefield items for coins:
   sell_all($item[bullet-proof corduroys], 1);
