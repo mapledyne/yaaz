@@ -13,7 +13,7 @@ boolean blacklisted(string player)
       }
       return false;
     case "degrassi":
-    case "ertest1"
+    case "ertest1":
     case "lord enzo":
     case "major meat":
     case "pacosr":

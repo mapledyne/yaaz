@@ -22,14 +22,14 @@ void buy_things()
   }
 
   // spend BACON on things for future use:
-  if(setting("bought_viral_video") == "" && item_amount($item[BACON]) > 20 && item_amount($item[viral video]) < 2))
+  if(setting("bought_viral_video") == "" && item_amount($item[BACON]) > 20 && item_amount($item[viral video]) < 2)
   {
     log("Picking up a " + wrap($item[viral video]) + " for use later.");
     cli_execute("acquire viral video");
     save_daily_setting("bought_viral_video", "true");
   }
 
-  if(setting("bought_print_screen") == "" && item_amount($item[BACON]) > 111 && item_amount($item[print screen button]) < 2))
+  if(setting("bought_print_screen") == "" && item_amount($item[BACON]) > 111 && item_amount($item[print screen button]) < 2)
   {
     log("Picking up a " + wrap($item[print screen button]) + " for use later.");
     cli_execute("acquire print screen button");

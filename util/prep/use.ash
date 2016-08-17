@@ -25,6 +25,7 @@ void use_things()
   use_all($item[orcish meat locker]);
   use_all($item[old coin purse]);
   use_all($item[old leather wallet]);
+  use_all($item[Penultimate Fantasy chest]);
   use_all($item[pork elf goodies sack]);
   use_all($item[red box]);
   use_all($item[Squat-Thrust Magazine]);
