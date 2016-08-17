@@ -98,7 +98,8 @@ void do_next_thing()
       if (run_level_quest("questL13Final", "L13_Q_sorceress"))
         break;
     case 12:
-      level_12_advice();
+      if (run_level_quest("quest12War", "L12_Q_war"))
+        break;
     case 11:
       if (run_level_quest("questL11Black", "L11_Q_black_market"))
         break;

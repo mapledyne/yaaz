@@ -1,5 +1,13 @@
 import "util/main.ash";
 
+boolean have_staff_of_ed()
+{
+  if (2286.to_item().available_amount() > 0 && 2268.to_item().available_amount() > 0 && 2180.to_item().available_amount() > 0)
+    return true;
+
+  return false;
+}
+
 int turners()
 {
   return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);
@@ -9,8 +17,14 @@ void open_pyramid()
 {
   if (quest_status("questL11Pyramid") < 0)
   {
-    error("Pyramid not yet discovered. If I was helpful, I'd tell you what to do next. I'm not.");
-    return;
+    if (have_staff_of_ed())
+    {
+      log("Opening up " + wrap("the pyramid", COLOR_LOCATION) + ".");
+      visit_url("place.php?whichplace=desertbeach&action=db_pyramid1");
+    } else {
+      warning("Pyramid not yet discovered. You need to solve more of the MacGuffin mystery.");
+      return;
+    }
   }
   if (quest_status("questL11Pyramid") > 10)
   {
@@ -28,6 +42,7 @@ void open_pyramid()
     }
   }
 
+  add_attract($monster[tomb rat]);
   while (quest_status("questL11Pyramid") < 3)
   {
     maximize("items");
@@ -37,6 +52,7 @@ void open_pyramid()
       progress(turners(), 10, "wheel turning things");
     }
   }
+  remove_attract($monster[tomb rat]);
 
   while (turners() < 10)
   {

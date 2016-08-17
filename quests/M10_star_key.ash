@@ -4,7 +4,7 @@ void get_star_key()
 {
   if (item_amount($item[steam-powered model rocketship]) == 0)
   {
-    warning("Go and get the " + wrap(item_amount($item[steam-powered model rocketship]) + " first.")
+    warning("Go and get the " + wrap($item[steam-powered model rocketship]) + " first.");
     return;
   }
 

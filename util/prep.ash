@@ -136,6 +136,10 @@ void prep(location loc)
   if (my_meat() > 300)
     hermit(999, $item[ten-leaf clover]);
 
+  get_totem();
+  get_saucepan();
+  get_accordion();
+  
   cast_things();
   pulverize_things();
   sell_things();

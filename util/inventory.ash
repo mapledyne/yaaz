@@ -151,16 +151,18 @@ void get_one(item it)
 
 void get_accordion()
 {
-	if((item_amount($item[Antique Accordion]) == 0) && !($classes[Accordion Thief, Avatar of Boris, Avatar of Jarlsberg, Avatar of Sneaky Pete, Ed] contains my_class()))
+	if((i_a($item[Antique Accordion]) == 0) && (i_a($item[toy accordion]) == 0) && my_meat() > 300 && !($classes[Accordion Thief, Avatar of Boris, Avatar of Jarlsberg, Avatar of Sneaky Pete, Ed] contains my_class()))
 	{
+    log("Getting an accordion.");
 		get_one($item[toy accordion]);
 	}
 }
 
 void get_totem()
 {
-	while(item_amount($item[turtle totem]) == 0)
+	while(i_a($item[turtle totem]) == 0 && my_meat() > 300)
 	{
+    log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[turtle totem]) + ".");
 		get_one($item[chewing gum on a string]);
 		use(1, $item[chewing gum on a string]);
 	}
@@ -168,8 +170,9 @@ void get_totem()
 
 void get_saucepan()
 {
-	while(item_amount($item[saucepan]) == 0)
+	while(i_a($item[saucepan]) == 0 && my_meat() > 300)
 	{
+    log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[saucepan]) + ".");
 		get_one($item[chewing gum on a string]);
 		use(1, $item[chewing gum on a string]);
 	}
