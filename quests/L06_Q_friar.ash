@@ -1,7 +1,6 @@
 import "util/main.ash";
 
-void do_friars();
-void main();
+boolean L06_Q_friar();
 boolean do_friar_area(location loc, item it);
 
 boolean do_friar_area(location loc, item it)
@@ -45,21 +44,21 @@ boolean do_stones()
   return false;
 }
 
-void do_friars()
+boolean L06_Q_friar()
 {
   if (my_level() < 6)
-  {
-    error("This quest can't be started until you're level 6.");
-    return;
-  }
+    return false;
+  if (quest_status("questL06Friar") == FINISHED)
+    return false;
+
+  log("Trying to complete the " + wrap("Deep Fat Friars", COLOR_LOCATION) + " quest.");
+  wait(3);
 
   if (quest_status("questL06Friar") < 0)
   {
-    log("Quest not started. Going to the council.");
+    log("Friar quest not started. Going to the council.");
     council();
   }
-
-  log("Trying to complete the Deep Fat Friars quest.");
 
   log("Going to get the " + wrap($item[dodecagram]) + ".");
   while (do_neck())
@@ -83,9 +82,10 @@ void do_friars()
   {
     // actions in do_stones()
   }
+  return true;
 }
 
 void main()
 {
-  do_friars();
+  L06_Q_friar();
 }

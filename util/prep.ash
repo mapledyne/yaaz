@@ -4,6 +4,7 @@ import "util/inventory.ash";
 import "util/maximize.ash";
 import "util/util.ash";
 import "util/heart.ash";
+import "util/consume.ash";
 import "util/prep/sell.ash";
 import "util/prep/buy.ash";
 import "util/prep/make.ash";
@@ -139,7 +140,7 @@ void prep(location loc)
   get_totem();
   get_saucepan();
   get_accordion();
-  
+
   cast_things();
   pulverize_things();
   sell_things();
@@ -159,6 +160,14 @@ void prep(location loc)
   {
     maintain_avatar();
   }
+
+  spleen();
+
+  if (my_adventures() < 10)
+  {
+    max_consumption();
+  }
+
   heart();
 
 }

@@ -2,6 +2,9 @@ import "util/monsters.ash";
 
 boolean ghost_hunting()
 {
+  // need better logic here to decide if we're going to hunt a ghost.
+  if (my_hp() < 200)
+    return false;
    if (get_property("questPAGhost") == STARTED || get_property("ghostLocation") != "")
     return true;
   return false;

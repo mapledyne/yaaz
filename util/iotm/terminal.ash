@@ -13,8 +13,52 @@ string to_enhancement(effect ef);
 boolean have_enhancement(string enh);
 boolean can_enhance();
 int enhances_remaining();
+boolean have_educate(string edu);
+void terminal_educate(string edu1, string edu2);
+void terminal_educate(string edu);
+void terminal_educate();
 void terminal();
 void main();
+
+boolean have_educate(string edu)
+{
+  return list_contains(get_property("sourceTerminalEducateKnown"), edu, ",");
+}
+
+void terminal_educate(string edu1, string edu2)
+{
+  if (!can_terminal())
+    return;
+
+  if (get_property("sourceTerminalEducate1") == edu1)
+  {
+    if (!list_contains(get_property("sourceTerminalChips"), "DRAM", ","))
+      return;
+    if (get_property("sourceTerminalEducate1") == edu2)
+      return;
+  }
+
+  if (have_educate(edu1))
+  {
+    log("Adding " + wrap($item[source terminal]) + " education: " + wrap(edu1, COLOR_ITEM) + ".");
+    cli_execute("terminal educate " + edu1);
+  }
+  if (have_educate(edu2) && (list_contains(get_property("sourceTerminalChips"), "DRAM", ",")))
+  {
+    log("Adding " + wrap($item[source terminal]) + " education: " + wrap(edu2, COLOR_ITEM) + ".");
+    cli_execute("terminal educate " + edu2);
+  }
+}
+
+void terminal_educate(string edu)
+{
+  terminal_educate(edu, "extract.edu");
+}
+
+void terminal_educate()
+{
+  terminal_educate("extract.edu", "digitize.edu");
+}
 
 void terminal_enhance(effect ef)
 {
@@ -70,7 +114,7 @@ effect pick_one_enhancement()
     return $effect[substats.enh];
   if (consider_one_enhancement($effect[init.enh]))
     return $effect[init.enh];
-  if (my_meat() < 10000)
+  if (my_meat() < 20000)
   {
     if (consider_one_enhancement($effect[meat.enh]))
       return $effect[meat.enh];
@@ -230,6 +274,8 @@ void terminal()
   {
     terminal_enquiry("stats");
   }
+
+  terminal_educate();
 
 }
 

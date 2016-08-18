@@ -104,12 +104,12 @@ void build_requirements()
   make_if_needed($item[unstable fulminate]);
   if (my_meat() > 5000)
   {
-    make_if_needed($item[bitchin' meatcar]);
+    make_if_needed($item[bitchin' meatcar], "to reach the desert.");
   }
 
   if (get_property("questL11Palindome") != "finished")
   {
-    make_if_needed($item[wet stunt nut stew]);
+    make_if_needed($item[wet stunt nut stew], "for Mr. Alarm");
   }
 
   if (get_property("questL13Final") != "unstarted" && i_a($item[wand of nagamar]) == 0 && can_adventure())

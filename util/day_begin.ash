@@ -22,8 +22,6 @@ void day_begin()
   log("Item of the Month and related work.");
   iotm();
 
-  spleen();
-  
   log("Doing basic prep.");
   prep($location[none]);
 

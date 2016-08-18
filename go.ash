@@ -2,6 +2,15 @@ import "util/main.ash";
 import "cleanup.ash";
 import "util/day_begin.ash";
 
+import "quests/M_guild.ash";
+import "quests/M_hidden_temple.ash";
+import "quests/M10_star_key.ash";
+
+import "quests/L06_Q_friar.ash";
+import "quests/L07_Q_cyrpt.ash";
+import "quests/L08_Q_trapper.ash";
+
+
 void run_quest(string ash)
 {
   cli_execute("call quests/" + ash +".ash");
@@ -145,10 +154,52 @@ void do_next_thing()
   warning_one_step();
 }
 
-void main()
+boolean ascend_loop()
+{
+  // returning true here ultimately just causes us to start this
+  // function over again.
+  // If you do no work in one of these functions, you should
+  // generally return false to let the next quest in line run.
+
+  if (M_guild()) return true;
+
+  // do this one as soon as possible since it can give us the Steel item.
+  if (L06_Q_friar()) return true;
+
+  // do this one earlier if only to talk to the trapper ASAP.
+  if (L08_Q_trapper()) return true;
+
+  if (M_hidden_temple()) return true;
+
+  if (L07_Q_cyrpt()) return true;
+
+  if (M10_star_key()) return true;
+
+  return false;
+}
+
+void ascend()
 {
   day_begin();
   cleanup();
-  do_next_thing();
+
+  if (quest_status("questL02Larva") == UNSTARTED)
+  {
+    log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
+    visit_url("tutorial.php?action=toot");
+  }
+
+  while(ascend_loop())
+  {
+    wait(5);
+    cleanup();
+  }
+  wait(5);
   cleanup();
+  warning("End of day stuff?");
+}
+
+void main()
+{
+  ascend();
 }

@@ -68,3 +68,30 @@ boolean dg_adventure(location loc)
 {
   return dg_adventure(loc, "none");
 }
+
+boolean dg_clover(location loc)
+{
+  item clover = $item[disassembled clover];
+
+  if (item_amount(clover) == 0)
+  {
+    warning("Trying to clover in " + wrap(loc) + " but you don't have a clover.");
+    return false;
+  }
+
+  if (!can_adventure())
+  {
+    warning("Trying to clover in " + wrap(loc) + " but you can't adventure right now.");
+    return false;
+  }
+
+  log("Clovering " + wrap(loc) + ".");
+  use(1, $item[disassembled clover]);
+
+  string protect = get_property("cloverProtectActive");
+  set_property("cloverProtectActive", false);
+  boolean ret = dg_adventure(loc);
+  set_property("cloverProtectActive", protect);
+
+  return ret;
+}

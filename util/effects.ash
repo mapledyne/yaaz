@@ -36,6 +36,7 @@ void maintain_avatar()
   {
     if (is_avatar_potion(it))
     {
+      log("Putting " + wrap(it) + " into the closet to reduce clutter.");
       put_closet(inventory[it], it);
     }
   }
@@ -72,6 +73,7 @@ void maintain_avatar()
     avatar_potion = potions[random(count(potions))];
   }
 
+  log("Taking " + wrap(avatar_potion) + " out of the closet to play dress-up.");
   take_closet(1, avatar_potion);
   use(1, avatar_potion);
 

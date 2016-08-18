@@ -116,74 +116,79 @@ void clear_cranny()
 	}
 }
 
-void defeat_cyrpt()
+boolean L07_Q_cyrpt()
 {
 	if(my_level() < 7)
-  {
-    error('Cannot adventure here yet. Get to level 7!');
-    return;
-  }
+    return false;
 
-  if (get_property("questL07Cyrptic") == "finished")
-  {
-    warning("You've already completed the cyrpt.");
-    return;
-  }
+	if (quest_status("questL07Cyrptic") == FINISHED)
+	return false;
+
 
 	if(item_amount($item[chest of the bonerdagon]) == 1)
 	{
     log("Looks like we've completed the quest but not opened the chest yet.");
 		use(1, $item[chest of the bonerdagon]);
-		return;
+		return true;
 	}
 
 	int timer = my_adventures();
 
+	log("We're off to clear the " + wrap("Defiled Cyrpt", COLOR_LOCATION) + ".");
+
 	if (item_amount($item[evilometer]) == 0)
 	{
-		log("We don't have an evilometer. Maybe we haven't started the quest yet?");
+		log("We don't have an " + wrap($item[evilometer]) + ". Maybe we haven't started the quest yet?");
 		council();
 	}
 
 	clear_alcove();
+	wait(3);
 
 	clear_nook();
+	wait(3);
 
 	clear_niche();
+	wait(3);
 
 	clear_cranny();
+	wait(3);
 
 	if(get_property("cyrptTotalEvilness").to_int() <= 0)
 	{
 		if (my_primestat() == $stat[Mysticality])
 		{
+			log("Changing MCD to 5 to get us a " + wrap($item[rib of the bonerdagon]) + ".");
 			change_mcd(5);
 		} else {
+			log("Changing MCD to 10 to get us a " + wrap($item[vertebra of the bonerdagon]) + ".");
 			change_mcd(10);
 		}
 
 		set_property("choiceAdventure527", 1);
 
-		maximize("");
-		boolean boner = dg_adventure($location[Haert of the Cyrpt]);
+		boolean boner = dg_adventure($location[Haert of the Cyrpt], "");
 		if(item_amount($item[chest of the bonerdagon]) == 1)
 		{
 			int total_adv = timer - my_adventures();
 			log("Bonerdagon defeated! It took " + total_adv + " adventures.");
 			use(1, $item[chest of the bonerdagon]);
+			log("Going to the " + wrap("council", COLOR_LOCATION) + " to report our victory.");
 		}
 		else if(!boner)
 		{
 			warning("We tried to kill the Bonerdagon, but couldn't adventure there. The area seems defiled. Probably the cyrpt is complete? Worth checking by hand.");
+			abort();
 		}
 		else
 		{
 			abort("Failed to kill bonerdagon");
 		}
 	}
+	return true;
 }
 
 void main()
 {
-  defeat_cyrpt();
+  L07_Q_cyrpt();
 }

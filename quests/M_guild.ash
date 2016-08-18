@@ -1,18 +1,12 @@
 import "util/main.ash";
 
-void open_guild()
+boolean M_guild()
 {
   if (guild_store_open())
-  {
-    log("Guild store already available to you.");
-    return;
-  }
+    return false;
 
   if (!is_guild_class())
-  {
-    warning(wrap(my_class()) + " isn't a guild class.");
-    return;
-  }
+    return false;
 
   log("Visiting the guild to see what they want us to do.");
   visit_url("guild.php?place=challenge");
@@ -54,14 +48,15 @@ void open_guild()
 
   if (!guild_store_open())
   {
-    warning("Your guild isn't open yet for some reason.");
-    return;
+    error("Your guild isn't open yet for some reason. Unsure how to handle this.");
+    abort();
   }
   log("Guild is now open.");
+  return true;
 }
 
 
 void main()
 {
-  open_guild();
+  M_guild();
 }

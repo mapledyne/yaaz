@@ -28,6 +28,20 @@ item spooky_quest_item();
 boolean guild_store_open();
 int smiles_remaining();
 int count_set(boolean[item] things);
+float average_range(string avg);
+
+float average_range(string avg)
+{
+  // turns strings like "1-5" into the average of the string ("3")
+  // useful for things like consumables which sometimes express
+  // values as ranges (adventures for food, for instance)
+
+  if (!contains_text(avg, "-"))
+    return to_float(avg);
+
+  string[int] avgs = split_string(avg, "-");
+  return ((to_int(avgs[0]) + to_int(avgs[1])) / 2);
+}
 
 int count_set(boolean[item] things)
 {

@@ -23,19 +23,23 @@ int get_cheese()
   return qty;
 }
 
-void L08_Q_trapper()
+boolean L08_Q_trapper()
 {
   if (my_level() < 8)
+    return false;
+
+  if (quest_status("questL08Trapper") == UNSTARTED)
   {
-    warning("You can't start the trapper quest until level 8.");
-    return;
+    log("Trapper quest isn't started yet. Talking to the council.");
+    council();
   }
 
-  if (quest_status("questL08Trapper") == 0)
+  if (quest_status("questL08Trapper") == STARTED)
   {
-    log("Quest isn't started yet. Talking to the council.");
-    council();
+    log("Talking to the trapper to see what ore he wants.");
     visit_trapper();
+    log("Trapper wants " + wrap(to_item(get_property("trapperOre"))) + ".");
+    return true;
   }
 
   if (quest_status("questL08Trapper") == 1)
@@ -44,23 +48,43 @@ void L08_Q_trapper()
     int ore_qty = item_amount(ore);
     int goat_qty = get_cheese();
 
-    if (ore_qty < 3)
+    while (ore_qty < 3)
     {
-      log("Unsure if it's better to clover the mine, get these from the deck, or just mine. Letting you decide for yourself for now.");
-      return;
+      if (can_deck())
+      {
+        cheat_deck("mine", "get some ore for the trapper.");
+        continue;
+      }
+
+      if (item_amount($item[disassembled clover]) > 0)
+      {
+        if (dg_clover($location[Itznotyerzitz Mine]))
+        {
+          continue;
+        }
+      }
+
+      warning("No good ways remain to get the " + wrap(ore) + " without mining.");
+      warning("I don't want to do that, so waiting until tomorrow for some clover.");
+      warning("Mine manually if you want to go about this a different way.");
+      return false;
     }
 
     if (goat_qty < 3)
     {
       warning("You should have three " + wrap($item[goat cheese]) + " at this point, but you don't.");
-      return;
+      abort();
     }
 
     log("Three " + wrap($item[goat cheese]) + " and three " + wrap(ore) + " found.");
     log("Returning these to the trapper.");
     visit_trapper();
+    return true;
   }
 
+  warning("There's something else we should do with the trapper, it's just not coded yet.");
+  wait(10);
+  return false;
 }
 
 void main()

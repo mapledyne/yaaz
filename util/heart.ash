@@ -98,7 +98,7 @@ void heart(boolean force)
   save_daily_setting("last_heart", my_turncount());
 
   do_heart_thing(pick_player());
-  wait(2);
+  wait(3);
 }
 
 void heart()
