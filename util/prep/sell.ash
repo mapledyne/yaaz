@@ -9,6 +9,7 @@ void sell_things()
   sell_all($item[dense meat stack]);
   sell_all($item[meat stack]);
 
+  sell_all($item[ancient protein powder]);
   sell_all($item[Anticheese]);
   sell_all($item[Antique greaves]);
   sell_all($item[Antique helmet]);
@@ -16,6 +17,7 @@ void sell_things()
   sell_all($item[Antique shield]);
   sell_all($item[Awful Poetry Journal]);
   sell_all($item[Beach Glass Bead]);
+  sell_all($item[bit-o-cactus]);
   sell_all($item[Black Pixel]);
   sell_all($item[Blue Pixel]);
   sell_all($item[Clay Peace-Sign Bead]);
