@@ -9,7 +9,7 @@ boolean L05_Q_goblin()
   location outskirts = $location[the outskirts of cobb's knob];
   warning("Test: Does questL05Goblin get updated on opening the Knob, before the main quest is offered?");
   wait(5);
-  if (outskirts.turns_spent < 11 || quest_status("questL05Goblin") < 1)
+  if ((outskirts.turns_spent < 11 || quest_status("questL05Goblin") < 1) && item_amount($item[Knob Goblin encryption key]) == 0)
   {
     if (item_amount($item[cobb's knob map]) == 0)
     {
@@ -20,10 +20,16 @@ boolean L05_Q_goblin()
     {
       dg_adventure(outskirts, "");
     }
-    log("Using the " + wrap($item[Knob Goblin encryption key]) + " to unlock Cobb's Knob.");
-    use(1, $item[Knob Goblin encryption key]);
-    return true;
   }
+
+  if (item_amount($item[cobb's knob map]) > 0 && item_amount($item[Knob Goblin encryption key]) > 0)
+  {
+  log("Using the " + wrap($item[cobb's knob map]) + " to unlock Cobb's Knob.");
+  use(1, $item[cobb's knob map]);
+  return true;
+
+  }
+
 
   log("Keep scripting L05_Q_goblin!");
   wait(10);
