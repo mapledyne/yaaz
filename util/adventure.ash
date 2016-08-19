@@ -3,17 +3,7 @@ import "util/counters.ash";
 import "util/progress.ash";
 import "util/inventory.ash";
 import "util/iotm/protonic.ash";
-
-int abort_on_advs_left = 3;
-
-boolean can_adventure()
-{
-  if (my_adventures() <= abort_on_advs_left)
-    return false;
-  if (my_inebriety() >= inebriety_limit())
-    return false;
-  return true;
-}
+import "util/util.ash";
 
 void update_flyer_progress()
 {
@@ -34,13 +24,21 @@ boolean dg_adventure(location loc, string maximize)
   if (my_inebriety() > inebriety_limit())
   {
     error("You are too drunk to continue.");
-    abort();
+    wait(5);
+    log("Going to do end-of-day tasks...");
+    wait(5);
+    cli_execute("call util/day_end.ash");
+    abort("Too drunk to adventure more. Go sleep it off.");
   }
 
   if (my_adventures() <= abort_on_advs_left)
   {
     error("Cannot auto-adventure with only " + my_adventures() + " adventures remaining. Get some more food/booze in you or wait until tomorrow. Aborting.");
-    abort();
+    wait(5);
+    log("Going to do end-of-day tasks...");
+    wait(5);
+    cli_execute("call util/day_end.ash");
+    abort("Not enough adventures to do more with. Maybe find a nightcap?");
   }
 
   // check for counters like semi-rare and dance cards.

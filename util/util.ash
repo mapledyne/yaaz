@@ -29,6 +29,18 @@ boolean guild_store_open();
 int smiles_remaining();
 int count_set(boolean[item] things);
 float average_range(string avg);
+boolean can_adventure();
+
+int abort_on_advs_left = 3;
+
+boolean can_adventure()
+{
+  if (my_adventures() <= abort_on_advs_left)
+    return false;
+  if (my_inebriety() >= inebriety_limit())
+    return false;
+  return true;
+}
 
 float average_range(string avg)
 {

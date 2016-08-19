@@ -6,6 +6,7 @@ import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M10_star_key.ash";
 
+import "quests/L05_Q_goblin.ash";
 import "quests/L06_Q_friar.ash";
 import "quests/L07_Q_cyrpt.ash";
 import "quests/L08_Q_trapper.ash";
@@ -161,16 +162,22 @@ boolean ascend_loop()
   // If you do no work in one of these functions, you should
   // generally return false to let the next quest in line run.
 
+  // open our guild store and trainer:
   if (M_guild()) return true;
 
   // do this one as soon as possible since it can give us the Steel item.
   if (L06_Q_friar()) return true;
 
+  // do a bit earlier than other order to get the Knob opened earlier.
+  if (L05_Q_goblin()) return true;
+
   // do this one earlier if only to talk to the trapper ASAP.
   if (L08_Q_trapper()) return true;
 
+  // open the hidden temple
   if (M_hidden_temple()) return true;
 
+  // whatever is left can be done in order:
   if (L07_Q_cyrpt()) return true;
 
   if (M10_star_key()) return true;
@@ -196,7 +203,8 @@ void ascend()
   }
   wait(5);
   cleanup();
-  warning("End of day stuff?");
+  log("Wrapping up for the end of the day.");
+  cli_execute("call util/day_end.ash");
 }
 
 void main()

@@ -1,4 +1,8 @@
-import "util/main.ash";
+import "util/requirements.ash";
+import "util/prep.ash";
+import "util/pvp.ash";
+import "util/iotm.ash";
+import "util/util.ash";
 
 void check_item(slot s)
 {

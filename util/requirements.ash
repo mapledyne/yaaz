@@ -1,4 +1,6 @@
 import "print.ash";
+import "util/util.ash";
+import "util/adventure.ash";
 
 // future requirements that we may as well sort out as we go.
 
