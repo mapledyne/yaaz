@@ -5,6 +5,9 @@ boolean M10_star_key()
   if (quest_status("questL10Garbage") != FINISHED)
     return false;
 
+  if (item_amount($item[richard's star key]) > 0)
+    return false;
+
   if (item_amount($item[steam-powered model rocketship]) == 0)
   {
     warning("Go and get the " + wrap($item[steam-powered model rocketship]) + " first.");
@@ -13,8 +16,7 @@ boolean M10_star_key()
     return false;
   }
 
-  if (item_amount($item[richard's star key]) > 0)
-    return false;
+  log("Going to the " + wrap($location[the hole in the sky]) + " to make " + wrap($item[richard's star key]) + ".");
 
   while(creatable_amount($item[richard's star key]) == 0)
   {
