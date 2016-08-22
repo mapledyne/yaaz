@@ -61,9 +61,9 @@ void go_dancing()
 
     if (my_primestat() == $stat[moxie])
     {
-      set_property("choiceAdventure876", 1); // moxie
+      set_property("choiceAdventure879", 1); // moxie
     } else {
-      set_property("choiceAdventure876", 6); // ignore it
+      set_property("choiceAdventure879", 6); // ignore it
     }
 
     if (item_amount($item[lady spookyraven's finest gown]) == 0)
@@ -133,7 +133,7 @@ void go_dancing()
 
   visit_url("place.php?whichplace=manor2&action=manor2_ladys");
 
-  dg_adventure($location["the haunted ballroom"]);
+  dg_adventure($location[the haunted ballroom]);
   log("Dancing complete!");
 }
 

@@ -4,6 +4,7 @@ void do_one_market_adv()
 {
   if (creatable_amount($item[reassembled blackbird]) > 0)
   {
+    log("Making a " + wrap($item[reassembled blackbird]) + " to help with exploration.");
     create(1, $item[reassembled blackbird]);
   }
 
@@ -29,9 +30,11 @@ void do_one_market_adv()
   } else {
     maximize(max);
   }
-
+  int bee = item_amount($item[beehive]);
   dg_adventure($location[the black forest]);
   progress(get_property("blackForestProgress").to_int(), 5, "");
+  if (bee < item_amount($item[beehive]))
+    log(wrap($item[beehive]) + " found!");
 }
 
 boolean market_loop()
@@ -66,8 +69,14 @@ boolean market_loop()
   }
 }
 
-void find_market()
+boolean L11_Q_black_market()
 {
+
+  if (quest_status("questL11Black") == FINISHED)
+    return false;
+
+  if (my_level() < 11)
+    return false;
 
   int turns = my_adventures();
 
@@ -81,6 +90,7 @@ void find_market()
   {
     int total = turns - my_adventures();
     log(wrap($item[your father's macguffin diary]) + " found. It took " + total + " turns.");
+    return true;
   } else {
     if (counter == 30)
     {
@@ -88,11 +98,12 @@ void find_market()
     } else {
       error("Black market area not complete, but I don't know why.");
     }
+    abort("I got stuck trying to solve the Black Market subquest, sorry.");
   }
-
+  return true;
 }
 
 void main()
 {
-  find_market();
+  L11_Q_black_market();
 }

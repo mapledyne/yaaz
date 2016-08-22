@@ -50,7 +50,7 @@ boolean L08_Q_trapper()
 
     while (ore_qty < 3)
     {
-      if (can_deck())
+      if (can_deck("mine"))
       {
         cheat_deck("mine", "get some ore for the trapper.");
         continue;
@@ -58,10 +58,8 @@ boolean L08_Q_trapper()
 
       if (item_amount($item[disassembled clover]) > 0)
       {
-        if (dg_clover($location[Itznotyerzitz Mine]))
-        {
-          continue;
-        }
+        dg_clover($location[Itznotyerzitz Mine]);
+        continue;
       }
 
       warning("No good ways remain to get the " + wrap(ore) + " without mining.");

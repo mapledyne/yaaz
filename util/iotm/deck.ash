@@ -24,15 +24,31 @@ string cheat_stat()
 
 void cheat_deck(string s, string msg)
 {
+  if (setting("decked_" + s) == "true")
+  {
+    warning("Trying to cheat the " + wrap($item[deck of every card]) + " for '" + s +"', but you've already drawn that today.");
+    return;
+  }
   log("Cheating with the " + wrap($item[deck of every card]) + " (" + s + ") to " + msg + ".");
+  save_daily_setting("decked_" + s, "true");
   cli_execute("cheat " + s);
 }
+
 
 boolean can_deck()
 {
   if (i_a($item[deck of every card]) > 0 && to_int(get_property("_deckCardsDrawn")) < 15)
     return true;
   return false;
+}
+
+boolean can_deck(string card)
+{
+  if (!can_deck())
+    return false;
+  if (setting("decked_" + card) == "true")
+    return false;
+  return true;
 }
 
 boolean pick_a_card()
