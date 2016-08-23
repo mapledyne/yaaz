@@ -11,6 +11,8 @@ import "quests/L06_Q_friar.ash";
 import "quests/L07_Q_cyrpt.ash";
 import "quests/L08_Q_trapper.ash";
 import "quests/L11_Q_black_market.ash";
+import "quests/L11_Q_desert.ash";
+import "quests/L11_Q_summoning.ash";
 
 boolean ascend_loop()
 {
@@ -43,7 +45,10 @@ boolean ascend_loop()
   // whatever is left can be done in order:
   if (L07_Q_cyrpt()) return true;
 
+  // macguffin quest
   if (L11_Q_black_market()) return true;
+  if (L11_Q_desert()) return true;
+  if (L11_Q_summoning()) return true;
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?

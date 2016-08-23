@@ -111,14 +111,14 @@ int open_gnasir()
     return adv_spent;
 }
 
-void find_pyramid()
+boolean L11_Q_desert()
 {
 
   if(my_level() < 11)
-  {
-    error('Cannot adventure here yet. Get to level 11!');
-    return;
-  }
+    return false;
+
+  if (get_property("desertExploration").to_int() >= 100)
+    return false;
 
   int turns = 0;
   int starting_adv_count = my_adventures();
@@ -158,8 +158,7 @@ void find_pyramid()
       string reason = "the Black Market may not be opened yet";
       if (my_meat() < 1000)
         reason = "you don't have enough meat to buy it";
-      error("Gnasir wants a " + wrap($item[can of black paint]) + ", but I couldn't get one, " + reason + ". Aborting.");
-      abort();
+      log("Gnasir wants a " + wrap($item[can of black paint]) + ", but I couldn't get one, " + reason + ". Skipping for now, but this will probably cost more turns.");
     }
 	} // can of black paint
 
@@ -182,7 +181,7 @@ void find_pyramid()
 		log("Gnasir wants a worm-riding manual.");
 	}
 
-  while (my_adventures() > 0 && get_property("desertExploration").to_int() < 100)
+  while (get_property("desertExploration").to_int() < 100)
   {
     if (i_a("desert sightseeing pamphlet") > 0)
     {
@@ -238,18 +237,14 @@ void find_pyramid()
     dg_adventure($location[The Arid\, Extra-Dry Desert]);
     desert_progress();
   }
-  if (get_property("desertExploration").to_int() < 100)
-  {
-    error("You ran out of adventures while exploring the desert. Explore some more tomorrow.");
-    abort();
-  }
 
   int count = starting_adv_count - my_adventures();
   log("It took you " + count + " adventures, but you've discovered the pyramid in the desert!");
+  return true;
 }
 
 
 void main()
 {
-  find_pyramid();
+  L11_Q_desert();
 }

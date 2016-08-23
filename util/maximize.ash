@@ -158,6 +158,7 @@ void max_effects(string target)
       effect_maintain($effect[tortious]);
       effect_maintain($effect[eau d'enmity]);
       effect_maintain($effect[high colognic]);
+      change_mcd(10);
       break;
     case "all res":
       effect_maintain($effect[elemental saucesphere]);

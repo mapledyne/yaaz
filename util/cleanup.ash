@@ -1,9 +1,10 @@
-import "util/main.ash";
+import "util/prep.ash";
+import "util/requirements.ash";
 
 void cleanup()
 {
   log("Doing basic cleanup.");
-  prep($location[none]);
+  prep();
   log("Checking for any future quest requirements.");
   build_requirements();
   log("Cleanup complete.");

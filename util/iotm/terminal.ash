@@ -25,16 +25,27 @@ boolean have_educate(string edu)
   return list_contains(get_property("sourceTerminalEducateKnown"), edu, ",");
 }
 
+boolean educated(string edu)
+{
+  if (get_property("sourceTerminalEducate1") == edu)
+    return true;
+  if (get_property("sourceTerminalEducate2") == edu)
+    return true;
+  return false;
+
+
+}
+
 void terminal_educate(string edu1, string edu2)
 {
   if (!can_terminal())
     return;
 
-  if (get_property("sourceTerminalEducate1") == edu1)
+  if (educated(edu1))
   {
     if (!list_contains(get_property("sourceTerminalChips"), "DRAM", ","))
       return;
-    if (get_property("sourceTerminalEducate1") == edu2)
+    if (educated(edu2))
       return;
   }
 

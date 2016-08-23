@@ -156,8 +156,13 @@ boolean do_spookyraven()
   }
 }
 
-void lord_spookyraven()
+boolean L11_Q_summoning()
 {
+if (quest_status("questL11Manor") == FINISHED)
+  return false;
+if (quest_status("questL11MacGuffin") == UNSTARTED)
+  return false;
+
   while(do_spookyraven())
   {
 
@@ -165,12 +170,14 @@ void lord_spookyraven()
   if (quest_status("questL11Manor") != FINISHED)
   {
     warning("Could not defeat " + wrap($monster[lord spookyraven]) +" for some reason.");
+    return true;
   } else {
     log(wrap($monster[lord spookyraven]) + " has been defeated.");
+    return true;
   }
 }
 
 void main()
 {
-  lord_spookyraven();
+  L11_Q_summoning();
 }

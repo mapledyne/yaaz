@@ -1,5 +1,6 @@
 
 import "util/util.ash";
+import <zlib.ash>;
 
 boolean blacklisted(string player)
 {
@@ -78,6 +79,17 @@ void do_heart_thing(string player)
     return;
   }
 
+  if (item_amount($item[almost-dead walkie-talkie]) > 0)
+  {
+//  boolean kmail(string recipient ,string message ,int meat ,int [item]  goodies ,string inside_note )
+    heart_msg(player, "sending them one " + wrap($item[almost-dead walkie-talkie]));
+    string msg = "Random heart-y-ness. Enjoy!";
+    string inside_msg = "Random heart-y-ness. Enjoy!";
+    int[item] stuff;
+    stuff[$item[almost-dead walkie-talkie]] = 1;
+    kmail(player, msg, 0, stuff, inside_msg);
+    return;
+  }
 }
 
 void heart(boolean force)

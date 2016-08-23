@@ -12,6 +12,7 @@ import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
 import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
+import "util/iotm/manuel.ash";
 
 void meat_cast(skill sk, effect ef, int avg)
 {
@@ -98,7 +99,6 @@ void consider_mall(item it)
 
 void mall_or_clan()
 {
-  consider_mall($item[almost-dead walkie-talkie]);
   consider_mall($item[gift card]);
   consider_mall($item[stuffed astral badger]);
   consider_mall($item[stuffed cheshire bitten]);
@@ -106,6 +106,19 @@ void mall_or_clan()
   consider_mall($item[stuffed key]);
   consider_mall($item[stuffed mink]);
   consider_mall($item[stuffed sleazy gravy fairy]);
+}
+
+void kolmafia_collectors()
+{
+  // stuff for makers of kolmafia and related. They collect stuff. Giving them stuff is nice.
+
+  // sure, this can be disabled.
+  if (setting("kolmafia_leech") == "true")
+    return;
+
+  // rubber emo roe to Veracity
+  // studded hodgman to bale
+
 }
 
 void prep_fishing(location loc)
@@ -141,6 +154,8 @@ void prep(location loc)
   get_saucepan();
   get_accordion();
 
+  consume();
+
   cast_things();
   pulverize_things();
   sell_things();
@@ -159,13 +174,6 @@ void prep(location loc)
   if (setting("use_avatar_potions") == "true")
   {
     maintain_avatar();
-  }
-
-  spleen();
-
-  if (my_adventures() < 10)
-  {
-    max_consumption();
   }
 
   heart();

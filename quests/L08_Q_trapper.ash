@@ -28,6 +28,9 @@ boolean L08_Q_trapper()
   if (my_level() < 8)
     return false;
 
+  if (quest_status("questL08Trapper") == FINISHED)
+    return false;
+
   if (quest_status("questL08Trapper") == UNSTARTED)
   {
     log("Trapper quest isn't started yet. Talking to the council.");

@@ -1,8 +1,13 @@
 import "util/print.ash";
 import "util/util.ash";
+import "util/iotm/clanvip.ash";
 
 boolean is_spleen_item(item it);
+boolean is_booze_item(item it);
+boolean is_food_item(item it);
 int spleen_remaining();
+int fullness_remaining();
+int inebriety_remaining();
 float adv_per_consumption(item it);
 
 
@@ -18,12 +23,36 @@ float adv_per_consumption(item it)
     return average_range(it.adventures) / to_float(it.spleen);
   }
 
+  if (is_food_item(it))
+  {
+    if (it.fullness > fullness_remaining())
+      return 0;
+    return average_range(it.adventures) / to_float(it.fullness);
+  }
+
+  if (is_booze_item(it))
+  {
+    if (it.inebriety > inebriety_remaining())
+      return 0;
+    return average_range(it.adventures) / to_float(it.inebriety);
+  }
+
   return 0;
 }
 
 int spleen_remaining()
 {
   return spleen_limit() - my_spleen_use();
+}
+
+int fullness_remaining()
+{
+  return fullness_limit() - my_fullness();
+}
+
+int inebriety_remaining()
+{
+  return inebriety_limit() - my_inebriety();
 }
 
 boolean is_spleen_item(item it)
@@ -33,9 +62,30 @@ boolean is_spleen_item(item it)
   return false;
 }
 
-int spleen_cost(item it)
+boolean is_food_item(item it)
 {
-  return it.spleen;
+  if (it.fullness > 0)
+    return true;
+  return false;
+}
+
+boolean is_booze_item(item it)
+{
+  if (it.inebriety > 0)
+    return true;
+  return false;
+}
+
+int consume_cost(item it)
+{
+  if (is_spleen_item(it))
+    return it.spleen;
+  if (is_booze_item(it))
+    return it.inebriety;
+  if (is_food_item(it))
+    return it.fullness;
+  error("Trying to get consumption cost of " + wrap(it) + " but I don't know what that is.");
+  return 100;
 }
 
 boolean can_chew(item it)
@@ -44,7 +94,29 @@ boolean can_chew(item it)
     return false;
   if (!is_spleen_item(it))
     return false;
-  if (spleen_cost(it) > spleen_remaining())
+  if (consume_cost(it) > spleen_remaining())
+    return false;
+  return true;
+}
+
+boolean can_eat(item it)
+{
+  if (item_amount(it) == 0)
+    return false;
+  if (!is_food_item(it))
+    return false;
+  if (consume_cost(it) > fullness_remaining())
+    return false;
+  return true;
+}
+
+boolean can_drink(item it)
+{
+  if (item_amount(it) == 0 && !is_vip_item(it))
+    return false;
+  if (!is_booze_item(it))
+    return false;
+  if (consume_cost(it) > inebriety_remaining())
     return false;
   return true;
 }
@@ -53,58 +125,64 @@ boolean try_chew(item it)
 {
   if (!can_chew(it))
     return false;
-  log("Chewing a " + wrap(it) + ".");
+  log("Chewing a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
   return chew(1, it);
 }
 
-void chew_all(item it)
+boolean try_eat(item it)
 {
-  while(try_chew(it))
+  if (!can_eat(it))
+    return false;
+  log("Eating a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+  return eat(1, it);
+}
+
+boolean try_drink(item it)
+{
+  if (!can_drink(it))
+    return false;
+  if (have_skill($skill[the ode to booze]) && mp_cost($skill[the ode to booze]) < my_mp())
   {
-    // work in try_chew()
+    if (have_effect($effect[ode to booze]) == 0)
+    {
+      log("Casting " + wrap($skill[the ode to booze]) + " for better booze action.");
+      use_skill(1, $skill[the ode to booze]);
+    }
   }
+  log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+  if (is_vip_item(it) && can_vip_drink())
+  {
+    cli_execute("buy 1 " + it);
+    abort("Maybe?");
+    return true;
+  } else {
+    return drink(1, it);
+  }
+  return false;
 }
 
-void spleen()
+item[int] consume_list()
 {
-  // things we feel comfortable using immediately:
-  chew_all($item[astral energy drink]);
-  chew_all($item[homeopathic mint tea]);
-}
-
-void max_spleen()
-{
-  // give the default stuff priority:
-  spleen();
-
-  float[item] spleens;
+  item[int] noms;
   int[item] inventory = get_inventory();
+  int count = 0;
   foreach it in inventory
   {
-    if (!is_spleen_item(it))
-      continue;
-
     float avg = adv_per_consumption(it);
 
     if (avg == 0)
       continue;
 
-    spleens[it] = avg;
+    noms[count] = it;
+    count+=1;
   }
-  sort spleens by value;
-
-  foreach s in spleens
-  {
-    log("Spleen: " + wrap(s) + " value is: " + spleens[s]);
-  }
-
-
+  sort noms by -adv_per_consumption(value);
+  return noms;
 }
 
 void max_consumption()
 {
   // use up all of our space.
-  max_spleen();
 
 }
 
@@ -124,13 +202,58 @@ void drink_irresponibly()
 
 }
 
+boolean try_consume(item it)
+{
+  if (is_spleen_item(it))
+    return try_chew(it);
+  if (is_food_item(it))
+    return try_eat(it);
+  if (is_booze_item(it))
+    return try_drink(it);
+  error("Trying to consume " + wrap(it) + " but I don't know what it is.");
+  return false;
+}
+
+boolean consume_best()
+{
+  item[int] noms = consume_list();
+  foreach nom, it in noms
+  {
+    print("Considering consuming " + wrap(it) + " which would give us " + adv_per_consumption(it) + " adventures.");
+//    if (try_consume(nom))
+//      return true;
+  }
+  return false;
+}
+
 void consume()
 {
-  spleen();
+  int adv_min = to_int(setting("adventure_floor", "10"));
+
+  if (get_counters("fortune cookie", 0, 500) == "")
+  {
+    // we don't know our next semi-rare...
+    if (can_vip() && inebriety_remaining() >= consume_cost($item[lucky lindy]))
+    {
+      try_drink($item[lucky lindy]);
+    }
+  }
+
+  if (closet_amount($item[hacked gibson]) == 0 && item_amount($item[hacked gibson]) > 0)
+  {
+    log("Putting one " + wrap($item[hacked gibson]) + " in the closet for use at the end of the day.");
+    put_closet(1, $item[hacked gibson]);
+  }
+
+  while (my_adventures() < adv_min)
+  {
+    if (!consume_best())
+      break;
+  }
 
 }
 
 void main()
 {
-  max_consumption();
+  consume();
 }
