@@ -6,6 +6,9 @@ import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M10_star_key.ash";
 
+import "quests/L02_Q_larva.ash";
+import "quests/L03_Q_rats.ash";
+import "quests/L04_Q_bats.ash";
 import "quests/L05_Q_goblin.ash";
 import "quests/L06_Q_friar.ash";
 import "quests/L07_Q_cyrpt.ash";
@@ -34,6 +37,7 @@ boolean ascend_loop()
   if (L06_Q_friar()) return true;
 
   // do a bit earlier than other order to get the Knob opened earlier.
+  // earlier knob == earlier dispensary if we get a KGE outfit.
   if (L05_Q_goblin()) return true;
 
   // do this one earlier if only to talk to the trapper ASAP.
@@ -43,13 +47,17 @@ boolean ascend_loop()
   if (M_hidden_temple()) return true;
 
   // whatever is left can be done in order:
+  if (L02_Q_larva()) return true;
+  if (L03_Q_rats()) return true;
+  if (L04_Q_bats()) return true;
   if (L07_Q_cyrpt()) return true;
 
   // macguffin quest
   if (L11_Q_black_market()) return true;
   if (L11_Q_desert()) return true;
   if (L11_Q_summoning()) return true;
-
+  if (L11_Q_hidden_city()) return true;
+  
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
   if (M10_star_key()) return true;

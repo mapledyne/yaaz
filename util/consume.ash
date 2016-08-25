@@ -150,10 +150,11 @@ boolean try_drink(item it)
     }
   }
   log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
-  if (is_vip_item(it) && can_vip_drink())
+  if (is_vip_item(it))
   {
-    cli_execute("buy 1 " + it);
-    abort("Maybe?");
+    if (!can_vip_drink(it))
+      return false;
+    cli_execute("drink 1 " + it);
     return true;
   } else {
     return drink(1, it);
@@ -232,10 +233,16 @@ void consume()
 
   if (get_counters("fortune cookie", 0, 500) == "")
   {
-    // we don't know our next semi-rare...
-    if (can_vip() && inebriety_remaining() >= consume_cost($item[lucky lindy]))
+    if (get_counters("Semirare window begin", 0, 500) == "" || get_counters("Semirare window begin", 0, 10) != "")
     {
-      try_drink($item[lucky lindy]);
+      // we don't know our next semi-rare and:
+      // we don't even know a window for it to appear...
+      // -or-
+      // the window is upon us, so we should find out what the actual number is...
+      if (can_vip_drink($item[lucky lindy]))
+      {
+        try_drink($item[lucky lindy]);
+      }
     }
   }
 

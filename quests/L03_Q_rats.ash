@@ -1,27 +1,19 @@
 import "util/main.ash";
 
-void clear_rats()
+boolean L03_Q_rats()
 {
   if (my_level() < 3)
-  {
-    log("You need to be at least level 3 before clearing the rats.");
-    return;
-  }
+    return false;
 
   if (quest_status("questL02Larva") != FINISHED)
-  {
-    warning("You can't start the Rats quest until the Larva quest is complete.");
-    return;
-  }
+    return false;
 
   if (quest_status("questL03Rat") == FINISHED)
+    return false;
+
+  if (quest_status("questL03Rat") == UNSTARTED)
   {
-    log("Rat faucet already turned off.");
-    return;
-  }
-  if (quest_status("questL03Rat") == -1)
-  {
-    log("Going to the council to pick up the quest.");
+    log("Going to the council to pick up the tavern quest.");
     council();
   }
   if (quest_status("questL03Rat") == 0)
@@ -37,6 +29,8 @@ void clear_rats()
     tavern("faucet");
   }
 
+  // generally would only get this if the tavern were done manually
+  // and not through tavern("faucet") above, but if so, we should handle the case:
   if (quest_status("questL03Rat") == 2)
   {
     log("Faucet turned off. Going to talk to Bart.");
@@ -47,5 +41,5 @@ void clear_rats()
 
 void main()
 {
-  clear_rats();
+  L03_Q_rats();
 }

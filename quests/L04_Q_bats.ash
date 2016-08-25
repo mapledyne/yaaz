@@ -54,6 +54,7 @@ void get_stench_res()
   }
 
   log("Getting a " + wrap($item[Pine-Fresh air freshener]) + " for some stench resistance. Probably not optimal - go get some skills to help with this.");
+  wait(3);
   while (i_a($item[Pine-Fresh air freshener]) == 0)
   {
     dg_adventure($location[the bat hole entrance], "items");
@@ -62,13 +63,14 @@ void get_stench_res()
 
 }
 
-void do_bats()
+boolean L04_Q_bats()
 {
   if (my_level() < 4)
-  {
-    warning("You need to be level 4 or better to defeat the bats.");
-    return;
-  }
+    return false;
+
+  if (quest_status("questL04Bat") == FINISHED)
+    return false;
+
   while(quest_status("questL04Bat") != FINISHED)
   {
     switch(quest_status("questL04Bat"))
@@ -87,14 +89,16 @@ void do_bats()
         if (item_amount($item[disassembled clover]) > 0)
         {
           log("Going to clover for some " + wrap($item[sonar-in-a-biscuit]) + ".");
-          use(1, $item[disassembled clover]);
-          string protect = get_property("cloverProtectActive");
-          set_property("cloverProtectActive", false);
-
+          get_stench_res();
+          dg_clover($location[guano junction]);
+          break;
+        }
+        log("We don't have a clover to get a " + wrap($item[sonar-in-a-biscuit]) + ", so doing it the hard way.");
+        maximize("");
+        while(i_a($item[sonar-in-a-biscuit]) == 0)
+        {
           get_stench_res();
           dg_adventure($location[guano junction]);
-
-          set_property("cloverProtectActive", protect);
           break;
         }
       case 2:
@@ -117,7 +121,7 @@ void do_bats()
         string max = "";
         if ($location[the boss bat's lair].turns_spent < 4)
         {
-          log("The " + $monster[beefy bodyguard bat] + " are meaty. Let's get some.");
+          log("The " + $monster[beefy bodyguard bat] + " is meaty. Let's get some.");
           max = "meat";
         } else {
           if (current_mcd() != 8)
@@ -135,9 +139,10 @@ void do_bats()
     }
   }
   log(wrap($monster[boss bat]) + " defeated.");
+  return true;
 }
 
 void main()
 {
-  do_bats();
+  L04_Q_bats();
 }
