@@ -30,33 +30,37 @@ boolean larva_loop()
   }
 }
 
-void collect_larva()
+boolean L02_Q_larva()
 {
+  if (quest_status("questL02Larva") == FINISHED)
+    return false;
+  if (my_level() < 2)
+    return false;
 
   int turns = my_adventures();
 
   int counter = 0;
-  while (larva_loop() && counter < 15)
+  while (larva_loop() && counter < 25)
   {
     counter += 1;
   }
 
-  if (quest_status("questL02Larva") > 10)
+  if (quest_status("questL02Larva") == FINISHED)
   {
     int total = turns - my_adventures();
     log(wrap($item[mosquito larva]) + " collected and returned to the council. It took " + total + " turns.");
   } else {
-    if (counter == 15)
+    if (counter == 25)
     {
-      error("This quest took too long. Aborting.");
+      abort("This quest took too long. Unsure what to do.");
     } else {
-      error("Mosquito quest not complete, but I don't know why.");
+      abort(wrap($item[mosquito larva]) + " quest not complete, but I don't know why.");
     }
   }
-
+  return true;
 }
 
 void main()
 {
-  collect_larva();
+  L02_Q_larva();
 }

@@ -128,6 +128,8 @@ location get_challenge_loc(string challenge)
       return $location[spookiest adventurer contest];
     case "cold":
       return $location[coldest adventurer contest];
+    case "hot":
+      return $location[hottest adventurer contest];
     default:
       error("Unsure what challenge this is: " + challenge + ".");
       abort();
