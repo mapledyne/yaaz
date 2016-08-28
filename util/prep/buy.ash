@@ -36,4 +36,10 @@ void buy_things()
     save_daily_setting("bought_print_screen", "true");
   }
 
+  if (get_property("lastGoofballBuy") < my_ascensions() && quest_status("questL03Rat") == FINISHED)
+  {
+    // once per ascension
+    log("Getting some " + wrap($item[bottle of goofballs]) + ". They're free!");
+    cli_execute("acquire bottle of goofballs");
+  }
 }

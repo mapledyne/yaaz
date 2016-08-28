@@ -2,49 +2,53 @@ import "util/util.ash";
 import "util/inventory.ash";
 import "util/print.ash";
 import "util/progress.ash";
+import "util/war_support.ash";
 
-void do_arena()
+boolean L12_SQ_arena(string side)
 {
   if (get_property("sidequestArenaCompleted") != "none")
-  {
-    return;
-  }
+    return false;
+
   if (quest_status("questL12War") < 1)
-  {
-    warning("Go start the war before starting the Arena sidequest.");
-    return;
-  }
+    return false;
+
   if (quest_status("questL12War") > 1)
-  {
-    warning("The war seems to be over. This sidequest isn't available now.");
-    return;
-  }
+    return false;
 
   if (!have_flyers())
   {
-    outfit("Frat Warrior Fatigues");
+    log("Going to get the " + wrap ("arena flyers", COLOR_ITEM) + " to distribute.");
+    outfit(war_outfit());
     visit_url("/bigisland.php?place=concert");
+    return true;
   }
+
   if (get_property("flyeredML").to_int() < 10000)
   {
-    warning("You have the flyers. Go and spread them around before coming back here.");
-    int flyerML = get_property("flyeredML").to_int() / 100;
-    progress(flyerML, "flyers delivered");
-    return;
+    log("We're still working on the war, but the " + wrap ("arena flyers", COLOR_ITEM) + " aren't all delivered yet, so going off to do other things.");
+    return false;
   }
-  outfit("Frat Warrior Fatigues");
+
+  outfit(war_outfit());
   visit_url("/bigisland.php?place=concert");
 
   if (get_property("sidequestArenaCompleted") == "none")
   {
     warning("The Arena sidequest should be complete, but for some reason it isn't.");
-    return;
+    wait(10);
+    return true;
   }
 
   log(wrap("Arena", COLOR_LOCATION) + " sidequest complete.");
+  return true;
+}
+
+boolean L12_SQ_arena()
+{
+  return L12_SQ_arena(war_side());
 }
 
 void main()
 {
-  do_arena();
+  L12_SQ_arena();
 }

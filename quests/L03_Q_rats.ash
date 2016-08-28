@@ -36,6 +36,7 @@ boolean L03_Q_rats()
     log("Faucet turned off. Going to talk to Bart.");
     visit_url("tavern.php?place=barkeep");
   }
+  return true;
 
 }
 

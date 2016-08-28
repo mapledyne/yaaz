@@ -1,4 +1,5 @@
 import "util/monsters.ash";
+import "util/locations.ash";
 
 boolean ghost_hunting()
 {
@@ -21,6 +22,13 @@ boolean protonic()
     return false;
 
   location ghost_loc = ghost_location();
+  if (!location_open(ghost_loc))
+  {
+    warning("Wanting to catch a ghost at " + wrap(ghost_loc) + " but I can't auto-unlock that yet.");
+    wait(10);
+    return false;
+  }
+
   log("Who ya gonna call? No one. You're going to trap this ghost in " + wrap(ghost_loc) + " and keep it for yourself.");
   maximize("", $item[protonic accelerator pack]);
   adv1(ghost_loc, -1, "");

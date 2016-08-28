@@ -9,6 +9,44 @@ int spleen_remaining();
 int fullness_remaining();
 int inebriety_remaining();
 float adv_per_consumption(item it);
+boolean block_auto_consume(item it);
+
+boolean booze_full();
+boolean fullness_full();
+boolean spleen_full();
+boolean all_full();
+
+
+boolean block_auto_consume(item it)
+{
+  return ($items[sandwich of the gods,
+                 grim fairy tale,
+                 groose grease,
+                 powdered gold,
+                 unconscious collective dream jar,
+                 agua de vida,
+                 instant karma] contains it);
+}
+
+boolean all_full()
+{
+  return booze_full() && fullness_full() && spleen_full();
+}
+
+boolean booze_full()
+{
+  return my_inebriety() >= inebriety_limit();
+}
+
+boolean fullness_full()
+{
+  return my_fullness() >= fullness_limit();
+}
+
+boolean spleen_full()
+{
+  return my_spleen_use() >= spleen_limit();
+}
 
 
 float adv_per_consumption(item it)
@@ -170,8 +208,10 @@ item[int] consume_list()
   foreach it in inventory
   {
     float avg = adv_per_consumption(it);
-
     if (avg == 0)
+      continue;
+
+    if (block_auto_consume(it))
       continue;
 
     noms[count] = it;
@@ -220,10 +260,13 @@ boolean consume_best()
   item[int] noms = consume_list();
   foreach nom, it in noms
   {
+
     print("Considering consuming " + wrap(it) + " which would give us " + adv_per_consumption(it) + " adventures.");
 //    if (try_consume(nom))
 //      return true;
   }
+
+  // we have nothing in our inventory we can consume right.
   return false;
 }
 

@@ -1,6 +1,8 @@
 import "util/main.ash";
+import "util/war_support.ash";
 
-string default_side = "fratboy";
+import "quests/L12_SQ_junkyard.ash";
+import "quests/L12_SQ_arena.ash";
 
 int defeated(string side);
 int defeated();
@@ -11,7 +13,6 @@ boolean sidequest(string quest);
 void do_war(string side);
 void do_war();
 
-
 int defeated(string side)
 {
   string prop = "hippiesDefeated";
@@ -21,7 +22,7 @@ int defeated(string side)
 }
 int defeated()
 {
-  return defeated(default_side);
+  return defeated(war_side());
 }
 
 int sidequests(string side)
@@ -46,7 +47,7 @@ int sidequests(string side)
 
 int sidequests()
 {
-  return sidequests(default_side);
+  return sidequests(war_side());
 }
 
 boolean sidequest(string quest, string side)
@@ -59,62 +60,54 @@ boolean sidequest(string quest, string side)
 }
 boolean sidequest(string quest)
 {
-    return sidequest(quest, default_side);
+    return sidequest(quest, war_side());
 }
 
-void do_war(string side)
+boolean L12_Q_war(string side)
 {
+  if (my_level() < 12)
+    return false;
+
+  if (i_a($item[Talisman o' Namsilat]) == 0)
+  {
+    // we want to get this (from the Gaudy Pirates) before the war starts
+    return false;
+  }
+
   if (quest_status("questL12War") < 1)
   {
-    warning("This script can't (yet) start the war. Go do that.");
-    return;
+    warning("This script can't (yet) start the island war. Go do that.");
+    wait(10);
+    return false;
   }
+
+
   if (quest_status("questL12War") == FINISHED)
   {
-    warning("War already ended. Good job!");
-    return;
+    return false;
   }
 
-  string sq = setting("war_junkyard");
-  if (sq == "")
+  if (war_junkyard())
   {
-    setting("war_junkyard", "true");
-    sq = "true";
-  }
-  if (sq == "true")
-  {
-    if (get_property("sidequestJunkyardCompleted") == "none")
-    {
-      cli_execute("call quests/L12_SQ_junkyard.ash");
-      if (get_property("sidequestJunkyardCompleted") == "none")
-      {
-        warning("Couldn't complete the " + wrap("Junkyard", COLOR_LOCATION) + " for some reason.");
-        return;
-      }
-    }
+    if (L12_SQ_junkyard(side))
+      return true;
   }
 
-  sq = setting("war_arena");
-  if (sq == "")
+  if (war_arena())
   {
-    setting("war_arena", "true");
-    sq = "true";
-  }
-  if (sq == "true")
-  {
+    if (L12_SQ_arena(side))
+      return true;
+
+    // special case to skip out if the arena's not done, but we want to avoid
+    // going forward with the war...
     if (get_property("sidequestArenaCompleted") == "none")
     {
-      cli_execute("call quests/L12_SQ_arena.ash");
-      if (get_property("sidequestArenaCompleted") == "none")
-      {
-        warning("Can't continue the war until the " + wrap("Arena", COLOR_LOCATION) + " is complete.");
-        return;
-      }
+      return false;
     }
   }
 
 
-  sq = setting("war_lighthouse");
+  string sq = setting("war_lighthouse");
   if (sq == "")
   {
     setting("war_lighthouse", "true");
@@ -128,7 +121,7 @@ void do_war(string side)
       if (get_property("sidequestLighthouseCompleted") == "none")
       {
         warning("Can't continue the war until the " + wrap("Lighthouse", COLOR_LOCATION) + " is complete.");
-        return;
+        return false;
       }
     }
   }
@@ -137,16 +130,14 @@ void do_war(string side)
   if (sidequests() < 5)
   {
     warning("This script doesn't handle the sidequests yet. You should do those before running this.");
-//    abort();
+    abort();
   }
 
   location battle = $location[The Battlefield (Frat Uniform)];
-  string outfit = "Frat Warrior Fatigues";
 
   if (side == "hippy")
   {
     battle = $location[The Battlefield (Hippy Uniform)];
-    outfit = "War Hippy Fatigues";
   }
   while(defeated() < 1000)
   {
@@ -155,7 +146,7 @@ void do_war(string side)
     {
       msg = "fratboys defeated";
     }
-    maximize("", outfit);
+    maximize("", war_outfit());
     dg_adventure(battle);
     progress(defeated(), 1000, msg);
   }
@@ -163,7 +154,7 @@ void do_war(string side)
   // turn in any last items...
   prep($location[none]);
   log("Warriors defeated. Now on to the final boss.");
-  maximize("", outfit);
+  maximize("", war_outfit());
 
   if (side == "hippy")
   {
@@ -179,15 +170,15 @@ void do_war(string side)
   } else {
     warning("I wasn't able to complete the war quest.");
   }
-
+  return true;
 }
 
-void do_war()
+boolean L12_Q_war()
 {
-  do_war(default_side);
+  return L12_Q_war(war_side());
 }
 
 void main()
 {
-  do_war();
+  L12_Q_war();
 }

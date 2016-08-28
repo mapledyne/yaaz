@@ -145,19 +145,20 @@ void hospital()
   log(wrap($location[the hidden hospital]) + " cleared.");
 }
 
-void hidden_city()
+boolean L11_Q_hidden_city()
 {
+  if (my_level() < 11)
+    return false;
+
   if (quest_status("questL11Worship") < 3)
   {
     warning("This script assumes you already have opened the hidden city.");
-    return;
+    wait(10);
+    return false;
   }
 
-  if (quest_status("questL11Worship") > 10)
-  {
-    warning("You've already completed the hidden city. Horray!");
-    return;
-  }
+  if (quest_status("questL11Worship") == FINISHED)
+    return false;
 
   get_machete();
 
@@ -172,9 +173,11 @@ void hidden_city()
   hospital();
 
   check_stones();
+
+  return true;
 }
 
 void main()
 {
-  hidden_city();
+  L11_Q_hidden_city();
 }

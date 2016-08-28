@@ -1,4 +1,5 @@
 import "util/main.ash";
+import "util/war_support.ash";
 
 int junkyard_progress()
 {
@@ -8,19 +9,16 @@ int junkyard_progress()
 void get_junkyard_item()
 {
   location loc = to_location(get_property("currentJunkyardLocation"));
-  maximize("");
-  dg_adventure(loc);
+  dg_adventure(loc, "");
   progress(junkyard_progress(), 4, "tools recovered");
 }
 
-void do_junkyard()
+boolean L12_SQ_junkyard(string side)
 {
   if (get_property("sidequestJunkyardCompleted") != "none")
-  {
-    return;
-  }
+    return false;
 
-  log("Trying to complete the junkyard...");
+  log("Trying to complete the " + wrap("Junkyard sidequest", COLOR_LOCATION) + "...");
   while (get_property("sidequestJunkyardCompleted") == "none")
   {
     item mol = to_item(get_property("currentJunkyardTool"));
@@ -29,7 +27,7 @@ void do_junkyard()
     {
       if (junkyard_progress() == 4)
       {
-        outfit("frat warrior fatigues");
+        outfit(war_outfit());
       }
       visit_url("bigisland.php?action=junkman&pwd=");
       continue;
@@ -39,12 +37,11 @@ void do_junkyard()
     {
       if (junkyard_progress() == 4)
         {
-          if (outfit("frat warrior fatigues"))
+          if (outfit(war_outfit()))
             visit_url("bigisland.php?action=junkman&pwd=");
           else
           {
-            error("Trying to equip the Frat Warrior outfit but couldn't for some reason. Junkyard quest should be complete - go visit Yossarian.");
-            return;
+            abort("Trying to equip the " + wrap(war_outfit(), COLOR_ITEM) + " but couldn't for some reason. Junkyard quest should be complete - go visit Yossarian yourself.");
           }
         } else {
           log("Visiting Yossarian.");
@@ -53,17 +50,21 @@ void do_junkyard()
     }
     else if (get_property("currentJunkyardLocation") == "")
     {
-      warning("Unsure what to do with a blank Junkyard Location.");
-      return;
+      abort("Unsure what to do with a blank Junkyard Location to continue on the junkyard quest.");
     } else {
       get_junkyard_item();
     }
   }
   log("Junkyard sidequest complete.");
+  return true;
+}
 
+boolean L12_SQ_junkyard()
+{
+  return L12_SQ_junkyard(war_side());
 }
 
 void main()
 {
-  do_junkyard();
+  L12_SQ_junkyard();
 }

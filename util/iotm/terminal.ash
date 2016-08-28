@@ -141,6 +141,9 @@ void consume_enhances()
 {
   while (can_enhance())
   {
+  error("Figure out why consume_enhances for terminal is wonky.");
+  wait(30);
+  return;
     effect enh = pick_one_enhancement();
     if (enh == $effect[none])
       return;

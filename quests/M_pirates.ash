@@ -1,3 +1,5 @@
+import "util/main.ash";
+
 void open_belowdecks()
 {
   if (quest_status("questM12Pirate") != 6)

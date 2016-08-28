@@ -16,8 +16,7 @@ void do_one_bridge_adv()
     cli_execute("untinker abridged dictionary");
   }
 
-  maximize("items");
-  dg_adventure($location[the smut orc logging camp]);
+  dg_adventure($location[the smut orc logging camp], "items");
 }
 
 boolean bridge_loop()
@@ -27,11 +26,6 @@ boolean bridge_loop()
   switch (status)
   {
     case -1:
-      if (my_level() < 9)
-      {
-        error("You can't attempt this quest until you're level 9. Level up!");
-        abort();
-      }
       log("Going to the council to pick up the quest.");
       council();
       return true;
@@ -50,13 +44,14 @@ boolean bridge_loop()
   }
 }
 
-void build_bridge()
+boolean L09_Q_bridge()
 {
+  if (my_level() < 9)
+    return false;
+
   if (quest_status("questL09Topping") > 1)
-  {
-    warning("You've already built the bridge.");
-    return;
-  }
+    return false;
+
   int turns = my_adventures();
 
   int counter = 0;
@@ -72,14 +67,15 @@ void build_bridge()
   } else {
     if (counter == 30)
     {
-      error("This quest took too long. Aborting.");
+      abort("This quest took too long. Aborting.");
     } else {
-      error("Bridge building not complete, but I don't know why.");
+      abort("Bridge building not complete, but I don't know why.");
     }
   }
-
+  return true;
 }
+
 void main()
 {
-  build_bridge();
+  L09_Q_bridge();
 }

@@ -20,7 +20,8 @@ boolean backstage_loop()
   progress(item_amount($item[bus pass]), 5, "bus passes");
   return true;
 }
-void collect_steel()
+
+boolean M06_pandemonium()
 {
 
   int turns = my_adventures();
@@ -44,5 +45,5 @@ void collect_steel()
 
 void main()
 {
-  collect_steel();
+  M06_pandemonium();
 }
