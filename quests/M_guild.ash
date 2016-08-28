@@ -20,7 +20,7 @@ boolean M_guild()
     case $class[disco bandit]:
     case $class[accordion thief]:
       loc = $location[the sleazy back alley];
-      it = $item[old sweatpants];
+      it = equipped_item($slot[pants]);
     break;
     case $class[seal clubber]:
     case $class[turtle tamer]:

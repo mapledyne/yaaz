@@ -42,6 +42,17 @@ void use_things()
     log("Drinking a " + wrap($item[steel margarita]) + ". Liver! Liver! Liver!");
     drink(1, $item[steel margarita]);
   }
+  if (item_amount($item[steel-scented air freshener]) > 0)
+  {
+    log("Chewing a " + wrap($item[steel-scented air freshener]) + ". Spleen! Spleen! Spleen!");
+    chew(1, $item[steel-scented air freshener]);
+  }
+  if (item_amount($item[steel lasagna]) > 0)
+  {
+    log("Eating a " + wrap($item[steel lasagna]) + ". Stomach! Stomach! Stomach!");
+    eat(1, $item[steel lasagna]);
+  }
+
 
   if (quest_status("questL09Topping") < 1)
   {
@@ -63,7 +74,40 @@ void use_things()
     use(1, $item[book of matches]);
   }
 
+  while (item_amount($item[Talisman o' Namsilat]) == 0 && item_amount($item[gaudy key]) > 0)
+  {
+    cli_execute("checkpoint");
+    if (!have_equipped($item[pirate fledges]))
+    {
+      equip($item[pirate fledges]);
+    }
+    use(1, $item[gaudy key]);
+    cli_execute("outfit checkpoint");
+  }
 
-  // choiceAdventure778 <-- to make choices for the tonic djinn.
+
+  if (setting("used_tonic_djinn") != "true" && item_amount($item[tonic djinn]) > 0)
+  {
+    int choice = 1;
+    if (my_meat() < 5000)
+    {
+      choice = 1;
+    } else {
+      switch(my_primestat())
+      {
+        case $stat[Muscle]:
+          break;
+        case $stat[Moxie]:
+          break;
+        case $stat[Mysticality]:
+          break;
+      }
+    }
+    set_property("choiceAdventure778", choice);
+    warning("Trying to use a tonic djinn");
+    wait(30);
+//    use(1, $item[tonic djinn]);
+    save_daily_setting("used_tonic_djinn", "true");
+  }
 
 }

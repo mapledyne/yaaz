@@ -269,12 +269,18 @@ void terminal()
 
   while(can_extrude() && item_amount($item[source essence]) > 10)
   {
+    if (my_path() == "Nuclear Autumn")
+    {
+      warning("You can extrude things from the terminal, but I don't know what's good to do in this path.");
+      warning("Skipping, but you have " +  extrudes_remaining() + " extrude(s) remaining and " + item_amount($item[source essence]) + " source essence.");
+      break;
+    }
     if (item_amount($item[hacked gibson]) > 2)
     {
       if (item_amount($item[browser cookie]) > 2)
       {
         warning("You seem flush in extruded food/booze. Not extruding anything else since it's not clear what to get. Extrude something!");
-        warning("You have " + extrudes_remaining() + " extrudes remaining.");
+        warning("You have " + extrudes_remaining() + " extrude(s) remaining and " + item_amount($item[source essence]) + " source essence.");
         break;
       } else {
         terminal_extrude("food");
@@ -286,6 +292,8 @@ void terminal()
 
   if (terminal_enquiry() == "")
   {
+    log("Setting your " + wrap($item[Source Terminal]) + " enquiry to 'stats'. Be sure to change if you want it to be something else.");
+    wait(10);
     terminal_enquiry("stats");
   }
 

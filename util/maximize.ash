@@ -146,11 +146,13 @@ void max_effects(string target)
       effect_maintain($effect[Fresh Scent]);
       effect_maintain($effect[Smooth Movements]);
       effect_maintain($effect[The Sonata of Sneakiness]);
+      uneffect($effect[Carlweather's Cantata of Confrontation]);
       break;
     case "combat":
       effect_maintain($effect[musk of the moose]);
       effect_maintain($effect[Carlweather's Cantata of Confrontation]);
       effect_maintain($effect[hippy stench]);
+      uneffect($effect[The Sonata of Sneakiness]);
       break;
     case "ml":
       effect_maintain($effect[Drescher's Annoying Noise]);

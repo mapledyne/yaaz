@@ -47,29 +47,6 @@ void cast_meat_spells(location loc)
   meat_cast($skill[The Polka of Plenty], $effect[Polka of Plenty], meat_pct * 50);
 }
 
-void item_cast(skill sk)
-{
-  effect ef = to_effect(sk);
-  if (!have_skill(sk))
-    return;
-
-  if (have_effect(ef) == 0)
-  {
-    log("Casting " + wrap(sk) + ".");
-    use_skill(sk);
-  }
-}
-
-void cast_item_spells(location loc)
-{
-  foreach l in $locations[tower level 1, tower level 2, tower level 3, tower level 4, none]
-  {
-    if (l == loc)
-      return;
-  }
-
-  item_cast($skill[Fat Leon's Phat Loot Lyric]);
-}
 
 void prep_turtle_tamer()
 {
@@ -108,19 +85,6 @@ void mall_or_clan()
   consider_mall($item[stuffed sleazy gravy fairy]);
 }
 
-void kolmafia_collectors()
-{
-  // stuff for makers of kolmafia and related. They collect stuff. Giving them stuff is nice.
-
-  // sure, this can be disabled.
-  if (setting("kolmafia_leech") == "true")
-    return;
-
-  // rubber emo roe to Veracity
-  // studded hodgman to bale
-
-}
-
 void prep_fishing(location loc)
 {
   if (is_fishing_hole(loc))
@@ -147,7 +111,7 @@ void cast_things()
 
 void prep(location loc)
 {
-  if (my_meat() > 300)
+  if (my_meat() > 300 && my_path() != "Nuclear Autumn")
     hermit(999, $item[ten-leaf clover]);
 
   get_totem();
@@ -163,15 +127,10 @@ void prep(location loc)
   use_things();
   make_things();
   cast_meat_spells(loc);
-  cast_item_spells(loc);
   class_specific_prep(my_class());
   prep_fishing(loc);
   mall_or_clan();
-  if (setting("use_avatar_potions") == "")
-  {
-    save_setting("use_avatar_potions", "true");
-  }
-  if (setting("use_avatar_potions") == "true")
+  if (setting("use_avatar_potions") != "false")
   {
     maintain_avatar();
   }

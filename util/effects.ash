@@ -87,3 +87,20 @@ void effect_maintain(effect ef)
     }
   }
 }
+
+boolean uneffect(effect ef)
+{
+	if(have_effect(ef) == 0)
+		return true;
+
+	if(cli_execute("uneffect " + ef))
+		return true;
+
+	if(item_amount($item[Soft Green Echo Eyedrop Antidote]) > 0)
+	{
+    log("Removing the effect " + wrap(ef) + " with a " + wrap($item[Soft Green Echo Eyedrop Antidote]) + ".");
+		visit_url("uneffect.php?pwd=&using=Yep.&whicheffect=" + to_int(ef));
+		return true;
+	}
+	return false;
+}

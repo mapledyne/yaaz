@@ -28,6 +28,11 @@ string wrap(item i)
 	return wrap(i, COLOR_ITEM);
 }
 
+string wrap(item i, int qty)
+{
+  return wrap(pluralize(qty, i), COLOR_ITEM);
+}
+
 string wrap(familiar f)
 {
 	return wrap(f, COLOR_ITEM);

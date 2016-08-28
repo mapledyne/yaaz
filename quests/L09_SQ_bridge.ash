@@ -16,6 +16,22 @@ void do_one_bridge_adv()
     cli_execute("untinker abridged dictionary");
   }
 
+  visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
+  progress(to_int(get_property("chasmBridgeProgress")), 30, "bridge progress");
+  if(get_property("chasmBridgeProgress").to_int() >= 30)
+  {
+    log("Bridge built! Going to see the " + wrap("Highland Lord", COLOR_LOCATION) + ".");
+    wait(3);
+    visit_url("place.php?whichplace=highlands&action=highlands_dude");
+    return;
+  }
+
+  // clover it, but only if we have spare clovers
+  if (item_amount($item[disassembled clover]) > 2)
+  {
+    dg_clover($location[the smut orc logging camp]);
+    return;
+  }
   dg_adventure($location[the smut orc logging camp], "items");
 }
 
@@ -44,7 +60,7 @@ boolean bridge_loop()
   }
 }
 
-boolean L09_Q_bridge()
+boolean L09_SQ_bridge()
 {
   if (my_level() < 9)
     return false;
@@ -64,10 +80,11 @@ boolean L09_Q_bridge()
   {
     int total = turns - my_adventures();
     log("Bridge built. It took " + total + " adventures.");
+    wait(5);
   } else {
     if (counter == 30)
     {
-      abort("This quest took too long. Aborting.");
+      abort("Making the Chasm Bridge took too long. Aborting in case something is wrong.");
     } else {
       abort("Bridge building not complete, but I don't know why.");
     }
@@ -77,5 +94,5 @@ boolean L09_Q_bridge()
 
 void main()
 {
-  L09_Q_bridge();
+  L09_SQ_bridge();
 }

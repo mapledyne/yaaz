@@ -1,7 +1,6 @@
 import "util/print.ash";
 import "util/iotm.ash";
 import "util/prep.ash";
-import "util/requirements.ash";
 import "util/consume.ash";
 
 void day_begin()

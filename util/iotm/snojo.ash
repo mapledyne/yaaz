@@ -2,14 +2,12 @@ import "util/print.ash";
 import "util/maximize.ash";
 import "util/adventure.ash";
 
-string bailedsetting = "snojo_bailed";
-
 boolean can_snojo()
 {
   if (!can_adventure())
     return false;
 
-  if (setting(bailedsetting) == "true")
+  if (setting("snojo_bailed") == "true")
   {
     return false;
   }
@@ -23,6 +21,7 @@ boolean can_snojo()
   if (to_boolean(get_property("snojoAvailable")) && get_property("snojoSetting") == "NONE")
   {
     warning(wrap($location[The X-32-F Combat Training Snowman]) + " is available but not set up. Hit a control button!");
+    wait(10);
   }
   return false;
 }
@@ -42,7 +41,7 @@ void snojo()
       float thresh = my_maxhp() * 0.2;
       if (have_effect($effect[beaten up]) > 0 || my_hp() < thresh)
       {
-        save_daily_setting(bailedsetting, "true");
+        save_daily_setting("snojo_bailed", "true");
         break;
       }
   }

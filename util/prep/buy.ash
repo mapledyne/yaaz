@@ -2,9 +2,18 @@ import "util/inventory.ash";
 
 void buy_things()
 {
+
+  stock_item($item[boris's key]);
+  stock_item($item[jarlsberg's key]);
+  stock_item($item[sneaky pete's key]);
+
+  // in order to catburgle the orcish blueprints
+  stock_item($item[frilly skirt]);
+
   stock_item($item[anti-anti-antidote], 3);
 
   stock_item($item[the big book of pirate insults]);
+
   if ((item_amount($item[dictionary]) + item_amount($item[abridged dictionary])) == 0)
   {
     stock_item($item[abridged dictionary]);

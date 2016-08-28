@@ -22,35 +22,42 @@ location pick_semi_rare_location()
 }
 
 
-void semi_rare()
+boolean semi_rare()
 {
   if(get_counters("Fortune Cookie", 0, 0) == "")
-    return;
+    return false;
 
   location loc = pick_semi_rare_location();
   if (loc == $location[none])
   {
     warning("Semi-rare counter is up, but for some reason we decided not to get something.");
-    return;
+    wait(10);
+    return false;
   }
   log("Semi-rare is up! Adventuring in " + wrap(loc) + ".");
+  wait(5);
   adventure(1, loc);
+  return true;
 }
 
-void dance_card()
+boolean dance_card()
 {
   if(get_counters("Dance Card", 0, 0) == "")
-    return;
+    return false;
 
   location loc = $location[The Haunted Ballroom];
   log("Dance card is up! Adventuring in " + wrap(loc) + ".");
   adventure(1, loc);
   if (item_amount($item[dance card]) > 0)
     use(1, $item[dance card]);
+  return true;
 }
 
-void counters()
+boolean counters()
 {
-  semi_rare();
-  dance_card();
+  if (semi_rare())
+    return true;
+  if (dance_card())
+    return true;
+  return false;
 }

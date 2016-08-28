@@ -78,6 +78,19 @@ boolean pick_a_card()
     }
   }
 
+  if (quest_status("questL08Trapper") < 1)
+  {
+    item ore = $item[asbestos ore];
+    if (item_amount(ore) < 3)
+    {
+      // we have less than three of this, so can assume we have less than
+      // three of all of them.
+      cheat_deck("mine", "get some ore for the trapper quest");
+    }
+  }
+
+  
+
   log("Out of things to automatically cheat with the deck.");
   if (can_deck())
   {

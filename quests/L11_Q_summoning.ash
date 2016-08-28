@@ -52,9 +52,10 @@ boolean get_blasting()
   while (item_amount($item[blasting soda]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
   {
     dg_adventure($location[the haunted laundry room], "items");
+    if (creatable_amount($item[unstable fulminate]) > 0)
+      create(1, $item[unstable fulminate]);
   }
   remove_attract($monster[cabinet of dr. limpieza]);
-  build_requirements();
   return true;
 }
 
@@ -81,9 +82,11 @@ boolean get_vinegar()
   while (item_amount($item[bottle of Chateau de Vinegar]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
   {
     dg_adventure($location[the haunted wine cellar], "items");
+    if (creatable_amount($item[unstable fulminate]) > 0)
+      create(1, $item[unstable fulminate]);
+
   }
   remove_attract($monster[possessed wine rack]);
-  build_requirements();
   return true;
 }
 

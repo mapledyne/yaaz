@@ -1,6 +1,24 @@
 import "util/print.ash";
 import "util/util.ash";
 
+void make_if_needed(item it, string msg)
+{
+  if (i_a(it) == 0 && creatable_amount(it) > 0)
+  {
+    if (msg != "")
+    {
+      log("Making " + wrap(it) + " " + msg);
+    }
+    create(1, it);
+  }
+}
+
+void make_if_needed(item it)
+{
+  make_if_needed(it, "");
+}
+
+
 boolean have_yellow_ray()
 {
   return false;
@@ -68,8 +86,9 @@ void stock_coin_item(item it, int qty)
   int total = qty - item_amount(it);
   int price = sell_price(master, it);
 
-  while (total > 0 && master.available_tokens > price)
+  while (total > 0 && master.available_tokens >= price)
   {
+    log("Buying " + total + " "  + wrap(it, total) + " from the " + wrap(master) + ".");
     buy(master, 1, it);
     total = total - 1;
   }
@@ -92,6 +111,7 @@ void stock_item(item it, int qty)
 
   if ((price * total) < (my_meat() * meat_buffer))
   {
+    log("Buying " + total + " "  + wrap(it, total) + ".");
     buy(total, it);
   }
 

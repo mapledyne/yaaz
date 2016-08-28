@@ -1,9 +1,9 @@
 import "util/main.ash";
-import "cleanup.ash";
 import "util/day_begin.ash";
 
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
+import "quests/M09_leaflet.ash";
 import "quests/M10_star_key.ash";
 
 import "quests/L02_Q_larva.ash";
@@ -13,7 +13,7 @@ import "quests/L05_Q_goblin.ash";
 import "quests/L06_Q_friar.ash";
 import "quests/L07_Q_cyrpt.ash";
 import "quests/L08_Q_trapper.ash";
-import "quests/L09_Q_bridge.ash";
+import "quests/L09_Q_topping.ash";
 // MacGuffin quest should be more self contained like the war one. For now:
 import "quests/L11_Q_black_market.ash";
 import "quests/L11_Q_desert.ash";
@@ -31,14 +31,16 @@ boolean ascend_loop()
   // If you do no work in one of these functions, you should
   // generally return false to let the next quest in line run.
 
-  if (quest_status("questL02Larva") == UNSTARTED)
+  if (quest_status("questL02Larva") == UNSTARTED && my_level() > 1)
   {
     log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
     visit_url("tutorial.php?action=toot");
   }
 
-  // open our guild store and trainer:
+  // misc things we should probably just do as soon as we can:
   if (M_guild()) return true;
+  if (M09_leaflet()) return true;
+
 
   // do this as soon as it's available - earlier start to the war == earlier arena fliers
   if (L12_Q_war()) return true;
@@ -61,7 +63,7 @@ boolean ascend_loop()
   if (L03_Q_rats()) return true;
   if (L04_Q_bats()) return true;
   if (L07_Q_cyrpt()) return true;
-  if (L09_Q_bridge()) return true;
+  if (L09_Q_topping()) return true;
 
   // macguffin quest
   if (L11_Q_black_market()) return true;
@@ -80,9 +82,8 @@ boolean ascend_loop()
 void ascend()
 {
   day_begin();
-  cleanup();
 
-  if (quest_status("questL02Larva") == UNSTARTED)
+  if (quest_status("questL02Larva") == UNSTARTED && my_level() > 1)
   {
     log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
     visit_url("tutorial.php?action=toot");
@@ -91,10 +92,8 @@ void ascend()
   while(ascend_loop())
   {
     wait(5);
-    cleanup();
   }
   wait(5);
-  cleanup();
   log("Wrapping up for the end of the day.");
   cli_execute("call util/day_end.ash");
 }

@@ -1,6 +1,5 @@
 import "util/inventory.ash";
 
-
 void consider_chrome_item()
 {
   // bail if we don't have the chrome ore
@@ -17,8 +16,10 @@ void consider_chrome_item()
   if (my_primestat() == $stat[moxie])
     chrome_weapon = $item[chrome crossbow];
 
-  // bail if we have one:
-  if (item_amount(chrome_weapon) > 0)
+  // bail if we have any of them. This is to protect me since I have a habit
+  // of making the wrong one when doing it manually, but that'll still
+  // give us adventures:
+  if (i_a($item[chrome staff]) > 0 || i_a($item[chrome sword]) > 0 || i_a($item[chrome crossbow]) > 0)
     return;
 
 
@@ -41,12 +42,52 @@ void consider_chrome_item()
   if ((my_adventures() < 20) && (my_inebriety() <= inebriety_limit()))
     return;
 
-  log("Making a " + wrap(chrome_weapon) + " for rollover adventures.");
+  log("Making a " + wrap(chrome_weapon) + " for more rollover adventures.");
   create(1, chrome_weapon);
 }
 
 void make_things()
 {
+
+  // General requirements for future quests and such
+
+  if (quest_status("questL13Final") != FINISHED)
+  {
+    string msg = "for the perplexing door.";
+    make_if_needed($item[skeleton key], msg);
+    make_if_needed($item[digital key], msg);
+    make_if_needed($item[richard's star key], msg);
+
+  }
+
+  make_if_needed($item[wand of nagamar]);
+
+  make_if_needed($item[unstable fulminate]);
+
+  if (my_meat() > 5000)
+  {
+    make_if_needed($item[bitchin' meatcar], "to reach the desert.");
+  }
+
+  if (get_property("questL11Palindome") != "finished")
+  {
+    make_if_needed($item[wet stunt nut stew], "for Mr. Alarm");
+  }
+
+  // Cobb Goblin cake
+  if (get_property("questL05Goblin") != "finished")
+  {
+    make_if_needed($item[knob cake], "to get to the " + wrap($monster[knob goblin king]) + ".");
+  }
+
+  if (!bit_flag(get_property("twinPeakProgress").to_int(), 2))
+  {
+    make_if_needed($item[jar of oil], "for the " + wrap($location[twin peak]));
+  }
+
+
+  // *** Less requirements, but still sometimes useful or fun:
+
   // bricks of sand:
   if (item_amount($item[handful of sand]) >= 5)
   {
