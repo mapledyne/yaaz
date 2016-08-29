@@ -14,15 +14,8 @@ import "quests/L06_Q_friar.ash";
 import "quests/L07_Q_cyrpt.ash";
 import "quests/L08_Q_trapper.ash";
 import "quests/L09_Q_topping.ash";
-// MacGuffin quest should be more self contained like the war one. For now:
-import "quests/L11_Q_black_market.ash";
-import "quests/L11_Q_desert.ash";
-import "quests/L11_Q_summoning.ash";
-import "quests/L11_Q_palindome.ash";
-import "quests/L11_Q_hidden_city.ash";
-
+import "quests/L11_Q_macguffin.ash";
 import "quests/L12_Q_war.ash";
-
 
 boolean ascend_loop()
 {
@@ -38,7 +31,7 @@ boolean ascend_loop()
   }
 
   // misc things we should probably just do as soon as we can:
-  if (M_guild()) return true;
+  if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M09_leaflet()) return true;
 
 
@@ -64,13 +57,7 @@ boolean ascend_loop()
   if (L04_Q_bats()) return true;
   if (L07_Q_cyrpt()) return true;
   if (L09_Q_topping()) return true;
-
-  // macguffin quest
-  if (L11_Q_black_market()) return true;
-  if (L11_Q_palindome()) return true;
-  if (L11_Q_desert()) return true;
-  if (L11_Q_summoning()) return true;
-  if (L11_Q_hidden_city()) return true;
+  if (L11_Q_macguffin()) return true;
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
@@ -83,16 +70,11 @@ void ascend()
 {
   day_begin();
 
-  if (quest_status("questL02Larva") == UNSTARTED && my_level() > 1)
-  {
-    log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
-    visit_url("tutorial.php?action=toot");
-  }
-
   while(ascend_loop() && can_adventure())
   {
     wait(5);
   }
+
   wait(5);
   log("Wrapping up for the end of the day.");
   cli_execute("call util/day_end.ash");
