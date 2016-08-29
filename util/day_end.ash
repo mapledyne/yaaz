@@ -1,4 +1,3 @@
-import "util/requirements.ash";
 import "util/prep.ash";
 import "util/pvp.ash";
 import "util/iotm.ash";
@@ -25,8 +24,7 @@ void check_item(slot s)
 
 void main()
 {
-  prep($location[none]);
-  build_requirements();
+  prep();
 
   if (!drunk())
   {

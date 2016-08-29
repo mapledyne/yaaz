@@ -89,7 +89,7 @@ void ascend()
     visit_url("tutorial.php?action=toot");
   }
 
-  while(ascend_loop())
+  while(ascend_loop() && can_adventure())
   {
     wait(5);
   }

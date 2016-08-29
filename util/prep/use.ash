@@ -96,17 +96,24 @@ void use_things()
       switch(my_primestat())
       {
         case $stat[Muscle]:
-          break;
-        case $stat[Moxie]:
+          choice = 2;
           break;
         case $stat[Mysticality]:
+          choice = 3;
+          break;
+        case $stat[Moxie]:
+          choice = 4;
           break;
       }
     }
+    string msg = "Meat";
+    if (choice != 1)
+      msg = to_string(my_primestat());
     set_property("choiceAdventure778", choice);
-    warning("Trying to use a tonic djinn");
-    wait(30);
-//    use(1, $item[tonic djinn]);
+    warning("Using a " + wrap($item[tonic djinn]) + " to get some " + wrap(msg, COLOR_ITEM) + ".");
+    use(1, $item[tonic djinn]);
+    // mafia doesn't seem to know the tonic djinn goes away after use.
+    cli_execute("refresh inv");
     save_daily_setting("used_tonic_djinn", "true");
   }
 

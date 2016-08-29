@@ -25,7 +25,10 @@ boolean block_auto_consume(item it)
                  powdered gold,
                  unconscious collective dream jar,
                  agua de vida,
-                 instant karma] contains it);
+                 instant karma,
+                 Falcon&trade; Maltese Liquor,
+                 hardboiled egg,
+                 hot wing] contains it);
 }
 
 boolean all_full()
@@ -58,6 +61,8 @@ float adv_per_consumption(item it)
   {
     if (it.spleen > spleen_remaining())
       return 0;
+    if (my_path() == "Nuclear Autumn" && it.spleen > 1)
+      return 0;
     return average_range(it.adventures) / to_float(it.spleen);
   }
 
@@ -65,12 +70,16 @@ float adv_per_consumption(item it)
   {
     if (it.fullness > fullness_remaining())
       return 0;
+    if (my_path() == "Nuclear Autumn" && it.fullness > 1)
+      return 0;
     return average_range(it.adventures) / to_float(it.fullness);
   }
 
   if (is_booze_item(it))
   {
     if (it.inebriety > inebriety_remaining())
+      return 0;
+    if (my_path() == "Nuclear Autumn" && it.inebriety > 1)
       return 0;
     return average_range(it.adventures) / to_float(it.inebriety);
   }
@@ -134,6 +143,8 @@ boolean can_chew(item it)
     return false;
   if (consume_cost(it) > spleen_remaining())
     return false;
+  if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
+    return false;
   return true;
 }
 
@@ -145,6 +156,8 @@ boolean can_eat(item it)
     return false;
   if (consume_cost(it) > fullness_remaining())
     return false;
+  if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
+    return false;
   return true;
 }
 
@@ -155,6 +168,8 @@ boolean can_drink(item it)
   if (!is_booze_item(it))
     return false;
   if (consume_cost(it) > inebriety_remaining())
+    return false;
+  if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
     return false;
   return true;
 }
@@ -171,7 +186,23 @@ boolean try_eat(item it)
 {
   if (!can_eat(it))
     return false;
+
+  if (item_amount(it) == 0 && creatable_amount(it) > 0)
+  {
+    log("Trying to make a " + wrap(it) + ".");
+    if (!create(1, it))
+      return false;
+  }
+
   log("Eating a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+
+  if (is_npc_item(it))
+  {
+    if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
+      return false;
+    return cli_execute("eat 1 " + it);
+  }
+
   return eat(1, it);
 }
 
@@ -179,6 +210,14 @@ boolean try_drink(item it)
 {
   if (!can_drink(it))
     return false;
+
+  if (item_amount(it) == 0 && creatable_amount(it) > 0)
+  {
+    log("Trying to make a " + wrap(it) + ".");
+    if (!create(1, it))
+      return false;
+  }
+
   if (have_skill($skill[the ode to booze]) && mp_cost($skill[the ode to booze]) < my_mp())
   {
     if (have_effect($effect[ode to booze]) == 0)
@@ -188,16 +227,23 @@ boolean try_drink(item it)
     }
   }
   log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+
   if (is_vip_item(it))
   {
     if (!can_vip_drink(it))
       return false;
-    cli_execute("drink 1 " + it);
-    return true;
-  } else {
-    return drink(1, it);
+    return cli_execute("drink 1 " + it);
   }
-  return false;
+
+  if (is_npc_item(it))
+  {
+    if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
+      return false;
+    return cli_execute("drink 1 " + it);
+  }
+
+
+  return drink(1, it);
 }
 
 item[int] consume_list()
@@ -205,18 +251,30 @@ item[int] consume_list()
   item[int] noms;
   int[item] inventory = get_inventory();
   int count = 0;
-  foreach it in inventory
+
+  foreach it in $items[]
   {
+    if (!is_npc_item(it) && item_amount(it) == 0 && creatable_amount(it) == 0 && !is_vip_item(it))
+      continue;
+
     float avg = adv_per_consumption(it);
+
     if (avg == 0)
       continue;
 
     if (block_auto_consume(it))
       continue;
 
-    noms[count] = it;
-    count+=1;
+    if (is_npc_item(it) && npc_price(it) == 0)
+      continue;
+
+    if (is_npc_item(it) && npc_price(it) > (my_meat() / 2))
+      continue;
+
+      noms[count] = it;
+      count+=1;
   }
+
   sort noms by -adv_per_consumption(value);
   return noms;
 }
@@ -261,16 +319,17 @@ boolean consume_best()
   foreach nom, it in noms
   {
 
-    print("Considering consuming " + wrap(it) + " which would give us " + adv_per_consumption(it) + " adventures.");
-//    if (try_consume(nom))
-//      return true;
+    log("Considering consuming " + wrap(it) + " which would give us " + adv_per_consumption(it) + " adventures.");
+    wait(10);
+    if (try_consume(it))
+      return true;
   }
 
-  // we have nothing in our inventory we can consume right.
+  // we have nothing in our inventory we can consume right now.
   return false;
 }
 
-void consume()
+ void consume()
 {
   int adv_min = to_int(setting("adventure_floor", "10"));
 
@@ -288,11 +347,13 @@ void consume()
       }
     }
   }
-
-  if (closet_amount($item[hacked gibson]) == 0 && item_amount($item[hacked gibson]) > 0)
+  if (my_path() != "Nuclear Autumn")
   {
-    log("Putting one " + wrap($item[hacked gibson]) + " in the closet for use at the end of the day.");
-    put_closet(1, $item[hacked gibson]);
+    if (closet_amount($item[hacked gibson]) == 0 && item_amount($item[hacked gibson]) > 0)
+    {
+      log("Putting one " + wrap($item[hacked gibson]) + " in the closet for use at the end of the day.");
+      put_closet(1, $item[hacked gibson]);
+    }
   }
 
   while (my_adventures() < adv_min)

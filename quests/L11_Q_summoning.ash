@@ -161,10 +161,17 @@ boolean do_spookyraven()
 
 boolean L11_Q_summoning()
 {
-if (quest_status("questL11Manor") == FINISHED)
-  return false;
-if (quest_status("questL11MacGuffin") == UNSTARTED)
-  return false;
+
+  if (to_int(get_property("writingDesksDefeated")) >= 5 && list_contains(setting("digitize_list"), $monster[writing desk]))
+  {
+    string new_list = list_remove(setting("digitize_list"), $monster[writing desk]);
+    save_setting("digitize_list", new_list);
+  }
+
+  if (quest_status("questL11Manor") == FINISHED)
+    return false;
+  if (quest_status("questL11MacGuffin") == UNSTARTED)
+    return false;
 
   while(do_spookyraven())
   {

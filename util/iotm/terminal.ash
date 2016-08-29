@@ -141,13 +141,17 @@ void consume_enhances()
 {
   while (can_enhance())
   {
-  error("Figure out why consume_enhances for terminal is wonky.");
-  wait(30);
-  return;
     effect enh = pick_one_enhancement();
     if (enh == $effect[none])
-      return;
+    {
+      log("We're using up your " + wrap($item[source terminal]) + " enhances, but you seem to have all of them running that you can.");
+      log("Loading up more " + wrap($effect[items.enh]) + " as a default. Maybe this could be smarter?");
+      wait(3);
+      enh = $effect[items.enh];
+    }
     terminal_enhance(enh);
+    // mafia doesn't seem to pick up new enhancements, so...
+    refresh_status();
   }
 }
 

@@ -2,7 +2,7 @@ import "util/main.ash";
 
 boolean M09_leaflet()
 {
-	if((my_level() < 9) || i_a($item[Giant Pinky Ring]))
+	if((my_level() < 9) || i_a($item[Giant Pinky Ring]) > 0)
 		return false;
 
 	if(my_class() == $class[Ed])

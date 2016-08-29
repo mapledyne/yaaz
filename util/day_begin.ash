@@ -2,6 +2,7 @@ import "util/print.ash";
 import "util/iotm.ash";
 import "util/prep.ash";
 import "util/consume.ash";
+import "util/maximize.ash";
 
 void day_begin()
 {
@@ -13,11 +14,14 @@ void day_begin()
     warning("This script assumes you're in hardcore. If you're in softcore, it'll do a lot of things the hard way.");
   }
   wait(5);
+  maximize();
+
   // breakfast-y stuff...
 
   iotm();
 
   log("Day startup tasks complete.");
+  wait(5);
 }
 
 void main()

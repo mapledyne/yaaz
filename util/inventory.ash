@@ -171,6 +171,8 @@ void get_one(item it)
 
 void get_accordion()
 {
+  if (npc_price($item[toy accordion]) == 0)
+    return;
 	if((i_a($item[Antique Accordion]) == 0) && (i_a($item[toy accordion]) == 0) && my_meat() > 300 && !($classes[Accordion Thief, Avatar of Boris, Avatar of Jarlsberg, Avatar of Sneaky Pete, Ed] contains my_class()))
 	{
     log("Getting an accordion.");
@@ -180,6 +182,8 @@ void get_accordion()
 
 void get_totem()
 {
+  if (npc_price($item[chewing gum on a string]) == 0)
+    return;
 	while(i_a($item[turtle totem]) == 0 && my_meat() > 300)
 	{
     log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[turtle totem]) + ".");
@@ -190,6 +194,8 @@ void get_totem()
 
 void get_saucepan()
 {
+  if (npc_price($item[chewing gum on a string]) == 0)
+    return;
 	while(i_a($item[saucepan]) == 0 && my_meat() > 300)
 	{
     log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[saucepan]) + ".");

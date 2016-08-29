@@ -8,6 +8,10 @@ boolean M_guild()
   if (!is_guild_class())
     return false;
 
+  // no guild on this path:
+  if (my_path() == "Nuclear Autumn")
+      return false;
+
   log("Visiting the guild to see what they want us to do.");
   visit_url("guild.php?place=challenge");
 

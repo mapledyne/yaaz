@@ -78,7 +78,7 @@ boolean pick_a_card()
     }
   }
 
-  if (quest_status("questL08Trapper") < 1)
+  if (quest_status("questL08Trapper") < 1 && can_deck("mine"))
   {
     item ore = $item[asbestos ore];
     if (item_amount(ore) < 3)
@@ -89,12 +89,12 @@ boolean pick_a_card()
     }
   }
 
-  
-
   log("Out of things to automatically cheat with the deck.");
   if (can_deck())
   {
-    log("You still have draws remaining.");
+    int draws = 15 - to_int(get_property("_deckCardsDrawn"));
+    log("You still have " + wrap(to_string(draws), COLOR_ITEM) + " draws remaining. Cheating uses 5 draws.");
+    wait(3);
   }
   return false;
 }

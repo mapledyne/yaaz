@@ -7,16 +7,10 @@ boolean can_snojo()
   if (!can_adventure())
     return false;
 
-  if (setting("snojo_bailed") == "true")
-  {
-    return false;
-  }
-
   if (to_boolean(get_property("snojoAvailable")) && get_property("_snojoFreeFights").to_int() < 10)
   {
     return true;
   }
-
 
   if (to_boolean(get_property("snojoAvailable")) && get_property("snojoSetting") == "NONE")
   {
@@ -37,13 +31,16 @@ void snojo()
 
   while(can_snojo())
   {
-      dg_adventure($location[The X-32-F Combat Training Snowman], "");
-      float thresh = my_maxhp() * 0.2;
-      if (have_effect($effect[beaten up]) > 0 || my_hp() < thresh)
-      {
-        save_daily_setting("snojo_bailed", "true");
-        break;
-      }
+    if (expected_damage($monster[The X-32-F Combat Training Snowman]) > (my_hp()/2))
+      break;
+
+    dg_adventure($location[The X-32-F Combat Training Snowman], "");
+    float thresh = my_maxhp() * 0.2;
+    if (have_effect($effect[beaten up]) > 0 || my_hp() < thresh)
+    {
+      save_daily_setting("snojo_bailed", "true");
+      break;
+    }
   }
 }
 
