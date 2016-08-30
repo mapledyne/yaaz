@@ -1,8 +1,8 @@
-import "util/print.ash";
+import "util/base/print.ash";
 import "util/iotm.ash";
-import "util/prep.ash";
-import "util/consume.ash";
-import "util/maximize.ash";
+import "util/base/prep.ash";
+import "util/base/consume.ash";
+import "util/base/maximize.ash";
 import "util/progress.ash";
 
 void day_begin()

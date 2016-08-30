@@ -1,6 +1,5 @@
 import "util/main.ash";
 import "quests/M_pirates.ash";
-import "util/adventure.ash";
 
 
 boolean L11_SQ_palindome()

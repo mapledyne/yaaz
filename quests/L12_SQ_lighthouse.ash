@@ -1,7 +1,4 @@
-import "util/util.ash";
-import "util/inventory.ash";
-import "util/print.ash";
-import "util/progress.ash";
+import "util/main.ash";
 
 void do_lighthouse()
 {

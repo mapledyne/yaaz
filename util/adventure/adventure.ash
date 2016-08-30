@@ -1,9 +1,8 @@
-import "util/prep.ash";
-import "util/counters.ash";
-import "util/progress.ash";
-import "util/inventory.ash";
+import "util/base/prep.ash";
+import "util/adventure/counters.ash";
+import "util/base/inventory.ash";
 import "util/iotm/protonic.ash";
-import "util/util.ash";
+import "util/base/util.ash";
 
 boolean overrides();
 boolean dg_clover(location loc);

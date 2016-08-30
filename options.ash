@@ -1,4 +1,4 @@
-import "util/util.ash";
+import "util/base/util.ash";
 
 string pref_line(string pref, string def, string comment)
 {

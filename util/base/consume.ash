@@ -1,5 +1,5 @@
-import "util/print.ash";
-import "util/util.ash";
+import "util/base/print.ash";
+import "util/base/util.ash";
 import "util/iotm/clanvip.ash";
 
 boolean is_spleen_item(item it);

@@ -1,8 +1,5 @@
-import "util/util.ash";
-import "util/inventory.ash";
-import "util/print.ash";
-import "util/progress.ash";
-import "util/war_support.ash";
+import "util/main.ash";
+import "util/base/war_support.ash";
 
 boolean L12_SQ_arena(string side)
 {

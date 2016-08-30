@@ -1,5 +1,5 @@
-import "util/print.ash";
-import "util/consume.ash";
+import "util/base/print.ash";
+import "util/base/consume.ash";
 
 item effect_to_item(effect ef)
 {

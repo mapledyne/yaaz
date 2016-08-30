@@ -1,5 +1,5 @@
-import "util/util.ash";
-import "util/print.ash";
+import "util/base/util.ash";
+import "util/base/print.ash";
 
 void progress_sheet()
 {

@@ -11,10 +11,9 @@ import "util/iotm/ltt.ash";
 
 void iotm()
 {
-  log("Doing default actions with various IotM things, if you have them.");
-  //snojo();
+  snojo();
 
-  //witchess();
+  witchess();
 
   chateau();
 

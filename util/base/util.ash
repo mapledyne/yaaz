@@ -1,4 +1,4 @@
-import "util/print.ash";
+import "util/base/print.ash";
 import <zlib.ash>;
 
 int FINISHED = 100;

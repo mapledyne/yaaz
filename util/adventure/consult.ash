@@ -1,5 +1,5 @@
-import "util/monsters.ash";
-import "util/inventory.ash";
+import "util/base/monsters.ash";
+import "util/base/inventory.ash";
 
 import <zlib.ash>;
 

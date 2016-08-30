@@ -1,4 +1,4 @@
-import "util/util.ash";
+import "util/base/util.ash";
 
 boolean have_colored_tongue()
 {

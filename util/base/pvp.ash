@@ -1,4 +1,4 @@
-import "util/print.ash";
+import "util/base/print.ash";
 
 void pvp();
 void pvp(string name, string swag, string attack);

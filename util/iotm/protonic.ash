@@ -1,5 +1,5 @@
-import "util/monsters.ash";
-import "util/locations.ash";
+import "util/base/monsters.ash";
+import "util/base/locations.ash";
 
 boolean ghost_hunting()
 {

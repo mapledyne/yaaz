@@ -1,6 +1,6 @@
-import "util/print.ash";
-import "util/maximize.ash";
-import "util/adventure.ash";
+import "util/base/print.ash";
+import "util/base/maximize.ash";
+import "util/adventure/adventure.ash";
 
 boolean can_witchess()
 {

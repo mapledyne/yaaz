@@ -1,8 +1,7 @@
-import "util/inventory.ash";
-import "util/print.ash";
-import "util/adventure.ash";
-import "util/familiars.ash";
+import "util/base/inventory.ash";
+import "util/base/print.ash";
+import "util/adventure/adventure.ash";
+import "util/base/familiars.ash";
 import "util/iotm.ash";
-import "util/maximize.ash";
-import "util/progress.ash";
-import "util/pvp.ash";
+import "util/base/maximize.ash";
+import "util/base/pvp.ash";

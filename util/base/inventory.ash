@@ -1,5 +1,5 @@
-import "util/print.ash";
-import "util/util.ash";
+import "util/base/print.ash";
+import "util/base/util.ash";
 
 void make_if_needed(item it, string msg)
 {

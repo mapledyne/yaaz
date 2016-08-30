@@ -1,6 +1,5 @@
-import "util/print.ash";
-import "util/progress.ash";
-import "util/util.ash";
+import "util/base/print.ash";
+import "util/base/util.ash";
 
 boolean can_chateau()
 {

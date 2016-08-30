@@ -1,10 +1,10 @@
-import "util/print.ash";
-import "util/effects.ash";
-import "util/inventory.ash";
-import "util/maximize.ash";
-import "util/util.ash";
-import "util/heart.ash";
-import "util/consume.ash";
+import "util/base/print.ash";
+import "util/base/effects.ash";
+import "util/base/inventory.ash";
+import "util/base/maximize.ash";
+import "util/base/util.ash";
+import "util/base/heart.ash";
+import "util/base/consume.ash";
 import "util/prep/sell.ash";
 import "util/prep/buy.ash";
 import "util/prep/make.ash";
@@ -143,10 +143,8 @@ void prep(location loc)
   class_specific_prep(my_class());
   prep_fishing(loc);
   mall_or_clan();
-  if (setting("use_avatar_potions") != "false")
-  {
-    maintain_avatar();
-  }
+
+  manuel();
 
   heart();
 

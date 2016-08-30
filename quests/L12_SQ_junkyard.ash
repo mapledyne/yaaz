@@ -1,5 +1,5 @@
 import "util/main.ash";
-import "util/war_support.ash";
+import "util/base/war_support.ash";
 
 int junkyard_progress()
 {

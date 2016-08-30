@@ -1,7 +1,7 @@
-import "util/print.ash";
-import "util/inventory.ash";
-import "util/effects.ash";
-import "util/familiars.ash";
+import "util/base/print.ash";
+import "util/base/inventory.ash";
+import "util/base/effects.ash";
+import "util/base/familiars.ash";
 import "util/iotm/terminal.ash";
 import "util/iotm/bookshelf.ash";
 

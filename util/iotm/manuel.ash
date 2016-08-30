@@ -1,4 +1,20 @@
-import "util/print.ash";
+import "util/base/print.ash";
+import "util/base/util.ash";
+
+
+boolean have_manuel()
+{
+  boolean have;
+  if (setting("have_manuel") == "")
+  {
+    have = (visit_url("questlog.php?which=6").contains_text( "[Monster Manuel]"));
+    save_daily_setting("have_manuel", have);
+  }
+  else
+    have = to_boolean(setting("have_manuel"));
+
+  return have;
+}
 
 boolean lame_avatar(item it) {
     return $items[blob of acid, flayed mind, kobold kibble, Fitspiration&trade; poster, giant tube of black lipstick, punk patch, artisanal hand-squeezed wheatgrass juice, steampunk potion,
@@ -79,4 +95,52 @@ void maintain_avatar()
   take_closet(1, avatar_potion);
   use(1, avatar_potion);
 
+}
+
+int manuel_location_max(location loc)
+{
+  monster[int] mons = get_monsters(loc);
+  return count(mons) * 3;
+}
+
+int manuel_location(location loc)
+{
+  monster[int] mons = get_monsters(loc);
+  int facts = manuel_location_max(loc);
+  int have = 0;
+
+  if (to_int(setting("factoids_" + loc, "0")) == facts)
+  {
+    return facts;
+  }
+
+  foreach m in mons
+  {
+    have += monster_factoids_available(mons[m], false);
+  }
+  save_daily_setting("factoids_" + loc, have);
+  return have;
+}
+
+void manuel_progress(location loc)
+{
+  if (!have_manuel())
+    return;
+
+  int max = manuel_location_max(loc);
+  int have = manuel_location(loc);
+  if (have == max)
+    return;
+
+  progress(have, max, "Monster Manuel factoids from " + loc);
+}
+
+void manuel()
+{
+  maintain_avatar();
+}
+
+void main()
+{
+  manuel();
 }

@@ -1,7 +1,7 @@
-import "util/prep.ash";
-import "util/pvp.ash";
+import "util/base/prep.ash";
+import "util/base/pvp.ash";
 import "util/iotm.ash";
-import "util/util.ash";
+import "util/base/util.ash";
 
 void check_item(slot s)
 {

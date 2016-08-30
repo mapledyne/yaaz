@@ -1,4 +1,4 @@
-import "util/print.ash";
+import "util/base/print.ash";
 
 location pick_semi_rare_location()
 {

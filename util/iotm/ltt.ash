@@ -1,5 +1,5 @@
-import "util/print.ash";
-import "util/inventory.ash";
+import "util/base/print.ash";
+import "util/base/inventory.ash";
 
 void ltt()
 {

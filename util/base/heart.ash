@@ -1,5 +1,5 @@
 
-import "util/util.ash";
+import "util/base/util.ash";
 import <zlib.ash>;
 
 int smiles_remaining()
