@@ -9,7 +9,7 @@ string prep_for_king()
       return "Knob Goblin Harem Girl Disguise";
     if (item_amount($item[Knob Goblin perfume]) > 0)
     {
-      log("Getting all smelly and nice for the " + wrap($monster[goblin king]) + ".");
+      log("Getting all smelly and nice for the " + wrap($monster[knob goblin king]) + ".");
       use(1, $item[Knob Goblin perfume]);
       return "Knob Goblin Harem Girl Disguise";
     }
@@ -33,6 +33,7 @@ string prep_for_king()
   } else {
     abort("Prepping for the Goblin King, but I don't have an outfit.");
   }
+  return "";
 }
 
 boolean L05_Q_goblin()

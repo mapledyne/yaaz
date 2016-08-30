@@ -159,7 +159,7 @@ boolean do_spookyraven()
   }
 }
 
-boolean L11_Q_summoning()
+boolean L11_SQ_summoning()
 {
 
   if (to_int(get_property("writingDesksDefeated")) >= 5 && list_contains(setting("digitize_list"), $monster[writing desk]))
@@ -189,5 +189,5 @@ boolean L11_Q_summoning()
 
 void main()
 {
-  L11_Q_summoning();
+  L11_SQ_summoning();
 }

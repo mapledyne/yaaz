@@ -145,7 +145,7 @@ void hospital()
   log(wrap($location[the hidden hospital]) + " cleared.");
 }
 
-boolean L11_Q_hidden_city()
+boolean L11_SQ_hidden_city()
 {
   if (my_level() < 11)
     return false;
@@ -179,5 +179,5 @@ boolean L11_Q_hidden_city()
 
 void main()
 {
-  L11_Q_hidden_city();
+  L11_SQ_hidden_city();
 }

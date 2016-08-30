@@ -31,7 +31,7 @@ void snojo()
 
   while(can_snojo())
   {
-    if (expected_damage($monster[The X-32-F Combat Training Snowman]) > (my_hp()/2))
+    if (expected_damage($monster[X-32-F Combat Training Snowman]) > (my_hp()/2))
       break;
 
     dg_adventure($location[The X-32-F Combat Training Snowman], "");

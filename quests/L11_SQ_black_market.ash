@@ -69,7 +69,7 @@ boolean market_loop()
   }
 }
 
-boolean L11_Q_black_market()
+boolean L11_SQ_black_market()
 {
 
   if (quest_status("questL11Black") == FINISHED)
@@ -105,5 +105,5 @@ boolean L11_Q_black_market()
 
 void main()
 {
-  L11_Q_black_market();
+  L11_SQ_black_market();
 }

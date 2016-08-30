@@ -15,6 +15,7 @@ void use_things()
   use_all($item[CSA discount card]);
   use_all($item[dungeon dragon chest]);
   use_all($item[duct tape wallet]);
+  use_all($item[Effermint&trade; tablets]);
   use_all($item[fat wallet]);
   use_all($item[Frobozz Real-Estate Company Instant House (TM)]);
   use_all($item[gummi turtle]);

@@ -13,7 +13,7 @@ int turners()
   return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);
 }
 
-void open_pyramid()
+boolean L11_SQ_pyramid()
 {
   if (quest_status("questL11Pyramid") < 0)
   {
@@ -21,15 +21,14 @@ void open_pyramid()
     {
       log("Opening up " + wrap("the pyramid", COLOR_LOCATION) + ".");
       visit_url("place.php?whichplace=desertbeach&action=db_pyramid1");
+      return true;
     } else {
-      warning("Pyramid not yet discovered. You need to solve more of the MacGuffin mystery.");
-      return;
+      return false;
     }
   }
   if (quest_status("questL11Pyramid") > 10)
   {
-    warning("Pyramid quest already complete.");
-    return;
+    return false;
   }
 
   while (quest_status("questL11Pyramid") < 1)
@@ -60,10 +59,13 @@ void open_pyramid()
     dg_adventure($location[The Middle Chamber]);
     progress(turners(), 10, "wheel turning things");
   }
+  log("You have all the wheel turning things, but actually turning the wheel isn't scripted.");
+  wait(15);
 
+  return true;
 }
 
 void main()
 {
-  open_pyramid();
+  L11_SQ_pyramid();
 }

@@ -111,7 +111,7 @@ int open_gnasir()
     return adv_spent;
 }
 
-boolean L11_Q_desert()
+boolean L11_SQ_desert()
 {
 
   if(my_level() < 11)
@@ -246,5 +246,5 @@ boolean L11_Q_desert()
 
 void main()
 {
-  L11_Q_desert();
+  L11_SQ_desert();
 }
