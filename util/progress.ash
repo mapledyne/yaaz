@@ -1,44 +1,45 @@
+import "util/util.ash";
+import "util/print.ash";
 
-void progress(int percent);
-void progress(int percent, string msg);
-void progress(int qty, int total);
-void progress(int qty, int total, string msg);
-
-void progress(int percent)
+void progress_sheet()
 {
-  progress(percent, 100);
-}
-
-void progress(int qty, int total)
-{
-  progress(qty, total, "");
-}
-
-void progress(int percent, string msg)
-{
-  progress(percent, 100, msg);
-}
-
-void progress(int qty, int total, string msg)
-{
-  if (qty > total)
-    qty = total;
-
-  int percent = ((to_float(qty) / to_float(total)) * 100.0);
-
-  string footer;
-  if (total == 100)
+  print("Current progress in a few things:");
+  if (my_level() < 13)
   {
-    footer = "&nbsp;" + qty + "%";
-  } else {
-    footer = "&nbsp;" + qty + "/" + total;
+    progress(my_level(), 13, "progress to level 13");
   }
-  if (msg != "")
+  if (item_amount($item[digital key]) == 0 && item_amount($item[white pixel]) > 0)
   {
-    footer += "&nbsp;" + msg;
+    progress(item_amount($item[white pixel]), 30, "digital key");
+  }
+  int desks = to_int(get_property("writingDesksDefeated"));
+
+  if (desks > 0 && desks < 5)
+  {
+    progress(desks, 5, "writing desks defeated");
   }
 
-  string div_style="border: 1px solid black; background-color: silver; width: 200px; position: relative; padding: 3px";
-  string bar_style="background-color: green; width: " + percent + "%;";
-  print_html("<div style='"+div_style+"'><div style='" + bar_style + "'>&nbsp;</div></div>&nbsp;" + footer);
+  int ore = item_amount($item[asbestos ore]);
+  if (quest_status("questL08Trapper") < 2 && ore > 0 && ore < 3)
+  {
+    progress(ore, 3, "ore for the trapper");
+  }
+
+  int cheese = item_amount($item[goat cheese]);
+  if (quest_status("questL08Trapper") < 2 && cheese > 0 && cheese < 3)
+  {
+    progress(cheese, 3, "cheese for the trapper");
+  }
+
+  if (quest_status("questL07Cyrptic") < FINISHED && quest_status("questL07Cyrptic") > UNSTARTED)
+  {
+    int evil = 200 - to_int(get_property("cyrptTotalEvilness"));
+    progress(evil, 200, "Cyrpt progress");
+  }
+
+}
+
+void main()
+{
+  progress_sheet();
 }

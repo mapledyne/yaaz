@@ -26,7 +26,6 @@ string setting(string value, string def);
 string setting(string value);
 item spooky_quest_item();
 boolean guild_store_open();
-int smiles_remaining();
 int count_set(boolean[item] things);
 float average_range(string avg);
 boolean can_adventure();
@@ -63,14 +62,6 @@ int count_set(boolean[item] things)
     counter += item_amount(it);
   }
   return counter;
-}
-
-int smiles_remaining()
-{
-  int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
-  int casts_used = to_int(get_property("_smilesOfMrA"));
-
-  return total_casts_available - casts_used;
 }
 
 boolean guild_store_open()

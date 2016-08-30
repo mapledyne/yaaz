@@ -49,7 +49,7 @@ void effect_maintain(effect ef)
 
   if (sk == $skill[none] && it == $item[none])
   {
-    error("Trying to maintain an effect (" + wrap(ef) + ") and can't find an appropriate skill or item.");
+    error("Trying to add an effect (" + wrap(ef) + ") and can't find an appropriate skill or item.");
     return;
   }
 
@@ -57,7 +57,7 @@ void effect_maintain(effect ef)
   {
     if (have_skill(sk))
     {
-      log("Keeping up " + wrap(ef) + " by casting " + wrap(sk) + ".");
+      log("Adding effect " + wrap(ef) + " by casting " + wrap(sk) + ".");
       use_skill(1, sk);
       return;
     }
@@ -81,7 +81,7 @@ void effect_maintain(effect ef)
 
     if (item_amount(it) > 0)
     {
-      log("Keeping up " + wrap(ef) + " by using " + wrap(it) + ".");
+      log("Adding effect " + wrap(ef) + " by using " + wrap(it) + ".");
       use(1, it);
       return;
     }
@@ -103,4 +103,40 @@ boolean uneffect(effect ef)
 		return true;
 	}
 	return false;
+}
+
+void cast_surplus_mp()
+{
+  if (my_mp() < (my_maxmp() * 0.8))
+    return;
+
+  log("Trying to cast out surplus MP. Can't easily test this until out of Nuclear Autumn.");
+  wait(5);
+
+  effect[int] effect_list;
+  int count = 0;
+
+  foreach ef in $effects[polka of plenty,
+                         Fat Leon's Phat Loot Lyric,
+                         elemental saucesphere,
+                         astral shell,
+                         snarl of the timberwolf,
+                         ghostly shell,
+                         Empathy]
+  {
+    if (have_skill(effect_to_skill(ef)))
+    {
+      effect_list[count] = ef;
+      count += 1;
+    }
+  }
+
+  sort effect_list by have_effect(value);
+
+  foreach ef in effect_list
+  {
+    print(effect_list[ef]);
+  }
+
+
 }

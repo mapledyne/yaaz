@@ -3,6 +3,7 @@ import "util/iotm.ash";
 import "util/prep.ash";
 import "util/consume.ash";
 import "util/maximize.ash";
+import "util/progress.ash";
 
 void day_begin()
 {
@@ -20,8 +21,11 @@ void day_begin()
 
   iotm();
 
-  log("Day startup tasks complete.");
+  progress_sheet();
   wait(5);
+
+  log("Day startup tasks complete. About to begin doing stuff.");
+  wait(10);
 }
 
 void main()

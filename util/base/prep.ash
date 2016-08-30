@@ -111,6 +111,19 @@ void cast_things()
 
 void prep(location loc)
 {
+
+  if (have_effect($effect[beaten up]) > 0)
+    uneffect($effect[beaten up]);
+
+  if (my_hp() < (my_maxhp() * 0.6))
+    restore_hp(90);
+
+  // should put more finesse here to just recover what we need...
+  if (my_mp() < (my_maxmp() * 0.5))
+    restore_hp(my_maxmp() * 0.6);
+
+  cast_surplus_mp();
+
   if (my_meat() > 300 && my_path() != "Nuclear Autumn")
     hermit(999, $item[ten-leaf clover]);
 

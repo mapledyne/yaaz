@@ -2,6 +2,17 @@
 import "util/util.ash";
 import <zlib.ash>;
 
+int smiles_remaining()
+{
+  if (my_path() == "Nuclear Autumn")
+    return 0;
+
+  int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
+  int casts_used = to_int(get_property("_smilesOfMrA"));
+
+  return total_casts_available - casts_used;
+}
+
 boolean blacklisted(string player)
 {
   // this should check an aggregate, but I'm sick and can't think straight.
@@ -143,7 +154,9 @@ void collectors()
   // KoLMafia devs:
   collect("veracity", $item[rubber emo roe]);
   collect("veracity", $item[rubber WWtNSD? bracelet]);
-  collect("holatuwol", $item[stuffed cocoabo]);
+  collect("bale", $item[stuffed hodgman]); // prolific scripter
+//  collect("holatuwol", $item[stuffed cocoabo]); // no longer playing?
+
 }
 
 void heart()
