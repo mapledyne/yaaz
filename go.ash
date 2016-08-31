@@ -20,6 +20,10 @@ import "quests/L12_Q_war.ash";
 
 boolean ascend_loop()
 {
+
+  if (!can_adventure())
+    return false;
+
   // returning true here ultimately just causes us to start this
   // function over again.
   // If you do no work in one of these functions, you should
@@ -116,7 +120,7 @@ void ascend()
 {
   day_begin();
 
-  while(ascend_loop() && can_adventure())
+  while(ascend_loop())
   {
     iotm();
     manuel_progress();

@@ -269,8 +269,6 @@ void terminal()
   if (!can_terminal())
     return;
 
-  log("Checking the " + $item[Source Terminal] + ".");
-
   while(can_extrude() && item_amount($item[source essence]) > 10)
   {
     if (my_path() == "Nuclear Autumn")
