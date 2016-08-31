@@ -11,9 +11,6 @@ import "util/iotm/ltt.ash";
 
 void iotm()
 {
-  snojo();
-
-  witchess();
 
   chateau();
 
@@ -31,6 +28,10 @@ void iotm()
   precinct();
 
   ltt();
+
+  snojo();
+
+  witchess();
 }
 
 void main()

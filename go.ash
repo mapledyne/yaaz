@@ -1,5 +1,6 @@
 import "util/main.ash";
 import "util/day_begin.ash";
+import "util/iotm/manuel.ash";
 
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
@@ -72,9 +73,10 @@ void ascend()
 
   while(ascend_loop() && can_adventure())
   {
+    manuel_progress();
     wait(5);
   }
-
+  manuel_progress();
   wait(5);
   log("Wrapping up for the end of the day.");
   cli_execute("call util/day_end.ash");

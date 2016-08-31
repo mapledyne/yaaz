@@ -2,13 +2,13 @@ import "util/base/prep.ash";
 import "util/adventure/counters.ash";
 import "util/base/inventory.ash";
 import "util/iotm/protonic.ash";
+import "util/iotm/manuel.ash";
 import "util/base/util.ash";
 
 boolean overrides();
 boolean dg_clover(location loc);
 boolean dg_adventure(location loc, string maximize);
 boolean dg_adventure(location loc);
-
 
 boolean overrides()
 {
@@ -100,6 +100,8 @@ boolean dg_adventure(location loc, string maximize)
 
   if (protonic())
     return true;
+
+  manuel_add_location(loc);
 
   boolean adv = adv1(loc, -1, "");
 

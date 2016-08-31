@@ -1,6 +1,19 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
 
+boolean manuel_exclude_monster(monster mon)
+{
+  if ($monsters[X-32-F Combat Training Snowman] contains mon)
+    return true;
+  return false;
+}
+
+void manuel_add_location(location loc)
+{
+  string locs = setting("manuel_locations");
+  locs = list_add(locs, loc);
+  save_daily_setting("manuel_locations", locs);
+}
 
 boolean have_manuel()
 {
@@ -97,17 +110,31 @@ void maintain_avatar()
 
 }
 
-int manuel_location_max(location loc)
+monster[int] manuel_monsters(location loc)
 {
   monster[int] mons = get_monsters(loc);
-  return count(mons) * 3;
+  monster[int] cleaned;
+  foreach m in mons
+  {
+    if (!manuel_exclude_monster(mons[m]))
+      cleaned[m] = mons[m];
+  }
+  return cleaned;
+}
+
+int manuel_location_max(location loc)
+{
+  return count(manuel_monsters(loc)) * 3;
 }
 
 int manuel_location(location loc)
 {
-  monster[int] mons = get_monsters(loc);
+  monster[int] mons = manuel_monsters(loc);
   int facts = manuel_location_max(loc);
   int have = 0;
+
+  if (facts == 0)
+    return 0;
 
   if (to_int(setting("factoids_" + loc, "0")) == facts)
   {
@@ -124,15 +151,33 @@ int manuel_location(location loc)
 
 void manuel_progress(location loc)
 {
+  if (loc == $location[none])
+    return;
   if (!have_manuel())
     return;
 
   int max = manuel_location_max(loc);
-  int have = manuel_location(loc);
-  if (have == max)
+  if (max == 0)
     return;
 
+  int have = manuel_location(loc);
+//  if (setting("manuel_always_show_progress") != "true" && (have == max))
+//    return;
+
   progress(have, max, "Monster Manuel factoids from " + loc);
+}
+
+void manuel_progress()
+{
+  string[int] locs = split_string(setting("manuel_locations"), ", ");
+  foreach i in locs
+  {
+    location l = to_location(locs[i]);
+    manuel_progress(l);
+  }
+
+  // clear list
+  save_daily_setting("manuel_locations", "");
 }
 
 void manuel()

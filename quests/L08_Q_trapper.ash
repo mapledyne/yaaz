@@ -14,12 +14,14 @@ int get_cheese()
 
   int qty = item_amount(cheese);
 
+  add_attract($monster[dairy goat]);
   while(qty < 3)
   {
-    maximize("items");
-    dg_adventure(goatlet);
+    dg_adventure(goatlet, "items");
     qty = item_amount(cheese);
+    progress(qty, 3, "goat cheese");
   }
+  remove_attract($monster[dairy goat]);
   return qty;
 }
 
