@@ -174,6 +174,7 @@ boolean L07_Q_cyrpt()
 			log("Bonerdagon defeated! It took " + total_adv + " adventures.");
 			use(1, $item[chest of the bonerdagon]);
 			log("Going to the " + wrap("council", COLOR_LOCATION) + " to report our victory.");
+			council();
 		}
 		else if(!boner)
 		{
