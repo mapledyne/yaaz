@@ -27,7 +27,7 @@ void do_one_bridge_adv()
   }
 
   // clover it, but only if we have spare clovers
-  if (item_amount($item[disassembled clover]) > 2)
+  if (item_amount($item[disassembled clover]) > 1)
   {
     dg_clover($location[the smut orc logging camp]);
     return;
@@ -37,6 +37,10 @@ void do_one_bridge_adv()
 
 boolean bridge_loop()
 {
+
+  if (!can_adventure())
+    return false;
+
   int status = quest_status("questL09Topping");
 
   switch (status)
@@ -70,10 +74,9 @@ boolean L09_SQ_bridge()
 
   int turns = my_adventures();
 
-  int counter = 0;
-  while (bridge_loop() && counter < 30)
+  while (bridge_loop())
   {
-    counter += 1;
+    // work in bridge_loop()
   }
 
   if (quest_status("questL09Topping") > 1)
@@ -81,13 +84,10 @@ boolean L09_SQ_bridge()
     int total = turns - my_adventures();
     log("Bridge built. It took " + total + " adventures.");
     wait(5);
-  } else {
-    if (counter == 30)
-    {
-      abort("Making the Chasm Bridge took too long. Aborting in case something is wrong.");
-    } else {
-      abort("Bridge building not complete, but I don't know why.");
-    }
+  }
+  else
+  {
+    log("Bridge not yet complete.");
   }
   return true;
 }

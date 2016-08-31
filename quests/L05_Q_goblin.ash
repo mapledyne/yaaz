@@ -20,7 +20,7 @@ string prep_for_king()
   {
     item cake = $item[knob cake];
 
-    while (item_amount(cake) == 0)
+    while (item_amount(cake) == 0 && can_adventure())
     {
       maximize("", "Knob Goblin Elite Guard Uniform");
       dg_adventure($location[cobb's knob kitchens]);
@@ -51,7 +51,7 @@ boolean L05_Q_goblin()
       log("Getting " + wrap($item[cobb's knob map]) + " from the council.");
       council();
     }
-    while (item_amount($item[Knob Goblin encryption key]) == 0)
+    while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
       dg_adventure(outskirts, "");
     }
@@ -72,7 +72,7 @@ boolean L05_Q_goblin()
 
     log("Off to try to get the " + wrap("Knob Goblin Harem Girl Disguise", COLOR_ITEM) + " from the " + wrap(harem) + ".");
     add_attract($monster[knob goblin harem girl]);
-    while(!have_outfit("Knob Goblin Harem Girl Disguise"))
+    while(!have_outfit("Knob Goblin Harem Girl Disguise") && can_adventure())
     {
       dg_adventure(harem, "items");
     }

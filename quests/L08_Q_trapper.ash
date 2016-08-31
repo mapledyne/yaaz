@@ -15,7 +15,7 @@ int get_cheese()
   int qty = item_amount(cheese);
 
   add_attract($monster[dairy goat]);
-  while(qty < 3)
+  while(qty < 3 && can_adventure())
   {
     dg_adventure(goatlet, "items");
     qty = item_amount(cheese);

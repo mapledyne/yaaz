@@ -35,7 +35,25 @@ boolean protonic()
   return true;
 }
 
+void cross_streams(string player)
+{
+  if (i_a($item[protonic accelerator pack]) == 0)
+    return;
+
+  if (to_boolean(get_property("_streamsCrossed")))
+    return;
+
+  log("Crossing streams with " + wrap(player, COLOR_MONSTER) + ".");
+  cli_execute("crossstreams " + player);
+}
+
+void cross_streams()
+{
+  string p = get_property("streamCrossDefaultTarget");
+  cross_streams(p);
+}
+
 void main()
 {
-
+  protonic();
 }

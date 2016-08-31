@@ -112,6 +112,31 @@ void deck()
   }
 }
 
+void consume_cards()
+{
+  if (!can_deck())
+    return;
+
+  int left = 15 - to_int(get_property("_deckCardsDrawn"));
+
+  if (left < 5 && can_adventure())
+  {
+    log("You have some cards left from the " + wrap($item[deck of every card]) + ", but not enough to cheat for anything. Using up your draws.");
+    while(can_deck())
+    {
+      cli_execute("cheat random");
+    }
+    return;
+  }
+
+
+  log("You have " + left + " draws left of the "+ wrap($item[deck of every card]) + ".");
+  log("This is enough to cheat for something, but I'm undecided what to cheat for.");
+  log("Maybe get something heart-y like the " + wrap($item[gift card]) + ", or more");
+  log("meat with the " + wrap($item[1952 mickey mantle card]) + ", or something else.");
+  wait(10);
+}
+
 void main()
 {
   deck();

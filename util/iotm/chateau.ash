@@ -34,8 +34,6 @@ void chateau()
 
   if (chateau_monster() == $monster[writing desk] && to_int(get_property("writingDesksDefeated")) < 5)
   {
-    log("It looks like you're using the " + wrap("Chateau", COLOR_LOCATION) + " to do the " + wrap($monster[writing desk]) + " trick. Setting things up to accommodate this.");
-    progress(to_int(get_property("writingDesksDefeated")), 5, "writing desks defeated");
     if (!list_contains(setting("digitize_list"), $monster[writing desk]))
     {
       string new_list = list_add(setting("digitize_list"), $monster[writing desk]);
@@ -43,7 +41,7 @@ void chateau()
     }
     if (can_chateau_fight() && expected_damage($monster[writing desk]) < (my_hp() / 2))
     {
-      log("Looks like we can fight one right now, so going to do that.");
+      log("Looks like we can fight a " + wrap($monster[writing desk]) +" now, so going to do that.");
       maximize();
       string temp = visit_url('place.php?whichplace=chateau&action=chateau_painting');
       run_combat();

@@ -5,28 +5,25 @@ int dancing_items()
   return item_amount($item[lady spookyraven's powder puff]) + item_amount($item[lady spookyraven's dancing shoes]) + item_amount($item[lady spookyraven's finest gown]);
 }
 
-void go_dancing()
+boolean M_spookyraven()
 {
   if (quest_status("questM21Dance") < 0)
   {
-    warning("Need to get Lady Spookyraven's telegram first.");
-    return;
+    // should code this...
+    return false;
   }
   if (quest_status("questM21Dance") == 0)
   {
-    warning("Speak to Lady Spookyraven on the second floor.");
-    return;
+  // should code this...
+//    warning("Speak to Lady Spookyraven on the second floor.");
+    return false;
   }
   if (quest_status("questM21Dance") == FINISHED)
-  {
-    warning("You've already danced with Lady Spookyraven.");
-    return;
-  }
+    return false;
 
   if (item_amount($item[lady spookyraven's powder puff]) == 0)
-  {
     log("Going to get " + wrap($item[lady spookyraven's powder puff]) + ".");
-  }
+
   while (item_amount($item[lady spookyraven's powder puff]) == 0)
   {
     location bath = $location[the haunted bathroom];
@@ -38,14 +35,14 @@ void go_dancing()
       maximize("-combat");
     }
 
-    dg_adventure(bath);
+    boolean b = dg_adventure(bath);
     progress(dancing_items(), 3, "dancing things found");
+    if (!b)
+      return true;
   }
 
   if (item_amount($item[lady spookyraven's finest gown]) == 0)
-  {
     log("Going to get " + wrap($item[lady spookyraven's finest gown]) + " and other things from " + wrap($location[the haunted bedroom]) + ".");
-  }
 
   while (item_amount($item[lady spookyraven's finest gown]) == 0 || i_a($item[lord spookyraven's spectacles]) == 0 || item_amount($item[disposable instant camera]) == 0)
   {
@@ -56,7 +53,7 @@ void go_dancing()
     {
       set_property("choiceAdventure876", 2); // muscle
     } else {
-      set_property("choiceAdventure876", 4); // ignore it
+      set_property("choiceAdventure876", 6); // ignore it
     }
 
     if (my_primestat() == $stat[moxie])
@@ -97,14 +94,15 @@ void go_dancing()
       maximize();
     }
 
-    dg_adventure(bed);
+    boolean b = dg_adventure(bed);
     progress(dancing_items(), 3, "dancing things found");
+    if (!b)
+      return true;
   }
 
   if (item_amount($item[lady spookyraven's dancing shoes]) == 0)
-  {
     log("Going to get " + wrap($item[lady spookyraven's dancing shoes]) + ".");
-  }
+
   while (item_amount($item[lady spookyraven's dancing shoes]) == 0)
   {
     location gallery = $location[the haunted gallery];
@@ -117,8 +115,10 @@ void go_dancing()
       maximize("-combat");
     }
 
-    dg_adventure(gallery);
+    boolean b = dg_adventure(gallery);
     progress(dancing_items(), 3, "dancing things found");
+    if (!b)
+      return true;
   }
 
   set_property("louvreDesiredGoal", 10); // prime stat
@@ -126,7 +126,7 @@ void go_dancing()
   if (dancing_items() != 3)
   {
     warning("Unsure what happened - we don't have all of Lady Spookyraven's dancing things.");
-    return;
+    return true;
   }
 
   log("Dancing items found. Returning them.");
@@ -135,9 +135,10 @@ void go_dancing()
 
   dg_adventure($location[the haunted ballroom]);
   log("Dancing complete!");
+  return true;
 }
 
 void main()
 {
-  go_dancing();
+  M_spookyraven();
 }

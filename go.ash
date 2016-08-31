@@ -1,9 +1,9 @@
 import "util/main.ash";
-import "util/day_begin.ash";
-import "util/iotm/manuel.ash";
+import "util/progress.ash";
 
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
+import "quests/M_spookyraven.ash";
 import "quests/M09_leaflet.ash";
 import "quests/M10_star_key.ash";
 
@@ -49,8 +49,9 @@ boolean ascend_loop()
   // do this one earlier if only to talk to the trapper sooner.
   if (L08_Q_trapper()) return true;
 
-  // open the hidden temple
+  // Misc quests. More efficient for these to go later?
   if (M_hidden_temple()) return true;
+  if (M_spookyraven()) return true;
 
   // whatever is left can be done in order:
   if (L02_Q_larva()) return true;
@@ -67,19 +68,68 @@ boolean ascend_loop()
   return false;
 }
 
+void day_begin()
+{
+  log("Turns used this ascension: " + my_turncount() + ", over " + my_daycount() + " days.");
+  log("Beginning start-of-day prep.");
+
+  if (!in_hardcore())
+  {
+    warning("This script assumes you're in hardcore. If you're in softcore, it'll do a lot of things the hard way.");
+  }
+  wait(5);
+  maximize();
+
+  iotm();
+
+  progress_sheet();
+  wait(5);
+
+  log("Day startup tasks complete. About to begin doing stuff.");
+  wait(10);
+
+}
+
+void day_end()
+{
+  log("Wrapping up for the end of the day.");
+  wait(5);
+
+  // if there are any source terminal enhances left
+  consume_enhances();
+
+  // if not done earlier:
+  cross_streams();
+
+  pvp();
+
+  log("Dressing for rollover.");
+  maximize("rollover");
+  log("Taking off anything not needed for rollover (helpful for PvP)");
+  remove_non_rollover();
+  progress_sheet();
+  manuel_progress();
+
+}
+
 void ascend()
 {
   day_begin();
 
   while(ascend_loop() && can_adventure())
   {
+    iotm();
     manuel_progress();
     wait(5);
   }
+
+  iotm();
   manuel_progress();
   wait(5);
-  log("Wrapping up for the end of the day.");
-  cli_execute("call util/day_end.ash");
+
+  day_end();
+
+  log("Scripted actions complete. Run this script again to continue trying to ascend.");
 }
 
 void main()

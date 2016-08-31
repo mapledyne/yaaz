@@ -95,7 +95,7 @@ boolean L04_Q_bats()
         }
         log("We don't have a clover to get a " + wrap($item[sonar-in-a-biscuit]) + ", so doing it the hard way.");
         maximize("");
-        while(i_a($item[sonar-in-a-biscuit]) == 0)
+        while(i_a($item[sonar-in-a-biscuit]) == 0 && can_adventure())
         {
           get_stench_res();
           dg_adventure($location[guano junction]);

@@ -209,3 +209,41 @@ int total_shadow_helpers()
 {
   return item_amount($item[gauze garter]) + item_amount($item[filthy poultice]);
 }
+
+boolean is_rollover(item i)
+{
+  if (i == $item[none])
+    return false;
+
+  float mod = numeric_modifier(i, "Adventures") + numeric_modifier(i, "PvP Fights");
+
+  if (i == $item[your cowboy boots])
+  {
+    if (equipped_item($slot[bootspur]) == $item[ticksilver spurs])
+    {
+      mod = mod + 5;
+    }
+  }
+  return mod > 0;
+}
+
+void remove_non_rollover(slot s)
+{
+  if (!is_rollover(equipped_item(s)))
+  {
+    equip(s, $item[none]);
+  }
+}
+
+void remove_non_rollover()
+{
+  remove_non_rollover($slot[hat]);
+  remove_non_rollover($slot[weapon]);
+  remove_non_rollover($slot[off-hand]);
+  remove_non_rollover($slot[back]);
+  remove_non_rollover($slot[shirt]);
+  remove_non_rollover($slot[pants]);
+  remove_non_rollover($slot[acc1]);
+  remove_non_rollover($slot[acc2]);
+  remove_non_rollover($slot[acc3]);
+}

@@ -122,7 +122,9 @@ void cast_surplus_mp()
                          astral shell,
                          snarl of the timberwolf,
                          ghostly shell,
-                         Empathy]
+                         Empathy,
+                         ear winds,
+                         Impeccable Coiffure]
   {
     if (have_skill(effect_to_skill(ef)))
     {
@@ -135,7 +137,9 @@ void cast_surplus_mp()
 
   foreach ef in effect_list
   {
-    print(effect_list[ef]);
+    if(my_mp() < (my_maxmp() * 0.8))
+      break;
+    use_skill(1, to_skill(effect_list[ef]));
   }
 
 

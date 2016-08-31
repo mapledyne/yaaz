@@ -73,20 +73,14 @@ boolean dg_adventure(location loc, string maximize)
   {
     error("You are too drunk to continue.");
     wait(5);
-    log("Going to do end-of-day tasks...");
-    wait(5);
-    cli_execute("call util/day_end.ash");
-    abort("Too drunk to adventure more. Go sleep it off.");
+    return false;
   }
 
   if (my_adventures() <= abort_on_advs_left)
   {
     error("Cannot auto-adventure with only " + my_adventures() + " adventures remaining. Get some more food/booze in you or wait until tomorrow. Aborting.");
     wait(5);
-    log("Going to do end-of-day tasks...");
-    wait(5);
-    cli_execute("call util/day_end.ash");
-    abort("Not enough adventures to do more with. Maybe find a nightcap?");
+    return false;
   }
 
   overrides();
@@ -106,7 +100,6 @@ boolean dg_adventure(location loc, string maximize)
   boolean adv = adv1(loc, -1, "");
 
   update_flyer_progress();
-
 
   return adv;
 }

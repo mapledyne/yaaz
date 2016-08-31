@@ -61,24 +61,24 @@ boolean L06_Q_friar()
   }
 
   log("Going to get the " + wrap($item[dodecagram]) + ".");
-  while (do_neck())
+  while (do_neck() && can_adventure())
   {
     // actions in do_neck()
   }
 
   log("Going to get the " + wrap($item[box of birthday candles]) + ".");
-  while (do_heart())
+  while (do_heart() && can_adventure())
   {
     // actions in do_heart();
   }
 
   log("Going to get the " + wrap($item[eldritch butterknife]) + ".");
-  while (do_elbow())
+  while (do_elbow() && can_adventure())
   {
     // actions in do_elbow()
   }
 
-  while (do_stones())
+  while (do_stones() && can_adventure())
   {
     // actions in do_stones()
   }

@@ -42,9 +42,11 @@ boolean M_guild()
     } else {
       maximize();
     }
-    dg_adventure(loc);
+    boolean b = dg_adventure(loc);
     if (equipped_item($slot[pants]) == $item[none] && my_primestat() == $stat[moxie])
       break;
+    if (!b)
+      return true;
   }
 
   log("Returning the " + wrap(it) + " to your guild leader.");

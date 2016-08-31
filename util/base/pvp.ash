@@ -1,4 +1,5 @@
 import "util/base/print.ash";
+import "util/iotm/deck.ash";
 
 void pvp();
 void pvp(string name, string swag, string attack);
@@ -14,6 +15,9 @@ void pvp(string name, string swag, string attack)
 
   if (hippy_stone_broken())
   {
+    if (can_deck("clubs"))
+      cheat_deck("clubs", "more PVP fights");
+
     if (pvp_attacks_left() > 0)
     {
       cli_execute("checkpoint");

@@ -4,8 +4,6 @@ import <zlib.ash>;
 
 int smiles_remaining()
 {
-  if (my_path() == "Nuclear Autumn")
-    return 0;
 
   int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
   int casts_used = to_int(get_property("_smilesOfMrA"));
@@ -110,6 +108,11 @@ void do_heart_thing(string player)
   }
   if (mail_heart_item(player, $item[almost-dead walkie-talkie])) return;
   if (mail_heart_item(player, $item[gift card])) return;
+  if (item_amount($item[roll of toilet paper]) > 0)
+  {
+    heart_msg(player, "throwing a " + wrap($item[roll of toilet paper]) + " at them. Jerk");
+    cli_execute("throw roll of toilet paper at " + player);
+  }
 }
 
 void heart(boolean force)

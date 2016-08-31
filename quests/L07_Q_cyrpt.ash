@@ -32,10 +32,9 @@ void clear_alcove()
 		log("Estimated turns: " + est);
 		int adv_count = my_adventures();
 
-		while (get_property("cyrptAlcoveEvilness").to_int() > 0)
+		while (get_property("cyrptAlcoveEvilness").to_int() > 0 && can_adventure())
 		{
-			maximize("init, -combat");
-			dg_adventure($location[The Defiled Alcove]);
+			dg_adventure($location[The Defiled Alcove], "init, -combat");
 			progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in Alcove.");
 
 		}
@@ -53,7 +52,7 @@ void clear_niche()
 		int adv_count = my_adventures();
 
 		add_attract($monster[dirty old lihc]);
-		while (get_property("cyrptNicheEvilness").to_int() > 0)
+		while (get_property("cyrptNicheEvilness").to_int() > 0 && can_adventure())
 		{
 			dg_adventure($location[The Defiled Niche], "items");
 			progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in Niche.");
@@ -74,10 +73,9 @@ void clear_nook()
 		log("Undefiling " + wrap($location[The Defiled Nook]) + ".");
 		int adv_count = my_adventures();
 
-		while (get_property("cyrptNookEvilness").to_int() > 0)
+		while (get_property("cyrptNookEvilness").to_int() > 0 && can_adventure())
 		{
-			maximize("items");
-			dg_adventure($location[The Defiled Nook]);
+			dg_adventure($location[The Defiled Nook], "items");
 			if(item_amount($item[evil eye]) > 0)
 			{
 				use(item_amount($item[evil eye]), $item[evil eye]);
@@ -102,7 +100,7 @@ void clear_cranny()
 
 		set_property("choiceAdventure523", "4");
 
-		while (get_property("cyrptCrannyEvilness").to_int() > 0)
+		while (get_property("cyrptCrannyEvilness").to_int() > 0 && can_adventure())
 		{
 			maximize("ml, -combat");
 			dg_adventure($location[The Defiled Cranny]);

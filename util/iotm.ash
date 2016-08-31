@@ -8,6 +8,7 @@ import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/precinct.ash";
 import "util/iotm/ltt.ash";
+import "util/iotm/timespinner.ash";
 
 void iotm()
 {
@@ -28,6 +29,10 @@ void iotm()
   precinct();
 
   ltt();
+
+  protonic();
+
+  timespinner();
 
   snojo();
 

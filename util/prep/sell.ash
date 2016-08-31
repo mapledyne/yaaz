@@ -19,7 +19,6 @@ void sell_things()
   sell_all($item[Beach Glass Bead]);
   sell_all($item[bit-o-cactus]);
   sell_all($item[Black Pixel]);
-  sell_all($item[Blue Pixel]);
   sell_all($item[Clay Peace-Sign Bead]);
   sell_all($item[Decorative Fountain]);
   sell_all($item[Empty Cloaca-Cola Bottle]);
@@ -27,7 +26,6 @@ void sell_things()
   sell_all($item[Fancy Bath Salts]);
   sell_all($item[Frigid Ninja Stars]);
   sell_all($item[Giant Moxie Weed]);
-  sell_all($item[Green Pixel]);
   sell_all($item[Half of a Gold Tooth]);
   sell_all($item[Imp Ale]);
   sell_all($item[Keel-Haulin\' Knife]);
@@ -44,7 +42,6 @@ void sell_things()
   sell_all($item[Photoprotoneutron Torpedo]);
   sell_all($item[Procrastination Potion]);
   sell_all($item[Ratgut]);
-  sell_all($item[Red Pixel]);
   sell_all($item[Smelted Roe]);
   sell_all($item[Spicy Jumping Bean Burrito]);
   sell_all($item[Spicy Bean Burrito]);
@@ -54,6 +51,13 @@ void sell_things()
   sell_all($item[Tequila Sunrise]);
   sell_all($item[Windchimes]);
   sell_all($item[valuable trinket]);
+
+  if (item_amount($item[digital key]) > 0)
+  {
+    sell_all($item[Blue Pixel]);
+    sell_all($item[Red Pixel]);
+    sell_all($item[Green Pixel]);
+  }
 
   // keep one:
   sell_all($item[cold ninja mask], 1);
