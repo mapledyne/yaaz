@@ -30,6 +30,7 @@ void use_things()
   use_all($item[old eyebrow pencil]);
   use_all($item[old leather wallet]);
   use_all($item[old rosewater cream]);
+  use_all($item[pack of KWE trading card]);
   use_all($item[Penultimate Fantasy chest]);
   use_all($item[pork elf goodies sack]);
   use_all($item[red box]);

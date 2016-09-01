@@ -39,7 +39,6 @@ boolean ascend_loop()
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M09_leaflet()) return true;
 
-
   // do this as soon as it's available - earlier start to the war == earlier arena fliers
   if (L12_Q_war()) return true;
 
@@ -83,6 +82,7 @@ void day_begin()
   }
   wait(5);
   maximize();
+  prep();
 
   iotm();
 
@@ -99,6 +99,8 @@ void day_end()
   log("Wrapping up for the end of the day.");
   wait(5);
 
+  prep();
+  
   // if there are any source terminal enhances left
   consume_enhances();
 
@@ -119,6 +121,13 @@ void day_end()
 void ascend()
 {
   day_begin();
+
+
+  if (!can_adventure())
+  {
+    log("You're already out of adventures you can use today.");
+    log("Doing cleanup actions, but skipping main quest loop.");
+  }
 
   while(ascend_loop())
   {

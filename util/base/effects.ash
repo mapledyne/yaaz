@@ -5,6 +5,7 @@ item effect_to_item(effect ef)
 {
   switch(ef)
   {
+    default:                            return $item[none];
     case $effect[adorable lookout]:     return $item[giraffe-necked turtle];
     case $effect[baited hook]:          return $item[wriggling worm];
     case $effect[balls of ectoplasm]:   return $item[ectoplasmic orbs];
@@ -30,7 +31,10 @@ item effect_to_item(effect ef)
     case $effect[Ticking Clock]:        return $item[cheap wind-up clock];
     case $effect[tortious]:             return $item[mocking turtle];
     case $effect[withered heart]:       return $item[love song of disturbing obsession];
-    default:                            return $item[none];
+    case $effect[sugar rush]:
+      if (item_amount($item[stick of &quot;gum&quot;]) > 0) return $item[stick of &quot;gum&quot;];
+      if (item_amount($item[angry farmer candy]) > 0) return $item[angry farmer candy];
+      return $item[none];
   }
 }
 
@@ -110,9 +114,6 @@ void cast_surplus_mp()
   if (my_mp() < (my_maxmp() * 0.8))
     return;
 
-  log("Trying to cast out surplus MP. Can't easily test this until out of Nuclear Autumn.");
-  wait(5);
-
   effect[int] effect_list;
   int count = 0;
 
@@ -124,7 +125,10 @@ void cast_surplus_mp()
                          ghostly shell,
                          Empathy,
                          ear winds,
-                         Impeccable Coiffure]
+                         Impeccable Coiffure,
+                         Juiced and Loose,
+                         mind vision,
+                         Hardened Sweatshirt]
   {
     if (have_skill(effect_to_skill(ef)))
     {
@@ -139,7 +143,9 @@ void cast_surplus_mp()
   {
     if(my_mp() < (my_maxmp() * 0.8))
       break;
-    use_skill(1, to_skill(effect_list[ef]));
+    skill sk = to_skill(effect_list[ef]);
+    log("Casting " + wrap(sk) + " to use up surplus MP.");
+    use_skill(1, sk);
   }
 
 

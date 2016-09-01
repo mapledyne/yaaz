@@ -7,7 +7,8 @@ void pvp(string name, string swag, string attack);
 
 void pvp()
 {
-  pvp("Numeric", "numericSwagger", "back to");
+//  pvp("Numeric", "numericSwagger", "back to");
+  pvp("School", "numericSwagger", "Freshman Rule");
 }
 
 void pvp(string name, string swag, string attack)

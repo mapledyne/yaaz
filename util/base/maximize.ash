@@ -139,6 +139,7 @@ void max_effects(string target)
       effect_maintain($effect[Springy Fusilli]);
       effect_maintain($effect[Ticking Clock]);
       effect_maintain($effect[Walberg\'s Dim Bulb]);
+      effect_maintain($effect[sugar rush]);
       terminal_enhance($effect[init.enh]);
       break;
     case "-combat":

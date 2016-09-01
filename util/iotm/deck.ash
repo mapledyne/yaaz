@@ -61,7 +61,7 @@ boolean pick_a_card()
   }
 
   // get some meat if we're low
-  if (my_meat() < 2000 && my_path() != "Way of the Surprising Fist")
+  if (my_meat() < 2000 && my_path() != "Way of the Surprising Fist" && can_deck("1952"))
   {
     cheat_deck("1952", "get some meat");
     sell_all($item[1952 mickey mantle card]);
@@ -71,7 +71,7 @@ boolean pick_a_card()
   // maybe get a hero key
   if (!have_familiar($familiar[gelatinous cubeling]) || to_familiar(setting("100familiar")) != $familiar[none])
   {
-    if (hero_keys() < 3)
+    if (hero_keys() < 3 && can_deck("tower"))
     {
       cheat_deck("tower", "get a hero key");
       return true;
@@ -86,6 +86,28 @@ boolean pick_a_card()
       // we have less than three of this, so can assume we have less than
       // three of all of them.
       cheat_deck("mine", "get some ore for the trapper quest");
+      return true;
+    }
+  }
+
+  if (!have_skill($skill[ancestral recall]) && can_deck("ancestral recall"))
+  {
+    cheat_deck("ancestral recall", "learn a skill for more adventures");
+    return true;
+  }
+
+  if (have_skill($skill[ancestral recall]))
+  {
+    if (can_deck("ancestral recall"))
+    {
+      cheat_deck("ancestral recall", "get some " + wrap($item[blue mana]) + " for more adventures");
+      return true;
+    }
+    // don't get two mana if we're doing PVP to leave room for the clubs/PVP card.
+    if (can_deck("island") && !hippy_stone_broken())
+    {
+      cheat_deck("island", "get some " + wrap($item[blue mana]) + " for more adventures");
+      return true;
     }
   }
 
@@ -101,6 +123,13 @@ boolean pick_a_card()
 
 void deck()
 {
+
+  while (have_skill($skill[ancestral recall]) && to_int(get_property("_ancestralRecallCasts")) < 10 && item_amount($item[blue mana]) > 0)
+  {
+    log("Casting " + wrap($skill[ancestral recall]) + " to get us a few more adventures.");
+    use_skill(1, $skill[ancestral recall]);
+  }
+
   if (!can_deck())
     return;
 

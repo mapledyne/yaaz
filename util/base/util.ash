@@ -36,7 +36,7 @@ boolean can_adventure()
 {
   if (my_adventures() <= abort_on_advs_left)
     return false;
-  if (my_inebriety() >= inebriety_limit())
+  if (my_inebriety() > inebriety_limit())
     return false;
   return true;
 }

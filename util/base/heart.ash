@@ -113,6 +113,8 @@ void do_heart_thing(string player)
     heart_msg(player, "throwing a " + wrap($item[roll of toilet paper]) + " at them. Jerk");
     cli_execute("throw roll of toilet paper at " + player);
   }
+
+  log("Apparently we're out of heart-y things to do right now. Sad.");
 }
 
 void heart(boolean force)
