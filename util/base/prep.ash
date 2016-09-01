@@ -101,6 +101,13 @@ void prep_fishing(location loc)
 
 void cast_things()
 {
+
+  while (have_skill($skill[ancestral recall]) && to_int(get_property("_ancestralRecallCasts")) < 10 && item_amount($item[blue mana]) > 0)
+  {
+    log("Casting " + wrap($skill[ancestral recall]) + " to get us a few more adventures.");
+    use_skill(1, $skill[ancestral recall]);
+  }
+
   // if it makes sense to cast another libram spell
   while(libram())
   {
