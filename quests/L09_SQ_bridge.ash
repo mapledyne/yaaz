@@ -17,7 +17,6 @@ void do_one_bridge_adv()
   }
 
   visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
-  progress(to_int(get_property("chasmBridgeProgress")), 30, "bridge progress");
   if(get_property("chasmBridgeProgress").to_int() >= 30)
   {
     log("Bridge built! Going to see the " + wrap("Highland Lord", COLOR_LOCATION) + ".");

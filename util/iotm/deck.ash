@@ -99,8 +99,6 @@ void deck()
   if (!can_deck())
     return;
 
-  log("Checking out your " + wrap($item[deck of every card]) + ".");
-
   while (can_deck() && pick_a_card())
   {
     // work in pick_a_card();
@@ -122,17 +120,6 @@ void consume_cards()
   if (hippy_stone_broken())
   {
     cheat_deck("clubs", "more PVP fights");
-  }
-
-  if (!have_skill($skill[ancestral recall]))
-  {
-    cheat_deck("ancestral recall", "learn a skill for more adventures");
-  }
-
-  if (have_skill($skill[ancestral recall]))
-  {
-    cheat_deck("ancestral recall", "get some " + wrap($item[blue mana]) + " for more adventures");
-    cheat_deck("island", "get some " + wrap($item[blue mana]) + " for more adventures");
   }
 
   int left = 15 - to_int(get_property("_deckCardsDrawn"));

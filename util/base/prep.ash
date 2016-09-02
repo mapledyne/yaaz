@@ -13,6 +13,7 @@ import "util/prep/use.ash";
 import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
+import "util/iotm/deck.ash";
 
 void meat_cast(skill sk, effect ef, int avg)
 {
@@ -138,9 +139,22 @@ void prep(location loc)
   get_saucepan();
   get_accordion();
 
+  if (to_int(setting("adventure_floor", "10")) > my_adventures())
+  {
+    if (!have_skill($skill[ancestral recall]))
+    {
+      cheat_deck("ancestral recall", "learn a skill for more adventures");
+    } else
+    {
+      cheat_deck("ancestral recall", "get some " + wrap($item[blue mana]) + " for more adventures");
+      cheat_deck("island", "get some " + wrap($item[blue mana]) + " for more adventures");
+    }
+  }
+
+  cast_things(); // before consume() so we can cast ancestral recall if able.
+
   consume();
 
-  cast_things();
   pulverize_things();
   sell_things();
   buy_things();

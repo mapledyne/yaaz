@@ -15,6 +15,7 @@ import "quests/L06_Q_friar.ash";
 import "quests/L07_Q_cyrpt.ash";
 import "quests/L08_Q_trapper.ash";
 import "quests/L09_Q_topping.ash";
+import "quests/L10_Q_Garbage.ash";
 import "quests/L11_Q_macguffin.ash";
 import "quests/L12_Q_war.ash";
 
@@ -62,12 +63,14 @@ boolean ascend_loop()
   if (L04_Q_bats()) return true;
   if (L07_Q_cyrpt()) return true;
   if (L09_Q_topping()) return true;
+  if (L10_Q_garbage()) return true;
   if (L11_Q_macguffin()) return true;
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
   if (M10_star_key()) return true;
 
+  log("Ran out of things to do in this script. Either a quest is missing, or maybe we should level?");
   return false;
 }
 
@@ -99,13 +102,14 @@ void day_end()
   log("Wrapping up for the end of the day.");
   wait(5);
 
-  prep();
-  
   // if there are any source terminal enhances left
   consume_enhances();
+  consume_cards();
 
-  // if not done earlier:
   cross_streams();
+
+  prep();
+
 
   pvp();
 

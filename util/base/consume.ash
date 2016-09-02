@@ -137,7 +137,7 @@ int consume_cost(item it)
 
 boolean can_chew(item it)
 {
-  if (item_amount(it) == 0)
+  if (item_amount(it) == 0 && creatable_amount(it) == 0)
     return false;
   if (!is_spleen_item(it))
     return false;
@@ -150,7 +150,7 @@ boolean can_chew(item it)
 
 boolean can_eat(item it)
 {
-  if (item_amount(it) == 0)
+  if (item_amount(it) == 0 && creatable_amount(it) == 0)
     return false;
   if (!is_food_item(it))
     return false;
@@ -163,7 +163,7 @@ boolean can_eat(item it)
 
 boolean can_drink(item it)
 {
-  if (item_amount(it) == 0 && !is_vip_item(it))
+  if (item_amount(it) == 0 && !is_vip_item(it) && creatable_amount(it) == 0)
     return false;
   if (!is_booze_item(it))
     return false;
@@ -319,8 +319,8 @@ boolean consume_best()
   foreach nom, it in noms
   {
 
-    log("Considering consuming " + wrap(it) + " which would give us " + adv_per_consumption(it) + " adventures.");
-    wait(10);
+    log("Considering consuming " + wrap(it) + " which will give us about " + adv_per_consumption(it) + " adventures.");
+    wait(5);
     if (try_consume(it))
       return true;
   }
@@ -329,7 +329,7 @@ boolean consume_best()
   return false;
 }
 
- void consume()
+void consume()
 {
   int adv_min = to_int(setting("adventure_floor", "10"));
 

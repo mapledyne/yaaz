@@ -1,6 +1,116 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
 
+int i_a(item it);
+int wad_total();
+void use_all(item it);
+void pulverize_all(item it);
+void pulverize_all_but_one(item it);
+void pulverize_keep_if(item it, boolean keep_if);
+int immateria();
+item spooky_quest_item();
+void make_if_needed(item it, string msg);
+void make_if_needed(item it);
+
+
+int i_a(item i)
+{
+	int a = item_amount(i) + closet_amount(i) + equipped_amount(i);
+
+	//Make a check for familiar equipment NOT equipped on the current familiar.
+	foreach fam in $familiars[] {
+		if (have_familiar(fam) && fam != my_familiar()) {
+			if (i == familiar_equipped_equipment(fam) && i != $item[none])
+      {
+				a = a + 1;
+			}
+		}
+	}
+	return a;
+}
+
+void use_all(item it)
+{
+  int count = item_amount(it); // use item_amount() instead of i_a() to protect closet things and such.
+  if (count == 0)
+    return;
+  log("Using " + count + " " + wrap(pluralize(count, it), COLOR_ITEM) + ".");
+  use(count, it);
+}
+
+void pulverize_all(item it)
+{
+	// artificial limiter - why make more wads if we're swimming in them?
+	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 0)
+		cli_execute("pulverize " + item_amount(it) + " " + it);
+}
+
+void pulverize_all_but_one(item it)
+{
+	// artificial limiter - why make more wads if we're swimming in them?
+	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 1)
+		cli_execute("pulverize " + (item_amount(it)-1) + " " + it);
+}
+
+void pulverize(item it)
+{
+	// artificial limiter - why make more wads if we're swimming in them?
+	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 0)
+		cli_execute("pulverize 1 " + it);
+}
+
+void pulverize_keep_if(item it, boolean keep_if)
+{
+	if (keep_if)
+	{
+		pulverize_all_but_one(it);
+	} else {
+		pulverize_all(it);
+	}
+}
+
+
+int wad_total()
+{
+	return item_amount($item[twinkly wad]) + item_amount($item[cold wad]) + item_amount($item[hot wad]) + item_amount($item[spooky wad]) + item_amount($item[sleaze wad]) + item_amount($item[stench wad]);
+}
+
+
+item spooky_quest_item()
+{
+  switch (my_class())
+  {
+    case $class[seal clubber]:
+    case $class[avatar of boris]:
+      return $item[tattered wolf standard];
+    case $class[turtle tamer]:
+      return $item[tattered snake standard];
+    case $class[pastamancer]:
+    case $class[sauceror]:
+      return $item[english to a. f. u. e. dictionary];
+    case $class[disco bandit]:
+    case $class[accordion thief]:
+      return $item[bizarre illegible sheet music];
+    default:
+      return $item[none];
+  }
+}
+
+int immateria()
+{
+  int count = 0;
+  if (item_amount($item[gauze immateria]) > 0)
+    count += 1;
+  if (item_amount($item[plastic wrap immateria]) > 0)
+    count += 1;
+  if (item_amount($item[tissue paper immateria]) > 0)
+    count += 1;
+  if (item_amount($item[tin foil immateria]) > 0)
+    count += 1;
+
+  return count;
+}
+
 void make_if_needed(item it, string msg)
 {
   if (i_a(it) == 0 && creatable_amount(it) > 0)

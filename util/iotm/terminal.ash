@@ -71,13 +71,13 @@ void terminal_educate()
   terminal_educate("extract.edu", "digitize.edu");
 }
 
-void terminal_enhance(effect ef)
+void terminal_enhance(effect ef, boolean force)
 {
   string enh = to_enhancement(ef);
   if (enh == "")
     return;
 
-  if (have_effect(ef) > 0)
+  if (have_effect(ef) > 0 && !force)
     return;
 
   if (!have_enhancement(enh))
@@ -89,6 +89,11 @@ void terminal_enhance(effect ef)
   log("Using " + wrap($item[Source Terminal]) + " to enhance " + wrap(ef) + ".");
   cli_execute("terminal enhance " + enh);
 
+}
+
+void terminal_enhance(effect ef)
+{
+  terminal_enhance(ef, false);
 }
 
 boolean have_enhancement(string enh)
@@ -134,7 +139,25 @@ effect pick_one_enhancement()
     return $effect[damage.enh];
   if (consider_one_enhancement($effect[critical.enh]))
     return $effect[critical.enh];
-  return $effect[none];
+
+  // we have all the effects we need, so see what we have the fewest of and up that one.
+  // no sense in letting them go to waste.
+  effect[int] enhs;
+  int count = 0;
+  foreach e in $effects[items.enh, substats.enh, meat.enh, init.enh, damage.enh, critical.enh]
+  {
+    if (have_enhancement(e))
+    {
+      enhs[count] = e;
+      count += 1;
+    }
+  }
+  sort enhs by have_effect(value);
+
+  if (count == 0)
+    return $effect[none];
+
+  return enhs[0];
 }
 
 void consume_enhances()
@@ -144,12 +167,12 @@ void consume_enhances()
     effect enh = pick_one_enhancement();
     if (enh == $effect[none])
     {
-      log("We're using up your " + wrap($item[source terminal]) + " enhances, but you seem to have all of them running that you can.");
-      log("Loading up more " + wrap($effect[items.enh]) + " as a default. Maybe this could be smarter?");
-      wait(3);
-      enh = $effect[items.enh];
+        warning("Tried to find a good enhancement from the Terminal, but I couldn't.") ;
+        warning("You should use these up - it'd be a shame to let them go to waste.");
+        wait(5);
+        return;
     }
-    terminal_enhance(enh);
+    terminal_enhance(enh, true);
     // mafia doesn't seem to pick up new enhancements, so...
     refresh_status();
   }
@@ -191,59 +214,37 @@ boolean can_terminal()
   return get_campground() contains $item[source terminal];
 }
 
-item terminal_extrude(item it)
+boolean terminal_extrude(item it)
 {
   if (!can_extrude())
-    return $item[none];
+    return false;
 
-  item gibson = $item[hacked gibson];
-  item cookie = $item[browser cookie];
 
   switch (it)
   {
-    case gibson:
-      int b = item_amount(gibson);
-      cli_execute("terminal extrude booze");
-      if (b < item_amount(gibson))
-      {
-        return gibson;
-      }
-      else
-      {
-        warning("Tried to extrude a " + wrap(gibson) + ", but it didn't seem to work.");
-        return $item[none];
-      }
-    case cookie:
-      int c = item_amount(cookie);
-      cli_execute("terminal extrude food");
-      if (c < item_amount(cookie))
-      {
-        return cookie;
-      }
-      else
-      {
-        warning("Tried to extrude a " + wrap(cookie) + ", but it didn't seem to work.");
-        return $item[none];
-      }
-
+    case $item[hacked gibson]:
+      return cli_execute("terminal extrude booze");
+    case $item[browser cookie]:
+      return cli_execute("terminal extrude food");
+    case $item[Source terminal GRAM chip]:
+      return cli_execute("terminal extrude gram");
+    case $item[Source terminal PRAM chip]:
+      return cli_execute("terminal extrude pram");
+    case $item[Source terminal SPAM chip]:
+      return cli_execute("terminal extrude spam");
+    case $item[Source terminal CRAM chip]:
+      return cli_execute("terminal extrude cram");
+    case $item[Source terminal DRAM chip]:
+      return cli_execute("terminal extrude dram");
+    case $item[Source terminal TRAM chip]:
+      return cli_execute("terminal extrude tram");
+    case $item[source shades]:
+      return cli_execute("terminal extrude gogles");
+    case $item[software bug]:
+      return cli_execute("terminal extrude familiar");
     default:
       error("I don't know how to extrude " + wrap(it) + ".");
-      return $item[none];
-  }
-}
-
-item terminal_extrude(string s)
-{
-  switch(s)
-  {
-    case "booze":
-      return terminal_extrude($item[hacked gibson]);
-    case "food":
-      return terminal_extrude($item[browser cookie]);
-
-    default:
-      error("Trying to extrude '" + s + "' but I don't know what that is.");
-      return $item[none];
+      return false;
   }
 }
 
@@ -264,6 +265,26 @@ string terminal_enquiry()
   return terminal_enquiry("");
 }
 
+boolean have_terminal_file(string f)
+{
+  if (list_contains(get_property("sourceTerminalEducateKnown"), f, ","))
+    return true;
+  if (list_contains(get_property("sourceTerminalEnhanceKnown"), f, ","))
+    return true;
+  if (list_contains(get_property("sourceTerminalEnquiryKnown"), f, ","))
+    return true;
+  if (list_contains(get_property("sourceTerminalExtrudeKnown"), f, ","))
+    return true;
+  return false;
+}
+
+boolean have_terminal_chip(string chip)
+{
+  if (list_contains(get_property("sourceTerminalChips"), chip, ","))
+    return true;
+  return false;
+}
+
 void terminal()
 {
   if (!can_terminal())
@@ -271,25 +292,52 @@ void terminal()
 
   while(can_extrude() && item_amount($item[source essence]) > 10)
   {
-    if (my_path() == "Nuclear Autumn")
+
+    item ext = $item[hacked gibson];
+    if (item_amount($item[hacked gibson]) > item_amount($item[browser cookie]))
     {
-      warning("You can extrude things from the terminal, but I don't know what's good to do in this path.");
-      warning("Skipping, but you have " +  extrudes_remaining() + " extrude(s) remaining and " + item_amount($item[source essence]) + " source essence.");
-      break;
+      ext = $item[browser cookie];
     }
-    if (item_amount($item[hacked gibson]) > 2)
+
+    if (item_amount(ext) >= 5)
     {
-      if (item_amount($item[browser cookie]) > 2)
+    // if we have plenty of food/booze, maybe consider getting something else:
+      if (!have_terminal_chip("CRAM") && item_amount($item[source essence]) > 1000 && have_terminal_file("cram.ext"))
       {
-        warning("You seem flush in extruded food/booze. Not extruding anything else since it's not clear what to get. Extrude something!");
-        warning("You have " + extrudes_remaining() + " extrude(s) remaining and " + item_amount($item[source essence]) + " source essence.");
-        break;
-      } else {
-        terminal_extrude("food");
+        ext = $item[Source terminal CRAM chip];
       }
-    } else {
-      terminal_extrude("booze");
+      else if (!have_terminal_chip("DRAM") && item_amount($item[source essence]) > 1000 && have_terminal_file("dram.ext"))
+      {
+        ext = $item[Source terminal DRAM chip];
+      }
+      else if (!have_terminal_chip("TRAM") && item_amount($item[source essence]) > 1000 && have_terminal_file("tram.ext"))
+      {
+        ext = $item[Source terminal TRAM chip];
+      }
+      else if (to_int(get_property("sourceTerminalGram")) <  10 && item_amount($item[source essence]) > 100 && have_terminal_file("gram.ext"))
+      {
+        ext = $item[Source terminal GRAM chip];
+      }
+      else if (to_int(get_property("sourceTerminalPram")) <  10 && item_amount($item[source essence]) > 100 && have_terminal_file("pram.ext"))
+      {
+        ext = $item[Source terminal PRAM chip];
+      }
+      else if (to_int(get_property("sourceTerminalSpam")) <  10 && item_amount($item[source essence]) > 100 && have_terminal_file("spam.ext"))
+      {
+        ext = $item[Source terminal SPAM chip];
+      }
     }
+
+    if (i_a($item[source shades]) == 0 && item_amount($item[source essence]) > 100)
+      ext = $item[source shades];
+
+    if (my_path() == "Nuclear Autumn" && ext == $item[hacked gibson] || ext == $item[browser cookie])
+    {
+      warning("You can't use the food and booze from the Terminal in Nuclear Autumn, but it's not obvious what else to extrude.");
+      wait(3);
+    }
+
+    terminal_extrude(ext);
   }
 
   if (terminal_enquiry() == "")

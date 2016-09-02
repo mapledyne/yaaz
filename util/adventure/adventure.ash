@@ -4,6 +4,7 @@ import "util/base/inventory.ash";
 import "util/iotm/protonic.ash";
 import "util/iotm/manuel.ash";
 import "util/base/util.ash";
+import "util/progress.ash";
 
 boolean overrides();
 boolean dg_clover(location loc);
@@ -53,19 +54,7 @@ boolean overrides()
 }
 
 
-void update_flyer_progress()
-{
-  if (get_property("questL12War") != "step1")
-    return;
-  if (get_property("sidequestArenaCompleted") != "none")
-    return;
 
-  if (have_flyers())
-  {
-    int flyerML = get_property("flyeredML").to_int() / 100;
-    progress(flyerML, "flyers delivered");
-  }
-}
 
 boolean dg_adventure(location loc, string maximize)
 {
@@ -99,7 +88,7 @@ boolean dg_adventure(location loc, string maximize)
 
   boolean adv = adv1(loc, -1, "");
 
-  update_flyer_progress();
+  progress_sheet();
 
   return adv;
 }

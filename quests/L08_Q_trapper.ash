@@ -85,6 +85,13 @@ boolean L08_Q_trapper()
     return true;
   }
 
+  if (quest_status("questL08Trapper") == 5)
+  {
+    log("Returning " + wrap($item[groar's fur]) + " to the Trapper.");
+    visit_trapper();
+    return true;
+  }
+
   warning("There's something else we should do with the trapper, it's just not coded yet.");
   wait(10);
   return false;
