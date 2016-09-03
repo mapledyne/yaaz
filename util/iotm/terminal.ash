@@ -239,7 +239,7 @@ boolean terminal_extrude(item it)
     case $item[Source terminal TRAM chip]:
       return cli_execute("terminal extrude tram");
     case $item[source shades]:
-      return cli_execute("terminal extrude gogles");
+      return cli_execute("terminal extrude goggles");
     case $item[software bug]:
       return cli_execute("terminal extrude familiar");
     default:

@@ -93,10 +93,6 @@ void prep_fishing(location loc)
     log("This location (" + wrap(loc) + ") may have floundry fish in it.");
     effect_maintain($effect[baited hook]);
   }
-  if (can_get_floundry_item())
-  {
-    log("You should get an item from the " + wrap("Floundry", COLOR_LOCATION) + ".");
-  }
 }
 
 

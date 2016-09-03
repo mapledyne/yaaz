@@ -28,7 +28,7 @@ void get_compass()
   if (can_equip_compass()) {
     if (i_a(compass) == 0) {
       log("Getting a " + wrap(compass) + ".");
-      if (i_a("Shore Inc. Ship Trip Scrip") == 0) {
+      if (i_a($item[Shore Inc. Ship Trip Scrip]) == 0) {
         log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
         adventure(1, $location[The Shore\, Inc. Travel Agency]);
       }
@@ -142,13 +142,13 @@ boolean L11_SQ_desert()
   html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
   run_choice(1); // visit_url("choice.php?whichchoice=805&option=1&pwd=");
 
-	if (contains_text(html, "can of black paint"))
+	if (contains_text(html, "can of black paint") && my_path() != "Nuclear Autumn")
   {
 		log("Gnasir wants a can of black paint.");
-		if (i_a("can of black paint") == 0 && my_meat() > 1000) {
+		if (i_a($item[can of black paint]) == 0 && my_meat() > 1000) {
 			cli_execute("acquire can of black paint");
 		}
-		if (i_a("can of black paint") > 0) {
+		if (i_a($item[can of black paint]) > 0) {
       log("Giving " + wrap($item[can of black paint]) + " to Gnasir.");
 			html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -165,7 +165,7 @@ boolean L11_SQ_desert()
 
 	if (contains_text(html, "killing jar")) {
 		log("Gnasir wants a killing jar.");
-		if (i_a("killing jar") > 0) {
+		if (i_a($item[killing jar]) > 0) {
 			log("Giving " + wrap($item[killing jar]) + " to Gnasir.");
 			html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -183,13 +183,13 @@ boolean L11_SQ_desert()
 
   while (get_property("desertExploration").to_int() < 100)
   {
-    if (i_a("desert sightseeing pamphlet") > 0)
+    if (i_a($item[desert sightseeing pamphlet]) > 0)
     {
       use_all($item[desert sightseeing pamphlet]);
       continue;
     }
 
-    if (i_a("stone rose") > 0) {
+    if (i_a($item[stone rose]) > 0) {
       log("Gnasir wants your stone rose.");
       html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
       html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -198,7 +198,7 @@ boolean L11_SQ_desert()
       continue;
     }
 
-    if (i_a("worm-riding manual page") > 14) {
+    if (i_a($item[worm-riding manual page]) > 14) {
       log("Gnasir wants to help you ride the majestic worms.");
       html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
       html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -206,8 +206,8 @@ boolean L11_SQ_desert()
       html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
       continue;
     }
-    else if (i_a("worm-riding hooks") > 0) {
-      if (i_a("drum machine") > 0) {
+    else if (i_a($item[worm-riding hooks]) > 0) {
+      if (i_a($item[drum machine]) > 0) {
         use(1, $item[drum machine]);
       }
       else {

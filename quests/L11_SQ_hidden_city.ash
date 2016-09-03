@@ -40,7 +40,9 @@ void get_machete()
   maximize("");
   while (i_a($item[antique machete]) == 0)
   {
-    dg_adventure($location[the hidden park]);
+    boolean b = dg_adventure($location[the hidden park]);
+    if (!b)
+      return;
   }
 }
 

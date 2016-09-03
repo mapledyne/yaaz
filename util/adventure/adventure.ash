@@ -22,7 +22,7 @@ boolean overrides()
   if (counters())
     return true;
 
-  if (quest_status("questL10Garbage") == FINISHED && i_a($item[wand of nagamar]) == 0)
+  if (quest_status("questL10Garbage") == FINISHED && i_a($item[wand of nagamar]) == 0 && item_amount($item[disassembled clover]) > 0)
   {
     log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
     boolean clove = dg_clover($location[The Castle in the Clouds in the Sky (Basement)]);

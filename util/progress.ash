@@ -32,7 +32,6 @@ int twinpeak_progress()
 
 void progress_sheet()
 {
-  print("Current progress in a few things:");
   if (my_level() < 13)
   {
     progress(my_basestat(my_primestat()), next_level(), " progress to next level (" + to_string(my_level()+1) + ")");
@@ -107,5 +106,6 @@ void progress_sheet()
 
 void main()
 {
+  print("Current progress in a few things:");
   progress_sheet();
 }
