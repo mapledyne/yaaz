@@ -22,6 +22,7 @@ void use_things()
   use_all($item[irradiated turtle]);
   use_all($item[kobold treasure hoard]);
   use_all($item[letter from king ralph xi]);
+  use_all($item[Map to a Hidden Booze Cache]);
   use_all($item[meat globe]);
   use_all($item[Newbiesport&trade; tent]);
   use_all($item[O'RLY manual]);
@@ -54,7 +55,6 @@ void use_things()
     log("Eating a " + wrap($item[steel lasagna]) + ". Stomach! Stomach! Stomach!");
     eat(1, $item[steel lasagna]);
   }
-
 
   if (quest_status("questL09Topping") < 1)
   {

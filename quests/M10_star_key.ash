@@ -9,18 +9,15 @@ boolean M10_star_key()
     return false;
 
   if (item_amount($item[steam-powered model rocketship]) == 0)
-  {
-    warning("Go and get the " + wrap($item[steam-powered model rocketship]) + " first.");
-    warning("... this should be scripted ...");
-    wait(10);
     return false;
-  }
 
   log("Going to the " + wrap($location[the hole in the sky]) + " to make " + wrap($item[richard's star key]) + ".");
 
   while(creatable_amount($item[richard's star key]) == 0)
   {
-    dg_adventure($location[the hole in the sky], "items");
+    boolean b = dg_adventure($location[the hole in the sky], "items");
+    if (!b)
+      return true;
   }
 
   log("Creating " + wrap($item[richard's star key]) + ".");

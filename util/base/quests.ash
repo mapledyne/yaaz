@@ -1,3 +1,4 @@
+import "util/base/print.ash";
 boolean quest_active(string quest);
 int quest_status(string quest);
 
@@ -37,4 +38,17 @@ int quest_status(string quest)
 		}
 	}
 	return -1;
+}
+
+boolean start_galaktik()
+{
+	if(quest_status("questM24Doc") == UNSTARTED && my_path() != "Nuclear Autumn")
+	{
+    log("Starting the " + wrap("Doc Galaktik", COLOR_LOCATION) + " to open " + wrap($location[the overgrown lot]) + ".");
+		string temp = visit_url("shop.php?whichshop=doc");
+		temp = visit_url("shop.php?whichshop=doc&action=talk");
+		temp = visit_url("choice.php?pwd=&whichchoice=1064&option=1");
+		return true;
+	}
+	return false;
 }

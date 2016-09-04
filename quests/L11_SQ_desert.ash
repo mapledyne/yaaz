@@ -10,10 +10,6 @@ boolean can_equip_compass() {
   return (my_path() != "Way of the Surprising Fist" && my_path() != "Avatar of Boris");
 }
 
-void desert_progress()
-{
-  progress(to_int(get_property("desertExploration")), "desert explored");
-}
 
 boolean pyramid_found()
 {
@@ -99,7 +95,6 @@ int open_gnasir()
         adv_spent += 1;
       }
       dg_adventure(desert);
-      desert_progress();
       adv_spent += 1;
     }
     if (!is_gnasir_open())
@@ -218,7 +213,6 @@ boolean L11_SQ_desert()
         {
           count = count + 1;
           dg_adventure($location[The Oasis], "combat,  0.5 items");
-          desert_progress();
           if (count > 10)
           {
             error ("Took too long finding the " + wrap($item[drum machine]) + ". Aborting so we can find out why.");
@@ -235,7 +229,6 @@ boolean L11_SQ_desert()
     }
 
     dg_adventure($location[The Arid\, Extra-Dry Desert]);
-    desert_progress();
   }
 
   int count = starting_adv_count - my_adventures();

@@ -75,6 +75,11 @@ int wad_total()
 	return item_amount($item[twinkly wad]) + item_amount($item[cold wad]) + item_amount($item[hot wad]) + item_amount($item[spooky wad]) + item_amount($item[sleaze wad]) + item_amount($item[stench wad]);
 }
 
+int turners()
+{
+  return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);
+}
+
 
 item spooky_quest_item()
 {
@@ -142,6 +147,17 @@ item yellow_ray_item()
 boolean have_flyers()
 {
   return (item_amount($item[rock band flyers]) > 0 || item_amount($item[jam band flyers]) > 0);
+}
+
+int friar_things()
+{
+  int count = 0;
+  foreach i in $items[dodecagram, box of birthday candles, eldritch butterknife]
+  {
+    if (item_amount(i) > 0)
+      count += 1;
+  }
+  return count;
 }
 
 int hero_keys()

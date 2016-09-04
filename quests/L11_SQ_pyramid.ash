@@ -8,11 +8,6 @@ boolean have_staff_of_ed()
   return false;
 }
 
-int turners()
-{
-  return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);
-}
-
 boolean L11_SQ_pyramid()
 {
   if (quest_status("questL11Pyramid") < 0)
@@ -35,10 +30,6 @@ boolean L11_SQ_pyramid()
   {
     maximize("noncombat");
     dg_adventure($location[The Upper Chamber]);
-    if (turners() > 0)
-    {
-      progress(turners(), 10, "wheel turning things");
-    }
   }
 
   add_attract($monster[tomb rat]);
@@ -46,10 +37,6 @@ boolean L11_SQ_pyramid()
   {
     maximize("items");
     dg_adventure($location[The Middle Chamber]);
-    if (turners() > 0)
-    {
-      progress(turners(), 10, "wheel turning things");
-    }
   }
   remove_attract($monster[tomb rat]);
 
@@ -57,7 +44,6 @@ boolean L11_SQ_pyramid()
   {
     maximize("items");
     dg_adventure($location[The Middle Chamber]);
-    progress(turners(), 10, "wheel turning things");
   }
   log("You have all the wheel turning things, but actually turning the wheel isn't scripted.");
   wait(15);

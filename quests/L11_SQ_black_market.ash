@@ -32,7 +32,6 @@ void do_one_market_adv()
   }
   int bee = item_amount($item[beehive]);
   dg_adventure($location[the black forest]);
-  progress(get_property("blackForestProgress").to_int(), 5, "forest progress");
   if (bee < item_amount($item[beehive]))
     log(wrap($item[beehive]) + " found!");
 }

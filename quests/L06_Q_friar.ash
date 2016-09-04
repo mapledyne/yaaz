@@ -16,6 +16,7 @@ boolean do_friar_area(location loc, item it)
   return true;
 }
 
+
 boolean do_neck()
 {
   return do_friar_area($location[the dark neck of the woods], $item[dodecagram]);

@@ -5,11 +5,14 @@ import "util/iotm/protonic.ash";
 import "util/iotm/manuel.ash";
 import "util/base/util.ash";
 import "util/progress.ash";
+import "util/base/locations.ash";
+
 
 boolean overrides();
 boolean dg_clover(location loc);
 boolean dg_adventure(location loc, string maximize);
 boolean dg_adventure(location loc);
+
 
 boolean overrides()
 {
@@ -21,6 +24,16 @@ boolean overrides()
   // check for counters like semi-rare and dance cards.
   if (counters())
     return true;
+
+  location prot = protonic();
+  if (prot != $location[none])
+  {
+    log("Who ya gonna call? No one. You're going to trap the ghost in " + wrap(prot) + " and keep it for yourself.");
+    wait(3);
+    maximize("", $item[protonic accelerator pack]);
+    manuel_add_location(prot);
+    return adv1(prot, -1, "");
+  }
 
   if (quest_status("questL10Garbage") == FINISHED && i_a($item[wand of nagamar]) == 0 && item_amount($item[disassembled clover]) > 0)
   {
@@ -43,10 +56,12 @@ boolean overrides()
     if (i_a($item[sneaky pete's key]) == 0 || i_a($item[boris's key]) == 0 || i_a($item[jarlsberg's key]) == 0 || setting("always_daily_with_cubeling") == "true")
     {
       maximize("", $item[ring of detect boring doors]);
+      manuel_add_location($location[the daily dungeon]);
       while (!get_property("dailyDungeonDone").to_boolean())
       {
         adv1($location[the daily dungeon], -1, "");
       }
+      return true;
     }
   }
 
@@ -74,15 +89,24 @@ boolean dg_adventure(location loc, string maximize)
 
   overrides();
 
+
+  if (!location_open(loc))
+  {
+    boolean b = open_location(loc);
+    if (!b)
+    {
+      warning("Trying to open the location " + wrap(loc) + " but I couldn't for some reason.");
+      return false;
+    }
+  }
+
+
   if (maximize != "none")
   {
     maximize(maximize);
   }
 
   prep(loc);
-
-  if (protonic())
-    return true;
 
   manuel_add_location(loc);
 

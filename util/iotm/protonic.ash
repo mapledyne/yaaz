@@ -1,5 +1,6 @@
 import "util/base/monsters.ash";
 import "util/base/locations.ash";
+import "util/base/quests.ash";
 
 boolean ghost_hunting()
 {
@@ -16,23 +17,14 @@ location ghost_location()
   return to_location(get_property("ghostLocation"));
 }
 
-boolean protonic()
+location protonic()
 {
   if (!ghost_hunting())
-    return false;
+    return $location[none];
 
   location ghost_loc = ghost_location();
-  if (!location_open(ghost_loc))
-  {
-    warning("Wanting to catch a ghost at " + wrap(ghost_loc) + " but I can't auto-unlock that yet.");
-    wait(10);
-    return false;
-  }
 
-  log("Who ya gonna call? No one. You're going to trap this ghost in " + wrap(ghost_loc) + " and keep it for yourself.");
-  maximize("", $item[protonic accelerator pack]);
-  adv1(ghost_loc, -1, "");
-  return true;
+  return ghost_loc;
 }
 
 void cross_streams(string player)
