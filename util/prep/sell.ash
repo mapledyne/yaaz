@@ -1,4 +1,5 @@
 import "util/base/inventory.ash";
+import "util/base/quests.ash";
 
 void sell_things()
 {
@@ -85,9 +86,27 @@ void sell_things()
   sell_all($item[round purple sunglasses], 1);
   sell_all($item[wicker shield]);
 
+  if (have_familiar($familiar[misshapen animal skeleton]))
+  {
+    sell_all($item[pile of dusty animal bones]);
+  }
+
   // keep three around for catburgling.
   sell_all($item[hot wing], 3);
 
+  if (item_amount($item[wand of nagamar]) > 0)
+  {
+    sell_all($item[ruby w]);
+    sell_all($item[metallic a]);
+    sell_all($item[lowercase n]);
+    sell_all($item[heavy d]);
+  } else {
+    sell_all($item[ruby w], 1);
+    sell_all($item[metallic a], 1);
+    sell_all($item[lowercase n], 1);
+    sell_all($item[heavy d], 1);
+  }
+  sell_all($item[original g]);
 
   if (my_primestat() == $stat[moxie])
     sell_all($item[4-dimensional guitar]);

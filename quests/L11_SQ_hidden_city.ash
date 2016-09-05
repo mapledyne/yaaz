@@ -143,7 +143,6 @@ boolean hospital()
     return false;
 
   log("Defeating " + wrap($location[the hidden hospital]) + ".");
-
   add_attract($monster[pygmy witch surgeon]);
   while(to_int(get_property("hiddenHospitalProgress")) < 6)
   {

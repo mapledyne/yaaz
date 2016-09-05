@@ -140,6 +140,19 @@ void progress_sheet()
     if (desert < 100)
       progress(desert, "desert explored");
 
+    if (quest_active("questL11Worship"))
+    {
+      progress(item_amount($item[stone triangle]), 4, "stone triangles from the Hidden City");
+
+      int surgeon = to_int(get_property("hiddenHospitalProgress"));
+      if (surgeon > 0 && surgeon < 6)
+      {
+        int s = numeric_modifier("surgeonosity");
+        progress(s, 5, "surgeonosity (" + (s * 10) + "% to find protector spirit)");
+      }
+    }
+
+
     if (quest_active("questL11Pyramid"))
     {
       progress(turners(), 10, "wheel turning things");

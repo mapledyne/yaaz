@@ -13,8 +13,16 @@ boolean location_open(location l)
     case $location[the overgrown lot]:
       if (quest_status("questM24Doc") != UNSTARTED)
         return true;
+      if (setting("overgrown_lot") == "true")
+        return true;
       string lot = visit_url("place.php?whichplace=town_wrong");
-      return contains_text(lot, "The Overgrown Lot");
+      if (contains_text(lot, "The Overgrown Lot"))
+      {
+        save_daily_setting("overgrown_lot", "true");
+        return true;
+      } else {
+        return false;
+      }
     default:
       return true;
   }

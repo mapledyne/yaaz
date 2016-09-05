@@ -334,6 +334,7 @@ void terminal()
     if (my_path() == "Nuclear Autumn" && ext == $item[hacked gibson] || ext == $item[browser cookie])
     {
       warning("You can't use the food and booze from the Terminal in Nuclear Autumn, but it's not obvious what else to extrude.");
+      warning("Going to extrude a " + wrap(ext) + " since we don't want it to go to waste, but we won't be able to use it for a while.");
       wait(3);
     }
 

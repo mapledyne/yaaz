@@ -1,4 +1,5 @@
 import "util/base/inventory.ash";
+import "util/base/locations.ash";
 
 void use_things()
 {
@@ -22,7 +23,6 @@ void use_things()
   use_all($item[irradiated turtle]);
   use_all($item[kobold treasure hoard]);
   use_all($item[letter from king ralph xi]);
-  use_all($item[Map to a Hidden Booze Cache]);
   use_all($item[meat globe]);
   use_all($item[Newbiesport&trade; tent]);
   use_all($item[O'RLY manual]);
@@ -39,6 +39,17 @@ void use_things()
   use_all($item[very overdue library book]);
   use_all($item[warm subject gift certificate]);
   use_all($item[Ye Olde Bawdy Limerick]);
+
+  if (!have_familiar($familiar[misshapen animal skeleton]))
+  {
+    use_all($item[pile of dusty animal bones]);
+  }
+
+  if (!location_open($location[the overgrown lot]))
+  {
+    log("Using a " + wrap($item[Map to a Hidden Booze Cache]) + " to open " + wrap($location[the overgrown lot]) + ".");
+    use(1, $item[Map to a Hidden Booze Cache]);
+  }
 
   if (item_amount($item[steel margarita]) > 0)
   {

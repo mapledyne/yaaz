@@ -132,7 +132,9 @@ void max_effects(string target)
         effect_maintain($effect[black tongue]);
       break;
     case "init":
+      effect_maintain($effect[all fired up]);
       effect_maintain($effect[adorable lookout]);
+      effect_maintain($effect[Hiding in Plain Sight]);
       effect_maintain($effect[lustful heart]);
       effect_maintain($effect[Sepia Tan]);
       effect_maintain($effect[Song of Slowness]);
