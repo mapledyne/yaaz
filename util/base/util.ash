@@ -7,13 +7,12 @@ boolean drunk();
 boolean guild_class();
 float avg_meat_per_adv(location loc);
 float cost_per_mp();
-string setting(string value, string def);
-string setting(string value);
 boolean guild_store_open();
 int count_set(boolean[item] things);
 float average_range(string avg);
 boolean can_adventure();
 
+string SCRIPT = "yaaz";
 
 int abort_on_advs_left = 3;
 
@@ -54,37 +53,6 @@ boolean guild_store_open()
   return (get_property("lastGuildStoreOpen").to_int() == my_ascensions());
 }
 
-
-string setting(string value, string def)
-{
-  // daily values override permanent ones:
-  string prop = get_property("_dg_" + value);
-  if (prop != "")
-    return prop;
-
-  prop = get_property("dg_" + value);
-  if (prop != "")
-    return prop;
-
-  return def;
-}
-
-string setting(string value)
-{
-  return setting(value, "");
-}
-
-string save_setting(string key, string value)
-{
-  set_property("dg_" + key, value);
-  return value;
-}
-
-string save_daily_setting(string key, string value)
-{
-  set_property("_dg_" + key, value);
-  return value;
-}
 
 float cost_per_mp()
 {

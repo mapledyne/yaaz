@@ -63,6 +63,15 @@ boolean L05_Q_goblin()
     use(1, $item[cobb's knob map]);
     return true;
   }
+  
+  if (my_level() < 5)
+    return false;
+
+  if (quest_status("questL05Goblin") == UNSTARTED)
+  {
+    log("Going to the council to pick up the Goblin King quest.");
+    council();
+  }
 
   if (!have_outfit("Knob Goblin Harem Girl Disguise") && !have_outfit("Knob Goblin Elite Guard Uniform"))
   {

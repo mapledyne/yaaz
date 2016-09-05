@@ -1,9 +1,11 @@
+import "util/base/settings.ash";
+
 string war_side()
 {
   string side = setting("war_side", "fratboy");
   if (side == "fratboy" || side == "hippy")
     return side;
-  abort("War side setting (dg_war_side) is not valid. It's currently set to '" + side + "', but must be either 'hippy' or 'fratboy'.");
+  abort("War side setting (" + SETTING_PREFIX + "_war_side) is not valid. It's currently set to '" + side + "', but must be either 'hippy' or 'fratboy'.");
   return "";
 }
 

@@ -1,15 +1,16 @@
 import "util/base/util.ash";
+import "util/base/settings.ash";
 
 string pref_line(string pref, string def, string comment)
 {
-  return "<tr><td>dg_" + pref + "</td><td>" + setting(pref, def) + "</td><td>" + comment + "</td></tr>";
+  return "<tr><td>" + SETTING_PREFIX + "_" + pref + "</td><td>" + setting(pref, def) + "</td><td>" + comment + "</td></tr>";
 }
 
 
-print_html("Options with <b>dg_ascend</b> can be set by changing various settings.");
+print_html("Options with <b>" + SCRIPT + "</b> can be set by changing various settings.");
 print("Set an option by changing the variable like the following in the gCLI:");
 print("");
-print("set dg_war_side=hippy");
+print("set " + SETTING_PREFIX + "_war_side=hippy");
 print("");
 print("Settings:");
 string table = "<table border=2 width=500px><tr><th>Option</th><th>Current</th><th>Notes</th></tr>";

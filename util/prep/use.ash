@@ -45,7 +45,7 @@ void use_things()
     use_all($item[pile of dusty animal bones]);
   }
 
-  if (!location_open($location[the overgrown lot]))
+  if (!location_open($location[the overgrown lot]) && item_amount($item[Map to a Hidden Booze Cache]) > 0)
   {
     log("Using a " + wrap($item[Map to a Hidden Booze Cache]) + " to open " + wrap($location[the overgrown lot]) + ".");
     use(1, $item[Map to a Hidden Booze Cache]);
@@ -129,5 +129,17 @@ void use_things()
     cli_execute("refresh inv");
     save_daily_setting("used_tonic_djinn", "true");
   }
+
+
+  // get new familiars as you find them:
+  foreach f in $familiars[]
+  {
+    if (!have_familiar(f) && item_amount(f.hatchling) > 0)
+    {
+      log("Putting a " + wrap(f.hatchling) + " in your terrarium so you can have a " + wrap(f) + " familiar.");
+      use(1, f.hatchling);
+    }
+  }
+
 
 }

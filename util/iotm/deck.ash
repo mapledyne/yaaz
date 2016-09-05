@@ -2,10 +2,11 @@ import "util/base/print.ash";
 import "util/base/inventory.ash";
 import "util/base/familiars.ash";
 import "util/base/quests.ash";
+import "util/base/util.ash";
 
 boolean can_deck()
 {
-  if (i_a($item[deck of every card]) > 0 && to_int(get_property("_deckCardsDrawn")) < 15)
+  if (can_adventure() && item_amount($item[deck of every card]) > 0 && to_int(get_property("_deckCardsDrawn")) < 15)
     return true;
   return false;
 }

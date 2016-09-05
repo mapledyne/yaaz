@@ -1,5 +1,6 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
+import "util/base/settings.ash";
 import "util/iotm/clanvip.ash";
 
 boolean is_spleen_item(item it);
@@ -163,7 +164,7 @@ boolean can_eat(item it)
 
 boolean can_drink(item it)
 {
-  if (item_amount(it) == 0 && !is_vip_item(it) && creatable_amount(it) == 0)
+  if (item_amount(it) == 0 && !can_vip_drink(it) && creatable_amount(it) == 0)
     return false;
   if (!is_booze_item(it))
     return false;
@@ -254,6 +255,9 @@ item[int] consume_list()
 
   foreach it in $items[]
   {
+    if (is_vip_item(it) && !can_vip())
+      continue;
+
     if (!is_npc_item(it) && item_amount(it) == 0 && creatable_amount(it) == 0 && !is_vip_item(it))
       continue;
 

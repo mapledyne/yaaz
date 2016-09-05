@@ -128,7 +128,7 @@ void prep(location loc)
 
   cast_surplus_mp();
 
-  if (my_meat() > 300 && my_path() != "Nuclear Autumn")
+  if (my_meat() > 1000 && my_path() != "Nuclear Autumn")
     hermit(999, $item[ten-leaf clover]);
 
   get_totem();
