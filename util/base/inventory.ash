@@ -8,6 +8,7 @@ void pulverize_all(item it);
 void pulverize_all_but_one(item it);
 void pulverize_keep_if(item it, boolean keep_if);
 int immateria();
+int palindome_items();
 item spooky_quest_item();
 void make_if_needed(item it, string msg);
 void make_if_needed(item it);
@@ -329,6 +330,21 @@ void get_saucepan()
 		use(1, $item[chewing gum on a string]);
 	}
 
+}
+
+int palindome_items()
+{
+  int count = 0;
+  foreach it in $items[photograph of a dog,
+                       photograph of an ostrich egg,
+                       photograph of a red nugget,
+                       photograph of god,
+                       &quot;I Love Me\, Vol. I&quot;]
+  {
+    if (item_amount(it) > 0)
+      count += 1;
+  }
+	return count;
 }
 
 int total_shadow_helpers()

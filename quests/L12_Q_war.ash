@@ -63,10 +63,74 @@ boolean sidequest(string quest)
     return sidequest(quest, war_side());
 }
 
+void get_hippy_disguise()
+{
+  if (!have_outfit("filthy hippy disguise"))
+  {
+    log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + " first.");
+    while (!have_outfit("filthy hippy disguise"))
+    {
+      boolean b = dg_adventure($location[hippy camp]);
+      if (!b)
+        return;
+    }
+  }
+}
+
+boolean start_the_war(string side)
+{
+  string outfit = war_outfit();
+
+  location camp = $location[hippy camp];
+  if (side == "fratboy")
+    camp = $location[frat house];
+
+  maximize("", "filthy hippy disguise");
+  if (!have_outfit(war_outfit()))
+    log("Off to get the " + wrap(outfit, COLOR_ITEM) + " from the " + wrap(camp) + ".");
+  while (!have_outfit(war_outfit()))
+  {
+    boolean b = dg_adventure(camp);
+    if (!b)
+      return true;
+  }
+
+  // we have the outfit. Now to start the war...
+
+  camp = $location[wartime hippy camp];
+  if (side == "hippy")
+    camp = $location[wartime frat house];
+
+  if (side == "fratboy")
+  {
+    // should check to see if we have hippy war outfit and maybe change 139, 140?
+    set_property("choiceAdventure139", 3); // fight space cadet
+    set_property("choiceAdventure140", 3); // fight drill sergeant
+    set_property("choiceAdventure141", 3); // start the war
+    set_property("choiceAdventure142", 3); // start the war
+
+  } else {
+    // should check to see if we have frat war outfit and maybe change 143, 144?
+    set_property("choiceAdventure143", 3); // fight war pledge
+    set_property("choiceAdventure144", 3); // fight drill sergeant
+    set_property("choiceAdventure145", 4); // start the war
+    set_property("choiceAdventure146", 4); // start the war
+  }
+
+  while (quest_status("warProgress") == UNSTARTED)
+  {
+    maximize("items, -combat", war_outfit());
+    boolean b = dg_adventure(camp);
+    if (!b)
+      return true;
+  }
+  return true;
+}
+
 boolean L12_Q_war(string side)
 {
-  if (my_level() < 12)
-    return false;
+  if (to_int(get_property("lastIslandUnlock")) >= my_ascensions())
+    get_hippy_disguise();
 
   if (i_a($item[Talisman o' Namsilat]) == 0)
   {
@@ -74,17 +138,28 @@ boolean L12_Q_war(string side)
     return false;
   }
 
-  if (quest_status("questL12War") < 1)
-  {
-    warning("This script can't (yet) start the island war. Go do that.");
-    wait(10);
+  if (my_level() < 12)
     return false;
+
+  if (quest_status("questL12War") == FINISHED)
+    return false;
+
+  if (quest_status("questL12War") == UNSTARTED)
+  {
+    log("Going to the council to start the War quest.");
+    council();
+  }
+
+  if (quest_status("questL12War") == STARTED)
+  {
+    return start_the_war(side);
   }
 
 
-  if (quest_status("questL12War") == FINISHED)
+  if (war_arena())
   {
-    return false;
+    if (L12_SQ_arena(side))
+      return true;
   }
 
   if (war_junkyard())
@@ -92,20 +167,6 @@ boolean L12_Q_war(string side)
     if (L12_SQ_junkyard(side))
       return true;
   }
-
-  if (war_arena())
-  {
-    if (L12_SQ_arena(side))
-      return true;
-
-    // special case to skip out if the arena's not done, but we want to avoid
-    // going forward with the war...
-    if (get_property("sidequestArenaCompleted") == "none")
-    {
-      return false;
-    }
-  }
-
 
   string sq = setting("war_lighthouse");
   if (sq == "")
@@ -132,6 +193,10 @@ boolean L12_Q_war(string side)
     warning("This script doesn't handle the sidequests yet. You should do those before running this.");
     abort();
   }
+
+  // handle cause where the arena sidequest is paused while we wait for flyers to be delivered.
+  if (war_arena() && get_property("sidequestArenaCompleted") == "none")
+    return false;
 
   location battle = $location[The Battlefield (Frat Uniform)];
 

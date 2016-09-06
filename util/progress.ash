@@ -152,6 +152,14 @@ void progress_sheet()
       }
     }
 
+    if (quest_active("questL11Palindome"))
+    {
+      if (quest_status("questL11Palindome") < 1)
+      {
+        progress(to_int(get_property("palindomeDudesDefeated")), 5, "Palindome dudes defeated");
+        progress(palindome_items(), 5, "Palindome items found");
+      }
+    }
 
     if (quest_active("questL11Pyramid"))
     {
@@ -159,7 +167,7 @@ void progress_sheet()
     }
   }
 
-  if (quest_active("questL12War") && get_property("sidequestArenaCompleted") != "none")
+  if (quest_active("questL12War") && get_property("sidequestArenaCompleted") == "none")
   {
       if (have_flyers())
       {

@@ -32,13 +32,28 @@ boolean L12_SQ_junkyard(string side)
       visit_url("bigisland.php?action=junkman&pwd=");
       continue;
     }
+    if (get_property("currentJunkyardLocation") == "")
+    {
+      if (outfit(war_outfit()))
+      {
+        log("Visiting Yossarian at the Junkyard.");
+        visit_url("bigisland.php?action=junkman&pwd=");
+      }
+      else
+      {
+        abort("Trying to equip the " + wrap(war_outfit(), COLOR_ITEM) + " but couldn't for some reason. Junkyard quest should be complete - go visit Yossarian yourself.");
+      }
+    }
 
     if (get_property("currentJunkyardLocation") == "Yossarian")
     {
       if (junkyard_progress() == 4)
         {
           if (outfit(war_outfit()))
+          {
+            log("Visiting Yossarian at the Junkyard.");
             visit_url("bigisland.php?action=junkman&pwd=");
+          }
           else
           {
             abort("Trying to equip the " + wrap(war_outfit(), COLOR_ITEM) + " but couldn't for some reason. Junkyard quest should be complete - go visit Yossarian yourself.");

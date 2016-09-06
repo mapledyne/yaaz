@@ -6,7 +6,7 @@ import "util/iotm/manuel.ash";
 import "util/base/util.ash";
 import "util/progress.ash";
 import "util/base/locations.ash";
-
+import "util/base/settings.ash";
 
 boolean overrides();
 boolean dg_clover(location loc);

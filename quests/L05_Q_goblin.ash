@@ -38,19 +38,21 @@ string prep_for_king()
 
 boolean L05_Q_goblin()
 {
+
+  if (to_int(get_property("lastDispensaryOpen")) < my_ascensions() && have_outfit("knob goblin elite guard uniform"))
+  {
+    log("Opening the Knob Goblin dispensary.");
+    maximize("outfit knob goblin elite guard uniform");
+    return dg_adventure($location[Cobb's knob barracks]);
+  }
+
   if (quest_status("questL05Goblin") == FINISHED)
     return false;
 
   location outskirts = $location[the outskirts of cobb's knob];
-  warning("Test: Does questL05Goblin get updated on opening the Knob, before the main quest is offered?");
-  wait(5);
+
   if ((outskirts.turns_spent < 11 || quest_status("questL05Goblin") < 1) && item_amount($item[Knob Goblin encryption key]) == 0)
   {
-    if (item_amount($item[cobb's knob map]) == 0)
-    {
-      log("Getting " + wrap($item[cobb's knob map]) + " from the council.");
-      council();
-    }
     while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
       dg_adventure(outskirts, "");
@@ -63,7 +65,7 @@ boolean L05_Q_goblin()
     use(1, $item[cobb's knob map]);
     return true;
   }
-  
+
   if (my_level() < 5)
     return false;
 

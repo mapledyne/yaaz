@@ -1,4 +1,6 @@
 import "util/base/print.ash";
+import "util/base/inventory.ash";
+import "util/base/quests.ash";
 
 location pick_semi_rare_location()
 {
@@ -16,9 +18,11 @@ location pick_semi_rare_location()
       return $location[The Hidden Temple];
   }
 
-
-
-  return $location[none];
+  if (last == $location[the haunted pantry])
+  {
+    return $location[the sleazy back alley];
+  }
+  return $location[the haunted pantry];
 }
 
 

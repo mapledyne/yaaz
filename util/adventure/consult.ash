@@ -1,5 +1,6 @@
 import "util/base/monsters.ash";
 import "util/base/inventory.ash";
+import "util/base/settings.ash";
 
 import <zlib.ash>;
 

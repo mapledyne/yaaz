@@ -2,11 +2,100 @@ import "util/main.ash";
 import "quests/M_pirates.ash";
 
 
+
+//palindomeDudesDefeated
+
+boolean get_photographs()
+{
+  if (palindome_items() == 5 && to_int(get_property("palindomeDudesDefeated")) <= 5)
+    return false;
+  if (quest_status("questL11Palindome") >= 1)
+    return false;
+
+  add_attract($monster[racecar bob]);
+  add_attract($monster[bob racecar]);
+  while (palindome_items() < 5
+         && can_adventure()
+         && to_int(get_property("palindomeDudesDefeated")) <= 5
+         && item_amount($item[stunt nuts]) == 0)
+  {
+    string max = "items, -combat";
+    if (palindome_items() >= 4)
+    {
+      max = "items";
+    }
+    maximize(max, $item[talisman o' namsilat]);
+    boolean b = dg_adventure($location[inside the palindome]);
+    if (!b)
+      return true;
+  }
+  remove_attract($monster[racecar bob]);
+  remove_attract($monster[bob racecar]);
+
+  return true;
+}
+
+boolean stunt_nut_stew()
+{
+  if (quest_status("questL11Palindome") >= 4)
+    return false;
+
+  log("Off to get some ingredients to cook up some " + wrap($item[wet stunt nut stew]) + ".");
+
+  while(can_adventure() && item_amount($item[wet stunt nut stew]) == 0)
+  {
+    if (creatable_amount($item[wet stunt nut stew]) > 0)
+    {
+      log("Cooking one " + wrap($item[wet stunt nut stew]) + " just like Mr. Alarm's grandmother used to make.");
+      create(1, $item[wet stunt nut stew]);
+      continue;
+    }
+    if (!to_boolean(get_property("friarsBlessingReceived")))
+      cli_execute("friar food");
+    boolean b = dg_adventure($location[whitey's grove], "combat, items");
+    if (!b)
+      return true;
+  }
+  return true;
+}
+
 boolean L11_SQ_palindome()
 {
   if (get_talisman()) return true;
 
-  return false;
+  if (i_a($item[Talisman o' Namsilat]) == 0)
+    return false;
+
+  switch(quest_status("questL11Palindome"))
+  {
+    default:
+      log("This palindome quest status isn't scripted yet: " + quest_status("questL11Palindome"));
+      wait(5);
+      return false;
+    case FINISHED:
+      return false;
+    case STARTED:
+    case UNSTARTED:
+      log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
+      get_photographs();
+      if(item_amount($item[&quot;I Love Me\, Vol. I&quot;]) == 0)
+        return false;
+
+      equip($item[Talisman o' Namsilat]);
+      log("Using the " + wrap($item[&quot;I Love Me\, Vol. I&quot;]) + ".");
+      use(1, $item[&quot;I Love Me\, Vol. I&quot;]);
+
+      log("Going to arrange some photographs in Dr. Awkward's office.");
+      visit_url("place.php?whichplace=palindome&action=pal_drlabel");
+      visit_url("choice.php?pwd&whichchoice=872&option=1&photo1=2259&photo2=7264&photo3=7263&photo4=7265");
+
+      log("Reading " + wrap($item[&quot;I Love Me\, Vol. I&quot;]) + ".");
+      use(1, $item[&quot;2 Love Me\, Vol. 2&quot;]);
+      log("Visiting Mr. Alarm.");
+      visit_url("place.php?whichplace=palindome&action=pal_mrlabel");
+      stunt_nut_stew();
+      return true;
+  }
 }
 
 void main()
