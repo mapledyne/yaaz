@@ -51,11 +51,17 @@ boolean stunt_nut_stew()
       continue;
     }
     if (!to_boolean(get_property("friarsBlessingReceived")))
-      cli_execute("friar food");
+    {
+      log("Going to get a blessing from the Friars.");
+      visit_url("friars.php?pwd&action=buffs&bro=1&button='Blessed Be'");
+    }
     boolean b = dg_adventure($location[whitey's grove], "combat, items");
     if (!b)
       return true;
   }
+  log("Giving the " + wrap($item[wet stunt nut stew]) + " to " + wrap("Mr. Alarm", COLOR_MONSTER) + ".");
+  visit_url("place.php?whichplace=palindome&action=pal_mrlabel");
+  cli_execute("refresh inv");
   return true;
 }
 
@@ -92,9 +98,27 @@ boolean L11_SQ_palindome()
       log("Reading " + wrap($item[&quot;I Love Me\, Vol. I&quot;]) + ".");
       use(1, $item[&quot;2 Love Me\, Vol. 2&quot;]);
       log("Visiting Mr. Alarm.");
+      equip($item[talisman o' namsilat]);
       visit_url("place.php?whichplace=palindome&action=pal_mrlabel");
+      return true;
+    case 3:
       stunt_nut_stew();
       return true;
+    case 4:
+      log("Giving the " + wrap($item[wet stunt nut stew]) + " to " + wrap("Mr. Alarm", COLOR_MONSTER) + ".");
+      equip($item[talisman o' namsilat]);
+      visit_url("place.php?whichplace=palindome&action=pal_mrlabel");
+      cli_execute("refresh inv");
+      return true;
+    case 5:
+      log("Off to fight " + wrap($monster[Dr. Awkward]) + ".");
+      maximize("equip talisman o' namsilat, equip mega gem");
+  		set_property("choiceAdventure131", 2);
+  		visit_url("place.php?whichplace=palindome&action=pal_drlabel");
+  		visit_url("choice.php?pwd&whichchoice=131&option=2");
+      run_combat();
+      return true;
+
   }
 }
 

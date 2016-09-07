@@ -1,6 +1,7 @@
 import "util/base/quests.ash";
 import "util/base/print.ash";
 import "util/base/inventory.ash";
+import "util/base/settings.ash";
 
 int previous_level()
 {
@@ -26,8 +27,12 @@ void level_progress()
   progress(current, max, "substat progress to level " + to_string(my_level()+1));
 }
 
-boolean mysterious(int progress, int c) {
- return (progress & (1 << c)) == 0;
+int war_defeated()
+{
+  string prop = "hippiesDefeated";
+  if (setting("war_side") == "hippy")
+    prop = "fratboysDefeated";
+  return (get_property(prop).to_int());
 }
 
 int twinpeak_progress()
@@ -167,16 +172,28 @@ void progress_sheet()
     }
   }
 
-  if (quest_active("questL12War") && get_property("sidequestArenaCompleted") == "none")
+  if (quest_active("questL12War"))
   {
-      if (have_flyers())
+      if (to_boolean(setting("war_arena", "true"))
+          && get_property("sidequestArenaCompleted") == "none"
+          && have_flyers())
       {
         int flyerML = get_property("flyeredML").to_int() / 100;
         progress(flyerML, "flyers delivered");
       }
+
+      if (to_boolean(setting("war_lighthouse", "true"))
+          && get_property("sidequestLighthouseCompleted") == "none")
+      {
+        progress(item_amount($item[barrel of gunpowder]), 5, "barrels of gunpowder");
+      }
+      string msg = "hippies defeated";
+      if (setting("war_side") == "hippy")
+      {
+        msg = "fratboys defeated";
+      }
+      progress(war_defeated(), 1000, msg);
   }
-
-
 }
 
 void main()

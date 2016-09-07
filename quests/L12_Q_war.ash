@@ -3,6 +3,8 @@ import "util/base/war_support.ash";
 
 import "quests/L12_SQ_junkyard.ash";
 import "quests/L12_SQ_arena.ash";
+import "quests/L12_SQ_lighthouse.ash";
+import "quests/L12_SQ_orchard.ash";
 
 int defeated(string side);
 int defeated();
@@ -12,18 +14,6 @@ boolean sidequest(string quest, string side);
 boolean sidequest(string quest);
 void do_war(string side);
 void do_war();
-
-int defeated(string side)
-{
-  string prop = "hippiesDefeated";
-  if (side == "hippy")
-    prop = "fratboysDefeated";
-  return (get_property(prop).to_int());
-}
-int defeated()
-{
-  return defeated(war_side());
-}
 
 int sidequests(string side)
 {
@@ -158,44 +148,34 @@ boolean L12_Q_war(string side)
 
   if (war_arena())
   {
-    if (L12_SQ_arena(side))
+    if (L12_SQ_arena())
+      return true;
+  }
+
+  if (war_lighthouse())
+  {
+    if (L12_SQ_lighthouse())
       return true;
   }
 
   if (war_junkyard())
   {
-    if (L12_SQ_junkyard(side))
+    if (L12_SQ_junkyard())
       return true;
   }
 
-  string sq = setting("war_lighthouse");
-  if (sq == "")
+  if (war_orchard())
   {
-    setting("war_lighthouse", "true");
-    sq = "true";
-  }
-  if (sq == "true")
-  {
-    if (get_property("sidequestLighthouseCompleted") == "none")
-    {
-      cli_execute("call quests/L12_SQ_lighthouse.ash");
-      if (get_property("sidequestLighthouseCompleted") == "none")
-      {
-        warning("Can't continue the war until the " + wrap("Lighthouse", COLOR_LOCATION) + " is complete.");
-        return false;
-      }
-    }
+    if (L12_SQ_orchard())
+      return true;
   }
 
-
-  if (sidequests() < 5)
-  {
-    warning("This script doesn't handle the sidequests yet. You should do those before running this.");
-    abort();
-  }
-
-  // handle cause where the arena sidequest is paused while we wait for flyers to be delivered.
+  // handle case where the arena sidequest is paused while we wait for flyers to be delivered.
   if (war_arena() && get_property("sidequestArenaCompleted") == "none")
+    return false;
+
+  // handle case where the lighthouse sidequest is paused while we wait for digitized lobsterfrogmen
+  if (war_lighthouse() && get_property("sidequestLighthouseCompleted") == "none")
     return false;
 
   location battle = $location[The Battlefield (Frat Uniform)];
@@ -204,16 +184,23 @@ boolean L12_Q_war(string side)
   {
     battle = $location[The Battlefield (Hippy Uniform)];
   }
+
+  if (side == "fratboy" && war_orchard())
+  {
+    while(defeated() < 64)
+    {
+      maximize("", war_outfit());
+      boolean b = dg_adventure(battle);
+      if (!b)
+        return true;
+    }
+    return true;
+  }
+  
   while(defeated() < 1000)
   {
-    string msg = "hippies defeated";
-    if (side == "hipppy")
-    {
-      msg = "fratboys defeated";
-    }
     maximize("", war_outfit());
     dg_adventure(battle);
-    progress(defeated(), 1000, msg);
   }
 
   // turn in any last items...

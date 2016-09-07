@@ -28,6 +28,7 @@ void sell_things()
   sell_all($item[Frigid Ninja Stars]);
   sell_all($item[Giant Moxie Weed]);
   sell_all($item[Half of a Gold Tooth]);
+  sell_all($item[handful of moss]);
   sell_all($item[Imp Ale]);
   sell_all($item[Keel-Haulin\' Knife]);
   sell_all($item[Kokomo Resort Pass]);
@@ -48,6 +49,7 @@ void sell_things()
   sell_all($item[Spicy Bean Burrito]);
   sell_all($item[Strongness Elixir]);
   sell_all($item[Sunken Chest]);
+  sell_all($item[suntan lotion of moxiousness]);
   sell_all($item[Tambourine Bells]);
   sell_all($item[Tequila Sunrise]);
   sell_all($item[Windchimes]);

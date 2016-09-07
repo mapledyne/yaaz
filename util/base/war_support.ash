@@ -21,7 +21,17 @@ boolean war_junkyard()
   return to_boolean(setting("war_junkyard", "true"));
 }
 
+boolean war_orchard()
+{
+  return to_boolean(setting("war_orchard", "true"));
+}
+
 boolean war_arena()
 {
   return to_boolean(setting("war_arena", "true"));
+}
+
+boolean war_lighthouse()
+{
+  return to_boolean(setting("war_lighthouse", "true"));
 }

@@ -1,8 +1,25 @@
 import "util/base/print.ash";
 import "util/base/consume.ash";
 
+item e_to_i(effect ef)
+{
+  foreach action in ef.all
+  {
+    if (contains_text(action, "use 1 "))
+    {
+      item it = to_item(replace_string(action, "use 1 ", ""));
+      
+      print(it);
+    }
+
+  }
+  return $item[none];
+}
+
 item effect_to_item(effect ef)
 {
+
+  // better to parse an item out of $effect.default?
   switch(ef)
   {
     default:                              return $item[none];
@@ -18,11 +35,15 @@ item effect_to_item(effect ef)
     case $effect[eye of the seal]:        return $item[seal eyeball];
     case $effect[fresh scent]:            return $item[deodorant];
     case $effect[green tongue]:           return $item[green snowcone];
+    case $effect[heart of green]:         return $item[green candy heart];
+    case $effect[heavy petting]:          return $item[Knob Goblin pet-buffing spray];
     case $effect[Hiding in Plain Sight]:  return $item[panty raider camouflage];
     case $effect[high colognic]:          return $item[musk turtle];
     case $effect[hippy stench]:           return $item[reodorant];
+    case $effect[insulated trousers]:     return $item[cold powder];
     case $effect[lustful heart]:          return $item[love song of naughty innuendo];
     case $effect[ocelot eyes]:            return $item[eyedrops of the ocelot];
+    case $effect[oiled-up]:               return $item[pec oil];
     case $effect[orange tongue]:          return $item[orange snowcone];
     case $effect[peeled eyeballs]:        return $item[knob goblin eyedrops];
     case $effect[purple tongue]:          return $item[purple snowcone];
@@ -30,8 +51,10 @@ item effect_to_item(effect ef)
     case $effect[Rushtacean\']:           return $item[armored prawn];
     case $effect[Sepia Tan]:              return $item[old bronzer];
     case $effect[Spiro Gyro]:             return $item[programmable turtle];
+    case $effect[spookypants]:           return $item[spooky powder];
     case $effect[Ticking Clock]:          return $item[cheap wind-up clock];
     case $effect[tortious]:               return $item[mocking turtle];
+    case $effect[well-oiled]:             return $item[Oil of Parrrlay];
     case $effect[withered heart]:         return $item[love song of disturbing obsession];
     case $effect[sugar rush]:
       if (item_amount($item[stick of &quot;gum&quot;]) > 0) return $item[stick of &quot;gum&quot;];

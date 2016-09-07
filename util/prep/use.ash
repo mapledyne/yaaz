@@ -19,6 +19,7 @@ void use_things()
   use_all($item[Effermint&trade; tablets]);
   use_all($item[fat wallet]);
   use_all($item[Frobozz Real-Estate Company Instant House (TM)]);
+  use_all($item[gold Boozehounds Anonymous token]);
   use_all($item[gummi turtle]);
   use_all($item[irradiated turtle]);
   use_all($item[kobold treasure hoard]);

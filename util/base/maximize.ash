@@ -165,12 +165,40 @@ void max_effects(string target)
       effect_maintain($effect[high colognic]);
       change_mcd(10);
       break;
-    case "all res":
+    case "familiar weight":
+      // consider this, but it's also -10% all stats...
+      // effect_maintain($effect[heavy petting]);
+      effect_maintain($effect[empathy]);
+      effect_maintain($effect[heart of green]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[green tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[black tongue]);
+
+    case "all res base":
       effect_maintain($effect[elemental saucesphere]);
       effect_maintain($effect[astral shell]);
       effect_maintain($effect[scarysauce]);
+      effect_maintain($effect[oiled-up]);
+      effect_maintain($effect[well-oiled]);
       effect_maintain($effect[spiro gyro]);
-
+      effect_maintain($effect[red door syndrome]);
+      if (my_familiar() == $familiar[exotic parrot])
+      {
+        max_effects("familiar weight");
+      }
+      break;
+    case "all res":
+      max_effects("cold res");
+      max_effects("spooky res");
+      break;
+    case "cold res":
+      max_effects("all res base");
+      effect_maintain($effect[insulated trousers]);
+      break;
+    case "spooky res":
+      max_effects("all res base");
+      effect_maintain($effect[spookypants]);
       break;
     default:
       if (!have_colored_tongue())

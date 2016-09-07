@@ -1,4 +1,5 @@
 import "util/main.ash";
+import "util/base/war_support.ash";
 
 boolean one_orchard_effect(effect ef, item it)
 {
@@ -35,41 +36,43 @@ location pick_orchard_location()
   return $location[the hatching chamber];
 }
 
-void do_orchard()
+boolean L12_SQ_orchard()
 {
+  string side = war_side();
+
+  if (!war_orchard())
+    return false;
 
   if (get_property("sidequestOrchardCompleted") != "none")
-  {
-    log("Orchard quest already complete.");
-    return;
-  }
+    return false;
 
-  if (get_property("hippiesDefeated") < 64)
-  {
-    warning("Orchard quest not available yet. Kill more hippies.");
-    return;
-  }
+  if (get_property("hippiesDefeated") < 64 && side == "fratboy")
+    return false;
 
-  outfit("frat warrior fatigues");
+  outfit(war_outfit());
+
   log("Visiting the grocer to start the quest.");
   visit_url("bigisland.php?place=orchard&action=stand&pwd=");
 
   log("Completing the orchard quest.");
-  while (i_a($item[heart of the filthworm queen]) == 0)
+  while (item_amount($item[heart of the filthworm queen]) == 0)
   {
     check_orchard_effects();
-    dg_adventure(pick_orchard_location(), "items");
+    boolean b = dg_adventure(pick_orchard_location(), "items");
+    if (!b)
+      return true;
   }
-  outfit("frat warrior fatigues");
+  outfit(war_outfit());
   log("Visiting the grocer to complete the quest.");
   visit_url("bigisland.php?place=orchard&action=stand&pwd=");
 
   log("Visiting the grocer once more to collect our reward.");
   visit_url("bigisland.php?place=orchard&action=stand&pwd=");
   log("Orchard complete.");
+  return true;
 }
 
 void main()
 {
-  do_orchard();
+  L12_SQ_orchard();
 }

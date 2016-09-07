@@ -89,6 +89,11 @@ familiar choose_familiar(string fam)
 
   switch(fam)
   {
+    case "all res":
+    case "cold res":
+    case "spooky res":
+      newbie = choose_familiar_from_list($familiars[exotic parrot]);
+      break;
     case "meat":
       newbie = choose_familiar_from_list($familiars[adventurous spelunker, angry jung man, grimstone golem, leprechaun, cheshire bat, nervous tick, hobo monkey, he-boulder, coffee pixie]);
       break;
