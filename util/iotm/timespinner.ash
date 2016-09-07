@@ -1,3 +1,5 @@
+import "util/base/settings.ash";
+import "util/base/print.ash";
 
 int time_minutes()
 {
@@ -23,10 +25,23 @@ boolean can_spin_time()
   return true;
 }
 
+boolean time_prank(string player, string msg)
+{
+  if (!can_spin_time())
+    false;
+  string url = "choice.php?pwd&whichchoice=1198&option=1&pl="+url_encode(player)+"&th="+url_encode(msg);
+  string ret = visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
+  ret = visit_url("choice.php?pwd&whichchoice=1195&option=5");
+  ret = visit_url(url);
+  return true;
+}
+
 boolean timespinner_future()
 {
-  string future = setting("far_future");
+  if (setting("visited_future") == "true")
+    return false;
 
+  string future = setting("far_future");
   if (future == "")
   {
     if (setting("spinner_notice") != "true")
@@ -39,6 +54,7 @@ boolean timespinner_future()
     }
     return false;
   }
+
   if (time_minutes() < 2)
     return false;
 
@@ -48,12 +64,13 @@ boolean timespinner_future()
     replicate = "drink";
 
   log("Using the " + wrap($item[time-spinner]) + " to visit the far future. Going to try to replicate some " + replicate + ".");
+  save_daily_setting("visited_future", "true");
   return cli_execute(future + " " + replicate);
 }
 
 void timespinner()
 {
-
+  timespinner_future();
 }
 
 void main()

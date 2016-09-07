@@ -1,5 +1,7 @@
 
 import "util/base/util.ash";
+import "util/base/settings.ash";
+import "util/iotm/timespinner.ash"Copyright (c) 2016 Copyright Holder All Rights Reserved.
 import <zlib.ash>;
 
 int smiles_remaining()
@@ -112,6 +114,11 @@ void do_heart_thing(string player)
   {
     heart_msg(player, "throwing a " + wrap($item[roll of toilet paper]) + " at them. Jerk");
     cli_execute("throw roll of toilet paper at " + player);
+  }
+  if (can_spin_time())
+  {
+    heart_msg(player, "sending a time prank.");
+    time_prank(player, "time is residual...");
   }
 
   log("Apparently we're out of heart-y things to do right now. Sad.");

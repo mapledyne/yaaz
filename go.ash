@@ -147,6 +147,14 @@ void ascend()
   day_end();
 
   log("Scripted actions complete. Run this script again to continue trying to ascend.");
+
+  if (my_adventures() < 10 && booze_full() && fullness_full())
+  {
+    log("It looks like you don't have much else you can do today. Consider a nightcap if you don't want to do anything else manually?");
+  } else {
+    log("There may be other things you can do today, but this script can't handle them. Do those, or just try rerunning this script.");
+  }
+
 }
 
 void main()
