@@ -116,8 +116,12 @@ void day_end()
 
   log("Dressing for rollover.");
   maximize("rollover");
-  log("Taking off anything not needed for rollover (helpful for PvP)");
-  remove_non_rollover();
+  if (hippy_stone_broken())
+  {
+    log("Tweaking nighttime outfit for better PvP.");
+    remove_non_rollover();
+    pvp_rollover();
+  }
   progress_sheet();
   manuel_progress();
 

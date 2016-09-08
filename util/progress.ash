@@ -32,7 +32,7 @@ int current_substats()
 void level_progress()
 {
 
-  progress(current_substats(), next_substats(), "substat progress to level " + to_string(my_level()+1));
+  progress(current_substats(), next_substats(), "substats to level " + to_string(my_level()+1));
 }
 
 int twinpeak_progress()
