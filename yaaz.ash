@@ -19,6 +19,7 @@ import "quests/L09_Q_topping.ash";
 import "quests/L10_Q_Garbage.ash";
 import "quests/L11_Q_macguffin.ash";
 import "quests/L12_Q_war.ash";
+import "quests/L13_Q_sorceress.ash";
 
 boolean ascend_loop()
 {
@@ -66,6 +67,7 @@ boolean ascend_loop()
   if (L09_Q_topping()) return true;
   if (L10_Q_garbage()) return true;
   if (L11_Q_macguffin()) return true;
+  if (L13_Q_sorceress()) return true;
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?

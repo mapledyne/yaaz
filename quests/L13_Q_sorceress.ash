@@ -49,7 +49,7 @@ boolean wall_of_meat()
   int counter = 0;
   while (quest_status("questL13Final") == 7 && counter < 10)
   {
-    maximize("meat");
+    maximize("meat, +effective");
     dg_adventure($location[tower level 2]);
     counter += 1;
   }
@@ -185,10 +185,8 @@ boolean loop_tower(int level)
   {
     case -1:
       if (my_level() < 13)
-      {
-        error("You can't go after the Naughty Sorceress until you're level 13.");
         return false;
-      }
+
       log("Seeing the council to start the quest.");
       council();
       return true;
@@ -222,16 +220,25 @@ boolean loop_tower(int level)
   return false;
 }
 
-void do_sorceress()
+boolean L13_Q_sorceress()
 {
+  if (my_level() < 13)
+    return false;
+
+  if (quest_status("questL12War") != FINISHED)
+    return false;
+  if (quest_status("questL11MacGuffin") != FINISHED)
+    return false;
+
 
   while (loop_tower(quest_status("questL13Final")))
   {
     // actions in loop_tower
   }
+  return true;
 }
 
 void main()
 {
-  do_sorceress();
+  L13_Q_sorceress();
 }
