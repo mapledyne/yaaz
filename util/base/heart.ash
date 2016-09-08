@@ -16,6 +16,9 @@ int smiles_remaining()
 
 boolean blacklisted(string player)
 {
+  if (player == to_lower_case(my_name()))
+    return true;
+
   // this should check an aggregate, but I'm sick and can't think straight.
   switch(to_lower_case(player))
   {
@@ -25,7 +28,6 @@ boolean blacklisted(string player)
         return true;
       }
       return false;
-    case "degrassi":
     case "ertest1":
     case "lord enzo":
     case "major meat":

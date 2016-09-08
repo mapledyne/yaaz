@@ -3,6 +3,7 @@ import "util/progress.ash";
 
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
+import "quests/M_8bit.ash";
 import "quests/M_spookyraven.ash";
 import "quests/M09_leaflet.ash";
 import "quests/M10_star_key.ash";
@@ -68,6 +69,7 @@ boolean ascend_loop()
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
+  if (M_8bit()) return true;
   if (M10_star_key()) return true;
 
   log("Ran out of things to do in this script. Either a quest is missing, or maybe we should level?");

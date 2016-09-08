@@ -85,7 +85,6 @@ float frequency_of_monster(location loc, monster mon)
       return freq;
     }
   }
-  warning("Looking for monster (" + wrap(mon) + ") frequency at " + wrap(loc) + ", but couldn't find monster.");
   return 0;
 }
 
