@@ -313,6 +313,10 @@ boolean try_consume(item it)
     return try_eat(it);
   if (is_booze_item(it))
     return try_drink(it);
+  if (it.usable)
+  {
+    return use(1, it);
+  }
   error("Trying to consume " + wrap(it) + " but I don't know what it is.");
   return false;
 }

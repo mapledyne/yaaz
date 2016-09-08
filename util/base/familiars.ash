@@ -1,4 +1,5 @@
 import "util/base/inventory.ash";
+import "util/base/settings.ash";
 
 boolean have_cubeling_items()
 {

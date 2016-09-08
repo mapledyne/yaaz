@@ -1,9 +1,56 @@
 import "util/base/print.ash";
 import "util/iotm/deck.ash";
+import "util/base/settings.ash";
 
 void pvp();
 void pvp(string name, string swag, string attack);
 
+item find_best_clothes(slot s)
+{
+  item target = $item[none];
+  int current = 0;
+  foreach i in get_inventory()
+  {
+    if (to_slot(i) != s)
+      continue;
+    string[int] spl = split_string(i, "r");
+    if (count(spl) > current)
+    {
+      target = i;
+      current = count(spl);
+    }
+  }
+  return target;
+}
+
+void school_clothes()
+{
+  cli_execute("outfit birthday suit");
+  equip(find_best_clothes($slot[hat]));
+  equip(find_best_clothes($slot[weapon]));
+  if (weapon_hands(equipped_item($slot[weapon])) == 1)
+    equip(find_best_clothes($slot[off-hand]));
+  equip(find_best_clothes($slot[pants]));
+  equip(find_best_clothes($slot[shirt]));
+  equip(find_best_clothes($slot[back]));
+  equip(find_best_clothes($slot[familiar]));
+  equip($slot[acc1], find_best_clothes($slot[acc1]));
+  equip($slot[acc2], find_best_clothes($slot[acc1]));
+  equip($slot[acc3], find_best_clothes($slot[acc1]));
+}
+
+void dress_for_pvp(string name)
+{
+  switch(name)
+  {
+    default:
+      cli_execute("outfit birthday suit");
+      return;
+    case "School":
+      school_clothes();
+      return;
+  }
+}
 
 void pvp()
 {
@@ -22,7 +69,7 @@ void pvp(string name, string swag, string attack)
     if (pvp_attacks_left() > 0)
     {
       cli_execute("checkpoint");
-      cli_execute("outfit birthday suit");
+      dress_for_pvp(name);
       cli_execute("pvp fame " + attack);
       cli_execute("outfit checkpoint");
     }

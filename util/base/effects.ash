@@ -74,8 +74,8 @@ void effect_maintain(effect ef)
 
     if (item_amount(it) > 0)
     {
-      log("Adding effect " + wrap(ef) + " by using " + wrap(it) + ".");
-      use(1, it);
+      log("Adding effect " + wrap(ef) + " by consuming " + wrap(it) + ".");
+      try_consume(it);
       return;
     }
   }

@@ -83,14 +83,15 @@ void day_begin()
   {
     warning("This script assumes you're in hardcore. If you're in softcore, it'll do a lot of things the hard way.");
   }
+
+  log("Current progress:");
+  progress_sheet();
   wait(5);
+
   maximize();
   prep();
 
   iotm();
-
-  progress_sheet();
-  wait(5);
 
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);

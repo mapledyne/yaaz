@@ -35,3 +35,30 @@ boolean war_lighthouse()
 {
   return to_boolean(setting("war_lighthouse", "true"));
 }
+
+int war_defeated()
+{
+  string prop = "hippiesDefeated";
+  if (setting("war_side") == "hippy")
+    prop = "fratboysDefeated";
+  return (get_property(prop).to_int());
+}
+
+int war_multiplier()
+{
+  int mult = 1;
+  if (get_property("sidequestArenaCompleted") == war_side())
+    mult = mult * 2;
+  if (get_property("sidequestOrchardCompleted") == war_side())
+    mult = mult * 2;
+  if (get_property("sidequestNunsCompleted") == war_side())
+    mult = mult * 2;
+  if (get_property("sidequestLighthouseCompleted") == war_side())
+    mult = mult * 2;
+  if (get_property("sidequestJunkyardCompleted") == war_side())
+    mult = mult * 2;
+  if (get_property("sidequestFarmCompleted") == war_side())
+    mult = mult * 2;
+
+  return mult;
+}

@@ -68,9 +68,6 @@ boolean overrides()
   return false;
 }
 
-
-
-
 boolean dg_adventure(location loc, string maximize)
 {
   if (my_inebriety() > inebriety_limit())
@@ -87,8 +84,10 @@ boolean dg_adventure(location loc, string maximize)
     return false;
   }
 
-  overrides();
-
+  while (overrides())
+  {
+    // keep trying overrides() until it has nothing to do and returns false.
+  }
 
   if (!location_open(loc))
   {
@@ -100,13 +99,12 @@ boolean dg_adventure(location loc, string maximize)
     }
   }
 
+  prep(loc);
 
   if (maximize != "none")
   {
     maximize(maximize);
   }
-
-  prep(loc);
 
   manuel_add_location(loc);
 

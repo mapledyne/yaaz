@@ -6,8 +6,6 @@ import "quests/L12_SQ_arena.ash";
 import "quests/L12_SQ_lighthouse.ash";
 import "quests/L12_SQ_orchard.ash";
 
-int defeated(string side);
-int defeated();
 int sidequests(string side);
 int sidequests();
 boolean sidequest(string quest, string side);
@@ -185,9 +183,9 @@ boolean L12_Q_war(string side)
     battle = $location[The Battlefield (Hippy Uniform)];
   }
 
-  if (side == "fratboy" && war_orchard())
+  if (side == "fratboy" && war_orchard() && war_defeated() < 64)
   {
-    while(defeated() < 64)
+    while(war_defeated() < 64)
     {
       maximize("", war_outfit());
       boolean b = dg_adventure(battle);
@@ -196,11 +194,13 @@ boolean L12_Q_war(string side)
     }
     return true;
   }
-  
-  while(defeated() < 1000)
+
+  while(war_defeated() < 1000)
   {
     maximize("", war_outfit());
-    dg_adventure(battle);
+    boolean b = dg_adventure(battle);
+    if (!b)
+      return true;
   }
 
   // turn in any last items...

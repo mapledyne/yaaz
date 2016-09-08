@@ -2,37 +2,37 @@ import "util/base/quests.ash";
 import "util/base/print.ash";
 import "util/base/inventory.ash";
 import "util/base/settings.ash";
+import "util/base/war_support.ash";
 
-int previous_level()
+
+int level_substats(int level)
 {
-  if (my_level() == 1)
+  if (level == 1)
     return 0;
-
-  return (my_level() - 1) * (my_level() - 1) + 4;
+  int s = (level - 1) * (level - 1) + 4;
+  s = s * s;
+  return s;
 }
 
-int next_level()
+int next_substats()
 {
-  return  my_level() * my_level() + 4;
+  return level_substats(my_level() + 1) - level_substats(my_level());
+}
+
+int current_substats()
+{
+  stat s = $stat[submuscle];
+  if (my_primestat() == $stat[mysticality])
+    s = $stat[submysticality];
+  if (my_primestat() == $stat[moxie])
+    s = $stat[submoxie];
+  return my_basestat(s) - level_substats(my_level());
 }
 
 void level_progress()
 {
 
-  int current = my_basestat(my_primestat()) - previous_level();
-
-  int max = (next_level() * next_level()) - (previous_level() * previous_level());
-  current = my_basestat($stat[submoxie]) - (previous_level() * previous_level());
-
-  progress(current, max, "substat progress to level " + to_string(my_level()+1));
-}
-
-int war_defeated()
-{
-  string prop = "hippiesDefeated";
-  if (setting("war_side") == "hippy")
-    prop = "fratboysDefeated";
-  return (get_property(prop).to_int());
+  progress(current_substats(), next_substats(), "substat progress to level " + to_string(my_level()+1));
 }
 
 int twinpeak_progress()
@@ -174,7 +174,7 @@ void progress_sheet()
 
   if (quest_active("questL12War"))
   {
-      if (to_boolean(setting("war_arena", "true"))
+      if (war_arena()
           && get_property("sidequestArenaCompleted") == "none"
           && have_flyers())
       {
@@ -182,16 +182,21 @@ void progress_sheet()
         progress(flyerML, "flyers delivered");
       }
 
-      if (to_boolean(setting("war_lighthouse", "true"))
+      if (war_lighthouse()
           && get_property("sidequestLighthouseCompleted") == "none")
       {
         progress(item_amount($item[barrel of gunpowder]), 5, "barrels of gunpowder");
       }
+
       string msg = "hippies defeated";
-      if (setting("war_side") == "hippy")
+      if (war_side() == "hippy")
       {
         msg = "fratboys defeated";
       }
+
+      int left = (1000 - war_defeated()) / war_multiplier();
+      msg += " (" + war_multiplier() + "/turn, " + left + " turns remain)";
+
       progress(war_defeated(), 1000, msg);
   }
 }
