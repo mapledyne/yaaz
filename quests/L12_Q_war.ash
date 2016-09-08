@@ -183,9 +183,10 @@ boolean L12_Q_war(string side)
     battle = $location[The Battlefield (Hippy Uniform)];
   }
 
-  if (side == "fratboy" && war_orchard() && war_defeated() < 64)
+  // TODO: should do this for all the sidequests...
+  if (war_orchard() && !war_orchard_accessible())
   {
-    while(war_defeated() < 64)
+    while(!war_orchard_accessible())
     {
       maximize("", war_outfit());
       boolean b = dg_adventure(battle);

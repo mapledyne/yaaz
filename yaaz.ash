@@ -111,7 +111,6 @@ void day_end()
 
   prep();
 
-
   pvp();
 
   log("Dressing for rollover.");

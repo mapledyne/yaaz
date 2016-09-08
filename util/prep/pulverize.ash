@@ -21,16 +21,18 @@ void pulverize_things()
   }
 
   // Always pulverize:
-  pulverize_all($item[Lockenstock&trade; sandals]);
   pulverize_all($item[gaia beads]);
   pulverize_all($item[hippy medical kit]);
+  pulverize_all($item[Lockenstock&trade; sandals]);
   pulverize_all($item[wicker shield]);
 
   // Always keep one:
+  pulverize_all_but_one($item[burnt snowpants]);
   pulverize_all_but_one($item[compression stocking]);
   pulverize_all_but_one($item[goatskin umbrella]);
   pulverize_all_but_one($item[little black book]);
   pulverize_all_but_one($item[pygmy briefs]);
+  pulverize_all_but_one($item[homoerotic frat-paddle]);
 
   // we may want some of these if not relying on muscle:
   pulverize_keep_if($item[punk rock jacket], my_primestat() != $stat[muscle]);
@@ -71,6 +73,13 @@ void pulverize_things()
   } else {
     pulverize_all($item[glowing red eye]);
   }
+
+  // bridge built
+  if (quest_status("questL09Topping") > 1)
+  {
+    pulverize_all_but_one($item[orcish stud-finder]);
+  }
+
 
   // Keep surgeonosity items if we haven't finished the L11 doc quest.
   pulverize_keep_if($item[bloodied surgical dungarees], quest_status("questL11Doctor") < 10);

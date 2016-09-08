@@ -52,8 +52,14 @@ void sell_things()
   sell_all($item[suntan lotion of moxiousness]);
   sell_all($item[Tambourine Bells]);
   sell_all($item[Tequila Sunrise]);
+  sell_all($item[white satin shield]);
   sell_all($item[Windchimes]);
   sell_all($item[valuable trinket]);
+
+
+  // keep one:
+  sell_all($item[cold ninja mask], 1);
+  sell_all($item[freshwater pearl necklace], 1);
 
   if (item_amount($item[digital key]) > 0)
   {
@@ -61,9 +67,6 @@ void sell_things()
     sell_all($item[Red Pixel]);
     sell_all($item[Green Pixel]);
   }
-
-  // keep one:
-  sell_all($item[cold ninja mask], 1);
 
   // starter items (keep one):
   sell_all($item[turtle totem], 1);
@@ -111,14 +114,26 @@ void sell_things()
   sell_all($item[original g]);
 
   if (my_primestat() == $stat[moxie])
+  {
     sell_all($item[4-dimensional guitar]);
+    sell_all($item[finger cymbals]);
+  }
   else
+  {
     sell_all($item[4-dimensional guitar], 1);
+    sell_all($item[finger cymbals], 1);
+  }
 
 
   if (quest_status("questM02Artist") == FINISHED)
   {
     sell_all($item[rat whisker]);
+  }
+
+  // bridge built
+  if (quest_status("questL09Topping") > 1)
+  {
+    sell_all($item[orc wrist]);
   }
 
   if (!have_familiar($familiar[gluttonous green ghost]))

@@ -182,6 +182,23 @@ void progress_sheet()
         progress(flyerML, "flyers delivered");
       }
 
+      if (war_orchard()
+          && war_orchard_accessible()
+          && get_property("sidequestOrchardCompleted") == "none")
+      {
+        int count = 0;
+        if (have_effect($effect[filthworm larva stench]) > 0)
+          count = 1;
+        if (have_effect($effect[filthworm drone stench]) > 0)
+          count = 2;
+        if (have_effect($effect[filthworm guard stench]) > 0)
+          count = 3;
+        if (item_amount($item[heart of the filthworm queen]) > 0)
+          count = 4;
+
+        progress(count, 4, "Orchard filthworm progress");
+      }
+
       if (war_lighthouse()
           && get_property("sidequestLighthouseCompleted") == "none")
       {

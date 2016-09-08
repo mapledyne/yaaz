@@ -1,5 +1,7 @@
 import "util/base/settings.ash";
 
+int war_defeated();
+ 
 string war_side()
 {
   string side = setting("war_side", "fratboy");
@@ -14,6 +16,13 @@ string war_outfit()
   if (war_side() == 'hippy')
     return 'War Hippy Fatigues';
   return 'Frat Warrior Fatigues';
+}
+
+boolean war_orchard_accessible()
+{
+  if (war_side() == 'hippy')
+    return true;
+  return war_defeated() >= 64;
 }
 
 boolean war_junkyard()
