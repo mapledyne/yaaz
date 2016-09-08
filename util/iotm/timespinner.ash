@@ -38,6 +38,9 @@ boolean time_prank(string player, string msg)
 
 boolean timespinner_future()
 {
+  if (time_minutes() < 2)
+    return false;
+
   if (setting("visited_future") == "true")
     return false;
 
