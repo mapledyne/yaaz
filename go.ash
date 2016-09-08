@@ -156,7 +156,12 @@ void ascend()
   if (my_adventures() < 10 && booze_full() && fullness_full())
   {
     log("It looks like you don't have much else you can do today. Consider a nightcap if you don't want to do anything else manually?");
-  } else {
+  } else if (drunk())
+  {
+    log("You're drunk, so there isn't anything else this script can do for you. Come back tomorrow!");
+  }
+  else
+  {
     log("There may be other things you can do today, but this script can't handle them. Do those, or just try rerunning this script.");
   }
 

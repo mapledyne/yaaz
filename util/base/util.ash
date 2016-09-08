@@ -3,7 +3,6 @@ import <zlib.ash>;
 
 float frequency_of_monster(location loc, monster mon);
 boolean bit_flag(int progress, int c);
-boolean drunk();
 boolean guild_class();
 float avg_meat_per_adv(location loc);
 float cost_per_mp();
@@ -93,11 +92,6 @@ float frequency_of_monster(location loc, monster mon)
 boolean bit_flag(int progress, int c)
 {
 	return (progress & (1 << c)) != 0;
-}
-
-boolean drunk()
-{
-	return my_inebriety() > inebriety_limit();
 }
 
 boolean is_guild_class()

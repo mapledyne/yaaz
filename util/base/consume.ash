@@ -16,7 +16,7 @@ boolean booze_full();
 boolean fullness_full();
 boolean spleen_full();
 boolean all_full();
-
+boolean drunk();
 
 boolean block_auto_consume(item it)
 {
@@ -41,6 +41,12 @@ boolean booze_full()
 {
   return my_inebriety() >= inebriety_limit();
 }
+
+boolean drunk()
+{
+  return my_inebriety() > inebriety_limit();
+}
+
 
 boolean fullness_full()
 {

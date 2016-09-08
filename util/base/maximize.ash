@@ -175,7 +175,7 @@ void max_effects(string target)
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
 
-    case "all res base":
+    case "resistance base":
       effect_maintain($effect[elemental saucesphere]);
       effect_maintain($effect[astral shell]);
       effect_maintain($effect[scarysauce]);
@@ -193,12 +193,19 @@ void max_effects(string target)
       max_effects("spooky res");
       break;
     case "cold res":
-      max_effects("all res base");
+      max_effects("resistance base");
       effect_maintain($effect[insulated trousers]);
       break;
     case "spooky res":
-      max_effects("all res base");
+      max_effects("resistance base");
       effect_maintain($effect[spookypants]);
+      break;
+    case "hot damage":
+      effect_maintain($effect[heart of orange]);
+      effect_maintain($effect[flaming weapon]);
+      break;
+    case "hot spell damage":
+      effect_maintain($effect[heart of orange]);
       break;
     default:
       if (!have_colored_tongue())

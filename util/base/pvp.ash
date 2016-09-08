@@ -1,6 +1,7 @@
 import "util/base/print.ash";
 import "util/iotm/deck.ash";
 import "util/base/settings.ash";
+import "util/base/maximize.ash";
 
 //  Numeric: ("Numeric", "numericSwagger", "back to")
 
@@ -9,16 +10,49 @@ string PVP_SWAGGER = "schoolSwagger";
 string PVP_FIGHT = "Spirit Day";
 
 void pvp();
+void effects_for_pvp();
+string school_letter(int threshold);
+string school_letter();
+item find_best_clothes(slot s);
+void school_clothes(string letter);
+
+
+string school_letter(int threshold)
+{
+  string info = visit_url("peevpee.php?place=rules");
+  matcher letter = create_matcher("<b>([A-Z])<\/b> in their equipment.", info);
+  string current = "A";
+  if(letter.find())
+  {
+    current = letter.group(1);
+  }
+
+  letter = create_matcher("Changing to <b>([A-Z])<\/b>", info);
+  string next = "";
+  if(letter.find())
+  {
+    next = letter.group(1);
+  }
+
+  letter = create_matcher("in ([0-9]+) seconds", info);
+  int sec = 0;
+  if(letter.find())
+  {
+    sec = to_int(letter.group(1));
+  }
+
+  if (sec > 0 && sec < threshold)
+  {
+    log("The current school letter is " + wrap(current, COLOR_ITEM) + " but it's changing soon to " + wrap(next, COLOR_ITEM) + ", so we'll use that letter instead.");
+    current = next;
+  }
+
+  return current;
+}
 
 string school_letter()
 {
-  string info = visit_url("peevpee.php?place=rules");
-  matcher letter = create_matcher("<b>([A-Z])<\/b>", info);
-  if(letter.find())
-  {
-     return (letter.group(1));
-  }
-  return "A";
+  return school_letter(0);
 }
 
 item find_best_clothes(slot s)
@@ -40,9 +74,8 @@ item find_best_clothes(slot s)
   return target;
 }
 
-void school_clothes()
+void school_clothes(string letter)
 {
-  string letter = school_letter();
   log("Optimizing wardrobe for PvP. School letter is currently: " + wrap(letter, COLOR_ITEM));
 
   if(equipped_item($slot[hat]) == $item[none])
@@ -69,9 +102,18 @@ void school_clothes()
     equip($slot[acc3], find_best_clothes($slot[acc1]));
 }
 
+void school_clothes()
+{
+  string letter = school_letter();
+  school_clothes(letter);
+}
+
 void pvp_rollover()
 {
-  school_clothes();
+  int time = 60 * 60; // one hour
+  string letter = school_letter(time);
+  school_clothes(letter);
+  effects_for_pvp();
 }
 
 void dress_for_pvp()
@@ -88,6 +130,18 @@ void dress_for_pvp()
   }
 }
 
+void effects_for_pvp()
+{
+  switch(PVP_SEASON)
+  {
+    default:
+      break;
+    case "School":
+      max_effects("hot damage");
+      max_effects("hot spell damage");
+  }
+}
+
 void pvp()
 {
 
@@ -100,6 +154,7 @@ void pvp()
     {
       cli_execute("checkpoint");
       dress_for_pvp();
+      effects_for_pvp();
       cli_execute("pvp fame " + PVP_FIGHT);
       cli_execute("outfit checkpoint");
     }
