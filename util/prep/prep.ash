@@ -115,7 +115,6 @@ void cast_things(location loc)
     element el = $element[none];
     foreach key, mon in get_monsters(loc)
     {
-    print (mon);
       if (mon.defense_element != $element[none])
         el = mon.defense_element;
     }
@@ -145,10 +144,10 @@ void cast_things(location loc)
           log("You have " + wrap("Flavour of Magic", COLOR_SKILL) + ". Firing up some taste!");
           use_skill(1, $skill[spirit of garlic]);
         }
-        if (loc != $location[The Ancient Hobo Burial Ground] && have_flavour_of_magic())
+        if (loc == $location[The Ancient Hobo Burial Ground] && have_flavour_of_magic())
         {
           log("Everything in " + wrap($location[The Ancient Hobo Burial Ground]) + " is immune to elemental damage, so turning " + wrap($skill[flavour of magic]) + " off.");
-
+          use_skill(1, $skill[spirit of nothing]);
         }
         break;
       case $element[hot]:

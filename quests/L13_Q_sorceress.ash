@@ -233,11 +233,21 @@ boolean loop_tower(int level)
     case 2:
       log("Claiming your prize.");
       visit_url('place.php?whichplace=nstower&action=ns_01_contestbooth');
-      visit_url("choice.php?pwd=&whichchoice=1003&option=4", true);
+      visit_url("choice.php?pwd=&whichchoice=1003&option=4");
       visit_url("main.php");
       return true;
     case 3:
+      log("Attending your coronation.");
+      visit_url("place.php?whichplace=nstower&action=ns_02_coronation");
+      visit_url("choice.php?pwd=&whichchoice=1020&option=1");
+      visit_url("choice.php?pwd=&whichchoice=1021&option=1");
+      visit_url("choice.php?pwd=&whichchoice=1022&option=1");
+      return true;
+    case 4:
       log("Hedge Maze is not yet automated.");
+      return false;
+    case 5:
+      log("Perplexing door keys not yet automated.");
       return false;
     case 6:
       return wall_of_skin();
@@ -261,6 +271,9 @@ boolean loop_tower(int level)
 
 boolean L13_Q_sorceress()
 {
+
+  // TODO: Get the Wand if you don't have it (it should clover automatically,
+  // but we should adventure for it if we don't have it at a certain point).
   if (my_level() < 13)
     return false;
 

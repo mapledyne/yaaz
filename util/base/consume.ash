@@ -229,16 +229,19 @@ boolean try_drink(item it)
   {
     if (have_effect($effect[ode to booze]) == 0)
     {
+    // TODO: Consider tossing out other buffs if we have too many songs in our head.
       log("Casting " + wrap($skill[the ode to booze]) + " for better booze action.");
       use_skill(1, $skill[the ode to booze]);
     }
   }
-  log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
 
   if (is_vip_item(it))
   {
     if (!can_vip_drink(it))
       return false;
+    if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
+      return false;
+    log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
     return cli_execute("drink 1 " + it);
   }
 
@@ -246,10 +249,12 @@ boolean try_drink(item it)
   {
     if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
       return false;
+    log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
     return cli_execute("drink 1 " + it);
   }
 
 
+  log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
   return drink(1, it);
 }
 

@@ -28,14 +28,29 @@ boolean can_snojo()
   if (snojo_too_risky())
     return false;
 
+  if (to_boolean(get_property("snojoAvailable")) && get_property("snojoSetting") == "NONE")
+  {
+    log("Turning the " + wrap($location[The X-32-F Combat Training Snowman]) + " on.");
+    int lever;
+    switch(my_primestat())
+    {
+      case $stat[muscle]:
+        lever = 1;
+        break;
+      case $stat[mysticality]:
+        lever = 2;
+        break;
+      case $stat[moxie]:
+        lever = 3;
+        break;
+    }
+    visit_url("place.php?whichplace=snojo&action=snojo_controller");
+    visit_url("choice.php?pwd=&whichchoice=1118&option=" + lever);
+  }
+
   if (to_boolean(get_property("snojoAvailable")) && get_property("_snojoFreeFights").to_int() < 10)
     return true;
 
-  if (to_boolean(get_property("snojoAvailable")) && get_property("snojoSetting") == "NONE")
-  {
-    warning(wrap($location[The X-32-F Combat Training Snowman]) + " is available but not set up. Hit a control button!");
-    wait(10);
-  }
   return false;
 }
 

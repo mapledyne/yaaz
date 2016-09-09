@@ -68,7 +68,7 @@ void progress_sheet()
     progress($location[The Outskirts of Cobb's Knob].turns_spent, 11, "turns in the Outskirts of Cobb's Knob to get the encryption key");
   }
 
-  if (item_amount($item[digital key]) == 0 && item_amount($item[white pixel]) > 0)
+  if (item_amount($item[digital key]) == 0 && item_amount($item[white pixel]) > 0 && quest_status("questL13Final") < 5)
   {
     progress(item_amount($item[white pixel]), 30, "digital key");
   }
@@ -84,6 +84,8 @@ void progress_sheet()
   {
     progress(friar_things(), 3, "Friar ceremony objects");
   }
+
+  // TODO: Count hot wings?
 
   if (quest_active("questL07Cyrptic"))
   {
@@ -236,7 +238,7 @@ void progress_sheet()
     if (contest > 0)
       progress(10 - contest, 10, "contestants (" + get_property("nsChallenge2") + ")");
 
-
+      // TODO: Find a way to track wall of meat progress...
   }
 }
 

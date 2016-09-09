@@ -52,19 +52,22 @@ void make_things()
   // General requirements for future quests and such
 
 
-  while (item_amount($item[digital key]) == 0 && creatable_amount($item[digital key]) == 0 && creatable_amount($item[white pixel]) > 0)
+  if (quest_status("questL13Final") < 5)
   {
-    log("Making a " + wrap($item[white pixel]) + " to help us make a " + $item[digital key] + ".");
-    create(1, $item[white pixel]);
-  }
+    while (item_amount($item[digital key]) == 0 && creatable_amount($item[digital key]) == 0 && creatable_amount($item[white pixel]) > 0)
+    {
+      log("Making a " + wrap($item[white pixel]) + " to help us make a " + $item[digital key] + ".");
+      create(1, $item[white pixel]);
+    }
 
-  if (quest_status("questL13Final") != FINISHED)
-  {
-    string msg = "for the perplexing door.";
-    make_if_needed($item[skeleton key], msg);
-    make_if_needed($item[digital key], msg);
-    make_if_needed($item[richard's star key], msg);
+    if (quest_status("questL13Final") != FINISHED)
+    {
+      string msg = "for the perplexing door.";
+      make_if_needed($item[skeleton key], msg);
+      make_if_needed($item[digital key], msg);
+      make_if_needed($item[richard's star key], msg);
 
+    }
   }
 
   make_if_needed($item[wand of nagamar]);

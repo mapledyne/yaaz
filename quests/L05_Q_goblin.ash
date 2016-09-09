@@ -52,9 +52,6 @@ boolean L05_Q_goblin()
     use(1, $item[cobb's knob map]);
   }
 
-  if (quest_status("questL05Goblin") == FINISHED)
-    return false;
-
 
   if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)
   {
@@ -66,12 +63,8 @@ boolean L05_Q_goblin()
     }
   }
 
-  if (item_amount($item[cobb's knob map]) > 0 && item_amount($item[Knob Goblin encryption key]) > 0)
-  {
-    log("Using the " + wrap($item[cobb's knob map]) + " to unlock Cobb's Knob.");
-    use(1, $item[cobb's knob map]);
-    return true;
-  }
+  if (quest_status("questL05Goblin") == FINISHED)
+    return false;
 
   if (my_level() < 5)
     return false;
@@ -80,6 +73,9 @@ boolean L05_Q_goblin()
   {
     log("Going to the council to pick up the Goblin King quest.");
     council();
+    // would not normally skip out here, but starting this over will catch the
+    // code above to use the map if needed.
+    return true;
   }
 
   if (!have_outfit("Knob Goblin Harem Girl Disguise") && !have_outfit("Knob Goblin Elite Guard Uniform"))
