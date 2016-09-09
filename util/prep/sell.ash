@@ -3,8 +3,11 @@ import "util/base/quests.ash";
 
 void sell_things()
 {
-  if (my_meat() < 5000)
-    sell_all($item[1952 Mickey Mantle card]);
+  while (my_meat() < 5000 && item_amount($item[1952 Mickey Mantle card]) > 0)
+    sell_one($item[1952 Mickey Mantle card]);
+
+  while (my_meat() < 5000 && item_amount($item[commemorative war stein]) > 0)
+    sell_one($item[commemorative war stein]);
 
   sell_all($item[fat stacks of cash]);
   sell_all($item[dense meat stack]);

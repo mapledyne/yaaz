@@ -236,7 +236,7 @@ void stock_item(item it, int qty)
   if (total <= 0 || price == 0)
     return;
 
-  if ((price * total) < (my_meat() * meat_buffer))
+  if ((price * total * meat_buffer) < my_meat())
   {
     log("Buying " + total + " "  + wrap(it, total) + ".");
     buy(total, it);
@@ -268,6 +268,13 @@ void sell_all(item it, int keep)
 void sell_all(item it)
 {
   sell_all(it, 0);
+}
+
+void sell_one(item it)
+{
+	if (item_amount(it) == 0)
+		return;
+	sell_all(it, item_amount(it) - 1);
 }
 
 void get_one(item it)

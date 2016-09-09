@@ -63,6 +63,11 @@ void progress_sheet()
 {
   level_progress();
 
+  if (quest_status("questL05Goblin") < 1)
+  {
+    progress($location[The Outskirts of Cobb's Knob].turns_spent, 11, "turns in the Outskirts of Cobb's Knob to get the encryption key");
+  }
+
   if (item_amount($item[digital key]) == 0 && item_amount($item[white pixel]) > 0)
   {
     progress(item_amount($item[white pixel]), 30, "digital key");
@@ -215,6 +220,23 @@ void progress_sheet()
       msg += " (" + war_multiplier() + "/turn, " + left + " turns remain)";
 
       progress(war_defeated(), 1000, msg);
+  }
+
+  if (quest_active("questL13Final"))
+  {
+    int contest = to_int(get_property("nsContestants1"));
+    if (contest > 0)
+      progress(10 - contest, 10, "contestants (init)");
+
+    contest = to_int(get_property("nsContestants2"));
+    if (contest > 0)
+      progress(10 - contest, 10, "contestants (" + get_property("nsChallenge1") + ")");
+
+    contest = to_int(get_property("nsContestants3"));
+    if (contest > 0)
+      progress(10 - contest, 10, "contestants (" + get_property("nsChallenge2") + ")");
+
+
   }
 }
 

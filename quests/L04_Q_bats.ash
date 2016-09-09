@@ -5,62 +5,68 @@ boolean has_stench_res()
   return (elemental_resistance($element[stench]) > 0);
 }
 
-void get_stench_res()
+boolean get_stench_res()
 {
   if (has_stench_res())
-    return;
+    return true;
 
   if (have_skill($skill[elemental saucesphere]))
   {
     get_saucepan();
     use_skill(1, $skill[elemental saucesphere]);
-    return;
+    return true;
   }
 
   if (have_skill($skill[astral shell]))
   {
     use_skill(1, $skill[astral shell]);
-    return;
+    return true;
   }
 
   if (item_amount($item[stench powder]) > 0)
   {
     use(1, $item[stench powder]);
-    return;
+    return true;
   }
 
   if (i_a($item[knob goblin harem veil]) > 0)
   {
     equip($item[knob goblin harem veil]);
-    return;
-  }
-
-  if (i_a($item[pine-fresh air freshener]) > 0)
-  {
-    equip($item[pine-fresh air freshener]);
-    return;
+    return true;
   }
 
   if (i_a($item[asshat]) > 0)
   {
     equip($item[asshat]);
-    return;
+    return true;
   }
 
   if (i_a($item[bum cheek]) > 0)
   {
     equip($item[bum cheek]);
-    return;
+    return true;
+  }
+
+  if (i_a($item[pine-fresh air freshener]) > 0 && my_basestat($stat[mysticality]) < 10)
+  {
+    return false;
+  }
+
+  if (i_a($item[pine-fresh air freshener]) > 0)
+  {
+    equip($item[pine-fresh air freshener]);
+    return true;
   }
 
   log("Getting a " + wrap($item[Pine-Fresh air freshener]) + " for some stench resistance. Probably not optimal - go get some skills to help with this.");
   wait(3);
   while (i_a($item[Pine-Fresh air freshener]) == 0)
   {
-    dg_adventure($location[the bat hole entrance], "items");
+    boolean b = dg_adventure($location[the bat hole entrance], "items");
+    if (!b)
+      return false;
   }
-  equip($item[Pine-Fresh air freshener]);
-
+  return get_stench_res();
 }
 
 boolean L04_Q_bats()
@@ -88,8 +94,9 @@ boolean L04_Q_bats()
         }
         if (item_amount($item[disassembled clover]) > 0)
         {
+          if (!get_stench_res())
+            return false;
           log("Going to clover for some " + wrap($item[sonar-in-a-biscuit]) + ".");
-          get_stench_res();
           dg_clover($location[guano junction]);
           break;
         }
@@ -97,7 +104,8 @@ boolean L04_Q_bats()
         maximize("");
         while(i_a($item[sonar-in-a-biscuit]) == 0 && can_adventure())
         {
-          get_stench_res();
+          if (!get_stench_res())
+            return false;
           dg_adventure($location[guano junction]);
           break;
         }

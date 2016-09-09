@@ -1,7 +1,5 @@
 import "util/main.ash";
 
-string BRIDGE_URL="place.php?whichplace=orc_chasm&action=bridge21";
-
 void do_one_bridge_adv()
 {
   use_all($item[smut orc keepsake box]);

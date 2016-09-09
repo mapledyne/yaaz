@@ -4,6 +4,7 @@ import "util/base/effects.ash";
 import "util/base/familiars.ash";
 import "util/iotm/terminal.ash";
 import "util/iotm/bookshelf.ash";
+import "util/iotm/protonic.ash";
 
 void do_maximize(string target, string outfit, item it);
 void maximize(string target, string outfit, item it, familiar fam);
@@ -109,6 +110,29 @@ void max_effects(string target)
 {
   switch(target)
   {
+    case "stats":
+      effect_maintain($effect[sealed brain]);
+      effect_maintain($effect[slightly larger than usual]);
+      cross_streams();
+      break;
+    case "mysticality":
+      max_effects("stats");
+      effect_maintain($effect[baconstoned]);
+      effect_maintain($effect[dweeby]);
+      effect_maintain($effect[moose wisdom]);
+      effect_maintain($effect[rainy soul miasma]);
+      effect_maintain($effect[seeing colors]);
+      effect_maintain($effect[carrrsmic]);
+
+      uneffect($effect[sugar rush]);
+
+      if (!to_boolean(get_property("concertVisited"))
+          && get_property("sidequestArenaCompleted") == "fratboy")
+      {
+        cli_execute("concert elvish");
+      }
+
+      break;
     case "meat":
       effect_maintain($effect[polka of plenty]);
       terminal_enhance($effect[meat.enh]);
@@ -139,10 +163,17 @@ void max_effects(string target)
       effect_maintain($effect[Sepia Tan]);
       effect_maintain($effect[Song of Slowness]);
       effect_maintain($effect[Springy Fusilli]);
-      effect_maintain($effect[Ticking Clock]);
-      effect_maintain($effect[Walberg\'s Dim Bulb]);
       effect_maintain($effect[sugar rush]);
+      effect_maintain($effect[Ticking Clock]);
+      effect_maintain($effect[the glistening]);
+      effect_maintain($effect[Walberg\'s Dim Bulb]);
+      effect_maintain($effect[well-swabbed ear]);
       terminal_enhance($effect[init.enh]);
+      if (!to_boolean(get_property("concertVisited"))
+          && get_property("sidequestArenaCompleted") == "fratboy")
+      {
+        cli_execute("concert white-boy angst");
+      }
       break;
     case "-combat":
     case "noncombat":
@@ -174,7 +205,7 @@ void max_effects(string target)
         effect_maintain($effect[green tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
-
+      break;
     case "resistance base":
       effect_maintain($effect[elemental saucesphere]);
       effect_maintain($effect[astral shell]);
@@ -200,12 +231,24 @@ void max_effects(string target)
       max_effects("resistance base");
       effect_maintain($effect[spookypants]);
       break;
+    case "elemental damage":
+      effect_maintain($effect[all glory to the toad]);
+      terminal_enhance($effect[damage.enh]);
+      break;
     case "hot damage":
+      max_effects("elemental damage");
       effect_maintain($effect[heart of orange]);
       effect_maintain($effect[flaming weapon]);
       break;
     case "hot spell damage":
       effect_maintain($effect[heart of orange]);
+      break;
+    case "cold damage":
+      effect_maintain($effect[cold hands]);
+      max_effects("elemental damage");
+      break;
+    case "cold spell damage":
+      effect_maintain($effect[cold hands]);
       break;
     default:
       if (!have_colored_tongue())

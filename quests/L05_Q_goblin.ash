@@ -46,13 +46,20 @@ boolean L05_Q_goblin()
     return dg_adventure($location[Cobb's knob barracks]);
   }
 
+  if (item_amount($item[knob goblin encryption key]) > 0 && item_amount($item[cobb's knob map]) > 0)
+  {
+    log("Using the "+ wrap($item[Cobb's Knob Map]) + " to open " + wrap("Cobb's Knob", COLOR_LOCATION) + ".");
+    use(1, $item[cobb's knob map]);
+  }
+
   if (quest_status("questL05Goblin") == FINISHED)
     return false;
 
-  location outskirts = $location[the outskirts of cobb's knob];
 
-  if ((outskirts.turns_spent < 11 || quest_status("questL05Goblin") < 1) && item_amount($item[Knob Goblin encryption key]) == 0)
+  if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)
   {
+    location outskirts = $location[the outskirts of cobb's knob];
+    log("Adventuring in " + wrap(outskirts) + " to get the " + wrap($item[Knob Goblin encryption key]) + ".");
     while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
       dg_adventure(outskirts, "");

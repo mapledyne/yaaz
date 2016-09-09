@@ -5,6 +5,18 @@ boolean L09_SQ_aboo()
   if (quest_status("questL09Topping") != 2)
     return false;
 
+  if (to_int(get_property("booPeakProgress")) == 0)
+  {
+    if ($location[a-boo peak].noncombat_queue.contains_text("Come On Ghosty, Light My Pyre"))
+      return false;
+
+    log("Off to light the fire at " + wrap($location[a-boo peak]) + ".");
+    dg_adventure($location[a-boo peak]);
+    return true;
+  }
+
+
+
   if (get_property("warProgress") == "unstarted")
   {
     log("We're waiting a bit to complete A-Boo peak in case it's helpful for the flyers and such.");

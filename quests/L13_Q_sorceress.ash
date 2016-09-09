@@ -1,4 +1,5 @@
 import "util/main.ash";
+import "util/iotm/deck.ash";
 
 boolean wall_of_skin()
 {
@@ -137,6 +138,39 @@ location get_challenge_loc(string challenge)
   return $location[none];
 }
 
+void max_contest(string max, int num)
+{
+  int baddies = to_int(get_property("nsContestants" + num));
+  if (baddies >= 0)
+    return;
+
+  log("Heading to the Naught Sorceress's contest. Next up, " + max + "!");
+  switch (to_lower_case(max))
+  {
+    default:
+      abort("NS Contest not automated: " + max);
+    case "init":
+      maximize("init");
+      cheat_deck("race", "go faster, pussycat, faster");
+      effect_maintain($effect[hiding in plain sight]);
+      break;
+    case "mysticality":
+      maximize("mysticality");
+      cheat_deck("magician", "get more mystically. Boosty boosty");
+      effect_maintain($effect[perspicacious pressure]);
+      break;
+    case "cold":
+      maximize("cold damage, cold spell damage");
+      break;
+  }
+  log("All dressed up and somewhere to go, the Registration Desk.");
+  visit_url("place.php?whichplace=nstower&action=ns_01_contestbooth");
+  visit_url("choice.php?pwd=&whichchoice=1003&option=" + num, true);
+  visit_url("main.php");
+  baddies = to_int(get_property("nsContestants" + num));
+  if (baddies > 0)
+    log("There are " + wrap(baddies, COLOR_MONSTER) + " contestants ahead of you.");
+}
 
 boolean contest_race()
 {
@@ -145,6 +179,16 @@ boolean contest_race()
     visit_url("place.php?whichplace=nstower&action=ns_01_contestbooth");
     return true;
   }
+
+
+  if (get_property("nsContestants1").to_int() < 0 || get_property("nsContestants2").to_int() < 0 || get_property("nsContestants3").to_int() < 0)
+  {
+    max_contest("init", 1);
+    max_contest(get_property("nsChallenge1"), 2);
+    max_contest(get_property("nsChallenge2"), 3);
+    return true;
+  }
+
   if (get_property("nsContestants1").to_int() > 0)
   {
     maximize();
@@ -169,13 +213,6 @@ boolean contest_race()
     dg_adventure(loc);
     return true;
   }
-
-  if (get_property("nsContestants1").to_int() < 0 || get_property("nsContestants2").to_int() < 0 || get_property("nsContestants3").to_int() < 0)
-  {
-    warning("Contests: Init, " + get_property("nsChallenge1") + ", " + get_property("nsChallenge2") + ". Maximizing for this isn't yet automated.");
-    return false;
-  }
-  log("All contestants have been defeated.");
   return false;
 }
 
@@ -196,6 +233,8 @@ boolean loop_tower(int level)
     case 2:
       log("Claiming your prize.");
       visit_url('place.php?whichplace=nstower&action=ns_01_contestbooth');
+      visit_url("choice.php?pwd=&whichchoice=1003&option=4", true);
+      visit_url("main.php");
       return true;
     case 3:
       log("Hedge Maze is not yet automated.");
