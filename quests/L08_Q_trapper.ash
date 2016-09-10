@@ -12,17 +12,20 @@ int get_cheese()
   item cheese = $item[goat cheese];
   location goatlet = $location[the goatlet];
 
-  int qty = item_amount(cheese);
+  if (item_amount(cheese) >= 3)
+    return item_amount(cheese);
 
+print("1cheesssssseeeee....");
   add_attract($monster[dairy goat]);
-  while(qty < 3 && can_adventure())
+  print("2cheesssssseeeee....");
+  while(item_amount(cheese) < 3 && can_adventure())
   {
     dg_adventure(goatlet, "items");
-    qty = item_amount(cheese);
-    progress(qty, 3, "goat cheese");
+    progress(item_amount(cheese), 3, "goat cheese");
   }
+  print("3cheesssssseeeee....");
   remove_attract($monster[dairy goat]);
-  return qty;
+  return item_amount(cheese);
 }
 
 boolean L08_Q_trapper()
@@ -50,10 +53,9 @@ boolean L08_Q_trapper()
   if (quest_status("questL08Trapper") == 1)
   {
     item ore = to_item(get_property("trapperOre"));
-    int ore_qty = item_amount(ore);
     int goat_qty = get_cheese();
 
-    while (ore_qty < 3)
+    while (item_amount(ore) < 3)
     {
       if (can_deck("mine"))
       {

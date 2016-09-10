@@ -32,7 +32,7 @@ void add_attract(monster mon)
 
   if (have_effect($effect[on the trail]) > 0)
   {
-    if (to_monster(get_property("olfactedMonster")) != mon)
+    if (to_monster(get_property("olfactedMonster")) != mon && item_amount($item[soft green echo eyedrop antidote]) > 0)
     {
       log("Trying to remove " + wrap($effect[on the trail]) + " since its smelling the wrong monster.");
       cli_execute("uneffect on the trail");

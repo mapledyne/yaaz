@@ -92,16 +92,17 @@ void progress_sheet()
     int evil = 200 - to_int(get_property("cyrptTotalEvilness"));
     progress(evil, 200, "Cyrpt progress");
     if (get_property("cyrptAlcoveEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in Alcove.");
-
-    if (get_property("cyrptNicheEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in Niche.");
-
-    if (get_property("cyrptNookEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in Nook.");
+      progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in Alcove");
 
     if (get_property("cyrptCrannyEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in Cranny.");
+      progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in Cranny");
+
+    if (get_property("cyrptNicheEvilness").to_int() > 0)
+      progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in Niche");
+
+    if (get_property("cyrptNookEvilness").to_int() > 0)
+      progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in Nook");
+
   }
 
   int ore = item_amount($item[asbestos ore]);

@@ -78,6 +78,8 @@ void school_clothes(string letter)
 {
   log("Optimizing wardrobe for PvP. School letter is currently: " + wrap(letter, COLOR_ITEM));
 
+  // TODO: make all equip() lines here use the specific slot, like familiars.
+
   if(equipped_item($slot[hat]) == $item[none])
     equip(find_best_clothes($slot[hat]));
   if(equipped_item($slot[weapon]) == $item[none])
@@ -93,7 +95,7 @@ void school_clothes(string letter)
   if(equipped_item($slot[back]) == $item[none])
     equip(find_best_clothes($slot[back]));
   if(equipped_item($slot[familiar]) == $item[none])
-    equip(find_best_clothes($slot[familiar]));
+    equip($slot[familiar], find_best_clothes($slot[familiar]));
   if(equipped_item($slot[acc1]) == $item[none])
     equip($slot[acc1], find_best_clothes($slot[acc1]));
   if(equipped_item($slot[acc2]) == $item[none])
