@@ -41,6 +41,14 @@ void use_things()
   use_all($item[warm subject gift certificate]);
   use_all($item[Ye Olde Bawdy Limerick]);
 
+  if (to_int(get_property("currentMojoFilters")) < 3
+      && item_amount($item[mojo filter]) > 0
+      && my_spleen_use() > 0)
+  {
+    log("Using a " + wrap($item[mojo filter]) + ".");
+    use(1, $item[mojo filter]);
+  }
+
   if (!have_familiar($familiar[misshapen animal skeleton]))
   {
     use_all($item[pile of dusty animal bones]);

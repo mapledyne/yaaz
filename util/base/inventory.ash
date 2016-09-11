@@ -35,7 +35,7 @@ void use_all(item it)
   int count = item_amount(it); // use item_amount() instead of i_a() to protect closet things and such.
   if (count == 0)
     return;
-  log("Using " + count + " " + wrap(pluralize(count, it), COLOR_ITEM) + ".");
+  log("Using " + count + " " + wrap(it, count) + ".");
   use(count, it);
 }
 
@@ -159,6 +159,11 @@ int friar_things()
       count += 1;
   }
   return count;
+}
+
+int junkyard_items()
+{
+  return i_a($item[molybdenum hammer]) + i_a($item[molybdenum crescent wrench]) + i_a($item[molybdenum pliers]) + i_a($item[molybdenum screwdriver]);
 }
 
 int hero_keys()

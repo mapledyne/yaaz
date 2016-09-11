@@ -196,8 +196,15 @@ void prep(location loc)
   get_saucepan();
   get_accordion();
 
+
+  consume();
+
   if (to_int(setting("adventure_floor", "10")) > my_adventures())
   {
+    if (hippy_stone_broken())
+    {
+      cheat_deck("clubs");
+    }
     if (!have_skill($skill[ancestral recall]))
     {
       cheat_deck("ancestral recall", "learn a skill for more adventures");
@@ -208,9 +215,7 @@ void prep(location loc)
     }
   }
 
-  cast_things(loc); // before consume() so we can cast ancestral recall if able.
-
-  consume();
+  cast_things(loc);
 
   pulverize_things();
   sell_things();

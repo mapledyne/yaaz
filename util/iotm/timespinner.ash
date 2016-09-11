@@ -13,6 +13,7 @@ int time_minutes()
   {
      return to_int(minutematcher.group(1));
   }
+  visit_url("main.php");
   return 0;
 }
 
@@ -30,9 +31,11 @@ boolean time_prank(string player, string msg)
   if (!can_spin_time())
     false;
   string url = "choice.php?pwd&whichchoice=1198&option=1&pl="+url_encode(player)+"&th="+url_encode(msg);
-  string ret = visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
-  ret = visit_url("choice.php?pwd&whichchoice=1195&option=5");
-  ret = visit_url(url);
+
+  visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
+  visit_url("choice.php?pwd&whichchoice=1195&option=5");
+  visit_url(url);
+  visit_url("main.php");
   return true;
 }
 

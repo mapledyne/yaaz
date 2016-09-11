@@ -1,16 +1,10 @@
 import "util/main.ash";
 import "util/base/war_support.ash";
 
-int junkyard_progress()
-{
-  return i_a($item[molybdenum hammer]) + i_a($item[molybdenum crescent wrench]) + i_a($item[molybdenum pliers]) + i_a($item[molybdenum screwdriver]);
-}
-
 void get_junkyard_item()
 {
   location loc = to_location(get_property("currentJunkyardLocation"));
   dg_adventure(loc, "");
-  progress(junkyard_progress(), 4, "tools recovered");
 }
 
 boolean L12_SQ_junkyard(string side)
@@ -25,7 +19,7 @@ boolean L12_SQ_junkyard(string side)
 
     if (mol != $item[none] && i_a(mol) > 0)
     {
-      if (junkyard_progress() == 4)
+      if (junkyard_items() == 4)
       {
         outfit(war_outfit());
       }
@@ -47,7 +41,7 @@ boolean L12_SQ_junkyard(string side)
 
     if (get_property("currentJunkyardLocation") == "Yossarian")
     {
-      if (junkyard_progress() == 4)
+      if (junkyard_items() == 4)
         {
           if (outfit(war_outfit()))
           {

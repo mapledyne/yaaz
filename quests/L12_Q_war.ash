@@ -89,21 +89,16 @@ boolean start_the_war(string side)
   if (side == "hippy")
     camp = $location[wartime frat house];
 
-  if (side == "fratboy")
-  {
-    // should check to see if we have hippy war outfit and maybe change 139, 140?
-    set_property("choiceAdventure139", 3); // fight space cadet
-    set_property("choiceAdventure140", 3); // fight drill sergeant
-    set_property("choiceAdventure141", 3); // start the war
-    set_property("choiceAdventure142", 3); // start the war
+  // should check to see if we have hippy war outfit and maybe change 139, 140?
+  set_property("choiceAdventure139", 3); // fight space cadet
+  set_property("choiceAdventure140", 3); // fight drill sergeant
+  set_property("choiceAdventure141", 3); // start the war
+  set_property("choiceAdventure142", 3); // start the war
 
-  } else {
-    // should check to see if we have frat war outfit and maybe change 143, 144?
-    set_property("choiceAdventure143", 3); // fight war pledge
-    set_property("choiceAdventure144", 3); // fight drill sergeant
-    set_property("choiceAdventure145", 4); // start the war
-    set_property("choiceAdventure146", 4); // start the war
-  }
+  set_property("choiceAdventure143", 3); // fight war pledge
+  set_property("choiceAdventure144", 3); // fight drill sergeant
+  set_property("choiceAdventure145", 4); // start the war
+  set_property("choiceAdventure146", 4); // start the war
 
   while (quest_status("warProgress") == UNSTARTED)
   {

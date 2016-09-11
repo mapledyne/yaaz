@@ -14,10 +14,10 @@ boolean get_photographs()
 
   add_attract($monster[racecar bob]);
   add_attract($monster[bob racecar]);
-  while (palindome_items() < 5
-         && can_adventure()
-         && to_int(get_property("palindomeDudesDefeated")) <= 5
-         && item_amount($item[stunt nuts]) == 0)
+  while (can_adventure()
+         && (palindome_items() < 5
+             || to_int(get_property("palindomeDudesDefeated")) < 5
+             || item_amount($item[stunt nuts]) == 0))
   {
     string max = "items, -combat";
     if (palindome_items() >= 4)

@@ -4,6 +4,8 @@ import "util/base/inventory.ash";
 import "util/base/settings.ash";
 import "util/base/war_support.ash";
 
+string CHECKED = "☑︎";
+string UNCHECKED = "☐";
 
 int level_substats(int level)
 {
@@ -205,6 +207,12 @@ void progress_sheet()
           count = 4;
 
         progress(count, 4, "Orchard filthworm progress");
+      }
+
+      if (war_junkyard()
+          && get_property("sidequestJunkyardCompleted") == "none")
+      {
+        progress(junkyard_items(), 4, "junkyard tools recovered");
       }
 
       if (war_lighthouse()
