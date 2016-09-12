@@ -59,15 +59,10 @@ void make_things()
       log("Making a " + wrap($item[white pixel]) + " to help us make a " + $item[digital key] + ".");
       create(1, $item[white pixel]);
     }
-
-    if (quest_status("questL13Final") != FINISHED)
-    {
-      string msg = "for the perplexing door.";
-      make_if_needed($item[skeleton key], msg);
-      make_if_needed($item[digital key], msg);
-      make_if_needed($item[richard's star key], msg);
-
-    }
+    string msg = "for the perplexing door.";
+    make_if_needed($item[skeleton key], msg);
+    make_if_needed($item[digital key], msg);
+    make_if_needed($item[richard's star key], msg);
   }
 
   make_if_needed($item[wand of nagamar]);

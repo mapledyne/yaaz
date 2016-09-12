@@ -203,7 +203,7 @@ void prep(location loc)
   {
     if (hippy_stone_broken())
     {
-      cheat_deck("clubs");
+      cheat_deck("clubs", "more PvP");
     }
     if (!have_skill($skill[ancestral recall]))
     {

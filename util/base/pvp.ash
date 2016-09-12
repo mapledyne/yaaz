@@ -64,6 +64,8 @@ item find_best_clothes(slot s)
   {
     if (to_slot(i) != s)
       continue;
+    if (!can_equip(i))
+      continue;
     string[int] spl = split_string(to_upper_case(i), letter);
     if (count(spl) > current)
     {
@@ -167,11 +169,6 @@ void pvp()
     if (totalSwag > 1000)
     {
       log("You've earned enough swagger to get the seasonal item if you haven't already picked it up.");
-    } else {
-      int fights = 10 + numeric_modifier("PvP Fights");
-      float avgSwag = fights*1.5;
-      int days = to_int((1000 - totalSwag) / avgSwag);
-      log("Approx " + days + " days remain to buy the seasonal award item.");
     }
   }
 

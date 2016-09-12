@@ -3,10 +3,12 @@ import "util/base/inventory.ash";
 void buy_things()
 {
 
-  stock_item($item[boris's key]);
-  stock_item($item[jarlsberg's key]);
-  stock_item($item[sneaky pete's key]);
-
+  if (quest_status("questL13Final") < 5)
+  {
+    stock_item($item[boris's key]);
+    stock_item($item[jarlsberg's key]);
+    stock_item($item[sneaky pete's key]);
+  }
   // in order to catburgle the orcish blueprints
   stock_item($item[frilly skirt]);
 

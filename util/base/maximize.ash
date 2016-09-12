@@ -113,7 +113,22 @@ void max_effects(string target)
     case "stats":
       effect_maintain($effect[sealed brain]);
       effect_maintain($effect[slightly larger than usual]);
+
+      if (!to_boolean(get_property("concertVisited"))
+          && get_property("sidequestArenaCompleted") == "fratboy")
+      {
+        cli_execute("concert elvish");
+      }
       cross_streams();
+      break;
+    case "moxie":
+      effect_maintain($effect[Newt Gets In Your Eyes]);
+      effect_maintain($effect[butt-rock hair]);
+      effect_maintain($effect[lycanthropy\, eh?]);
+      effect_maintain($effect[The Moxious Madrigal]);
+      effect_maintain($effect[spiky hair]);
+      effect_maintain($effect[Knob Goblin Lust Frenzy]);
+      effect_maintain($effect[sugar rush]);
       break;
     case "mysticality":
       max_effects("stats");
@@ -125,12 +140,6 @@ void max_effects(string target)
       effect_maintain($effect[carrrsmic]);
 
       uneffect($effect[sugar rush]);
-
-      if (!to_boolean(get_property("concertVisited"))
-          && get_property("sidequestArenaCompleted") == "fratboy")
-      {
-        cli_execute("concert elvish");
-      }
 
       break;
     case "meat":
@@ -250,6 +259,14 @@ void max_effects(string target)
     case "cold spell damage":
       effect_maintain($effect[cold hands]);
       break;
+    case "sleaze damage":
+      effect_maintain($effect[Amorous]);
+      effect_maintain($effect[sleazy weapon]);
+      max_effects("elemental damage");
+      break;
+    case "sleaze spell damage":
+      break;
+
     default:
       if (!have_colored_tongue())
         effect_maintain($effect[orange tongue]);

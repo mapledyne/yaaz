@@ -113,6 +113,7 @@ boolean L05_Q_goblin()
   maximize("", disguise);
   dg_adventure($location[Throne Room]);
 
+  // TODO: Check if defeated!
   log("Going to let the council know.");
   council();
 

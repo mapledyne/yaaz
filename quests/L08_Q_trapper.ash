@@ -15,15 +15,12 @@ int get_cheese()
   if (item_amount(cheese) >= 3)
     return item_amount(cheese);
 
-print("1cheesssssseeeee....");
   add_attract($monster[dairy goat]);
-  print("2cheesssssseeeee....");
   while(item_amount(cheese) < 3 && can_adventure())
   {
     dg_adventure(goatlet, "items");
     progress(item_amount(cheese), 3, "goat cheese");
   }
-  print("3cheesssssseeeee....");
   remove_attract($monster[dairy goat]);
   return item_amount(cheese);
 }

@@ -131,6 +131,8 @@ location get_challenge_loc(string challenge)
       return $location[coldest adventurer contest];
     case "hot":
       return $location[hottest adventurer contest];
+    case "sleaze":
+      return $location[sleaziest adventurer contest];
     default:
       error("Unsure what challenge this is: " + challenge + ".");
       abort();
@@ -154,13 +156,23 @@ void max_contest(string max, int num)
       cheat_deck("race", "go faster, pussycat, faster");
       effect_maintain($effect[hiding in plain sight]);
       break;
+    case "moxie":
+      maximize("moxie");
+      cheat_deck("fool", "get more moxie. Foolish agility");
+      effect_maintain($effect[superhuman sarcasm]);
+      // consider oil of stability
+      break;
     case "mysticality":
       maximize("mysticality");
       cheat_deck("magician", "get more mystically. Boosty boosty");
       effect_maintain($effect[perspicacious pressure]);
+      // consider oil of stability
       break;
     case "cold":
       maximize("cold damage, cold spell damage");
+      break;
+    case "sleaze":
+      maximize("sleaze damage, sleaze spell damage");
       break;
   }
   log("All dressed up and somewhere to go, the Registration Desk.");
@@ -261,6 +273,9 @@ boolean loop_tower(int level)
       return shadow();
     case 11:
       return sorceress();
+    case 12:
+      log("Go and break the prism and free " + wrap("King Raplh", COLOR_MONSTER) + " or, you know, don't.");
+      return false;
     default:
       warning("Trying to do the Sorceress tower but I don't know where we are in the quest.");
       warning("We're at step " + level + ", which I don't recognize.");

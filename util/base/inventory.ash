@@ -217,13 +217,18 @@ void stock_coin_item(item it, int qty)
   }
   int total = qty - item_amount(it);
   int price = sell_price(master, it);
+	int tokens = master.available_tokens;
 
-  while (total > 0 && master.available_tokens >= price)
-  {
-    log("Buying " + total + " "  + wrap(it, total) + " from the " + wrap(master) + ".");
-    buy(master, 1, it);
-    total = total - 1;
-  }
+	if (tokens < total * price)
+	{
+		total = tokens / price;
+	}
+
+	if (total > 0)
+	{
+		log("Buying " + total + " "  + wrap(it, total) + " from the " + wrap(master) + ".");
+		buy(master, total, it);
+	}
 }
 
 void stock_item(item it, int qty)

@@ -201,7 +201,7 @@ boolean try_eat(item it)
       return false;
   }
 
-  log("Eating a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+  log("Eating a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
 
   if (is_npc_item(it))
   {
@@ -241,7 +241,7 @@ boolean try_drink(item it)
       return false;
     if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
       return false;
-    log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+    log("Drinking a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
     return cli_execute("drink 1 " + it);
   }
 
@@ -249,12 +249,12 @@ boolean try_drink(item it)
   {
     if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
       return false;
-    log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+    log("Drinking a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
     return cli_execute("drink 1 " + it);
   }
 
 
-  log("Drinking a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+  log("Drinking a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
   return drink(1, it);
 }
 
@@ -337,10 +337,7 @@ boolean consume_best()
   item[int] noms = consume_list();
   foreach nom, it in noms
   {
-
-    log("Considering consuming " + wrap(it) + " which will give us about " + adv_per_consumption(it) + " adventures.");
-    wait(5);
-    if (try_consume(it))
+     if (try_consume(it))
       return true;
   }
 

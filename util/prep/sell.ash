@@ -32,6 +32,7 @@ void sell_things()
   sell_all($item[Giant Moxie Weed]);
   sell_all($item[Half of a Gold Tooth]);
   sell_all($item[handful of moss]);
+  sell_all($item[huge gold coin]);
   sell_all($item[Imp Ale]);
   sell_all($item[Keel-Haulin\' Knife]);
   sell_all($item[Kokomo Resort Pass]);
@@ -62,6 +63,7 @@ void sell_things()
 
   // keep one:
   sell_all($item[cold ninja mask], 1);
+  sell_all($item[dead guy's watch], 1);
   sell_all($item[freshwater pearl necklace], 1);
 
   if (item_amount($item[digital key]) > 0)
