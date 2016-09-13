@@ -50,7 +50,6 @@ boolean continuum()
   return false;
 }
 
-
 boolean M_misc()
 {
   if (toot()) return true;

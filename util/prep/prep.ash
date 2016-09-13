@@ -3,7 +3,7 @@ import "util/base/effects.ash";
 import "util/base/inventory.ash";
 import "util/base/maximize.ash";
 import "util/base/util.ash";
-import "util/base/heart.ash";
+import "util/heart.ash";
 import "util/base/consume.ash";
 import "util/prep/sell.ash";
 import "util/prep/buy.ash";

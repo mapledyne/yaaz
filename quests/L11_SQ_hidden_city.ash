@@ -119,13 +119,11 @@ boolean bowling()
       buy(1, $item[Bowl Of Scorpions]);
     }
     dg_adventure($location[the hidden bowling alley], "items");
-    progress(to_int(get_property("hiddenBowlingAlleyProgress")) - 1, 5, "bowling balls found");
   }
   remove_attract($monster[pygmy bowler]);
   while(item_amount($item[bowling ball]) == 0)
   {
     dg_adventure($location[the hidden bowling alley], "items");
-    progress(to_int(get_property("hiddenBowlingAlleyProgress")) - 1, 5, "bowling balls found");
   }
 
   log("Off to defeat the " + wrap($monster[ancient protector spirit]) + ".");

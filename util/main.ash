@@ -5,5 +5,5 @@ import "util/adventure/adventure.ash";
 import "util/base/familiars.ash";
 import "util/iotm/iotm.ash";
 import "util/base/maximize.ash";
-import "util/base/pvp.ash";
+import "util/pvp.ash";
 import "util/base/util.ash";

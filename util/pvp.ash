@@ -43,7 +43,7 @@ string school_letter(int threshold)
 
   if (sec > 0 && sec < threshold)
   {
-    log("The current school letter is " + wrap(current, COLOR_ITEM) + " but it's changing soon to " + wrap(next, COLOR_ITEM) + ", so we'll use that letter instead.");
+    log(CLUB + " The current school letter is " + wrap(current, COLOR_ITEM) + " but it's changing soon to " + wrap(next, COLOR_ITEM) + ", so we'll use that letter instead.");
     current = next;
   }
 
@@ -78,7 +78,7 @@ item find_best_clothes(slot s)
 
 void school_clothes(string letter)
 {
-  log("Optimizing wardrobe for PvP. School letter is currently: " + wrap(letter, COLOR_ITEM));
+  log(CLUB + " Optimizing wardrobe for PvP. School letter is currently: " + wrap(letter, COLOR_ITEM));
 
   // TODO: make all equip() lines here use the specific slot, like familiars.
 
@@ -155,6 +155,9 @@ void pvp()
       cheat_deck("clubs", "more PVP fights");
 
     if (pvp_attacks_left() > 0)
+      log (CLUB + " Using up our PVP attacks.");
+
+    if (pvp_attacks_left() > 0)
     {
       cli_execute("checkpoint");
       dress_for_pvp();
@@ -163,13 +166,14 @@ void pvp()
       cli_execute("outfit checkpoint");
     }
     visit_url("peevpee.php?place=shop");
-    log("PVP swagger: " + get_property("availableSwagger"));
+    log(CLUB + " PVP swagger: " + get_property("availableSwagger"));
     int totalSwag = to_int(get_property(PVP_SWAGGER));
-    log(PVP_SEASON + " swagger: " + totalSwag);
+    log(CLUB + " " + PVP_SEASON + " swagger: " + totalSwag);
     if (totalSwag > 1000)
     {
-      log("You've earned enough swagger to get the seasonal item if you haven't already picked it up.");
+      log(CLUB + " You've earned enough swagger to get the seasonal item if you haven't already picked it up.");
     }
+    wait(5);
   }
 
 }

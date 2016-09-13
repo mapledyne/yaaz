@@ -1,6 +1,7 @@
 import "util/main.ash";
 import "util/progress.ash";
 
+import "quests/M_misc.ash";
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
@@ -32,13 +33,8 @@ boolean ascend_loop()
   // If you do no work in one of these functions, you should
   // generally return false to let the next quest in line run.
 
-  if (quest_status("questL02Larva") == UNSTARTED && my_level() > 1)
-  {
-    log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
-    visit_url("tutorial.php?action=toot");
-  }
-
   // misc things we should probably just do as soon as we can:
+  if (M_misc()) return true; // These shouldn't consume turns, just visiting people to kick things off.
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M09_leaflet()) return true;
 

@@ -4,6 +4,8 @@ import "util/base/familiars.ash";
 import "util/base/quests.ash";
 import "util/base/util.ash";
 
+string DECK = "🂥";
+
 boolean can_deck()
 {
   if (can_adventure() && item_amount($item[deck of every card]) > 0 && to_int(get_property("_deckCardsDrawn")) < 15)

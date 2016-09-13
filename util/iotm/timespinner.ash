@@ -34,8 +34,15 @@ boolean time_prank(string player, string msg)
 
   visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
   visit_url("choice.php?pwd&whichchoice=1195&option=5");
-  visit_url(url);
-  visit_url("main.php");
+  string ret = visit_url(url);
+  string oops = "someone else hiding in their timestream already";
+
+  if (contains_text(ret, oops))
+  {
+    log("Trying to send " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but someone beat you to it.");
+    visit_url("choice.php?pwd&whichchoice=1198&option=2");
+    return false;
+  }
   return true;
 }
 

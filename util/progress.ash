@@ -4,8 +4,6 @@ import "util/base/inventory.ash";
 import "util/base/settings.ash";
 import "util/base/war_support.ash";
 
-string CHECKED = "☑︎";
-string UNCHECKED = "☐";
 
 int level_substats(int level)
 {
@@ -81,6 +79,19 @@ void progress_sheet()
     progress(desks, 5, "writing desks defeated");
   }
 
+  if (quest_status("questM21Dance") > UNSTARTED && quest_status("questM21Dance") < 3)
+  {
+    string shoes = UNCHECKED;
+    string gown = UNCHECKED;
+    string puff = UNCHECKED;
+    if (item_amount($item[Lady Spookyraven's powder puff]) > 0)
+      puff = CHECKED;
+    if (item_amount($item[Lady Spookyraven's dancing shoes]) > 0)
+      shoes = CHECKED;
+    if (item_amount($item[Lady Spookyraven's finest gown]) > 0)
+      gown = CHECKED;
+    progress(dancing_items(), 3, "dancing things found (" + puff + " puff, " + shoes + " shoes, " + gown + " gown)");
+  }
 
   if (quest_active("questL06Friar"))
   {
@@ -144,6 +155,10 @@ void progress_sheet()
   {
     if (item_amount($item[s.o.c.k.]) == 0)
       progress(immateria(), 4, "Immateria found");
+
+    if (quest_status("questL10Garbage") == 8)
+      progress($location[The Castle in the Clouds in the Sky (Ground Floor)].turns_spent, 11, "progress to open the top floor of the castle");
+
   }
 
   if (quest_active("questL11MacGuffin"))
@@ -164,6 +179,27 @@ void progress_sheet()
       {
         int s = numeric_modifier("surgeonosity");
         progress(s, 5, "surgeonosity (" + (s * 10) + "% to find protector spirit)");
+      }
+
+      if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
+        progress(to_int(get_property("hiddenBowlingAlleyProgress")), 5, "bowling balls rolled");
+
+      if (quest_active("questL11Curses"))
+      {
+        int curse = 0;
+        if (have_effect($effect[once-cursed]) > 0)
+          curse = 1;
+        if (have_effect($effect[twice-cursed]) > 0)
+          curse = 2;
+        if (have_effect($effect[thrice-cursed]) > 0)
+          curse = 3;
+        progress(curse, 3, "curses for the penthouse");
+      }
+
+      if (quest_active("questL11Doctor"))
+      {
+        int surg = numeric_modifier("surgeonosity");
+        progress(surg, 5, "surgeonosity - " + (surg*10) + "% chance to find spirit");
       }
     }
 

@@ -11,6 +11,14 @@ string COLOR_WARNING = "purple";
 string COLOR_LOG = "#CD853F";
 string COLOR_ADVICE = "purple";
 
+
+string CLUB = "♣";
+string HEART = "♥";
+
+// Unicode has some nice choices, but they render irregularly in the gCLI:
+string CHECKED = "[X]";
+string UNCHECKED = "[ ]";
+
 string pluralize(int count, item it)
 {
   if (count == 1)

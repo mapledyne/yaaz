@@ -1,10 +1,5 @@
 import "util/main.ash";
 
-int dancing_items()
-{
-  return item_amount($item[lady spookyraven's powder puff]) + item_amount($item[lady spookyraven's dancing shoes]) + item_amount($item[lady spookyraven's finest gown]);
-}
-
 boolean M_spookyraven()
 {
   if (quest_status("questM21Dance") < 0)
@@ -36,7 +31,6 @@ boolean M_spookyraven()
     }
 
     boolean b = dg_adventure(bath);
-    progress(dancing_items(), 3, "dancing things found");
     if (!b)
       return true;
   }
@@ -95,7 +89,6 @@ boolean M_spookyraven()
     }
 
     boolean b = dg_adventure(bed);
-    progress(dancing_items(), 3, "dancing things found");
     if (!b)
       return true;
   }
@@ -116,7 +109,6 @@ boolean M_spookyraven()
     }
 
     boolean b = dg_adventure(gallery);
-    progress(dancing_items(), 3, "dancing things found");
     if (!b)
       return true;
   }

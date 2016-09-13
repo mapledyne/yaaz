@@ -100,7 +100,6 @@ void open_top_floor()
     boolean b = dg_adventure(ground, "items");
     if (!b)
       return;
-    progress(ground.turns_spent, 11, "progress to open the top floor of the castle");
   }
 
 }

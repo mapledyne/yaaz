@@ -79,8 +79,6 @@ boolean dg_adventure(location loc, string maximize)
 
   if (my_adventures() <= abort_on_advs_left)
   {
-    error("Cannot auto-adventure with only " + my_adventures() + " adventures remaining. Get some more food/booze in you or wait until tomorrow. Aborting.");
-    wait(5);
     return false;
   }
 

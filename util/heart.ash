@@ -16,7 +16,7 @@ int smiles_remaining()
 
 boolean blacklisted(string player)
 {
-  if (to_lower_case(player) == to_lower_case(my_name()))
+  if (player ≈ my_name())
     return true;
 
   // this should check an aggregate, but I'm sick and can't think straight.
@@ -75,7 +75,7 @@ string pick_player()
 
 void heart_msg(string player, string msg)
 {
-  log("Being heart-y to " + wrap(player, COLOR_MONSTER) + " by " + msg + ".");
+  log(HEART + " Being heart-y to " + wrap(player, COLOR_MONSTER) + " by " + msg + ".");
   save_daily_setting("hearted_" + player, "true");
 }
 
@@ -126,7 +126,7 @@ void do_heart_thing(string player)
     return;
   }
 
-  log("Apparently we're out of heart-y things to do right now. Sad.");
+  log(HEART + " Apparently we're out of heart-y things to do right now. Sad.");
 }
 
 void heart(boolean force)
@@ -134,13 +134,23 @@ void heart(boolean force)
   if (setting("do_heart") == "false")
     return;
 
+  if (setting("do_heart") == "")
+  {
+    warning(HEART + " You haven't set if you want to do heart-y things during your run, like casting Smiles and such.");
+    warning(HEART + " Set the variable " + SETTING_PREFIX + "_do_heart to 'true' or 'false' depending on which way you want to be.");
+    warning(HEART + " Doing so will clear this message, for example:");
+    warning(HEART + " set " + SETTING_PREFIX + "_do_heart=true");
+    wait(10);
+    return;
+  }
+
   int last = to_int(setting("last_heart", 0));
   int how_fast = to_int(setting("heart_speed", "10"));
 
   if (my_turncount() < last + how_fast && !force)
     return;
 
-  log("Considering doing something heart-y");
+  log(HEART + " Considering doing something heart-y");
   save_daily_setting("last_heart", my_turncount());
 
   do_heart_thing(pick_player());

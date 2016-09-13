@@ -166,6 +166,11 @@ int junkyard_items()
   return i_a($item[molybdenum hammer]) + i_a($item[molybdenum crescent wrench]) + i_a($item[molybdenum pliers]) + i_a($item[molybdenum screwdriver]);
 }
 
+int dancing_items()
+{
+  return item_amount($item[lady spookyraven's powder puff]) + item_amount($item[lady spookyraven's dancing shoes]) + item_amount($item[lady spookyraven's finest gown]);
+}
+
 int hero_keys()
 {
   int keys = 0;
