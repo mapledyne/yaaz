@@ -41,7 +41,7 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
       {
         return f;
       }
-      if (f == $familiar[intergnat] && item_amount($item[BACON]) < 111)
+      if (f == $familiar[intergnat] && item_amount($item[BACON]) < 200)
       {
         return f;
       }

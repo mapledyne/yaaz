@@ -24,9 +24,12 @@ void pulverize_things()
   pulverize_all($item[gaia beads]);
   pulverize_all($item[hippy medical kit]);
   pulverize_all($item[Lockenstock&trade; sandals]);
+  pulverize_all($item[smirking shrunken head]);
   pulverize_all($item[wicker shield]);
 
+
   // Always keep one:
+  pulverize_all_but_one($item[attorney's badge]);
   pulverize_all_but_one($item[burnt snowpants]);
   pulverize_all_but_one($item[compression stocking]);
   pulverize_all_but_one($item[goatskin umbrella]);

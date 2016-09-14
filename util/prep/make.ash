@@ -95,11 +95,13 @@ void make_things()
 
   if (!bit_flag(get_property("twinPeakProgress").to_int(), 2))
   {
-    make_if_needed($item[jar of oil], "for the " + wrap($location[twin peak]));
+    make_if_needed($item[jar of oil], "for the " + wrap($location[twin peak]) + ".");
   }
 
 
   // *** Less requirements, but still sometimes useful or fun:
+
+  make_if_needed($item[ratskin belt], "for a meat bonus item.")
 
   // bricks of sand:
   if (item_amount($item[handful of sand]) >= 5)
