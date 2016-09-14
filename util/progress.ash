@@ -175,7 +175,7 @@ void progress_sheet()
       progress(item_amount($item[stone triangle]), 4, "stone triangles from the Hidden City");
 
       int surgeon = to_int(get_property("hiddenHospitalProgress"));
-      if (surgeon > 0 && surgeon < 6)
+      if (quest_active("questL11Doctor"))
       {
         int s = numeric_modifier("surgeonosity");
         progress(s, 5, "surgeonosity (" + (s * 10) + "% to find protector spirit)");
@@ -196,11 +196,6 @@ void progress_sheet()
         progress(curse, 3, "curses for the penthouse");
       }
 
-      if (quest_active("questL11Doctor"))
-      {
-        int surg = numeric_modifier("surgeonosity");
-        progress(surg, 5, "surgeonosity - " + (surg*10) + "% chance to find spirit");
-      }
     }
 
     if (quest_active("questL11Palindome"))
