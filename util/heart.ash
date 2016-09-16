@@ -5,6 +5,9 @@ import "util/iotm/timespinner.ash";
 
 import <zlib.ash>;
 
+string[int] prank_msgs;
+file_to_map("scripts/dg_ascend/util/data/pranks.txt", prank_msgs);
+
 int smiles_remaining()
 {
 
@@ -121,7 +124,9 @@ void do_heart_thing(string player)
   }
   if (can_spin_time())
   {
-    heart_msg(player, "sending a time prank.");
+    int num = random(count(prank_msgs));
+    string prank_msg = prank_msgs[num];
+    heart_msg(player, prank_msg);
     time_prank(player, "time is residual...");
     return;
   }
@@ -194,5 +199,8 @@ void heart()
 
 void main()
 {
-  heart(true);
+int num = random(count(prank_msgs));
+string prank_msg = prank_msgs[num];
+print(prank_msg);
+  //heart(true);
 }

@@ -101,7 +101,7 @@ void make_things()
 
   // *** Less requirements, but still sometimes useful or fun:
 
-  make_if_needed($item[ratskin belt], "for a meat bonus item.")
+  make_if_needed($item[ratskin belt], "for a meat bonus item.");
 
   // bricks of sand:
   if (item_amount($item[handful of sand]) >= 5)
