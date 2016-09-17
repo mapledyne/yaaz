@@ -126,8 +126,8 @@ void do_heart_thing(string player)
   {
     int num = random(count(prank_msgs));
     string prank_msg = prank_msgs[num];
-    heart_msg(player, prank_msg);
-    time_prank(player, "time is residual...");
+    heart_msg(player, "sending a " + wrap("Time Prank", COLOR_ITEM) + " to them ('" + prank_msg + "').");
+    time_prank(player, prank_msg);
     return;
   }
 
