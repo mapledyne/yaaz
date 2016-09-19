@@ -47,8 +47,11 @@ string pick_player()
   boolean[string] players;
   players = who_clan();
 
-  // force extra players that aren't in clan:
-  players["muddytm"] = true;
+  string[int] friends = split_string(setting("contact_list"), ", ");
+  foreach x, f in friends
+  {
+    players[f] = true;
+  }
 
   string[int] possible;
   int count = 0;
@@ -191,8 +194,34 @@ void collectors()
 
 }
 
+void fill_from_contact_list()
+{
+  if (setting("contact_list") != "")
+    return;
+
+  string list = visit_url( "account_contactlist.php" );
+  list = substring( list, 0 , index_of( list , "Ignore List" ) );
+
+  int index = -1;
+  int i = 0;
+  string contacts = "";
+  repeat {
+      index = index_of( list , "showplayer" );
+      if ( index < 0 ) break;
+      int start = index_of( list , "<b>" , index ) + 3;
+      int end   = index_of( list , "</b>" , start );
+      string player = substring( list , start , end );
+      contacts = list_add(contacts, player);
+      list = substring( list , end );
+      i = i + 1;
+  } until ( index < 0 );
+
+  save_daily_setting("contact_list", contacts);
+}
+
 void heart()
 {
+  fill_from_contact_list();
   collectors();
   heart(false);
 }

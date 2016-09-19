@@ -37,6 +37,7 @@ void sell_things()
   sell_all($item[Keel-Haulin\' Knife]);
   sell_all($item[Kokomo Resort Pass]);
   sell_all($item[Mad Train Wine]);
+  sell_all($item[magicalness-in-a-can]);
   sell_all($item[Margarita]);
   sell_all($item[Martini]);
   sell_all($item[Meat Paste]);

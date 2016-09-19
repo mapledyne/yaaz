@@ -32,7 +32,8 @@ void chateau()
     visit_url("place.php?whichplace=chateau&action=chateau_desk2");
   }
 
-  if (chateau_monster() == $monster[writing desk] && to_int(get_property("writingDesksDefeated")) < 5)
+  if (chateau_monster() == $monster[writing desk]
+      && i_a($item[ghost of a necklace]) == 0)
   {
     if (!list_contains(setting("digitize_list"), $monster[writing desk]))
     {
