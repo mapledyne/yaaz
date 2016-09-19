@@ -28,6 +28,9 @@ boolean can_vip_drink(item it)
   if (my_path() == "Nuclear Autumn" && yum > 1)
     return false;
 
+  if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
+    return false;
+
   int room = inebriety_limit() - my_inebriety();
   return yum <= room;
 }

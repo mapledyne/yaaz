@@ -239,8 +239,6 @@ boolean try_drink(item it)
   {
     if (!can_vip_drink(it))
       return false;
-    if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
-      return false;
     log("Drinking a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
     return cli_execute("drink 1 " + it);
   }

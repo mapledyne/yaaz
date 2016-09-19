@@ -2,9 +2,16 @@ import "util/base/print.ash";
 import "util/base/maximize.ash";
 import "util/adventure/adventure.ash";
 
+int witchess_left()
+{
+  if (get_campground() contains $item[Witchess Set])
+    return 5 - to_int(get_property("_witchessFights"));
+  return 0;
+}
+
 boolean can_witchess()
 {
-  if(can_adventure() && get_campground() contains $item[Witchess Set] && get_property("_witchessFights").to_int() < 5)
+  if(can_adventure() && witchess_left() > 0)
     return true;
   return false;
 }
@@ -37,7 +44,7 @@ void witchess(item it)
     run_choice(1);
     visit_url("choice.php?option=1&pwd="+my_hash()+"&whichchoice=1182&piece=" + choice, false);
     run_combat();
-
+    progress_sheet();
   } else {
     warning("Cannot fight " + wrap($item[Witchess Set]) + " pieces. There aren't any left to fight.");
   }

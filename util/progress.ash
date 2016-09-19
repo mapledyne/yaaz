@@ -59,7 +59,27 @@ int evil_progress(int p)
 }
 
 
-void progress_sheet()
+void progress_sheet_verbose()
+{
+  // extra details for the sheet when requested.
+
+  if (get_campground() contains $item[Witchess Set])
+  {
+    int fights = to_int(get_property("_witchessFights"));
+    if (fights < 5)
+    {
+      progress(fights, 5, "Witchess fights", "blue");
+    }
+  }
+
+  if (to_int(get_property("royalty")) > 0)
+  {
+    progress(to_int(get_property("royalty")), 500, "royalty", "blue");
+  }
+
+}
+
+void progress_sheet(boolean verbose)
 {
   level_progress();
 
@@ -280,10 +300,20 @@ void progress_sheet()
 
       // TODO: Find a way to track wall of meat progress...
   }
+
+  if(verbose)
+  {
+    progress_sheet_verbose();
+  }
+}
+
+void progress_sheet()
+{
+  progress_sheet(false);
 }
 
 void main()
 {
   print("Current progress in a few things:");
-  progress_sheet();
+  progress_sheet(true);
 }

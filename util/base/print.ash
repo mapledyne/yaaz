@@ -135,7 +135,7 @@ void progress(int percent, string msg)
   progress(percent, 100, msg);
 }
 
-void progress(int qty, int total, string msg)
+void progress(int qty, int total, string msg, string color)
 {
   if (qty > total)
     qty = total;
@@ -155,6 +155,12 @@ void progress(int qty, int total, string msg)
   }
 
   string div_style="border: 1px solid black; background-color: silver; width: 200px; position: relative; padding: 3px";
-  string bar_style="background-color: green; width: " + percent + "%;";
+  string bar_style="background-color: " + color + "; width: " + percent + "%;";
   print_html("<div style='"+div_style+"'><div style='" + bar_style + "'>&nbsp;</div></div>&nbsp;" + footer);
+
+}
+
+void progress(int qty, int total, string msg)
+{
+  progress(qty, total, msg, "green");
 }

@@ -98,33 +98,6 @@ void day_begin()
 
 }
 
-void day_end()
-{
-  log("Wrapping up for the end of the day.");
-  wait(5);
-
-  // if there are any source terminal enhances left
-  consume_enhances();
-  consume_cards();
-
-  cross_streams();
-
-  prep();
-
-  pvp();
-
-  log("Dressing for rollover.");
-  maximize("rollover");
-  if (hippy_stone_broken())
-  {
-    log("Tweaking nighttime outfit for better PvP.");
-    remove_non_rollover();
-    pvp_rollover();
-  }
-  progress_sheet();
-  manuel_progress();
-
-}
 
 void ascend()
 {
@@ -148,9 +121,8 @@ void ascend()
   manuel_progress();
   wait(5);
 
-  day_end();
 
-  log("Scripted actions complete. Run this script again to continue trying to ascend.");
+  day_end();
 
   if (my_adventures() < 10 && booze_full() && fullness_full())
   {
@@ -163,6 +135,9 @@ void ascend()
   {
     log("There may be other things you can do today, but this script can't handle them. Do those, or just try rerunning this script.");
   }
+
+  warning("Run " + wrap(SCRIPT + "-eod", COLOR_ITEM) + " if you're done for the day to perform final cleanup.");
+
 
 }
 
