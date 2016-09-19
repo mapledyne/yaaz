@@ -85,13 +85,23 @@ void day_begin()
   }
 
   log("Current progress:");
-  progress_sheet();
+  progress_sheet(true);
   wait(5);
 
   maximize();
   prep();
 
   iotm();
+
+  if (!hippy_stone_broken() && setting("no_pvp") != "true")
+  {
+    warning("You haven't broken your Hippy Stone to enable PvP.");
+    warning("This script can handle PvP for you if you break the stone.");
+    warning("If you don't want to fight in PvP, and don't want this message,");
+    log("set " + SETTING_PREFIX + "_no_pvp=true");
+    warning("Otherwise, his ESC and go break that stone!");
+    wait(10);
+  }
 
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);
@@ -120,9 +130,6 @@ void ascend()
   iotm();
   manuel_progress();
   wait(5);
-
-
-  day_end();
 
   if (my_adventures() < 10 && booze_full() && fullness_full())
   {

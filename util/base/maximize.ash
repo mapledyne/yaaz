@@ -111,8 +111,10 @@ void max_effects(string target)
   switch(target)
   {
     case "stats":
+      effect_maintain($effect[mutated]);
       effect_maintain($effect[sealed brain]);
       effect_maintain($effect[slightly larger than usual]);
+      effect_maintain($effect[tomato power]);
 
       if (!to_boolean(get_property("concertVisited"))
           && get_property("sidequestArenaCompleted") == "fratboy")
@@ -120,6 +122,15 @@ void max_effects(string target)
         cli_execute("concert elvish");
       }
       cross_streams();
+      break;
+    case "muscle":
+      effect_maintain($effect[Extreme Muscle Relaxation]);
+      effect_maintain($effect[Football Eyes]);
+//      effect_maintain($effect[Go Get 'Em\, Tiger!]);
+      effect_maintain($effect[spiky hair]);
+      effect_maintain($effect[Steroid Boost]);
+      effect_maintain($effect[Truly Gritty]);
+      effect_maintain($effect[Woad Warrior]);
       break;
     case "moxie":
       effect_maintain($effect[Newt Gets In Your Eyes]);

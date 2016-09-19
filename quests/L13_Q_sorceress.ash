@@ -156,6 +156,12 @@ void max_contest(string max, int num)
       cheat_deck("race", "go faster, pussycat, faster");
       effect_maintain($effect[hiding in plain sight]);
       break;
+    case "muscle":
+      maximize("muscle");
+      cheat_deck("strength", "get more muscle. Strongity strong");
+      effect_maintain($effect[Phorcefullness]);
+      // consider oil of stability
+      break;
     case "moxie":
       maximize("moxie");
       cheat_deck("fool", "get more moxie. Foolish agility");
