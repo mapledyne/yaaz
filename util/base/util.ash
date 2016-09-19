@@ -12,6 +12,7 @@ float average_range(string avg);
 boolean can_adventure();
 
 string SCRIPT = "yaaz";
+string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 

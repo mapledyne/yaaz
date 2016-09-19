@@ -6,7 +6,7 @@ import "util/iotm/timespinner.ash";
 import <zlib.ash>;
 
 string[int] prank_msgs;
-file_to_map("scripts/dg_ascend/util/data/pranks.txt", prank_msgs);
+file_to_map(DATA_DIR + "pranks.txt", prank_msgs);
 
 int smiles_remaining()
 {
@@ -85,20 +85,24 @@ void heart_msg(string player, string msg)
   save_daily_setting("hearted_" + player, "true");
 }
 
-boolean mail_heart_item(string player, item toy)
+boolean mail_heart_item(string player, item toy, string message)
 {
   if (item_amount(toy) == 0)
     return false;
 
   //  boolean kmail(string recipient ,string message ,int meat ,int [item]  goodies ,string inside_note )
-  heart_msg(player, "sending them one " + wrap(toy));
-  string msg = "Random heart-y-ness. Enjoy!";
-  string inside_msg = "Random heart-y-ness. Enjoy!";
+  heart_msg(player, "sending them one " + wrap(toy) + ".");
+  string msg = message;
+  string inside_msg = message;
   int[item] stuff;
   stuff[toy] = 1;
   kmail(player, msg, 0, stuff, inside_msg);
   return true;
+}
 
+boolean mail_heart_item(string player, item toy)
+{
+  return mail_heart_item(player, toy, "Random heart-y-ness. Enjoy!");
 }
 
 void do_heart_thing(string player)
@@ -117,14 +121,6 @@ void do_heart_thing(string player)
     log("You have " + wrap(smiles_remaining(), COLOR_ITEM) + " smiles from your " + wrap($item[golden mr. accessory]) + " remaining today.");
     return;
   }
-  if (mail_heart_item(player, $item[almost-dead walkie-talkie])) return;
-  if (mail_heart_item(player, $item[gift card])) return;
-  if (item_amount($item[roll of toilet paper]) > 0)
-  {
-    heart_msg(player, "throwing a " + wrap($item[roll of toilet paper]) + " at them. Jerk");
-    cli_execute("throw roll of toilet paper at " + player);
-    return;
-  }
   if (can_spin_time())
   {
     int num = random(count(prank_msgs));
@@ -132,6 +128,32 @@ void do_heart_thing(string player)
     heart_msg(player, "sending a " + wrap("Time Prank", COLOR_ITEM) + " to them ('" + prank_msg + "').");
     time_prank(player, prank_msg);
     return;
+  }
+
+  if (mail_heart_item(player, $item[almost-dead walkie-talkie])) return;
+  if (mail_heart_item(player, $item[gift card])) return;
+
+  if (item_amount($item[roll of toilet paper]) > 0)
+  {
+    heart_msg(player, "throwing a " + wrap($item[roll of toilet paper]) + " at them. Jerk");
+    cli_execute("throw roll of toilet paper at " + player);
+    return;
+  }
+
+
+  foreach toy in $items[yellow snowcone,
+                        black candy heart,
+                        mood ring,
+                        encoder ring,
+                        defective skull,
+                        jazz soap,
+                        joybuzzer,
+                        whoopie cushion,
+                        fake hand,
+                        explosion-flavored chewing gum,
+                        fake fake vomit]
+  {
+    if (mail_heart_item(player, toy, "Random 'heart'-y ness.")) return;
   }
 
   log(HEART + " Apparently we're out of heart-y things to do right now. Sad.");
@@ -228,8 +250,5 @@ void heart()
 
 void main()
 {
-int num = random(count(prank_msgs));
-string prank_msg = prank_msgs[num];
-print(prank_msg);
-  //heart(true);
+  heart(true);
 }

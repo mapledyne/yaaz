@@ -1,5 +1,6 @@
 import "util/base/inventory.ash";
 import "util/base/locations.ash";
+import "util/base/settings.ash";
 
 void use_things()
 {
@@ -52,6 +53,16 @@ void use_things()
   if (!have_familiar($familiar[misshapen animal skeleton]))
   {
     use_all($item[pile of dusty animal bones]);
+  }
+
+  if (closet_amount($item[stuffed key]) > 0 && closet_amount($item[stuffed treasure chest]) > 0)
+  {
+    log("Taking out a " + wrap($item[stuffed key]) + " and a " + wrap($item[stuffed treasure chest]) + " to open.");
+    take_closet(1, $item[stuffed key]);
+    take_closet(1, $item[stuffed treasure chest]);
+
+    log("Opening the " + wrap($item[stuffed treasure chest]) + ".");
+    use(1, $item[stuffed treasure chest]);
   }
 
   if (!location_open($location[the overgrown lot]) && item_amount($item[Map to a Hidden Booze Cache]) > 0)
@@ -149,6 +160,10 @@ void use_things()
       use(1, f.hatchling);
     }
   }
+}
 
 
+void main()
+{
+  use_things();
 }

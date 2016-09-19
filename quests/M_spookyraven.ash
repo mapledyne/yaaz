@@ -16,6 +16,10 @@ boolean M_spookyraven()
   if (quest_status("questM21Dance") == FINISHED)
     return false;
 
+  // bail if we're unlikely to kill things easily enough (using a representative monster):
+  if (expected_damage($monster[malevolent hair clog]) > my_maxhp() / 10)
+    return false;
+
   if (item_amount($item[lady spookyraven's powder puff]) == 0)
     log("Going to get " + wrap($item[lady spookyraven's powder puff]) + ".");
 

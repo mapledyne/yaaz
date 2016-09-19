@@ -109,7 +109,7 @@ boolean dg_adventure(location loc, string maximize)
 
   manuel_add_location(loc);
 
-  boolean adv = adv1(loc, -1, "");
+  boolean adv = adventure(1, loc);
 
   progress_sheet();
 

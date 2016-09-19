@@ -94,6 +94,10 @@ boolean L05_Q_goblin()
     return true;
   }
 
+  // bail if the king is still too tough for us...
+  if (expected_damage($monster[knob goblin king]) > my_maxhp() / 10)
+    return false;
+
   string disguise = prep_for_king();
 
   log("Fiddling with monster's heads to get the loot we want from the " + wrap($monster[knob goblin king]) + ".");

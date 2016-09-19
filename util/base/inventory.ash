@@ -70,6 +70,14 @@ void pulverize_keep_if(item it, boolean keep_if)
 	}
 }
 
+void closet(item it, int keep)
+{
+	int qty = item_amount(it) - keep;
+	if (qty < 1)
+		return;
+	log("Putting " + qty + " " + wrap(it, qty) + " in the closet to reduce clutter.");
+	put_closet(qty, it);
+}
 
 int wad_total()
 {

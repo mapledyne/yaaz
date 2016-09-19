@@ -6,15 +6,7 @@ int time_minutes()
   if (item_amount($item[time-spinner]) == 0)
     return 0;
 
-  // hopefully mafia will track this as some point. Until then ...
-  string time = visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
-  matcher minutematcher = create_matcher("You have (\\d+) minute[s]? left today", time);
-  if(minutematcher.find())
-  {
-     return to_int(minutematcher.group(1));
-  }
-  visit_url("main.php");
-  return 0;
+  return 10 - to_int(get_property("_timeSpinnerMinutesUsed"));
 }
 
 boolean can_spin_time()
@@ -30,7 +22,7 @@ boolean time_prank(string player, string msg)
 {
   if (!can_spin_time())
     false;
-  string url = "choice.php?pwd&whichchoice=1198&option=1&pl="+url_encode(player)+"&th="+url_encode(msg);
+  string url = "choice.php?pwd&whichchoice=1198&option=1&pl=" + player + "&th=" + msg;
 
   visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
   visit_url("choice.php?pwd&whichchoice=1195&option=5");
@@ -53,7 +45,7 @@ boolean timespinner_future()
   if (time_minutes() < 2)
     return false;
 
-  if (setting("visited_future") == "true")
+  if (get_property("_timeSpinnerReplicatorUsed") == "true")
     return false;
 
   string future = setting("far_future");
@@ -79,7 +71,6 @@ boolean timespinner_future()
     replicate = "drink";
 
   log("Using the " + wrap($item[time-spinner]) + " to visit the far future. Going to try to replicate some " + replicate + ".");
-  save_daily_setting("visited_future", "true");
   return cli_execute(future + " " + replicate);
 }
 

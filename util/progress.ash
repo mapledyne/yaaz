@@ -74,7 +74,60 @@ void progress_sheet_verbose()
 
   if (to_int(get_property("royalty")) > 0)
   {
-    progress(to_int(get_property("royalty")), 500, "royalty", "blue");
+
+    int max = to_int(setting("royalty_max", "0"));
+    if (max == 0)
+    {
+      string roy = visit_url("museum.php?floor=4&place=royalboards");
+
+
+      int index = index_of( roy , "showplayer" );
+      int start = index_of( roy , "<b>" , index ) + 3;
+      int end   = index_of( roy , "</b>" , start );
+      string player = substring( roy , start , end );
+
+      start = index_of( roy , "<td>" , end ) + 4;
+      end   = index_of( roy , "</td>" , start );
+
+      max = to_int(substring( roy , start , end ));
+      save_daily_setting("royalty_max", max);
+
+    }
+    progress(to_int(get_property("royalty")), max, "royalty", "blue");
+  }
+
+  if (item_amount($item[time-spinner]) > 0)
+  {
+    int used = to_int(get_property("_timeSpinnerMinutesUsed"));
+
+    if (used < 10)
+    {
+      progress(used, 10, "Time Spinner minutes used", "blue");
+    }
+
+    if (to_boolean(get_property("_timeSpinnerReplicatorUsed")))
+    {
+      dg_print(UNCHECKED + " Time Spinner replicator used", "black");
+    }
+
+  }
+
+  if (item_amount($item[deck of every card]) > 0
+      && to_int(get_property("_deckCardsDrawn")) < 15)
+  {
+    progress(15 - to_int(get_property("_deckCardsDrawn")), 15, "Deck of Every Card cards drawn");
+  }
+
+  if (get_campground() contains $item[Witchess Set]
+      && to_int(get_property("_witchessFights")) < 5)
+  {
+    progress(5 - to_int(get_property("_witchessFights")), 5, "Witchess fights");
+  }
+
+  if (have_skill($skill[calculate the universe])
+      && to_int(get_property("_universeCalculated")) == 0)
+  {
+    dg_print(UNCHECKED + " Calculate the Universe", "black");
   }
 
 }

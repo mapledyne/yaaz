@@ -78,12 +78,6 @@ void consider_mall(item it)
 void mall_or_clan()
 {
   consider_mall($item[gift card]);
-  consider_mall($item[stuffed astral badger]);
-  consider_mall($item[stuffed cheshire bitten]);
-  // should check for stuffed treasure chest and open them when possible:
-  consider_mall($item[stuffed key]);
-  consider_mall($item[stuffed mink]);
-  consider_mall($item[stuffed sleazy gravy fairy]);
 }
 
 void prep_fishing(location loc)

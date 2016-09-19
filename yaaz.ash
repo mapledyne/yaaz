@@ -1,5 +1,6 @@
 import "util/main.ash";
 import "util/progress.ash";
+import "yaaz/yaaz-begin.ash";
 
 import "quests/M_misc.ash";
 import "quests/M_guild.ash";
@@ -74,44 +75,12 @@ boolean ascend_loop()
   return false;
 }
 
-void day_begin()
-{
-  log("Turns used this ascension: " + my_turncount() + ", over " + my_daycount() + " days.");
-  log("Beginning start-of-day prep.");
-
-  if (!in_hardcore())
-  {
-    warning("This script assumes you're in hardcore. If you're in softcore, it'll do a lot of things the hard way.");
-  }
-
-  log("Current progress:");
-  progress_sheet(true);
-  wait(5);
-
-  maximize();
-  prep();
-
-  iotm();
-
-  if (!hippy_stone_broken() && setting("no_pvp") != "true")
-  {
-    warning("You haven't broken your Hippy Stone to enable PvP.");
-    warning("This script can handle PvP for you if you break the stone.");
-    warning("If you don't want to fight in PvP, and don't want this message,");
-    log("set " + SETTING_PREFIX + "_no_pvp=true");
-    warning("Otherwise, his ESC and go break that stone!");
-    wait(10);
-  }
-
-  log("Day startup tasks complete. About to begin doing stuff.");
-  wait(10);
-
-}
-
 
 void ascend()
 {
   day_begin();
+  log("Day startup tasks complete. About to begin doing stuff.");
+  wait(10);
 
 
   if (!can_adventure())
@@ -143,7 +112,7 @@ void ascend()
     log("There may be other things you can do today, but this script can't handle them. Do those, or just try rerunning this script.");
   }
 
-  warning("Run " + wrap(SCRIPT + "-eod", COLOR_ITEM) + " if you're done for the day to perform final cleanup.");
+  warning("Run " + wrap(SCRIPT + "-end", COLOR_ITEM) + " if you're done for the day to perform final cleanup.");
 
 
 }

@@ -77,7 +77,7 @@ void make_things()
     wait(5);
   }
 
-  if (my_meat() > 5000)
+  if (my_meat() > 2500)
   {
     make_if_needed($item[bitchin' meatcar], "to reach the desert.");
   }

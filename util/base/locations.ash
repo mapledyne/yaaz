@@ -1,6 +1,7 @@
 import "util/base/util.ash";
 import "util/base/quests.ash";
 import "util/base/print.ash";
+import "util/base/settings.ash";
 
 boolean location_open(location l)
 {
