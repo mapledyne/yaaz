@@ -59,7 +59,9 @@ void snojo()
   while(can_snojo())
   {
     log("Off to fight a " + wrap($monster[X-32-F Combat Training Snowman]) + " at the " + wrap("Snojo", COLOR_LOCATION) + ". You have " + snojo_fights_remaining() + " fights remaining.");
-    dg_adventure($location[The X-32-F Combat Training Snowman], "");
+    maximize("");
+    adv1($location[The X-32-F Combat Training Snowman], -1, "");
+    progress_sheet();
   }
 }
 
