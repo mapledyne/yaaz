@@ -183,8 +183,23 @@ void prep(location loc)
 
   cast_surplus_mp();
 
-  if (my_meat() > 1000 && my_path() != "Nuclear Autumn")
-    hermit(999, $item[ten-leaf clover]);
+  while (my_meat() > 1000
+      && setting("hermit_complete") != "true"
+      && setting("no_clover") != "true"
+      && my_path() != "Nuclear Autumn")
+  {
+    while ($coinmaster[hermit].available_tokens == 0)
+    {
+      if (item_amount($item[chewing gum on a string]) == 0)
+        buy(1, $item[chewing gum on a string]);
+      use(1, $item[chewing gum on a string]);
+    }
+    boolean gotcha = hermit(1, $item[ten-leaf clover]);
+    if (!gotcha)
+    {
+      save_daily_setting("hermit_complete", "true");
+    }
+  }
 
   get_totem();
   get_saucepan();

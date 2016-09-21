@@ -24,7 +24,7 @@ void get_compass()
   if (can_equip_compass()) {
     if (i_a(compass) == 0) {
       log("Getting a " + wrap(compass) + ".");
-      if (i_a($item[Shore Inc. Ship Trip Scrip]) == 0) {
+      if (item_amount($item[Shore Inc. Ship Trip Scrip]) == 0) {
         log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
         adventure(1, $location[The Shore\, Inc. Travel Agency]);
       }

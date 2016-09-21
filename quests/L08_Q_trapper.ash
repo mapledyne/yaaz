@@ -49,6 +49,10 @@ boolean L08_Q_trapper()
 
   if (quest_status("questL08Trapper") == 1)
   {
+    // if we don't expect to do well in these area, skip for now.
+    if (expected_damage($monster[sabre-toothed goat]) > my_maxhp()/10)
+      return false;
+
     item ore = to_item(get_property("trapperOre"));
     int goat_qty = get_cheese();
 

@@ -1,4 +1,5 @@
 import "util/main.ash";
+import "util/progress.ash";
 
 boolean untinker()
 {
@@ -50,11 +51,49 @@ boolean continuum()
   return false;
 }
 
+boolean dingy()
+{
+  if (item_amount($item[Dingy dinghy]) > 0)
+    return false;
+  if (item_amount($item[bitchin' meatcar]) == 0)
+    return false;
+  if (my_adventures() < 30)
+    return false;
+
+  if (item_amount($item[dingy planks]) == 0 && my_meat() > 1000)
+  {
+    buy(1, $item[dingy planks]);
+  }
+
+  while (item_amount($item[Shore Inc. Ship Trip Scrip]) < 3 && item_amount($item[dinghy plans]) == 0)
+  {
+    log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
+    adventure(1, $location[The Shore\, Inc. Travel Agency]);
+    progress_sheet();
+  }
+  if (item_amount($item[dinghy plans]) == 0)
+  {
+    log("Buying " + wrap($item[dinghy plans]) + ".");
+    cli_execute("acquire dinghy plans");
+  }
+
+  if (item_amount($item[dinghy plans]) > 0 && item_amount($item[dingy planks]) > 0)
+  {
+    log("Making a " + wrap($item[Dingy dinghy]) + ".");
+    use(1, $item[dinghy plans]);
+    return true;
+  }
+
+  return false;
+}
+
 boolean M_misc()
 {
   if (toot()) return true;
   if (untinker()) return true;
   if (continuum()) return true;
+
+  if (dingy()) return true;
 
   return false;
 }

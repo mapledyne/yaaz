@@ -63,6 +63,22 @@ void progress_sheet_verbose()
 {
   // extra details for the sheet when requested.
 
+  if (item_amount($item[bitchin' meatcar]) == 0)
+  {
+    dg_print(UNCHECKED + " Build a bitchin' meatcar", "black");
+  }
+  if (item_amount($item[dingy dinghy]) == 0)
+  {
+    if (item_amount($item[dinghy plans]) == 0)
+    {
+      progress(item_amount($item[Shore Inc. Ship Trip Scrip]), 3, "shore scrip for the dinghy plans");
+    }
+    if (item_amount($item[dingy planks]) == 0)
+    {
+      dg_print(UNCHECKED + " buy dinghy planks", "black");
+    }
+  }
+
   if (get_campground() contains $item[Witchess Set])
   {
     int fights = to_int(get_property("_witchessFights"));
@@ -72,29 +88,6 @@ void progress_sheet_verbose()
     }
   }
 
-  if (to_int(get_property("royalty")) > 0)
-  {
-
-    int max = to_int(setting("royalty_max", "0"));
-    if (max == 0)
-    {
-      string roy = visit_url("museum.php?floor=4&place=royalboards");
-
-
-      int index = index_of( roy , "showplayer" );
-      int start = index_of( roy , "<b>" , index ) + 3;
-      int end   = index_of( roy , "</b>" , start );
-      string player = substring( roy , start , end );
-
-      start = index_of( roy , "<td>" , end ) + 4;
-      end   = index_of( roy , "</td>" , start );
-
-      max = to_int(substring( roy , start , end ));
-      save_daily_setting("royalty_max", max);
-
-    }
-    progress(to_int(get_property("royalty")), max, "royalty", "blue");
-  }
 
   if (item_amount($item[time-spinner]) > 0)
   {
@@ -121,13 +114,37 @@ void progress_sheet_verbose()
   if (get_campground() contains $item[Witchess Set]
       && to_int(get_property("_witchessFights")) < 5)
   {
-    progress(5 - to_int(get_property("_witchessFights")), 5, "Witchess fights");
+    progress(5 - to_int(get_property("_witchessFights")), 5, "Witchess fights", "blue");
   }
 
   if (have_skill($skill[calculate the universe])
       && to_int(get_property("_universeCalculated")) == 0)
   {
     dg_print(UNCHECKED + " Calculate the Universe", "black");
+  }
+
+  if (to_int(get_property("royalty")) > 0)
+  {
+
+    int max = to_int(setting("royalty_max", "0"));
+    if (max == 0)
+    {
+      string roy = visit_url("museum.php?floor=4&place=royalboards");
+
+
+      int index = index_of( roy , "showplayer" );
+      int start = index_of( roy , "<b>" , index ) + 3;
+      int end   = index_of( roy , "</b>" , start );
+      string player = substring( roy , start , end );
+
+      start = index_of( roy , "<td>" , end ) + 4;
+      end   = index_of( roy , "</td>" , start );
+
+      max = to_int(substring( roy , start , end ));
+      save_daily_setting("royalty_max", max);
+
+    }
+    progress(to_int(get_property("royalty")), max, "royalty", "blue");
   }
 
 }

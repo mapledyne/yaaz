@@ -89,6 +89,14 @@ boolean uneffect(effect ef)
 	if(cli_execute("uneffect " + ef))
 		return true;
 
+  if (ef == $effect[beaten up] && have_effect(ef) > 0)
+  {
+    // not great, but don't have a better plan right now.
+    log("Unsure how else to get rid of " + wrap(ef) + ", so going to take a quick rest.");
+    wait(3);
+    cli_execute("rest");
+  }
+
 	if(item_amount($item[Soft Green Echo Eyedrop Antidote]) > 0)
 	{
     log("Removing the effect " + wrap(ef) + " with a " + wrap($item[Soft Green Echo Eyedrop Antidote]) + ".");

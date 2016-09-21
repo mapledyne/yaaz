@@ -24,7 +24,6 @@ void clear_alcove()
 
 		log("Undefiling " + wrap($location[The Defiled Alcove]) + ". " + wrap($monster[Modern Zmobie]) + " appearance " + modern_zmobie_pct() + "% at +" + initiative_modifier() + " init.");
 		int est = estimated_alcove_turns();
-		log("Estimated turns: " + est);
 		int adv_count = my_adventures();
 
 		while (get_property("cyrptAlcoveEvilness").to_int() > 0 && can_adventure())
@@ -32,7 +31,6 @@ void clear_alcove()
 			dg_adventure($location[The Defiled Alcove], "init, -combat");
 		}
 		int total_turns = adv_count - my_adventures();
-		log("Actual turns to clear " + wrap($location[The Defiled Alcove]) + ": " + total_turns + ". We estimated " + est);
 	}
 }
 
@@ -51,8 +49,6 @@ void clear_niche()
 		}
 		remove_attract($monster[dirty old lihc]);
 		int total_turns = adv_count - my_adventures();
-		log("Turns to clear " + wrap($location[The Defiled Niche]) + ": " + total_turns + ".");
-		warning_no_estimate();
 
 	}
 }
@@ -74,8 +70,6 @@ void clear_nook()
 
 		}
 		int total_turns = adv_count - my_adventures();
-		log("Turns to clear " + wrap($location[The Defiled Nook]) + ": " + total_turns + ".");
-		warning_no_estimate();
 
 	}
 
@@ -97,8 +91,6 @@ void clear_cranny()
 		}
 
 		int total_turns = adv_count - my_adventures();
-		log("Turns to clear " + wrap($location[The Defiled Cranny]) + ": " + total_turns + ".");
-		warning_no_estimate();
 
 	}
 }
@@ -109,7 +101,7 @@ boolean L07_Q_cyrpt()
     return false;
 
 	if (quest_status("questL07Cyrptic") == FINISHED)
-	return false;
+	  return false;
 
 
 	if(item_amount($item[chest of the bonerdagon]) == 1)
@@ -121,25 +113,36 @@ boolean L07_Q_cyrpt()
 
 	int timer = my_adventures();
 
-	log("We're off to clear the " + wrap("Defiled Cyrpt", COLOR_LOCATION) + ".");
-
 	if (item_amount($item[evilometer]) == 0)
 	{
 		log("We don't have an " + wrap($item[evilometer]) + ". Maybe we haven't started the quest yet?");
 		council();
 	}
 
-	clear_alcove();
-	wait(3);
+	if (get_property("cyrptAlcoveEvilness").to_int() > 0)
+	{
+		clear_alcove();
+		return true;
+	}
+	if (get_property("cyrptNookEvilness").to_int() > 0)
+	{
+		clear_nook();
+		return true;
+	}
+	if (get_property("cyrptNicheEvilness").to_int() > 0)
+	{
+		clear_niche();
+		return true;
+	}
+	if (get_property("cyrptCrannyEvilness").to_int() > 0)
+	{
+		clear_cranny();
+		return true;
+	}
 
-	clear_nook();
-	wait(3);
-
-	clear_niche();
-	wait(3);
-
-	clear_cranny();
-	wait(3);
+	// maybe fight it later?
+	if (expected_damage($monster[bonerdagon]) > my_maxhp() / 10)
+		return false;
 
 	if(get_property("cyrptTotalEvilness").to_int() <= 0)
 	{
