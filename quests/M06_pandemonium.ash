@@ -195,7 +195,7 @@ boolean M06_pandemonium()
 
   if((item_amount($item[Azazel\'s Tutu]) == 0) && (item_amount($item[Bus Pass]) >= 5) && (item_amount($item[Imp Air]) >= 5))
   {
-    log("Heading to " + wrap("Moaning...", COLOR_LOCATION) + " to get " + wrap($item[Azazel\'s Tutu]) + ".");
+    log("Heading to " + wrap("Moaning Panda Square", COLOR_LOCATION) + " to get " + wrap($item[Azazel\'s Tutu]) + ".");
     wait(3);
     string temp = visit_url("pandamonium.php?action=moan");
   }

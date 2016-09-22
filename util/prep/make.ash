@@ -103,6 +103,15 @@ void make_things()
 
   make_if_needed($item[ratskin belt], "for a meat bonus item.");
 
+  // rainbow summons:
+  while (have_all_wads()
+         && have_skill($skill[rainbow gravitation])
+         && to_int(get_property("prismaticSummons")) < 3)
+  {
+    log("Summoning a " + wrap($item[prismatic wad]) + ".");
+    use_skill(1, $skill[rainbow gravitation]);
+  }
+
   // bricks of sand:
   if (item_amount($item[handful of sand]) >= 5)
   {

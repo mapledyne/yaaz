@@ -1,5 +1,5 @@
 // yeah, not an IotM, but until there's a better place for it...
-
+import "base/print.ash";
 
 int moon_sign_id()
 {
@@ -49,17 +49,40 @@ int universe_result(int input)
 
 int pick_a_number()
 {
+	int goal;
 	if (hippy_stone_broken())
-		return universe_result(37);
-	return universe_result(69);
+	{
+ 		goal = universe_result(37);
+		if (goal > 0)
+		{
+			log("Going to " + wrap($skill[Calculate the universe]) + " to get us some more PvP fights.");
+			cli_execute("numberology 37");
+			return goal;
+		}
+	}
+	goal = universe_result(69);
+	if (goal > 0)
+	{
+		log("Going to " + wrap($skill[Calculate the universe]) + " to get us some more adventures.");
+		cli_execute("numberology 69");
+		return goal;
+	}
+	return 0;
+}
+
+void numberology()
+{
+	if (!have_skill($skill[calculate the universe]))
+		return;
+	if (to_int(get_property("_universeCalculated")) != 0)
+		return; // TODO: doesn't account for >1 calculations possible yet.
+	int goal = pick_a_number();
+
+	if (goal == 0)
+	 	return;
 }
 
 void main()
 {
-	int num = pick_a_number();
-	if (num == 0)
-		print("No good number found.");
-	else
-		print("Try: " + num + ".");
-
+	numberology();
 }

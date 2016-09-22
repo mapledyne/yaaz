@@ -14,6 +14,7 @@ import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
 import "util/iotm/deck.ash";
+import "util/iotm/numberology.ash";
 
 void meat_cast(skill sk, effect ef, int avg)
 {
@@ -188,14 +189,17 @@ void prep(location loc)
       && setting("no_clover") != "true"
       && my_path() != "Nuclear Autumn")
   {
+
     while ($coinmaster[hermit].available_tokens == 0)
     {
       if (item_amount($item[chewing gum on a string]) == 0)
         buy(1, $item[chewing gum on a string]);
       use(1, $item[chewing gum on a string]);
     }
+    int qty = total_clovers();
+
     boolean gotcha = hermit(1, $item[ten-leaf clover]);
-    if (!gotcha)
+    if (!gotcha || qty == total_clovers())
     {
       save_daily_setting("hermit_complete", "true");
     }
@@ -205,7 +209,8 @@ void prep(location loc)
   get_saucepan();
   get_accordion();
 
-
+  numberology();
+  
   consume();
 
   if (to_int(setting("adventure_floor", "10")) > my_adventures())

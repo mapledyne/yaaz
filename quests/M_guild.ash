@@ -25,7 +25,14 @@ boolean M_guild()
     case $class[accordion thief]:
       loc = $location[the sleazy back alley];
       it = equipped_item($slot[pants]);
+      if (it == $item[none])
+        return false;
     break;
+    case $class[pastamancer]:
+    case $class[sauceror]:
+      loc = $location[the haunted pantry];
+      it = $item[exorcised sandwich];
+      break;
     case $class[seal clubber]:
     case $class[turtle tamer]:
       loc = $location[the outskirts of cobb's knob];
@@ -38,9 +45,9 @@ boolean M_guild()
   {
     if (my_primestat() == $stat[moxie])
     {
-      maximize("", $item[old sweatpants]);
+      maximize("", it);
     } else {
-      maximize();
+      maximize("");
     }
     boolean b = dg_adventure(loc);
     if (equipped_item($slot[pants]) == $item[none] && my_primestat() == $stat[moxie])

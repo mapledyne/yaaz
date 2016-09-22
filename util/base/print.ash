@@ -10,6 +10,7 @@ string COLOR_ERROR = "red";
 string COLOR_WARNING = "purple";
 string COLOR_LOG = "#CD853F";
 string COLOR_ADVICE = "purple";
+string COLOR_TASK = "black";
 
 
 string CLUB = "♣";
@@ -114,6 +115,10 @@ void advice(string msg)
   dg_print(msg, COLOR_ADVICE);
 }
 
+void task(string msg)
+{
+  dg_print(UNCHECKED + " " + msg, COLOR_TASK);
+}
 
 void progress(int percent);
 void progress(int percent, string msg);

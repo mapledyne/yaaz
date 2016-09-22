@@ -84,6 +84,24 @@ int wad_total()
 	return item_amount($item[twinkly wad]) + item_amount($item[cold wad]) + item_amount($item[hot wad]) + item_amount($item[spooky wad]) + item_amount($item[sleaze wad]) + item_amount($item[stench wad]);
 }
 
+boolean have_all_wads()
+{
+	if (item_amount($item[twinkly wad]) == 0)
+	 	return false;
+	if (item_amount($item[cold wad]) == 0)
+	 	return false;
+	if (item_amount($item[hot wad]) == 0)
+	 	return false;
+	if (item_amount($item[spooky wad]) == 0)
+	 	return false;
+	if (item_amount($item[sleaze wad]) == 0)
+	 	return false;
+	if (item_amount($item[stench wad]) == 0)
+		return false;
+
+	return true;
+}
+
 int turners()
 {
   return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);
@@ -177,6 +195,11 @@ int junkyard_items()
 int dancing_items()
 {
   return item_amount($item[lady spookyraven's powder puff]) + item_amount($item[lady spookyraven's dancing shoes]) + item_amount($item[lady spookyraven's finest gown]);
+}
+
+int total_clovers()
+{
+	return item_amount($item[ten-leaf clover]) + item_amount($item[disassembled clover]);
 }
 
 int hero_keys()

@@ -35,8 +35,13 @@ boolean time_prank(string player, string msg)
     visit_url("choice.php?pwd&whichchoice=1198&option=2");
     return false;
   }
-  print(ret);
-  wait(10);
+
+  if (!contains_text(ret, "You send a paradoxical time copy of yourself"))
+  {
+    // some other reply that we need to handle intelligently.
+    print(ret);
+    wait(30);
+  }
   return true;
 }
 

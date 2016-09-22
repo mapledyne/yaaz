@@ -139,8 +139,8 @@ void do_heart_thing(string player)
     cli_execute("throw roll of toilet paper at " + player);
     return;
   }
-
-
+  // throw personalized coffee mug at abulafia || abcd | efgh | ijkl
+  // visit_url("curse.php?action=use&pwd&whichitem=7697&targetplayer=abulafia&message=test");
   foreach toy in $items[yellow snowcone,
                         black candy heart,
                         mood ring,
@@ -169,7 +169,7 @@ void heart(boolean force)
     warning(HEART + " You haven't set if you want to do heart-y things during your run, like casting Smiles and such.");
     warning(HEART + " Set the variable " + SETTING_PREFIX + "_do_heart to 'true' or 'false' depending on which way you want to be.");
     warning(HEART + " Doing so will clear this message, for example:");
-    warning(HEART + " set " + SETTING_PREFIX + "_do_heart=true");
+    log("set " + SETTING_PREFIX + "_do_heart=true");
     wait(10);
     return;
   }

@@ -2,17 +2,24 @@ import "util/main.ash";
 
 boolean M_spookyraven()
 {
+  if (quest_status("questM20Necklace") == 4)
+  {
+    log("Returning the " + wrap($item[ghost of a necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER) + ".");
+    abort("Find this URL");
+  }
+
   if (quest_status("questM21Dance") < 0)
   {
-    // should code this...
     return false;
   }
+
   if (quest_status("questM21Dance") == 0)
   {
-  // should code this...
-//    warning("Speak to Lady Spookyraven on the second floor.");
-    return false;
+    log("Talking to " + wrap("Lady Spookyraven", COLOR_MONSTER) + " to see about dancing.");
+    visit_url("place.php?whichplace=manor2&action=manor2_ladys");
+    return true;
   }
+
   if (quest_status("questM21Dance") == FINISHED)
     return false;
 

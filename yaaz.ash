@@ -7,6 +7,7 @@ import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
 import "quests/M_spookyraven.ash";
+import "quests/M06_pandemonium.ash";
 import "quests/M09_leaflet.ash";
 import "quests/M10_star_key.ash";
 
@@ -37,13 +38,14 @@ boolean ascend_loop()
   // misc things we should probably just do as soon as we can:
   if (M_misc()) return true; // These shouldn't consume turns, just visiting people to kick things off.
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
+  if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
+
+  // do this one earlier since it opens the pandemonium.
+  if (L06_Q_friar()) return true;
 
   // do this as soon as it's available - earlier start to the war == earlier arena fliers
   if (L12_Q_war()) return true;
-
-  // do this one earlier since it can give us the Steel item.
-  if (L06_Q_friar()) return true;
 
   // do a bit earlier than other order to get the Knob opened earlier.
   // earlier knob == earlier dispensary if we get a KGE outfit.

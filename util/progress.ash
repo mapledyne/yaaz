@@ -58,28 +58,18 @@ int evil_progress(int p)
 	return 25-(max(0,p-25));
 }
 
+boolean do_detail(string test, string detail)
+{
+  return test == detail || detail == "all";
+}
 
-void progress_sheet_verbose()
+void progress_sheet_detail(string detail)
 {
   // extra details for the sheet when requested.
 
-  if (item_amount($item[bitchin' meatcar]) == 0)
-  {
-    dg_print(UNCHECKED + " Build a bitchin' meatcar", "black");
-  }
-  if (item_amount($item[dingy dinghy]) == 0)
-  {
-    if (item_amount($item[dinghy plans]) == 0)
-    {
-      progress(item_amount($item[Shore Inc. Ship Trip Scrip]), 3, "shore scrip for the dinghy plans");
-    }
-    if (item_amount($item[dingy planks]) == 0)
-    {
-      dg_print(UNCHECKED + " buy dinghy planks", "black");
-    }
-  }
 
-  if (get_campground() contains $item[Witchess Set])
+  if (do_detail("witchess", detail)
+      && get_campground() contains $item[Witchess Set])
   {
     int fights = to_int(get_property("_witchessFights"));
     if (fights < 5)
@@ -88,42 +78,44 @@ void progress_sheet_verbose()
     }
   }
 
+  if (do_detail("precinct", detail)
+      && to_int(get_property("_detectiveCasesCompleted")) < 3
+      && to_boolean(get_property("hasDetectiveSchool")))
+  {
+    progress(to_int(get_property("_detectiveCasesCompleted")), 3, "detective cases solved", "blue");
+  }
 
-  if (item_amount($item[time-spinner]) > 0)
+  if (do_detail("timespinner", detail)
+      && item_amount($item[time-spinner]) > 0)
   {
     int used = to_int(get_property("_timeSpinnerMinutesUsed"));
 
     if (used < 10)
     {
       progress(used, 10, "Time Spinner minutes used", "blue");
+      if (!to_boolean(get_property("_timeSpinnerReplicatorUsed")))
+      {
+        task("use Time Spinner replicator");
+      }
     }
-
-    if (to_boolean(get_property("_timeSpinnerReplicatorUsed")))
-    {
-      dg_print(UNCHECKED + " Time Spinner replicator used", "black");
-    }
-
   }
 
-  if (item_amount($item[deck of every card]) > 0
+  if (do_detail("deck", detail)
+      &&item_amount($item[deck of every card]) > 0
       && to_int(get_property("_deckCardsDrawn")) < 15)
   {
-    progress(15 - to_int(get_property("_deckCardsDrawn")), 15, "Deck of Every Card cards drawn");
+    progress(to_int(get_property("_deckCardsDrawn")), 15, "Deck of Every Card cards drawn", "blue");
   }
 
-  if (get_campground() contains $item[Witchess Set]
-      && to_int(get_property("_witchessFights")) < 5)
-  {
-    progress(5 - to_int(get_property("_witchessFights")), 5, "Witchess fights", "blue");
-  }
-
-  if (have_skill($skill[calculate the universe])
+  if (do_detail("numberology", detail)
+      && have_skill($skill[calculate the universe])
       && to_int(get_property("_universeCalculated")) == 0)
   {
-    dg_print(UNCHECKED + " Calculate the Universe", "black");
+    task("Calculate the Universe");
   }
 
-  if (to_int(get_property("royalty")) > 0)
+  if (do_detail("royalty", detail)
+      && to_int(get_property("royalty")) > 0)
   {
 
     int max = to_int(setting("royalty_max", "0"));
@@ -146,14 +138,45 @@ void progress_sheet_verbose()
     }
     progress(to_int(get_property("royalty")), max, "royalty", "blue");
   }
-
 }
 
-void progress_sheet(boolean verbose)
+void progress_sheet(string detail)
 {
+
+  if (detail != "" && detail != "all")
+  {
+    progress_sheet_detail(detail);
+    return;
+  }
+
   level_progress();
 
-  if (quest_status("questL05Goblin") < 1)
+  if (item_amount($item[bitchin' meatcar]) == 0)
+  {
+    task("Build a bitchin' meatcar");
+  }
+
+  if (item_amount($item[dingy dinghy]) == 0 && item_amount($item[bitchin' meatcar]) > 0)
+  {
+    if (item_amount($item[dinghy plans]) == 0)
+    {
+      progress(item_amount($item[Shore Inc. Ship Trip Scrip]), 3, "shore scrip for the dinghy plans");
+    }
+    if (item_amount($item[dingy planks]) == 0)
+    {
+      task("buy dinghy planks");
+    }
+  }
+
+  if (quest_status("questL13Final") < 5
+      && hero_keys() < 3
+      && !to_boolean(get_property("dailyDungeonDone")))
+  {
+    int keys = 3 - hero_keys();
+    progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms - " + keys + " hero keys needed");
+  }
+
+  if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)
   {
     progress($location[The Outskirts of Cobb's Knob].turns_spent, 11, "turns in the Outskirts of Cobb's Knob to get the encryption key");
   }
@@ -185,7 +208,17 @@ void progress_sheet(boolean verbose)
 
   if (quest_active("questL06Friar"))
   {
-    progress(friar_things(), 3, "Friar ceremony objects");
+    string dodecagram = UNCHECKED;
+    string candles = UNCHECKED;
+    string butterknife = UNCHECKED;
+    if (item_amount($item[dodecagram]) > 0)
+      dodecagram = CHECKED;
+    if (item_amount($item[box of birthday candles]) > 0)
+      candles = CHECKED;
+    if (item_amount($item[eldritch butterknife]) > 0)
+      butterknife = CHECKED;
+
+    progress(friar_things(), 3, "Friar ceremony objects (" + dodecagram + " dodecagram, " + candles + " candles, " + butterknife + " butterknife)");
   }
 
   // TODO: Count hot wings?
@@ -371,19 +404,16 @@ void progress_sheet(boolean verbose)
       // TODO: Find a way to track wall of meat progress...
   }
 
-  if(verbose)
-  {
-    progress_sheet_verbose();
-  }
+  progress_sheet_detail(detail);
 }
 
 void progress_sheet()
 {
-  progress_sheet(false);
+  progress_sheet("");
 }
 
 void main()
 {
   print("Current progress in a few things:");
-  progress_sheet(true);
+  progress_sheet("all");
 }

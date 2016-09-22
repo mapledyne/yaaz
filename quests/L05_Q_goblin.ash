@@ -50,6 +50,7 @@ boolean L05_Q_goblin()
   {
     log("Using the "+ wrap($item[Cobb's Knob Map]) + " to open " + wrap("Cobb's Knob", COLOR_LOCATION) + ".");
     use(1, $item[cobb's knob map]);
+    return true;
   }
 
 
@@ -60,6 +61,7 @@ boolean L05_Q_goblin()
     while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
       dg_adventure(outskirts, "");
+      return true;
     }
   }
 

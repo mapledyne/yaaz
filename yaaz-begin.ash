@@ -11,7 +11,7 @@ void day_begin()
   }
 
   log("Current progress:");
-  progress_sheet(true);
+  progress_sheet("all");
   wait(5);
 
   maximize();

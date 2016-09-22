@@ -144,7 +144,9 @@ int consume_cost(item it)
 
 boolean can_chew(item it)
 {
-  if (item_amount(it) == 0 && creatable_amount(it) == 0)
+  if (item_amount(it) == 0
+      && creatable_amount(it) == 0
+      && (!is_npc_item(it) || npc_price(it) == 0))
     return false;
   if (!is_spleen_item(it))
     return false;
@@ -157,7 +159,9 @@ boolean can_chew(item it)
 
 boolean can_eat(item it)
 {
-  if (item_amount(it) == 0 && creatable_amount(it) == 0)
+  if (item_amount(it) == 0
+      && creatable_amount(it) == 0
+      && (!is_npc_item(it) || npc_price(it) == 0))
     return false;
   if (!is_food_item(it))
     return false;
@@ -170,7 +174,10 @@ boolean can_eat(item it)
 
 boolean can_drink(item it)
 {
-  if (item_amount(it) == 0 && !can_vip_drink(it) && creatable_amount(it) == 0)
+  if (item_amount(it) == 0
+      && !can_vip_drink(it)
+      && creatable_amount(it) == 0
+      && (!is_npc_item(it) || npc_price(it) == 0))
     return false;
   if (!is_booze_item(it))
     return false;
@@ -183,9 +190,19 @@ boolean can_drink(item it)
 
 boolean try_chew(item it)
 {
+print("Try chew " + it);
   if (!can_chew(it))
     return false;
   log("Chewing a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
+  print("Try chew " + it);
+
+  if (is_npc_item(it))
+  {
+    if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
+      return false;
+    return cli_execute("chew 1 " + it);
+  }
+
   return chew(1, it);
 }
 

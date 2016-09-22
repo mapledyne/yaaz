@@ -1,7 +1,6 @@
 import "util/main.ash";
 import "util/progress.ash";
 
-
 void day_end()
 {
   log("Wrapping up for the end of the day.");
@@ -15,7 +14,24 @@ void day_end()
 
   prep();
 
+  if (hippy_stone_broken())
+  {
+    boolean attempt = true;
+    repeat
+    {
+      attempt = try_consume($item[hatorade]);
+    } until (!attempt || spleen_remaining() < 5);
+
+  }
+
   pvp();
+
+  if (get_campground() contains $item[spinning wheel]
+      && !to_boolean(get_property("_spinningWheel")))
+  {
+    log("Spinning some meat from the " + wrap($item[spinning wheel]) + ".");
+    visit_url("campground.php?action=spinningwheel");
+  }
 
   log("Dressing for rollover.");
   maximize("rollover");
@@ -25,7 +41,7 @@ void day_end()
     remove_non_rollover();
     pvp_rollover();
   }
-  progress_sheet();
+  progress_sheet("all");
   manuel_progress();
 
 }

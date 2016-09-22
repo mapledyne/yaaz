@@ -76,26 +76,25 @@ item find_best_clothes(slot s)
   return target;
 }
 
+
 void school_clothes(string letter)
 {
   log(CLUB + " Optimizing wardrobe for PvP. School letter is currently: " + wrap(letter, COLOR_ITEM));
 
-  // TODO: make all equip() lines here use the specific slot, like familiars.
-
   if(equipped_item($slot[hat]) == $item[none])
-    equip(find_best_clothes($slot[hat]));
+    equip($slot[hat], find_best_clothes($slot[hat]));
   if(equipped_item($slot[weapon]) == $item[none])
-    equip(find_best_clothes($slot[weapon]));
+    equip($slot[weapon], find_best_clothes($slot[weapon]));
   if (weapon_hands(equipped_item($slot[weapon])) == 1
       && equipped_item($slot[off-hand]) == $item[none])
-    equip(find_best_clothes($slot[off-hand]));
+    equip($slot[off-hand], find_best_clothes($slot[off-hand]));
   if(equipped_item($slot[pants]) == $item[none])
-    equip(find_best_clothes($slot[pants]));
+    equip($slot[pants], find_best_clothes($slot[pants]));
   if (have_skill($skill[torso awaregness])
       && equipped_item($slot[shirt]) == $item[none])
-    equip(find_best_clothes($slot[shirt]));
+    equip($slot[shirt], find_best_clothes($slot[shirt]));
   if(equipped_item($slot[back]) == $item[none])
-    equip(find_best_clothes($slot[back]));
+    equip($slot[back], find_best_clothes($slot[back]));
   if(equipped_item($slot[familiar]) == $item[none])
     equip($slot[familiar], find_best_clothes($slot[familiar]));
   if(equipped_item($slot[acc1]) == $item[none])
