@@ -67,6 +67,15 @@ void sell_things()
   sell_all($item[dead guy's watch], 1);
   sell_all($item[freshwater pearl necklace], 1);
 
+  sell_all($item[knob goblin scimitar], 1); // worth keeping?
+
+  if (my_primestat() == $stat[moxie])
+  {
+    sell_all($item[finger cymbals], 1);
+  } else {
+    sell_all($item[finger cymbals]);
+  }
+
   if (item_amount($item[digital key]) > 0)
   {
     sell_all($item[Blue Pixel]);

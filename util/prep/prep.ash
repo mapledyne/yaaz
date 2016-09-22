@@ -10,6 +10,7 @@ import "util/prep/buy.ash";
 import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
+import "util/prep/closet.ash";
 import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
@@ -210,7 +211,7 @@ void prep(location loc)
   get_accordion();
 
   numberology();
-  
+
   consume();
 
   if (to_int(setting("adventure_floor", "10")) > my_adventures())
@@ -236,6 +237,7 @@ void prep(location loc)
   buy_things();
   use_things();
   make_things();
+  closet_things();
   cast_meat_spells(loc);
   class_specific_prep(my_class());
   prep_fishing(loc);

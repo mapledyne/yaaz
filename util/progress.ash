@@ -68,6 +68,13 @@ void progress_sheet_detail(string detail)
   // extra details for the sheet when requested.
 
 
+  if (do_detail("floundry", detail)
+      && item_amount($item[fishin' pole]) == 0
+      && !to_boolean(get_property("_floundryItemUsed")))
+  {
+    task("get item from the floundry");
+  }
+
   if (do_detail("witchess", detail)
       && get_campground() contains $item[Witchess Set])
   {
@@ -76,6 +83,21 @@ void progress_sheet_detail(string detail)
     {
       progress(fights, 5, "Witchess fights", "blue");
     }
+  }
+
+  if (do_detail("snojo", detail)
+      && to_boolean(get_property("snojoAvailable"))
+      && to_int(get_property("_snojoFreeFights")) < 10)
+  {
+    int fights = to_int(get_property("_snojoFreeFights"));
+    progress(fights, 10, "freesnojo fights", "blue");
+  }
+
+  if (do_detail("protonic", detail)
+      && i_a($item[protonic accelerator pack]) > 0
+      && to_location(get_property("ghostLocation")) != $location[none])
+  {
+    task("defeat ghost (" + get_property("ghostLocation")+ ")");
   }
 
   if (do_detail("precinct", detail)
@@ -156,7 +178,8 @@ void progress_sheet(string detail)
     task("Build a bitchin' meatcar");
   }
 
-  if (item_amount($item[dingy dinghy]) == 0 && item_amount($item[bitchin' meatcar]) > 0)
+  if (item_amount($item[dingy dinghy]) == 0
+      && item_amount($item[bitchin' meatcar]) > 0)
   {
     if (item_amount($item[dinghy plans]) == 0)
     {
@@ -166,6 +189,12 @@ void progress_sheet(string detail)
     {
       task("buy dinghy planks");
     }
+  }
+
+  if (quest_status("questL07Cyrptic") > UNSTARTED
+      && item_amount($item[skeleton key]) == 0)
+  {
+    task("make skeleton key");
   }
 
   if (quest_status("questL13Final") < 5

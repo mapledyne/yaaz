@@ -24,3 +24,6 @@ stuffed martini	0
 stuffed baby gravy fairy	0
 stuffed crazy bastard sword	0
 stuffed scary death orb	0
+LCD Game: Garbage River	0
+LCD Game: Food Eater	0
+LCD Game: Burger Belt	0

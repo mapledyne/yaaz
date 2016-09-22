@@ -36,6 +36,12 @@ void do_maximize(string target, string outfit, item it)
     max = max + "+equip " + it;
   }
 
+  if (max != "")
+  {
+    max = max + ", ";
+  }
+  max += "-equip hilarious comedy prop";
+
   maximize(max, false);
 }
 
@@ -129,6 +135,7 @@ void max_effects(string target)
 //      effect_maintain($effect[Go Get 'Em\, Tiger!]);
       effect_maintain($effect[spiky hair]);
       effect_maintain($effect[Steroid Boost]);
+      effect_maintain($effect[superheroic]);
       effect_maintain($effect[Truly Gritty]);
       effect_maintain($effect[Woad Warrior]);
       break;

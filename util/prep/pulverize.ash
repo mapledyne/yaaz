@@ -36,6 +36,7 @@ void pulverize_things()
   pulverize_all_but_one($item[little black book]);
   pulverize_all_but_one($item[pygmy briefs]);
   pulverize_all_but_one($item[homoerotic frat-paddle]);
+  pulverize_all_but_one($item[filthy knitted dread sack]);
 
   // we may want some of these if not relying on muscle:
   pulverize_keep_if($item[punk rock jacket], my_primestat() != $stat[muscle]);
@@ -61,10 +62,12 @@ void pulverize_things()
 
   // only keep if we're moxie:
   pulverize_keep_if($item[armgun], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[bone flute], my_primestat() == $stat[moxie]);
   pulverize_keep_if($item[buoybottoms], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[happiness], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[magilaser blastercannon], my_primestat() == $stat[moxie]);
   pulverize_keep_if($item[frigid hanky&#363;], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[happiness], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[hippy bongo], my_primestat() == $stat[moxie]);
+  pulverize_keep_if($item[magilaser blastercannon], my_primestat() == $stat[moxie]);
 
 
   // Stuff below this are things we'll pulverize based on quest status:
@@ -95,13 +98,26 @@ void pulverize_things()
   pulverize_keep_if($item[round purple sunglasses], quest_status("questL12War") < 10);
 
   // some more aggressive work if we aren't flush in wads:
-  if (wad_total() < spleen_limit())
+  if (to_int(get_property("lastGuildStoreOpen")) == my_ascensions()
+      && my_primestat() == $stat[muscle]
+      && wad_total() < spleen_limit())
   {
-    pulverize_all_but_one($item[twinkly nuggets]);
-    pulverize_all_but_one($item[hot nuggets]);
-    pulverize_all_but_one($item[cold nuggets]);
-    pulverize_all_but_one($item[sleaze nuggets]);
-    pulverize_all_but_one($item[spooky nuggets]);
-    pulverize_all_but_one($item[stench nuggets]);
+    foreach nug in $items[twinkly powder,
+                          stench powder,
+                          spooky powder,
+                          hot powder,
+                          cold powder,
+                          sleaze powder,
+                          twinkly nuggets,
+                          hot nuggets,
+                          cold nuggets,
+                          sleaze nuggets,
+                          spooky nuggets,
+                          stench nuggets]
+    {
+      if (item_amount(nug) > 5
+          && wad_total() < spleen_limit())
+        pulverize_all(nug);
+    }
   }
 }
