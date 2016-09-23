@@ -40,7 +40,7 @@ boolean semi_rare()
   }
   log("Semi-rare is up! Adventuring in " + wrap(loc) + ".");
   wait(5);
-  adventure(1, loc);
+  adv1(loc, 0, "");
   return true;
 }
 

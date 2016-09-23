@@ -21,25 +21,25 @@ void main(int round, monster foe, string page)
   if (list_contains(yellow_ray_list, foe) && have_yellow_ray() && have_effect($effect[everything looks yellow]) == 0)
   {
     item yr = yellow_ray_item();
-    throw_item(yr);
     string new_list = list_remove(yellow_ray_list, foe);
     save_setting("yellow_ray_list", new_list);
+    throw_item(yr);
   }
 
   string duplicate_list = setting("duplicate_list");
   if (list_contains(duplicate_list, foe) && have_skill($skill[duplicate]))
   {
-    use_skill(1, $skill[duplicate]);
     string new_list = list_remove(duplicate_list, foe);
     save_setting("duplicate_list", new_list);
+    use_skill(1, $skill[duplicate]);
   }
 
   string digitize_list = setting("digitize_list");
   if (list_contains(digitize_list, foe) && have_skill($skill[digitize]))
   {
-    use_skill(1, $skill[digitize]);
     string new_list = list_remove(digitize_list, foe);
     save_setting("digitize_list", new_list);
+    use_skill(1, $skill[digitize]);
   }
 
 }

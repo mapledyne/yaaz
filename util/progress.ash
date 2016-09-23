@@ -282,6 +282,12 @@ void progress_sheet(string detail)
     progress(cheese, 3, "cheese for the trapper");
   }
 
+  if (quest_status("questL08Trapper") == 3
+      || quest_status("questL08Trapper") == 4)
+  {
+    progress($location[mist-shrouded peak].turns_spent, 3, "yetis killed");
+  }
+
   if(quest_active("questL09Topping"))
   {
     int bridge = to_int(get_property("chasmBridgeProgress"));

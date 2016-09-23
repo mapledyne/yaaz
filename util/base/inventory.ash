@@ -138,6 +138,18 @@ item spooky_quest_item()
   }
 }
 
+int ninja_snowman_items()
+{
+	int ninja = 0;
+
+	foreach toy in $items[ninja rope, ninja crampons, ninja carabiner]
+	{
+		if (item_amount(toy) > 0)
+			ninja += 1;
+	}
+	return ninja;
+}
+
 int immateria()
 {
   int count = 0;

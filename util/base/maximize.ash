@@ -40,7 +40,7 @@ void do_maximize(string target, string outfit, item it)
   {
     max = max + ", ";
   }
-  max += "-equip hilarious comedy prop";
+  max += "-equip hilarious comedy prop, -equip training legwarmers";
 
   maximize(max, false);
 }
@@ -213,6 +213,7 @@ void max_effects(string target)
       effect_maintain($effect[musk of the moose]);
       effect_maintain($effect[Carlweather's Cantata of Confrontation]);
       effect_maintain($effect[hippy stench]);
+      effect_maintain($effect[High Colognic]);
       uneffect($effect[The Sonata of Sneakiness]);
       break;
     case "ml":
@@ -236,7 +237,6 @@ void max_effects(string target)
     case "resistance base":
       effect_maintain($effect[elemental saucesphere]);
       effect_maintain($effect[astral shell]);
-      effect_maintain($effect[scarysauce]);
       effect_maintain($effect[oiled-up]);
       effect_maintain($effect[well-oiled]);
       effect_maintain($effect[spiro gyro]);
@@ -253,10 +253,15 @@ void max_effects(string target)
     case "cold res":
       max_effects("resistance base");
       effect_maintain($effect[insulated trousers]);
+      effect_maintain($effect[scarysauce]);
       break;
     case "spooky res":
       max_effects("resistance base");
       effect_maintain($effect[spookypants]);
+      break;
+    case "sleaze res":
+      max_effects("resistance base");
+      effect_maintain($effect[scarysauce]);
       break;
     case "elemental damage":
       effect_maintain($effect[all glory to the toad]);
