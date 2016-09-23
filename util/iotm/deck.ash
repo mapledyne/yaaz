@@ -41,14 +41,14 @@ string cheat_stat()
   return cheat_stat(my_primestat());
 }
 
-void cheat_deck(string s, string msg)
+boolean cheat_deck(string s, string msg)
 {
   if (!can_deck(s))
-    return;
+    return false;
 
   log("Cheating with the " + wrap($item[deck of every card]) + " (" + s + ") to " + msg + ".");
   save_daily_setting("decked_" + s, "true");
-  cli_execute("cheat " + s);
+  return cli_execute("cheat " + s);
 }
 
 
@@ -58,16 +58,15 @@ boolean pick_a_card()
   // maybe get some stats?
   if (my_level() < 4 && my_path() != "The Source")
   {
-    cheat_deck(cheat_stat(), "get some stats");
-    return true;
+    return cheat_deck(cheat_stat(), "get some stats");
   }
 
   // get some meat if we're low
   if (my_meat() < 2000 && my_path() != "Way of the Surprising Fist")
   {
-    cheat_deck("1952", "get some meat");
+    boolean b = cheat_deck("1952", "get some meat");
     sell_all($item[1952 mickey mantle card]);
-    return true;
+    return b;
   }
 
   // maybe get a hero key
@@ -75,8 +74,7 @@ boolean pick_a_card()
   {
     if (hero_keys() < 3)
     {
-      cheat_deck("tower", "get a hero key");
-      return true;
+      return cheat_deck("tower", "get a hero key");
     }
   }
 
@@ -87,8 +85,7 @@ boolean pick_a_card()
     {
       // we have less than three of this, so can assume we have less than
       // three of all of them.
-      cheat_deck("mine", "get some ore for the trapper quest");
-      return true;
+      return cheat_deck("mine", "get some ore for the trapper quest");
     }
   }
   return false;

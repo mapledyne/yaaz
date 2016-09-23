@@ -116,7 +116,6 @@ void ascend()
 
   warning("Run " + wrap(SCRIPT + "-end", COLOR_ITEM) + " if you're done for the day to perform final cleanup.");
 
-
 }
 
 void main()

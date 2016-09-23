@@ -15,7 +15,6 @@ import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
 import "util/iotm/deck.ash";
-import "util/iotm/numberology.ash";
 
 void meat_cast(skill sk, effect ef, int avg)
 {
@@ -205,12 +204,9 @@ void prep(location loc)
       save_daily_setting("hermit_complete", "true");
     }
   }
-
   get_totem();
   get_saucepan();
   get_accordion();
-
-  numberology();
 
   consume();
 

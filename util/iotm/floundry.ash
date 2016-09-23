@@ -27,6 +27,7 @@ boolean can_get_floundry_item()
 {
   if (item_amount($item[fishin' pole]) == 0)
     return false;
+		// TODO: This parameter doesn't seem 100% reliable:
   if (to_boolean(get_property("_floundryItemUsed")))
     return false;
 
