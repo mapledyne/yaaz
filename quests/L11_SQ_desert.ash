@@ -21,27 +21,17 @@ boolean pyramid_found()
 void get_compass()
 {
   //Get the UV Compass.
-  if (can_equip_compass()) {
-    if (i_a(compass) == 0) {
+  if (can_equip_compass())
+  {
+    if (i_a(compass) == 0)
+    {
       log("Getting a " + wrap(compass) + ".");
-      if (item_amount($item[Shore Inc. Ship Trip Scrip]) == 0) {
+      if (item_amount($item[Shore Inc. Ship Trip Scrip]) == 0)
+      {
         log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
         adventure(1, $location[The Shore\, Inc. Travel Agency]);
       }
       cli_execute("acquire UV-resistant compass");
-      if (weapon_hands(equipped_item($slot[weapon])) > 1)
-      {
-        error("You're wielding a 2-handed weapon so can't use the compass currently. Aborting.");
-        abort();
-      }
-      equip($item[UV-resistant compass]);
-    } else { // ! if (i_a(compass) == 0)
-      if (weapon_hands(equipped_item($slot[weapon])) > 1)
-      {
-        error("You're wielding a 2-handed weapon so can't use the compass currently. Aborting.");
-        abort();
-      }
-      equip(compass);
     }
   } else { // ! if (can_equip_compass())
     print("Skipping the " + wrap(compass) + " since you can't use it this run.");
@@ -61,6 +51,12 @@ int open_oasis()
   int adv_spent = 0;
   while ( adv_spent < max_adv && !is_oasis_open() )
   {
+    if (can_equip_compass())
+    {
+      maximize("", compass);
+    } else {
+      maximize("");
+    }
     dg_adventure(desert);
     adv_spent += 1;
   }
@@ -89,6 +85,13 @@ int open_gnasir()
 
     while ( adv_spent < max_adv && !is_gnasir_open() )
     {
+      if (can_equip_compass())
+      {
+        maximize("", compass);
+      } else {
+        maximize("");
+      }
+
       if (have_effect(ultrahydrated) == 0)
       {
         dg_adventure(oasis);
@@ -226,6 +229,13 @@ boolean L11_SQ_desert()
     if (have_effect($effect[Ultrahydrated]) == 0) {
       dg_adventure($location[The Oasis]);
       continue;
+    }
+
+    if (can_equip_compass())
+    {
+      maximize("", compass);
+    } else {
+      maximize("");
     }
 
     dg_adventure($location[The Arid\, Extra-Dry Desert]);

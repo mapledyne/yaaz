@@ -205,10 +205,32 @@ boolean L11_SQ_hidden_city()
 
   if (quest_status("questL11Worship") < 3)
   {
-    if (item_amount($item[stone wool]) == 0)
+
+    if((item_amount($item[Stone Wool]) == 0) && (have_effect($effect[stone-faced]) == 0))
+  	{
+      cheat_deck("sheep", "get some " + wrap($item[Stone Wool]) + ".");
+      if (item_amount($item[Stone Wool]) == 0)
+      {
+        warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");
+        while(can_adventure() && item_amount($item[stone wool]) == 0)
+        {
+          boolean b = dg_adventure($location[the hidden temple], "items");
+          if (!b)
+            return true;
+        }
+      }
+  	}
+
+    if (have_effect($effect[stone-faced]) == 0)
+  	{
+      log("Using a " + wrap($item[stone wool]) + " to access " + wrap($location[the hidden temple]) + ".");
+      use(1, $item[stone wool]);
+    }
+
+    if (have_effect($effect[stone-faced]) == 0)
       return false;
 
-
+    log("Trying to open the " + wrap("Hidden City", COLOR_LOCATION) + ".");
     boolean b = dg_adventure($location[The Hidden Temple]);
     if (!b)
       return false;

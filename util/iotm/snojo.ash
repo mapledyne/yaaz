@@ -1,6 +1,7 @@
 import "util/base/print.ash";
 import "util/base/maximize.ash";
 import "util/adventure/adventure.ash";
+import "util/progress.ash";
 
 boolean snojo_too_risky()
 {
@@ -62,6 +63,7 @@ void snojo()
     maximize("");
     adv1($location[The X-32-F Combat Training Snowman], -1, "");
     progress_sheet();
+    progress_sheet("snojo");
   }
 }
 

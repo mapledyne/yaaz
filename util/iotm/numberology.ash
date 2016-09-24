@@ -59,6 +59,7 @@ int pick_a_number()
 			cli_execute("numberology 37");
 			return goal;
 		}
+		return 0;
 	}
 	goal = universe_result(69);
 	if (goal > 0)
