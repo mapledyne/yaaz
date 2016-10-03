@@ -10,6 +10,11 @@ boolean have_colored_tongue()
   return false;
 }
 
+int total_dice()
+{
+  return count_set($items[d4, d6, d8, d10, d12, d20]);
+}
+
 int total_candy_hearts()
 {
   return count_set($items[white candy heart,
@@ -53,6 +58,8 @@ int libram_count(skill sk)
       return total_party_favors();
     case $skill[summon love song]:
       return total_love_songs();
+    case $skill[summon dice]:
+      return total_dice();
   }
 }
 
@@ -62,7 +69,7 @@ skill next_libram()
 
   skill [int] books;
   int counter = 0;
-  foreach sk in $skills[summon candy heart, summon love song, summon party favor]
+  foreach sk in $skills[summon candy heart, summon love song, summon party favor, summon dice]
   {
     books[counter] = sk;
     counter += 1;

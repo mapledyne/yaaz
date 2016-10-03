@@ -105,6 +105,9 @@ void cast_things(location loc)
 
   }
 
+  // Way of the Surprising Fist
+  effect_maintain($effect[Salamanderenity]);
+
   if (have_skill($skill[flavour of magic]))
   {
     element el = $element[none];

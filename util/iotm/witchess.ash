@@ -45,6 +45,7 @@ void witchess(item it)
     visit_url("choice.php?option=1&pwd="+my_hash()+"&whichchoice=1182&piece=" + choice, false);
     run_combat();
     progress_sheet();
+    progress_sheet("witchess");
   } else {
     warning("Cannot fight " + wrap($item[Witchess Set]) + " pieces. There aren't any left to fight.");
   }

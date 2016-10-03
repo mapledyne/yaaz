@@ -139,6 +139,13 @@ void do_heart_thing(string player)
     cli_execute("throw roll of toilet paper at " + player);
     return;
   }
+
+  if (item_amount($item[&quot;KICK ME&quot; sign]) > 0)
+  {
+    heart_msg(player, "placing a " + wrap($item[&quot;KICK ME&quot; sign]) + " on them. Jerk");
+    cli_execute("throw &quot;KICK ME&quot; sign at " + player);
+    return;
+  }
   // throw personalized coffee mug at abulafia || abcd | efgh | ijkl
   // visit_url("curse.php?action=use&pwd&whichitem=7697&targetplayer=abulafia&message=test");
   foreach toy in $items[yellow snowcone,

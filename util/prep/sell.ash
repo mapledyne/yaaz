@@ -3,6 +3,9 @@ import "util/base/quests.ash";
 
 void sell_things()
 {
+  if (my_path() == "Way of the Surprising Fist")
+    return;
+
   while (my_meat() < 5000 && item_amount($item[1952 Mickey Mantle card]) > 0)
     sell_one($item[1952 Mickey Mantle card]);
 

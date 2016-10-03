@@ -1,5 +1,6 @@
 import "util/base/settings.ash";
 import "util/base/print.ash";
+import "util/progress.ash";
 
 int time_minutes()
 {
@@ -42,6 +43,7 @@ boolean time_prank(string player, string msg)
     print(ret);
     wait(30);
   }
+  progress_sheet("timespinner");
   return true;
 }
 
