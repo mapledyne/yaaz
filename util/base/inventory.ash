@@ -30,13 +30,18 @@ int i_a(item i)
 	return a;
 }
 
+void use_all(item it, int keep)
+{
+	int count = item_amount(it) - keep; // use item_amount() instead of i_a() to protect closet things and such.
+	if (count < 1)
+		return;
+	log("Using " + count + " " + wrap(it, count) + ".");
+	use(count, it);
+}
+
 void use_all(item it)
 {
-  int count = item_amount(it); // use item_amount() instead of i_a() to protect closet things and such.
-  if (count == 0)
-    return;
-  log("Using " + count + " " + wrap(it, count) + ".");
-  use(count, it);
+	use_all(it, 0);
 }
 
 void pulverize_all(item it)

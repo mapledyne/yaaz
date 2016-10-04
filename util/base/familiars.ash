@@ -90,6 +90,9 @@ familiar choose_familiar(string fam)
 
   switch(fam)
   {
+    case "rollover":
+      newbie = choose_familiar_from_list($familiars[trick-or-treating tot]);
+      break;
     case "all res":
     case "cold res":
     case "spooky res":

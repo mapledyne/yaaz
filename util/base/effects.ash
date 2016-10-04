@@ -125,7 +125,10 @@ void cast_surplus_mp()
                          Impeccable Coiffure,
                          Juiced and Loose,
                          mind vision,
-                         Hardened Sweatshirt]
+                         Hardened Sweatshirt,
+                         Salamanderenity,
+                         retrograde relaxation,
+                         earthen fist]
   {
     if (have_skill(effect_to_skill(ef)))
     {

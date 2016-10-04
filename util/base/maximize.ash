@@ -132,6 +132,7 @@ void max_effects(string target)
     case "muscle":
       effect_maintain($effect[Extreme Muscle Relaxation]);
       effect_maintain($effect[Football Eyes]);
+      effect_maintain($effect[feroci tea]);
 //      effect_maintain($effect[Go Get 'Em\, Tiger!]);
       effect_maintain($effect[spiky hair]);
       effect_maintain($effect[Steroid Boost]);
@@ -142,6 +143,7 @@ void max_effects(string target)
     case "moxie":
       effect_maintain($effect[Newt Gets In Your Eyes]);
       effect_maintain($effect[butt-rock hair]);
+      effect_maintain($effect[dexteri tea]);
       effect_maintain($effect[lycanthropy\, eh?]);
       effect_maintain($effect[The Moxious Madrigal]);
       effect_maintain($effect[spiky hair]);
@@ -156,11 +158,13 @@ void max_effects(string target)
       effect_maintain($effect[rainy soul miasma]);
       effect_maintain($effect[seeing colors]);
       effect_maintain($effect[carrrsmic]);
+      effect_maintain($effect[wit tea]);
 
       uneffect($effect[sugar rush]);
 
       break;
     case "meat":
+      effect_maintain($effect[chari tea]);
       effect_maintain($effect[polka of plenty]);
       terminal_enhance($effect[meat.enh]);
       if (!have_colored_tongue())
@@ -174,6 +178,7 @@ void max_effects(string target)
       effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
       effect_maintain($effect[ocelot eyes]);
       effect_maintain($effect[peeled eyeballs]);
+      effect_maintain($effect[serendipi tea]);
       effect_maintain($effect[singer's faithful ocelot]);
       effect_maintain($effect[withered heart]);
       terminal_enhance($effect[items.enh]);
@@ -183,6 +188,7 @@ void max_effects(string target)
         effect_maintain($effect[black tongue]);
       break;
     case "init":
+      effect_maintain($effect[alacri tea]);
       effect_maintain($effect[all fired up]);
       effect_maintain($effect[adorable lookout]);
       effect_maintain($effect[Hiding in Plain Sight]);
@@ -207,12 +213,14 @@ void max_effects(string target)
       effect_maintain($effect[Fresh Scent]);
       effect_maintain($effect[Smooth Movements]);
       effect_maintain($effect[The Sonata of Sneakiness]);
+      effect_maintain($effect[obscuri tea]);
       uneffect($effect[Carlweather's Cantata of Confrontation]);
       break;
     case "combat":
       effect_maintain($effect[musk of the moose]);
       effect_maintain($effect[Carlweather's Cantata of Confrontation]);
       effect_maintain($effect[hippy stench]);
+      effect_maintain($effect[irritabili tea]);
       effect_maintain($effect[High Colognic]);
       uneffect($effect[The Sonata of Sneakiness]);
       break;
@@ -222,12 +230,14 @@ void max_effects(string target)
       effect_maintain($effect[tortious]);
       effect_maintain($effect[eau d'enmity]);
       effect_maintain($effect[high colognic]);
+      effect_maintain($effect[mediocri tea]);
       change_mcd(10);
       break;
     case "familiar weight":
       // consider this, but it's also -10% all stats...
       // effect_maintain($effect[heavy petting]);
       effect_maintain($effect[empathy]);
+      effect_maintain($effect[loyal tea]);
       effect_maintain($effect[heart of green]);
       if (!have_colored_tongue())
         effect_maintain($effect[green tongue]);
@@ -249,19 +259,33 @@ void max_effects(string target)
     case "all res":
       max_effects("cold res");
       max_effects("spooky res");
+      max_effects("sleaze res");
+      max_effects("stench res");
+      max_effects("hot res");
       break;
     case "cold res":
       max_effects("resistance base");
       effect_maintain($effect[insulated trousers]);
       effect_maintain($effect[scarysauce]);
+      effect_maintain($effect[toast tea]);
       break;
     case "spooky res":
       max_effects("resistance base");
       effect_maintain($effect[spookypants]);
+      effect_maintain($effect[morbidi tea]);
       break;
     case "sleaze res":
       max_effects("resistance base");
       effect_maintain($effect[scarysauce]);
+      effect_maintain($effect[proprie tea]);
+      break;
+    case "stench res":
+      max_effects("resistance base");
+      effect_maintain($effect[net tea]);
+      break;
+    case "hot res":
+      max_effects("resistance base");
+      effect_maintain($effect[frost tea]);
       break;
     case "elemental damage":
       effect_maintain($effect[all glory to the toad]);
@@ -271,12 +295,14 @@ void max_effects(string target)
       max_effects("elemental damage");
       effect_maintain($effect[heart of orange]);
       effect_maintain($effect[flaming weapon]);
+      effect_maintain($effect[flamibili tea]);
       break;
     case "hot spell damage":
       effect_maintain($effect[heart of orange]);
       break;
     case "cold damage":
       effect_maintain($effect[cold hands]);
+      effect_maintain($effect[yet tea]);
       max_effects("elemental damage");
       break;
     case "cold spell damage":
@@ -284,10 +310,23 @@ void max_effects(string target)
       break;
     case "sleaze damage":
       effect_maintain($effect[Amorous]);
+      effect_maintain($effect[improprie tea]);
       effect_maintain($effect[sleazy weapon]);
       max_effects("elemental damage");
       break;
     case "sleaze spell damage":
+      break;
+    case "spooky damage":
+      effect_maintain($effect[boo tea]);
+      max_effects("elemental damage");
+      break;
+    case "spooky spell damage":
+      break;
+    case "stench damage":
+      effect_maintain($effect[nas tea]);
+      max_effects("elemental damage");
+      break;
+    case "stench spell damage":
       break;
 
     default:

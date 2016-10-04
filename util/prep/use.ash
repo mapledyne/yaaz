@@ -2,45 +2,16 @@ import "util/base/inventory.ash";
 import "util/base/locations.ash";
 import "util/base/settings.ash";
 
+
 void use_things()
 {
-  use_all($item[black pension check]);
-  use_all($item[shiny stones]);
-  use_all($item[ancient vinyl coin purse]);
-  use_all($item[bag of park garbage]);
-  use_all($item[black picnic basket]);
-  use_all($item[bone with a price tag on it]);
-  use_all($item[briefcase]);
-  use_all($item[chest of the Bonerdagon]);
-  use_all($item[carton of astral energy drinks]);
-  use_all($item[collection of tiny spooky objects]);
-  use_all($item[CSA discount card]);
-  use_all($item[dungeon dragon chest]);
-  use_all($item[duct tape wallet]);
-  use_all($item[Effermint&trade; tablets]);
-  use_all($item[fat wallet]);
-  use_all($item[Frobozz Real-Estate Company Instant House (TM)]);
-  use_all($item[gold Boozehounds Anonymous token]);
-  use_all($item[gummi turtle]);
-  use_all($item[irradiated turtle]);
-  use_all($item[kobold treasure hoard]);
-  use_all($item[letter from king ralph xi]);
-  use_all($item[meat globe]);
-  use_all($item[Newbiesport&trade; tent]);
-  use_all($item[O'RLY manual]);
-  use_all($item[orcish meat locker]);
-  use_all($item[old coin purse]);
-  use_all($item[old eyebrow pencil]);
-  use_all($item[old leather wallet]);
-  use_all($item[old rosewater cream]);
-  use_all($item[pack of KWE trading card]);
-  use_all($item[Penultimate Fantasy chest]);
-  use_all($item[pork elf goodies sack]);
-  use_all($item[red box]);
-  use_all($item[Squat-Thrust Magazine]);
-  use_all($item[very overdue library book]);
-  use_all($item[warm subject gift certificate]);
-  use_all($item[Ye Olde Bawdy Limerick]);
+  int[item] use_items;
+  file_to_map(DATA_DIR + "use.txt", use_items);
+
+  foreach it, i in use_items
+  {
+    use_all(it, i);
+  }
 
   if (to_int(get_property("currentMojoFilters")) < 3
       && item_amount($item[mojo filter]) > 0
@@ -150,7 +121,6 @@ void use_things()
     save_daily_setting("used_tonic_djinn", "true");
   }
 
-
   // get new familiars as you find them:
   foreach f in $familiars[]
   {
@@ -161,7 +131,6 @@ void use_things()
     }
   }
 }
-
 
 void main()
 {

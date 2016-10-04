@@ -173,6 +173,15 @@ void progress_sheet(string detail)
 
   level_progress();
 
+  if (my_path() == "Way of the Surprising Fist")
+  {
+    int charity = to_int(get_property("totalCharitableDonations"));
+    if (charity < 1000000)
+    {
+      progress(charity, 1000000, "Good Will Hunting trophy");
+    }
+  }
+
   if (item_amount($item[bitchin' meatcar]) == 0)
   {
     task("Build a bitchin' meatcar");

@@ -60,3 +60,31 @@ boolean get_talisman()
   }
   return true;
 }
+
+boolean get_getup()
+{
+  log("Get the swashbuckling getup...");
+  wait(15);
+  return false;
+}
+
+boolean M_pirates()
+{
+  if (to_int(get_property("lastIslandUnlock")) < my_ascensions())
+    return false;
+
+  if (!have_outfit("swashbuckling getup"))
+  {
+    return get_getup();
+  }
+
+  log("Do something with the pirates?");
+  wait(15);
+
+  return false;
+}
+
+void main()
+{
+  M_pirates();
+}

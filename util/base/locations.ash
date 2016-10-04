@@ -3,6 +3,8 @@ import "util/base/quests.ash";
 import "util/base/print.ash";
 import "util/base/settings.ash";
 
+boolean open_location(location loc);
+
 boolean location_open(location l)
 {
   switch (l)
@@ -22,7 +24,7 @@ boolean location_open(location l)
         save_daily_setting("overgrown_lot", "true");
         return true;
       } else {
-        return false;
+        return open_location(l);
       }
     default:
       return true;

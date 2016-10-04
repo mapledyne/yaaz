@@ -1,6 +1,7 @@
 import "quests/L09_SQ_bridge.ash";
 import "quests/L09_SQ_oilpeak.ash";
 import "quests/L09_SQ_aboo.ash";
+import "quests/L09_SQ_twin.ash";
 
 boolean L09_Q_topping()
 {
@@ -12,6 +13,7 @@ boolean L09_Q_topping()
 
   if (L09_SQ_bridge()) return true;
   if (L09_SQ_oilpeak()) return true;
+  if (L09_SQ_twin()) return true;
   if (L09_SQ_aboo()) return true;
 
   if (to_int(get_property("booPeakProgress")) > 0)

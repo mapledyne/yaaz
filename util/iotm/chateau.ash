@@ -29,7 +29,21 @@ void chateau()
   if (!to_boolean(get_property("_chateauDeskHarvested")))
   {
     log("Collecting items from the " + wrap("Chateau Mantegna", COLOR_LOCATION) + " desk.");
-    visit_url("place.php?whichplace=chateau&action=chateau_desk2");
+    int desk = 0;
+    if (get_chateau() contains $item[swiss piggy bank])
+    {
+      desk = 1;
+    } else if (get_chateau() contains $item[continental juice bar])
+    {
+      desk = 2;
+    } else if (get_chateau() contains $item[fancy stationery set])
+    {
+      desk = 3;
+    }
+    if (desk > 0)
+    {
+      visit_url("place.php?whichplace=chateau&action=chateau_desk" + desk);
+    }
   }
 
   if (chateau_monster() == $monster[writing desk]

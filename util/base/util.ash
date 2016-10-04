@@ -16,6 +16,12 @@ string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 
+
+int elemental_resitance(element goal)
+{
+	return numeric_modifier(goal + " resistance");
+}
+
 boolean can_adventure()
 {
   if (my_adventures() <= abort_on_advs_left)
