@@ -3,7 +3,7 @@ import "util/base/print.ash";
 import "util/base/inventory.ash";
 import "util/base/settings.ash";
 import "util/base/war_support.ash";
-
+import "util/base/paths.ash";
 
 int level_substats(int level)
 {
@@ -67,6 +67,10 @@ void progress_sheet_detail(string detail)
 {
   // extra details for the sheet when requested.
 
+  if (do_detail("smiles") && smiles_remaining() > 0)
+  {
+    progress(5 - smiles_remaining(), 5, "smiles from your Golden Mr. Accessory");
+  }
 
   if (do_detail("floundry", detail)
       && item_amount($item[fishin' pole]) == 0
@@ -398,8 +402,7 @@ void progress_sheet(string detail)
   {
     if (quest_status("questL11Manor") == 2)
     {
-      if (my_path() == "Way of the Surprising Fist"
-          || my_path() == "Nuclear Autumn")
+      if (!can_make_wine_bomb())
       {
         progress(scavenger_hunt_items(), 6, "manor scavenger hunt items");
       } else {

@@ -118,7 +118,7 @@ void do_heart_thing(string player)
   {
     heart_msg(player, "casting " + wrap($skill[The Smile of Mr. A.]));
     use_skill(1, $skill[The Smile of Mr. A.], player);
-    log("You have " + wrap(smiles_remaining(), COLOR_ITEM) + " smiles from your " + wrap($item[golden mr. accessory]) + " remaining today.");
+    progress_sheet("smiles");
     return;
   }
   if (can_spin_time())

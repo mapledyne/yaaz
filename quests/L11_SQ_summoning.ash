@@ -150,8 +150,7 @@ boolean open_summoning_scavenge()
 
 boolean open_summoning()
 {
-  if (my_path() == "Way of the Surprising Fist"
-      || my_path() == "Nuclear Autumn")
+  if (!can_make_wine_bomb())
   {
     return open_summoning_scavenge();
   }
