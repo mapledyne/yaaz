@@ -4,6 +4,7 @@ import "util/base/inventory.ash";
 import "util/base/settings.ash";
 import "util/base/war_support.ash";
 import "util/base/paths.ash";
+import "util/base/util.ash";
 
 int level_substats(int level)
 {
@@ -58,6 +59,31 @@ int evil_progress(int p)
 	return 25-(max(0,p-25));
 }
 
+int black_pudding()
+{
+  int eaten = to_int(setting("black_pudding", "-1"));
+
+  if (eaten > -1)
+  {
+    string pudding = visit_url("showconsumption.php");
+
+    int index = index_of( pudding , "black pudding" );
+    if (index == -1)
+    {
+      save_daily_setting("black_pudding", 0);
+      return 0;
+    }
+    int start = index_of( pudding , "<td>" , index ) + 4;
+    int end   = index_of( pudding , "</td>" , start );
+    string eaten_str = substring( pudding , start , end );
+
+    eaten = to_int(substring( pudding , start , end ));
+    save_daily_setting("black_pudding", eaten);
+  }
+
+  return eaten;
+}
+
 boolean do_detail(string test, string detail)
 {
   return test == detail || detail == "all";
@@ -67,9 +93,10 @@ void progress_sheet_detail(string detail)
 {
   // extra details for the sheet when requested.
 
-  if (do_detail("smiles") && smiles_remaining() > 0)
+  if (do_detail("smiles", detail)
+      && smiles_remaining() > 0)
   {
-    progress(5 - smiles_remaining(), 5, "smiles from your Golden Mr. Accessory");
+    progress(5 - smiles_remaining(), total_smiles(), "smiles from your Golden Mr. Accessory");
   }
 
   if (do_detail("floundry", detail)
@@ -140,6 +167,26 @@ void progress_sheet_detail(string detail)
     task("Calculate the Universe");
   }
 
+  if (do_detail("goodwill", detail)
+       && my_path() == "Way of the Surprising Fist")
+  {
+    int charity = to_int(get_property("totalCharitableDonations"));
+    if (charity < 1000000)
+    {
+      progress(charity, 1000000, "Good Will Hunting trophy", "blue");
+    }
+  }
+
+  if (do_detail("pudding", detail))
+  {
+    int pudding = black_pudding();
+    pudding = pudding * 0.35;
+    if (pudding < 240)
+    {
+      progress(pudding, 240, "approx Awwww, Yeah trophy progress", "blue");
+    }
+  }
+
   if (do_detail("royalty", detail)
       && to_int(get_property("royalty")) > 0)
   {
@@ -177,15 +224,6 @@ void progress_sheet(string detail)
 
   level_progress();
 
-  if (my_path() == "Way of the Surprising Fist")
-  {
-    int charity = to_int(get_property("totalCharitableDonations"));
-    if (charity < 1000000)
-    {
-      progress(charity, 1000000, "Good Will Hunting trophy");
-    }
-  }
-
   if (item_amount($item[bitchin' meatcar]) == 0)
   {
     task("Build a bitchin' meatcar");
@@ -211,11 +249,26 @@ void progress_sheet(string detail)
   }
 
   if (quest_status("questL13Final") < 5
+      && hero_keys() < 3)
+  {
+    int keys = 3 - hero_keys();
+    string pete = UNCHECKED;
+    string boris = UNCHECKED;
+    string jarl = UNCHECKED;
+
+    if (item_amount($item[boris's key]) > 0) boris = CHECKED;
+    if (item_amount($item[jarlsberg's key]) > 0) jarl = CHECKED;
+    if (item_amount($item[sneaky pete's key]) > 0) pete = CHECKED;
+
+    progress(keys, 3, "hero keys (" + boris + "Boris, " + pete + "Pete, " + jarl + "Jarlsberg)");
+  }
+
+  if (quest_status("questL13Final") < 5
       && hero_keys() < 3
       && !to_boolean(get_property("dailyDungeonDone")))
   {
     int keys = 3 - hero_keys();
-    progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms - " + keys + " hero keys needed");
+    progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
   }
 
   if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)

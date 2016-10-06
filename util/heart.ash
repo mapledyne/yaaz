@@ -8,15 +8,6 @@ import <zlib.ash>;
 string[int] prank_msgs;
 file_to_map(DATA_DIR + "pranks.txt", prank_msgs);
 
-int smiles_remaining()
-{
-
-  int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
-  int casts_used = to_int(get_property("_smilesOfMrA"));
-
-  return total_casts_available - casts_used;
-}
-
 boolean blacklisted(string player)
 {
   if (player ≈ my_name())

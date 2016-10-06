@@ -189,17 +189,10 @@ int ninja_snowman_items()
 
 int immateria()
 {
-  int count = 0;
-  if (item_amount($item[gauze immateria]) > 0)
-    count += 1;
-  if (item_amount($item[plastic wrap immateria]) > 0)
-    count += 1;
-  if (item_amount($item[tissue paper immateria]) > 0)
-    count += 1;
-  if (item_amount($item[tin foil immateria]) > 0)
-    count += 1;
-
-  return count;
+	return count_set($items[gauze immateria,
+													plastic wrap immateria,
+													tissue paper immateria,
+													tin foil immateria]);
 }
 
 void make_if_needed(item it, string msg)
@@ -237,13 +230,10 @@ boolean have_flyers()
 
 int friar_things()
 {
-  int count = 0;
-  foreach i in $items[dodecagram, box of birthday candles, eldritch butterknife]
-  {
-    if (item_amount(i) > 0)
-      count += 1;
-  }
-  return count;
+
+	return count_set($items[dodecagram,
+													box of birthday candles,
+													eldritch butterknife]);
 }
 
 int junkyard_items()

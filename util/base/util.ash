@@ -15,6 +15,19 @@ string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 
+int smiles_remaining()
+{
+
+  int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
+  int casts_used = to_int(get_property("_smilesOfMrA"));
+
+  return total_casts_available - casts_used;
+}
+
+int total_smiles()
+{
+	return to_int(get_property("goldenMrAccessories")) * 5;
+}
 
 int elemental_resitance(element goal)
 {
