@@ -5,6 +5,11 @@ boolean can_vip();
 
 // Note: more complex Clan VIP items have their own entry, like the Floundry.
 
+void vip_hottub()
+{
+  if (can_vip())
+    visit_url("clan_viplounge.php?action=hottub");
+}
 
 boolean can_vip()
 {

@@ -100,6 +100,9 @@ boolean M_spookyraven()
     }
 
     boolean b = dg_adventure(bed);
+    cli_execute("choice-goal");
+    cli_execute("choice-goal");
+    
     if (!b)
       return true;
   }

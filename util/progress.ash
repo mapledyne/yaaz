@@ -351,6 +351,20 @@ void progress_sheet(string detail)
       if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
         progress(to_int(get_property("hiddenBowlingAlleyProgress")), 5, "bowling balls rolled");
 
+      if (quest_active("questL11Business"))
+      {
+        if (item_amount($item[McClusky file (complete)]) == 0)
+        {
+          if (item_amount($item[boring binder clip]) == 0)
+          {
+            task("get boring binder clip");
+          }
+          progress(mcclusky_items(), 5, "McClusky file pages");
+        } else {
+          task("fight the Protector Spirit in the Office Building");
+        }
+      }
+
       if (quest_active("questL11Curses"))
       {
         int curse = 0;
@@ -377,6 +391,25 @@ void progress_sheet(string detail)
     if (quest_active("questL11Pyramid"))
     {
       progress(turners(), 10, "wheel turning things");
+    }
+  }
+
+  if (quest_active("questL11Manor"))
+  {
+    if (quest_status("questL11Manor") == 2)
+    {
+      if (my_path() == "Way of the Surprising Fist"
+          || my_path() == "Nuclear Autumn")
+      {
+        progress(scavenger_hunt_items(), 6, "manor scavenger hunt items");
+      } else {
+        if (i_a($item[unstable fulminate]) == 0)
+        {
+          task("make unstable fulminate");
+        } else {
+          task("make wine bomb");
+        }
+      }
     }
   }
 

@@ -57,7 +57,9 @@ void open_ground_floor()
   } else {
     maximize("");
   }
-  if (i_a($item[titanium assault umbrella]) > 0 && !have_equipped($item[titanium assault umbrella]))
+  if (i_a($item[titanium assault umbrella]) > 0
+      && !have_equipped($item[titanium assault umbrella])
+      && my_path() != "Way of the Surprising Fist")
   {
     equip($item[titanium assault umbrella]);
   }

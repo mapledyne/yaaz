@@ -7,7 +7,6 @@ boolean guild_class();
 float avg_meat_per_adv(location loc);
 float cost_per_mp();
 boolean guild_store_open();
-int count_set(boolean[item] things);
 float average_range(string avg);
 boolean can_adventure();
 
@@ -44,15 +43,6 @@ float average_range(string avg)
   return ((to_int(avgs[0]) + to_int(avgs[1])) / 2);
 }
 
-int count_set(boolean[item] things)
-{
-  int counter = 0;
-  foreach it in things
-  {
-    counter += item_amount(it);
-  }
-  return counter;
-}
 
 boolean guild_store_open()
 {

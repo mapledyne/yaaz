@@ -56,9 +56,15 @@ boolean market_loop()
       do_one_market_adv();
       return true;
     case 2:
-      if (i_a($item[forged identification documents]) == 0)
+      if (item_amount($item[forged identification documents]) == 0)
       {
-        buy(1, $item[forged identification documents]);
+        if (my_path() == "Way of the Surprising Fist")
+        {
+          visit_url("shop.php?action=fightbmguy&whichshop=blackmarket");
+          run_combat();
+        } else {
+          buy(1, $item[forged identification documents]);
+        }
       } else {
         dg_adventure($location[The Shore\, Inc. Travel Agency]);
       }

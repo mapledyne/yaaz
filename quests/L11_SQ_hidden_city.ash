@@ -48,7 +48,7 @@ void get_machete()
 
 boolean do_liana()
 {
-  if (i_a($item[antique machete]) == 0)
+  if (i_a($item[antique machete]) == 0 || my_path() == "Way of the Surprising Fist")
   {
     return false;
   }
@@ -58,7 +58,12 @@ boolean do_liana()
     return false;
   }
 
-  maximize("", $item[antique machete]);
+  if (my_path() == "Way of the Surprising Fist")
+  {
+    maximize("");
+  } else {
+    maximize("", $item[antique machete]);
+  }
 
   if(quest_status("questL11Business") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northeast)]) + ".");
@@ -149,6 +154,78 @@ boolean hospital()
   }
   remove_attract($monster[pygmy witch surgeon]);
   log(wrap($location[the hidden hospital]) + " cleared.");
+  return true;
+}
+
+boolean office()
+{
+  if (to_int(get_property("hiddenOfficeProgress")) < 1)
+    return false;
+
+  if (to_int(get_property("hiddenOfficeProgress")) > 6)
+    return false;
+
+  log("Defeating " + wrap($location[the hidden office building]) + ".");
+  add_attract($monster[pygmy witch accountant]);
+  while(to_int(get_property("hiddenOfficeProgress")) < 6)
+  {
+    int turns = $location[the hidden office building].turns_spent % 5;
+    if (item_amount($item[boring binder clip]) > 0
+        && item_amount($item[McClusky file (complete)]) == 0
+        && turns == 0
+        && quest_status("questL11Curses") != FINISHED)
+    {
+      log("Trying to get the rest of the " + wrap("McClusky File", COLOR_ITEM) + " from the " + wrap($location[the hidden apartment building]));
+      return false;
+    }
+    dg_adventure($location[the hidden office building], "");
+  }
+  remove_attract($monster[pygmy witch accountant]);
+  log(wrap($location[the hidden office building]) + " cleared.");
+  return true;
+}
+
+boolean apartment()
+{
+  if (to_int(get_property("hiddenApartmentProgress")) < 1)
+    return false;
+
+  if (to_int(get_property("hiddenApartmentProgress")) > 6)
+    return false;
+
+  log("Defeating " + wrap($location[the hidden apartment building]) + ".");
+  if (get_property("olfactedMonster") != $monster[pygmy witch accountant]
+      || quest_status("questL11Business") == FINISHED)
+  {
+    add_attract($monster[pygmy shaman]);
+  }
+
+  while(to_int(get_property("hiddenApartmentProgress")) < 6)
+  {
+    if (have_effect($effect[twice-cursed]) > 0
+        && to_int(get_property("hiddenTavernUnlock")) == my_ascensions())
+    {
+      log("Trying to drink a " + wrap($item[cursed punch]) + " for the extra curse.");
+      try_consume($item[cursed punch]);
+    }
+    dg_adventure($location[the hidden apartment building], "");
+  }
+  remove_attract($monster[pygmy shaman]);
+  log(wrap($location[the hidden apartment building]) + " cleared.");
+  vip_hottub(); // remove curses if hottub available
+  return true;
+}
+
+boolean fight_spirit()
+{
+  if (quest_status("questL11Worship") != 4)
+  {
+    return false;
+  }
+
+  log("Fighting the " + $monster[Protector Spectre] + ".");
+  dg_adventure($location[A Massive Ziggurat], "elemental damage");
+
   return true;
 }
 
@@ -250,18 +327,21 @@ boolean L11_SQ_hidden_city()
   if (quest_status("questL11Worship") == FINISHED)
     return false;
 
-  get_machete();
+  if (my_path() != "Way of the Surprising Fist")
+    get_machete();
 
   check_stones();
 
   if (do_liana()) return true;
   if (bowling()) return true;
   if (hospital()) return true;
+  if (office()) return true;
+  if (apartment()) return true;
 
   check_stones();
 
-  warning("Rest of Hidden City needs to be scripted...");
-  wait(10);
+  if (fight_spirit()) return true;
+
   return false;
 }
 

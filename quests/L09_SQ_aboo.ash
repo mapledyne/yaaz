@@ -38,7 +38,9 @@ boolean L09_SQ_aboo()
       log("Using one " + wrap($item[a-boo clue]) + " to help with the peak.");
       use(1, $item[a-boo clue]);
       max = "cold res, spooky res";
+      set_property("choiceAdventure611", "1");
     }
+
     boolean b = dg_adventure($location[a-boo peak], max);
     if (!b)
       return true;

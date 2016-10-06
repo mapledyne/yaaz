@@ -110,6 +110,59 @@ void open_cellar()
   log(wrap("The Haunted Cellar", COLOR_LOCATION) + " is open.");
 }
 
+boolean open_summoning_scavenge()
+{
+
+  location[item] parts;
+  parts[$item[loosening powder]] = $location[the haunted kitchen];
+  parts[$item[powdered castoreum]] = $location[the haunted conservatory];
+  parts[$item[drain dissolver]] = $location[the haunted bathroom];
+  parts[$item[triple-distilled turpentine]] = $location[the haunted gallery];
+  parts[$item[detartrated anhydrous sublicalc]] = $location[the haunted laboratory];
+  parts[$item[triatomaceous dust]] = $location[the haunted storage room];
+
+  foreach i, l in parts
+  {
+    if (item_amount(i) == 0)
+    {
+      log("Off to get the " + wrap(i) + " from " + wrap(l) + ".");
+      while (item_amount(i) == 0)
+      {
+        boolean b = dg_adventure(l, "-combat");
+        if (!b) return true;
+      }
+      return true;
+    }
+  }
+
+  string chamber = visit_url("place.php?whichplace=manor4");
+  if (contains_text(chamber, "The Summoning Chamber"))
+  {
+    // mafia doesn't always catch that the masonry is gone.
+    set_property("questL11Manor", "step3");
+    return false;
+  } else {
+    log("Trying to disolve the masonry.");
+    visit_url('place.php?whichplace=manor4&action=manor4_chamberwall_label');
+    return true;
+  }
+}
+
+boolean open_summoning()
+{
+  if (my_path() == "Way of the Surprising Fist"
+      || my_path() == "Nuclear Autumn")
+  {
+    return open_summoning_scavenge();
+  }
+
+  if (get_blasting()) return true;
+  if (get_vinegar()) return true;
+  if (get_wine_bomb()) return true;
+
+  return false;
+}
+
 boolean do_spookyraven()
 {
   switch(quest_status("questL11Manor"))
@@ -131,7 +184,7 @@ boolean do_spookyraven()
         warning("This script requires that you have " + wrap($item[lord spookyraven's spectacles]) + ". Go get them before continuing.");
         return false;
       }
-      if (i_a($item[recipe: mortar-dissolving solution]) == 0)
+      if (item_amount($item[recipe: mortar-dissolving solution]) == 0)
       {
         log("Getting the " + wrap($item[recipe: mortar-dissolving solution]) + ".");
         visit_url('place.php?whichplace=manor4&action=manor4_chamberwall_label');
@@ -146,12 +199,7 @@ boolean do_spookyraven()
       use(1, $item[recipe: mortar-dissolving solution]);
       return true;
     case 2:
-      if (get_blasting())
-        return true;
-      if (get_vinegar())
-        return true;
-      if (get_wine_bomb())
-        return true;
+      if (open_summoning()) return true;
       log("Going to try to kill " + wrap($monster[lord spookyraven]) + ".");
       visit_url('place.php?whichplace=manor4&action=manor4_chamberwall_label');
       dg_adventure($location[summoning chamber], "all res");

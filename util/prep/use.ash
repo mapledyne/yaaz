@@ -89,6 +89,11 @@ void use_things()
     cli_execute("outfit checkpoint");
   }
 
+  if (item_amount($item[boring binder clip]) > 0 && mcclusky_items() == 5)
+  {
+    log("Making the " + wrap($item[McClusky file (complete)]) + ".");
+    use(1, $item[boring binder clip]);
+  }
 
   if (setting("used_tonic_djinn") != "true" && item_amount($item[tonic djinn]) > 0)
   {

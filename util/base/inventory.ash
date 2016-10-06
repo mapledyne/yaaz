@@ -13,6 +13,16 @@ item spooky_quest_item();
 void make_if_needed(item it, string msg);
 void make_if_needed(item it);
 
+int count_set(boolean[item] things)
+{
+  int counter = 0;
+  foreach it in things
+  {
+    counter += item_amount(it);
+  }
+  return counter;
+}
+
 
 int i_a(item i)
 {
@@ -141,6 +151,28 @@ item spooky_quest_item()
     default:
       return $item[none];
   }
+}
+
+int scavenger_hunt_items()
+{
+	return count_set($items[loosening powder,
+													powdered castoreum,
+													drain dissolver,
+													triple-distilled turpentine,
+													detartrated anhydrous sublicalc,
+													triatomaceous dust]);
+}
+
+int mcclusky_items()
+{
+	if (item_amount($item[McClusky file (complete)]) > 0)
+		return 6;
+
+	return count_set($items[McClusky file (page 1),
+													McClusky file (page 2),
+													McClusky file (page 3),
+													McClusky file (page 4),
+													McClusky file (page 5)]);
 }
 
 int ninja_snowman_items()
