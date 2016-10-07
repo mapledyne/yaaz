@@ -17,8 +17,6 @@ void iotm()
   // yeah, not an IotM. Unsure a better place to put it for now.
   numberology();
 
-  chateau();
-
   terminal();
 
   deck();
@@ -37,6 +35,8 @@ void iotm()
   protonic();
 
   timespinner();
+
+  chateau();
 
   snojo();
 

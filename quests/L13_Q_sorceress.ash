@@ -180,6 +180,9 @@ void max_contest(string max, int num)
     case "sleaze":
       maximize("sleaze damage, sleaze spell damage");
       break;
+    case "hot":
+      maximize("hot damage, hot spell damage");
+      break;
   }
   log("All dressed up and somewhere to go, the Registration Desk.");
   visit_url("place.php?whichplace=nstower&action=ns_01_contestbooth");

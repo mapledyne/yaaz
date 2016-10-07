@@ -25,7 +25,6 @@ boolean blacklisted(string player)
     case "ertest1":
     case "lord enzo":
     case "major meat":
-    case "pacosr":
     case "ultibot":
     case "searchingchat":
     case "s t u p i d":

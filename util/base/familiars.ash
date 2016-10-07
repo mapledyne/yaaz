@@ -35,9 +35,12 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
   // first look for familiars with drops that haven't happened yet:
   foreach f in fams
   {
+    if (contains_text(to_lower_case(f), "b") && my_path() == "Bees Hate You")
+      continue;
     if(have_familiar(f))
     {
-      if (f == $familiar[gelatinous cubeling] && !have_cubeling_items())
+      if (f == $familiar[gelatinous cubeling]
+          && !have_cubeling_items())
       {
         return f;
       }
@@ -55,6 +58,9 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
   // failing that, pick a familiar from the list:
   foreach f in fams
   {
+    if (contains_text(to_lower_case(f), "b") && my_path() == "Bees Hate You")
+      continue;
+
     if(have_familiar(f))
     {
       return f;

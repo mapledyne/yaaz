@@ -45,8 +45,7 @@ boolean L12_SQ_orchard()
 
   if (get_property("sidequestOrchardCompleted") != "none")
     return false;
-
-  if (get_property("hippiesDefeated") < 64 && side == "fratboy")
+  if (to_int(get_property("hippiesDefeated")) < 64 && side == "fratboy")
     return false;
 
   outfit(war_outfit());

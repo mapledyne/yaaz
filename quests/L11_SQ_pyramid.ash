@@ -8,8 +8,52 @@ boolean have_staff_of_ed()
   return false;
 }
 
+void get_turner()
+{
+  if (turners() == 0)
+  {
+    log("We need another item to turn the wooden wheel.");
+  }
+
+  while(turners() == 0)
+  {
+    dg_adventure($location[The Middle Chamber], "items");
+  }
+}
+
+void turn_wheel_until(int position)
+{
+  int current = to_int(get_property("pyramidPosition"));
+  while (position != current)
+  {
+    get_turner();
+    visit_url("place.php?whichplace=pyramid&action=pyramid_control");
+    if(item_amount($item[crumbling wooden wheel]) > 0)
+    {
+      string v = visit_url("choice.php?pwd&whichchoice=929&option=1&choiceform1=Use+a+wheel+on+the+peg&pwd="+my_hash());
+    }
+    else if (item_amount($item[tomb ratchet]) > 0)
+    {
+      string v = visit_url("choice.php?whichchoice=929&option=2&pwd");
+    } else
+    {
+      abort("You should have a way to turn the wheels before getting here.");
+    }
+    current = to_int(get_property("pyramidPosition"));
+  }
+}
+
 boolean L11_SQ_pyramid()
 {
+print(1);
+  if (item_amount($item[Holy MacGuffin]) > 0)
+  {
+    log("Visiting the council to turn in the " + wrap($item[Holy MacGuffin]) + ".");
+    council();
+    return true;
+  }
+  print(2);
+
   if (quest_status("questL11Pyramid") < 0)
   {
     if (have_staff_of_ed())
@@ -31,7 +75,8 @@ boolean L11_SQ_pyramid()
     maximize("noncombat");
     dg_adventure($location[The Upper Chamber]);
   }
-  if (turners() < 10)
+
+  if (quest_status("questL11Pyramid") < 3)
   {
     add_attract($monster[tomb rat]);
     while (quest_status("questL11Pyramid") < 3)
@@ -40,42 +85,41 @@ boolean L11_SQ_pyramid()
       dg_adventure($location[The Middle Chamber]);
     }
     remove_attract($monster[tomb rat]);
-
-    while (turners() < 10)
-    {
-      maximize("items");
-      dg_adventure($location[The Middle Chamber]);
-    }
   }
 
-  log("Scripting the pyramid is woefully poor. Should be checking prop 'pyramidPosition' and inventory to know what to do.");
-  wait(10);
-  int x = 0;
-  while(x < 10)
+  if (to_boolean(get_property("lowerChamberUnlock")))
   {
-    if(item_amount($item[crumbling wooden wheel]) > 0)
-    {
-      log("Turning the wheel with a " + wrap($item[crumbling wooden wheel]) + ".");
-      visit_url("choice.php?pwd&whichchoice=929&option=1&choiceform1=Use+a+wheel+on+the+peg&pwd="+my_hash());
-    }
-    else
-    {
-      log("Turning the wheel with a " + wrap($item[tomb ratchet]) + ".");
-      visit_url("choice.php?whichchoice=929&option=2&pwd");
-    }
-    x = x + 1;
-    if((x == 3) || (x == 7) || (x == 10))
-    {
-      log("Heading down to the lower chambers.");
-      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-    }
-    if((x == 3) || (x == 7))
-    {
-      log("Heading down to the pyramid control room.");
-      visit_url("place.php?whichplace=pyramid&action=pyramid_control");
-    }
+    log("Off to fight " + wrap($monster[ed the undying]) + ".");
+    dg_adventure($location[the lower chambers], "");
+    log("Visiting the council to turn in the " + wrap($item[Holy MacGuffin]) + ".");
+    council();
+    return true;
   }
 
+  if (item_amount($item[ancient bomb]) > 0)
+  {
+    log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
+    turn_wheel_until(1);
+    visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    return true;
+  }
+
+
+  if (item_amount($item[ancient bronze token]) > 0)
+  {
+    log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
+    turn_wheel_until(3);
+    visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    return true;
+  }
+
+  if (item_amount($item[ancient bronze token]) == 0)
+  {
+    log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
+    turn_wheel_until(4);
+    visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    return true;
+  }
 
   log("Ed should be unlocked?");
   wait(15);

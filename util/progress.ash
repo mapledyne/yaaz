@@ -63,7 +63,7 @@ int black_pudding()
 {
   int eaten = to_int(setting("black_pudding", "-1"));
 
-  if (eaten > -1)
+  if (eaten == -1)
   {
     string pudding = visit_url("showconsumption.php");
 
@@ -181,7 +181,7 @@ void progress_sheet_detail(string detail)
   {
     int pudding = black_pudding();
     pudding = pudding * 0.35;
-    if (pudding < 240)
+    if (pudding < 240 && pudding > 0)
     {
       progress(pudding, 240, "approx Awwww, Yeah trophy progress", "blue");
     }
@@ -242,12 +242,6 @@ void progress_sheet(string detail)
     }
   }
 
-  if (quest_status("questL07Cyrptic") > UNSTARTED
-      && item_amount($item[skeleton key]) == 0)
-  {
-    task("make skeleton key");
-  }
-
   if (quest_status("questL13Final") < 5
       && hero_keys() < 3)
   {
@@ -261,6 +255,13 @@ void progress_sheet(string detail)
     if (item_amount($item[sneaky pete's key]) > 0) pete = CHECKED;
 
     progress(keys, 3, "hero keys (" + boris + "Boris, " + pete + "Pete, " + jarl + "Jarlsberg)");
+
+    if (quest_status("questL07Cyrptic") > UNSTARTED
+        && item_amount($item[skeleton key]) == 0)
+    {
+      task("make skeleton key");
+    }
+
   }
 
   if (quest_status("questL13Final") < 5

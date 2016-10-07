@@ -3,6 +3,22 @@ import "util/base/quests.ash";
 
 void sell_things()
 {
+
+  // battlefield items for coins:
+  sell_all($item[bullet-proof corduroys], 1);
+  sell_all($item[communications windchimes]);
+  sell_all($item[didgeridooka]);
+  sell_all($item[green clay bead]);
+  sell_all($item[hippy protest button]);
+  sell_all($item[fire poi]);
+  sell_all($item[flowing hippy skirt]);
+  sell_all($item[oversized pipe]);
+  sell_all($item[pink clay bead]);
+  sell_all($item[purple clay bead]);
+  sell_all($item[reinforced beaded headband], 1);
+  sell_all($item[round purple sunglasses], 1);
+  sell_all($item[wicker shield]);
+
   if (my_path() == "Way of the Surprising Fist")
     return;
 
@@ -93,21 +109,6 @@ void sell_things()
   sell_all($item[stolen accordion], 1);
   sell_all($item[disco ball], 1);
 
-
-  // battlefield items for coins:
-  sell_all($item[bullet-proof corduroys], 1);
-  sell_all($item[communications windchimes]);
-  sell_all($item[didgeridooka]);
-  sell_all($item[green clay bead]);
-  sell_all($item[hippy protest button]);
-  sell_all($item[fire poi]);
-  sell_all($item[flowing hippy skirt]);
-  sell_all($item[oversized pipe]);
-  sell_all($item[pink clay bead]);
-  sell_all($item[purple clay bead]);
-  sell_all($item[reinforced beaded headband], 1);
-  sell_all($item[round purple sunglasses], 1);
-  sell_all($item[wicker shield]);
 
   if (have_familiar($familiar[misshapen animal skeleton]))
   {
