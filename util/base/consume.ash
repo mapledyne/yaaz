@@ -154,6 +154,8 @@ boolean can_chew(item it)
     return false;
   if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
     return false;
+  if (!be_good(it))
+    return false;
   return true;
 }
 
@@ -168,6 +170,8 @@ boolean can_eat(item it)
   if (consume_cost(it) > fullness_remaining())
     return false;
   if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
+    return false;
+  if (!be_good(it))
     return false;
   return true;
 }
@@ -184,6 +188,8 @@ boolean can_drink(item it)
   if (consume_cost(it) > inebriety_remaining())
     return false;
   if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
+    return false;
+  if (!be_good(it))
     return false;
   return true;
 }

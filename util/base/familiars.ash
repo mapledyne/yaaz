@@ -1,5 +1,6 @@
 import "util/base/inventory.ash";
 import "util/base/settings.ash";
+import <zlib.ash>
 
 boolean have_cubeling_items()
 {
@@ -35,8 +36,14 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
   // first look for familiars with drops that haven't happened yet:
   foreach f in fams
   {
-    if (contains_text(to_lower_case(f), "b") && my_path() == "Bees Hate You")
+    if (!be_good(f))
       continue;
+
+    // be_good() seems hit-or-miss with familiars...
+    if (my_path() == "Bees Hate You"
+        && contains_text(to_lower_case(f), "b"))
+      continue;
+
     if(have_familiar(f))
     {
       if (f == $familiar[gelatinous cubeling]
@@ -58,7 +65,12 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
   // failing that, pick a familiar from the list:
   foreach f in fams
   {
-    if (contains_text(to_lower_case(f), "b") && my_path() == "Bees Hate You")
+    if (!be_good(f))
+      continue;
+
+    // be_good() seems hit-or-miss with familiars...
+    if (my_path() == "Bees Hate You"
+        && contains_text(to_lower_case(f), "b"))
       continue;
 
     if(have_familiar(f))

@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+
+familiar bird = $familiar[reassembled blackbird];
+if (my_path() == "Bees Hate You")
+  bird = $familiar[reconstituted crow];
+
 void do_one_market_adv()
 {
   if (creatable_amount($item[reassembled blackbird]) > 0)
@@ -24,9 +29,9 @@ void do_one_market_adv()
     max = "combat, 0.2 items";
   }
 
-  if (item_amount($item[reassembled blackbird]) == 0 && have_familiar($familiar[reassembled blackbird]))
+  if (item_amount(bird.hatchling) == 0 && have_familiar(bird))
   {
-    maximize(max, $familiar[reassembled blackbird]);
+    maximize(max, bird);
   } else {
     maximize(max);
   }

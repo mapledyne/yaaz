@@ -59,30 +59,6 @@ int evil_progress(int p)
 	return 25-(max(0,p-25));
 }
 
-int black_pudding()
-{
-  int eaten = to_int(setting("black_pudding", "-1"));
-
-  if (eaten == -1)
-  {
-    string pudding = visit_url("showconsumption.php");
-
-    int index = index_of( pudding , "black pudding" );
-    if (index == -1)
-    {
-      save_daily_setting("black_pudding", 0);
-      return 0;
-    }
-    int start = index_of( pudding , "<td>" , index ) + 4;
-    int end   = index_of( pudding , "</td>" , start );
-    string eaten_str = substring( pudding , start , end );
-
-    eaten = to_int(substring( pudding , start , end ));
-    save_daily_setting("black_pudding", eaten);
-  }
-
-  return eaten;
-}
 
 boolean do_detail(string test, string detail)
 {
@@ -177,15 +153,6 @@ void progress_sheet_detail(string detail)
     }
   }
 
-  if (do_detail("pudding", detail))
-  {
-    int pudding = black_pudding();
-    pudding = pudding * 0.35;
-    if (pudding < 240 && pudding > 0)
-    {
-      progress(pudding, 240, "approx Awwww, Yeah trophy progress", "blue");
-    }
-  }
 
   if (do_detail("royalty", detail)
       && to_int(get_property("royalty")) > 0)
@@ -245,7 +212,7 @@ void progress_sheet(string detail)
   if (quest_status("questL13Final") < 5
       && hero_keys() < 3)
   {
-    int keys = 3 - hero_keys();
+    int keys = hero_keys();
     string pete = UNCHECKED;
     string boris = UNCHECKED;
     string jarl = UNCHECKED;

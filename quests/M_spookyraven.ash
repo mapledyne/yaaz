@@ -5,7 +5,8 @@ boolean M_spookyraven()
   if (quest_status("questM20Necklace") == 4)
   {
     log("Returning the " + wrap($item[ghost of a necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER) + ".");
-    abort("Find this URL");
+    visit_url("place.php?whichplace=manor1&action=manor1_ladys");
+    return true;
   }
 
   if (quest_status("questM21Dance") < 0)
@@ -102,7 +103,7 @@ boolean M_spookyraven()
     boolean b = dg_adventure(bed);
     cli_execute("choice-goal");
     cli_execute("choice-goal");
-    
+
     if (!b)
       return true;
   }

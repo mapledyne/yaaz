@@ -37,6 +37,14 @@ boolean time_prank(string player, string msg)
     return false;
   }
 
+  oops = "You didn't think of a real player";
+  if (contains_text(ret, oops))
+  {
+    log("Trying to send " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but that doesn't seem to be a player.");
+    visit_url("choice.php?pwd&whichchoice=1198&option=2");
+    return false;
+  }
+
   if (!contains_text(ret, "You send a paradoxical time copy of yourself"))
   {
     // some other reply that we need to handle intelligently.

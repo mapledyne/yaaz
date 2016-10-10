@@ -70,7 +70,13 @@ void use_things()
 
   if (get_property("questL10Garbage") == "started" && item_amount($item[enchanted bean]) > 0)
   {
-    use(1, $item[enchanted bean]);
+    if (my_path() == "Bees Hate You")
+    {
+      visit_url("place.php?whichplace=plains&action=garbage_grounds");
+    } else {
+      use(1, $item[enchanted bean]);
+    }
+
   }
 
   if (get_property("hiddenTavernUnlock").to_int() < my_ascensions() && item_amount($item[book of matches]) > 0)

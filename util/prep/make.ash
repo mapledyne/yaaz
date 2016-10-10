@@ -1,4 +1,5 @@
 import "util/base/inventory.ash";
+import <zlib.ash>
 
 void consider_chrome_item()
 {
@@ -132,24 +133,31 @@ void make_things()
   }
 
   // turtlemail bits:
-  if (item_amount($item[turtlemail bits]) > 7 && have_skill($skill[torso awaregness]) && i_a($item[turtlemail hauberk]) == 0)
+  if (be_good($item[turtlemail bits]))
   {
-    log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail hauberk]) + ".");
-    create(1, $item[turtlemail hauberk]);
-  }
-  if (item_amount($item[turtlemail bits]) > 5 && i_a($item[turtlemail breeches]) == 0)
-  {
-    log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail breeches]) + ".");
-    create(1, $item[turtlemail breeches]);
-  }
-  if (item_amount($item[turtlemail bits]) > 3 && i_a($item[turtlemail coif]) == 0)
-  {
-    log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail coif]) + ".");
-    create(1, $item[turtlemail coif]);
-  }
-  if (i_a($item[turtlemail hauberk]) > 0 && i_a($item[turtlemail breeches]) > 0 && i_a($item[turtlemail coif]) > 0)
-  {
-    sell_all($item[turtlemail bits]);
+    if (item_amount($item[turtlemail bits]) > 7
+        && have_skill($skill[torso awaregness])
+        && i_a($item[turtlemail hauberk]) == 0)
+    {
+      log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail hauberk]) + ".");
+      create(1, $item[turtlemail hauberk]);
+    }
+    if (item_amount($item[turtlemail bits]) > 5
+        && i_a($item[turtlemail breeches]) == 0)
+    {
+      log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail breeches]) + ".");
+      create(1, $item[turtlemail breeches]);
+    }
+    if (item_amount($item[turtlemail bits]) > 3 && i_a($item[turtlemail coif]) == 0)
+    {
+      log("Turning " + wrap($item[turtlemail bits]) + " into a " + wrap($item[turtlemail coif]) + ".");
+      create(1, $item[turtlemail coif]);
+    }
+    if (i_a($item[turtlemail hauberk]) > 0 && i_a($item[turtlemail breeches]) > 0 && i_a($item[turtlemail coif]) > 0)
+    {
+      sell_all($item[turtlemail bits]);
+    }
+
   }
 
   // turtle wax. Aught to make it into something useful.

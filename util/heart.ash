@@ -34,6 +34,13 @@ boolean blacklisted(string player)
 
 string pick_player()
 {
+  if (have_equipped($item[actual reality goggles]))
+  {
+    log("We can't reliably pick players while you're wearing the " + wrap($item[actual reality goggles]) + ".");
+    wait(3);
+    return "";
+  }
+
   boolean[string] players;
   players = who_clan();
 

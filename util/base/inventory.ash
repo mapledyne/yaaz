@@ -45,6 +45,8 @@ void use_all(item it, int keep)
 	int count = item_amount(it) - keep; // use item_amount() instead of i_a() to protect closet things and such.
 	if (count < 1)
 		return;
+  if (!be_good(it))
+    return;
 	log("Using " + count + " " + wrap(it, count) + ".");
 	use(count, it);
 }
