@@ -125,15 +125,10 @@ boolean dg_adventure(location loc)
 boolean dg_clover(location loc)
 {
   item clover = $item[disassembled clover];
+  item tenleaf = $item[ten-leaf clover];
 
   if (setting("no_clovers") == "true")
     return false;
-
-  if (item_amount(clover) == 0)
-  {
-    warning("Trying to clover in " + wrap(loc) + " but you don't have a " + wrap("clover", COLOR_ITEM) + ".");
-    return false;
-  }
 
   if (!can_adventure())
   {
@@ -143,7 +138,28 @@ boolean dg_clover(location loc)
 
   log("Clovering " + wrap(loc) + ".");
   wait(3);
-  use(1, clover);
+
+  if(item_amount(tenleaf) == 0 && item_amount(clover) > 0 && be_good(clover))
+  {
+    use(1, clover);
+  }
+
+  if(item_amount(tenleaf) == 0 && closet_amount(tenleaf) > 0)
+  {
+    take_closet(1, tenleaf);
+  }
+
+  if (item_amount(tenleaf) == 0 && closet_amount(clover) > 0 && be_good(clover))
+  {
+    take_closet(1, clover);
+    use(1, clover);
+  }
+
+  if (item_amount(tenleaf) == 0)
+  {
+    warning("Trying to clover in " + wrap(loc) + " but you don't have a " + wrap("clover", COLOR_ITEM) + ".");
+    return false;
+  }
 
   string protect = get_property("cloverProtectActive");
   set_property("cloverProtectActive", false);

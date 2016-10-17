@@ -58,6 +58,9 @@ void effect_maintain(effect ef)
 
   if (it != $item[none])
   {
+    if (!be_good(it))
+      return;
+
     // buy one if we need it and can afford it:
     if (item_amount(it) == 0)
     {

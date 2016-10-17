@@ -45,14 +45,12 @@ void turn_wheel_until(int position)
 
 boolean L11_SQ_pyramid()
 {
-print(1);
   if (item_amount($item[Holy MacGuffin]) > 0)
   {
     log("Visiting the council to turn in the " + wrap($item[Holy MacGuffin]) + ".");
     council();
     return true;
   }
-  print(2);
 
   if (quest_status("questL11Pyramid") < 0)
   {

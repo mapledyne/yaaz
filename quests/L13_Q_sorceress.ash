@@ -133,6 +133,8 @@ location get_challenge_loc(string challenge)
       return $location[hottest adventurer contest];
     case "sleaze":
       return $location[sleaziest adventurer contest];
+    case "stench":
+      return $location[stinkiest adventurer contest];
     default:
       error("Unsure what challenge this is: " + challenge + ".");
       abort();
@@ -182,6 +184,9 @@ void max_contest(string max, int num)
       break;
     case "hot":
       maximize("hot damage, hot spell damage");
+      break;
+    case "stench":
+      maximize("stench damage, stench spell damage");
       break;
   }
   log("All dressed up and somewhere to go, the Registration Desk.");

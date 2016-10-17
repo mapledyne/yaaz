@@ -1,7 +1,7 @@
 import "util/base/settings.ash";
 
 int war_defeated();
- 
+
 string war_side()
 {
   string side = setting("war_side", "fratboy");
@@ -27,6 +27,8 @@ boolean war_orchard_accessible()
 
 boolean war_junkyard()
 {
+  if (my_path() == "Bees Hate You")
+    return false;
   return to_boolean(setting("war_junkyard", "true"));
 }
 
@@ -37,6 +39,8 @@ boolean war_orchard()
 
 boolean war_arena()
 {
+if (my_path() == "Bees Hate You")
+  return false;
   return to_boolean(setting("war_arena", "true"));
 }
 
