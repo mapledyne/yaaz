@@ -233,6 +233,19 @@ void max_effects(string target)
       effect_maintain($effect[mediocri tea]);
       change_mcd(10);
       break;
+    case "familiar exp":
+      effect_maintain($effect[Blue Swayed]);
+      effect_maintain($effect[Curiosity of Br'er Tarrypin]);
+      effect_maintain($effect[heart of white]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[green tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[black tongue]);
+      if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
+      {
+        cli_execute("friars familiar");
+      }
+      break;
     case "familiar weight":
       // consider this, but it's also -10% all stats...
       // effect_maintain($effect[heavy petting]);

@@ -5,9 +5,9 @@ import "util/base/maximize.ash";
 
 //  Numeric: ("Numeric", "numericSwagger", "back to")
 
-string PVP_SEASON = "School";
-string PVP_SWAGGER = "schoolSwagger";
-string PVP_FIGHT = "Spirit Day";
+string PVP_SEASON = "Holiday";
+string PVP_SWAGGER = "holidaySwagger";
+string PVP_FIGHT = "All Bundled Up";
 
 void pvp();
 void effects_for_pvp();
@@ -130,6 +130,9 @@ void dress_for_pvp()
       cli_execute("outfit birthday suit");
       school_clothes();
       return;
+    case "Holiday":
+      maximize("cold res, -combat");
+      return;
   }
 }
 
@@ -142,6 +145,16 @@ void effects_for_pvp()
     case "School":
       max_effects("hot damage");
       max_effects("hot spell damage");
+    case "Holiday":
+      max_effects("cold res");
+      max_effects("-combat");
+      // should we add to booze or to familiar exp? Unsure.
+      if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
+      {
+        cli_execute("friars booze");
+      }
+      max_effects("familiar exp");
+      break;
   }
 }
 
