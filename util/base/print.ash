@@ -47,6 +47,11 @@ string wrap(familiar f)
 	return wrap(f, COLOR_ITEM);
 }
 
+string wrap(thrall t)
+{
+	return wrap(t, COLOR_ITEM);
+}
+
 string wrap(monster m)
 {
   return wrap(m, COLOR_MONSTER);

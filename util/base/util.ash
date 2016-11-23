@@ -107,3 +107,30 @@ boolean is_guild_class()
 {
 	return ($classes[Seal Clubber, Turtle Tamer, Sauceror, Pastamancer, Disco Bandit, Accordion Thief] contains my_class());
 }
+
+skill thrall_to_skill(thrall slave)
+{
+  skill sk = $skill[none];
+  switch(slave)
+  {
+    case $thrall[lasagmbie]:
+      return $skill[bind lasagmbie];
+    case $thrall[Spice Ghost]:
+      return $skill[bind Spice Ghost];
+    case $thrall[Angel Hair Wisp]:
+      return $skill[bind Angel Hair Wisp];
+    case $thrall[Vermincelli]:
+      return $skill[bind Vermincelli];
+    case $thrall[Spaghetti Elemental]:
+      return $skill[bind Spaghetti Elemental];
+    case $thrall[Vampieroghi]:
+      return $skill[bind Vampieroghi];
+    case $thrall[Penne Dreadful]:
+      return $skill[bind Penne Dreadful];
+    case $thrall[Elbow Macaroni]:
+      return $skill[bind undead Elbow Macaroni];
+
+    default:
+      return $skill[none];
+  }
+}

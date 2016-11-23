@@ -55,12 +55,58 @@ void prep_turtle_tamer()
   effect_maintain($effect[Eau de Tortue]);
 }
 
-void class_specific_prep(class cl)
+boolean valid_thrall(thrall slave)
+{
+  skill sk = thrall_to_skill(slave);
+  if (!have_skill(sk)) return false;
+  if (my_maxmp() < mp_cost(sk)) return false;
+  return true;
+}
+
+void bind_thrall(thrall slave)
+{
+  if (my_thrall() == slave)
+    return;
+  skill sk = thrall_to_skill(slave);
+  if (sk != $skill[none])
+  {
+    log("Binding a " + wrap(slave) + " to our will.");
+    use_skill(1, sk);
+  }
+}
+
+void prep_pastamancer(location loc)
+{
+
+  if (valid_thrall($thrall[lasagmbie])
+      && (loc == $location[the themthar hills]
+          || loc == $location[tower level 2]))
+  {
+    bind_thrall($thrall[lasagmbie]);
+    return;
+  }
+
+  foreach slave in $thralls[spice ghost, angel hair wisp, vermincelli, spaghetti elemental, vampieroghi, lasagmbie, penne dreadful, elbow macaroni]
+  {
+    if (valid_thrall(slave))
+    {
+      bind_thrall(slave);
+      return;
+    }
+  }
+  log("You're a " + wrap(my_class()) + ", but you don't have any thrall skills. Go learn one!");
+
+}
+
+void class_specific_prep(class cl, location loc)
 {
   switch(cl)
   {
     case $class[turtle tamer]:
       prep_turtle_tamer();
+      break;
+    case $class[pastamancer]:
+      prep_pastamancer(loc);
       break;
   }
 
@@ -250,7 +296,7 @@ void prep(location loc)
   make_things();
   closet_things();
   cast_meat_spells(loc);
-  class_specific_prep(my_class());
+  class_specific_prep(my_class(), loc);
   prep_fishing(loc);
   mall_or_clan();
 
