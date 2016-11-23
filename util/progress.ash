@@ -54,20 +54,6 @@ int twinpeak_progress()
   return progress;
 }
 
-int pirate_insults()
-{
-  int count = 0;
-  for x from 1 to 8
-  {
-    string insult = 'lastPirateInsult' + x;
-    if (to_boolean(get_property(insult)))
-    {
-      count += 1;
-    }
-  }
-  return count;
-}
-
 int evil_progress(int p)
 {
 	return 25-(max(0,p-25));
