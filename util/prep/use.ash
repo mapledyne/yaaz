@@ -33,7 +33,7 @@ void use_things()
     take_closet(1, $item[stuffed treasure chest]);
 
     log("Opening the " + wrap($item[stuffed treasure chest]) + ".");
-    use(1, $item[stuffed treasure chest]);
+    use(1, $item[stuffed key]);
   }
 
   if (!location_open($location[the overgrown lot]) && item_amount($item[Map to a Hidden Booze Cache]) > 0)

@@ -107,16 +107,9 @@ void school_clothes(string letter)
 
 void school_clothes()
 {
-  string letter = school_letter();
-  school_clothes(letter);
-}
-
-void pvp_rollover()
-{
   int time = 60 * 60; // one hour
   string letter = school_letter(time);
   school_clothes(letter);
-  effects_for_pvp();
 }
 
 void dress_for_pvp()
@@ -145,6 +138,7 @@ void effects_for_pvp()
     case "School":
       max_effects("hot damage");
       max_effects("hot spell damage");
+      break;
     case "Holiday":
       max_effects("cold res");
       max_effects("-combat");
@@ -156,6 +150,12 @@ void effects_for_pvp()
       max_effects("familiar exp");
       break;
   }
+}
+
+void pvp_rollover()
+{
+  dress_for_pvp();
+  effects_for_pvp();
 }
 
 void pvp()

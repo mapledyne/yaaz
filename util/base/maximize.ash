@@ -213,6 +213,7 @@ void max_effects(string target)
       effect_maintain($effect[Fresh Scent]);
       effect_maintain($effect[Smooth Movements]);
       effect_maintain($effect[The Sonata of Sneakiness]);
+      effect_maintain($effect[Shelter of Shed]);
       effect_maintain($effect[obscuri tea]);
       uneffect($effect[Carlweather's Cantata of Confrontation]);
       break;

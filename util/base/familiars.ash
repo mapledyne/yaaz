@@ -84,6 +84,7 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
 
 familiar choose_familiar(string fam)
 {
+  if (my_path() == "Actually Ed the Undying") return $familiar[none];
 
   if (!have_familiar($familiar[mosquito]))
   {

@@ -175,23 +175,27 @@ void cast_things(location loc)
 void prep(location loc)
 {
 
-  if (have_effect($effect[beaten up]) > 0)
-    uneffect($effect[beaten up]);
+ if (my_path() != "Actually Ed the Undying")
+ {
+   if (have_effect($effect[beaten up]) > 0)
+     uneffect($effect[beaten up]);
 
-  if (my_hp() < (my_maxhp() * 0.75))
-  {
-    log("Restoring health...");
-    wait(3);
-    restore_hp(my_maxhp() * 0.9);
-  }
+   if (my_hp() < (my_maxhp() * 0.75))
+   {
+     log("Restoring health...");
+     wait(3);
+     restore_hp(my_maxhp() * 0.9);
+   }
 
-  // should put more finesse here to just recover what we need...
-  if (my_mp() < (my_maxmp() * 0.5))
-  {
-    log("Restoring MP...");
-    wait(3);
-    restore_mp(my_maxmp() * 0.6);
-  }
+   // should put more finesse here to just recover what we need...
+   if (my_mp() < (my_maxmp() * 0.5))
+   {
+     log("Restoring MP...");
+     wait(3);
+     restore_mp(my_maxmp() * 0.6);
+   }
+
+ }
 
   cast_surplus_mp();
 

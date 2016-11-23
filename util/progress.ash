@@ -54,6 +54,20 @@ int twinpeak_progress()
   return progress;
 }
 
+int pirate_insults()
+{
+  int count = 0;
+  for x from 1 to 8
+  {
+    string insult = 'lastPirateInsult' + x;
+    if (to_boolean(get_property(insult)))
+    {
+      count += 1;
+    }
+  }
+  return count;
+}
+
 int evil_progress(int p)
 {
 	return 25-(max(0,p-25));
@@ -237,6 +251,23 @@ void progress_sheet(string detail)
   {
     int keys = 3 - hero_keys();
     progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
+  }
+
+  if (quest_status("questM12Pirate") > 0 && quest_status("questM12Pirate") < 5)
+  {
+    // list taken from the excellent "guide" relay script:
+    float [int] insult_success_likelyhood;
+    insult_success_likelyhood[0] = 0;
+    insult_success_likelyhood[1] = 0;
+    insult_success_likelyhood[2] = 0;
+    insult_success_likelyhood[3] = 1.79;
+    insult_success_likelyhood[4] = 7.1;
+    insult_success_likelyhood[5] = 17.86;
+    insult_success_likelyhood[6] = 35.7;
+    insult_success_likelyhood[7] = 62.5;
+    insult_success_likelyhood[8] = 100;
+    int current = pirate_insults();
+    progress(current, 8, "pirate insults (" + insult_success_likelyhood[current] + "% chance)");
   }
 
   if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)

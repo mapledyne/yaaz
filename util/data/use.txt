@@ -1,4 +1,3 @@
-stuffed key	0
 black pension check	0
 shiny stones	0
 ancient vinyl coin purse	0
@@ -10,9 +9,6 @@ chest of the Bonerdagon	0
 carton of astral energy drinks	0
 collection of tiny spooky objects	0
 CSA discount card	0
-cuppa flexibili tea])
-cuppa physicali tea])
-cuppa neuroplastici tea])
 dungeon dragon chest	0
 duct tape wallet	0
 Effermint&trade; tablets	0

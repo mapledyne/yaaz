@@ -52,3 +52,17 @@ boolean start_galaktik()
 	}
 	return false;
 }
+
+int pirate_insults()
+{
+  int count = 0;
+  for x from 1 to 8
+  {
+    string insult = 'lastPirateInsult' + x;
+    if (to_boolean(get_property(insult)))
+    {
+      count += 1;
+    }
+  }
+  return count;
+}
