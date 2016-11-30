@@ -8,6 +8,7 @@ briefcase	0
 chest of the Bonerdagon	0
 carton of astral energy drinks	0
 collection of tiny spooky objects	0
+cornucopia	0
 CSA discount card	0
 dungeon dragon chest	0
 duct tape wallet	0

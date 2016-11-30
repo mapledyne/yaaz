@@ -6,6 +6,7 @@ import "quests/M_misc.ash";
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
+import "quests/M_pirates.ash";
 import "quests/M_spookyraven.ash";
 import "quests/M06_pandemonium.ash";
 import "quests/M09_leaflet.ash";
@@ -40,16 +41,17 @@ boolean ascend_loop()
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
+  if (M_pirates()) return true;
+
+  // do a bit earlier than other order to get the Knob opened earlier.
+  // earlier knob == earlier dispensary if we get a KGE outfit.
+  if (L05_Q_goblin()) return true;
 
   // do this one earlier since it opens the pandemonium.
   if (L06_Q_friar()) return true;
 
   // do this as soon as it's available - earlier start to the war == earlier arena fliers
   if (L12_Q_war()) return true;
-
-  // do a bit earlier than other order to get the Knob opened earlier.
-  // earlier knob == earlier dispensary if we get a KGE outfit.
-  if (L05_Q_goblin()) return true;
 
   // do this one earlier if only to talk to the trapper sooner.
   if (L08_Q_trapper()) return true;

@@ -63,9 +63,39 @@ boolean get_talisman()
 
 boolean get_getup()
 {
+  if (have_outfit("swashbuckling getup"))
+    return false;
+
   log("Get the swashbuckling getup...");
-  wait(15);
-  return false;
+  while(!have_outfit("swashbuckling getup"))
+  {
+    boolean b = dg_adventure($location[The Obligatory Pirate's Cove]);
+    if (!b) return true;
+  }
+  return true;
+}
+
+boolean collect_insults()
+{
+  if (item_amount($item[the big book of pirate insults]) == 0)
+    return false;
+
+  while (pirate_insults() < 6)
+  {
+    if (item_amount($item[Cap'm Caronch's Map]) > 0)
+    {
+      log("Off to fight the " + wrap($monster[booty crab]) + ".");
+      maximize("");
+      use(1, $item[Cap'm Caronch's Map]);
+      return true;
+    }
+
+    maximize("", "swashbuckling getup");
+    boolean b = dg_adventure($location[The Obligatory Pirate's Cove]);
+    if (!b) return true;
+  }
+  log(wrap(pirate_insults(), COLOR_ITEM) + " discovered.");
+  return true;
 }
 
 boolean M_pirates()
@@ -73,10 +103,8 @@ boolean M_pirates()
   if (to_int(get_property("lastIslandUnlock")) < my_ascensions())
     return false;
 
-  if (!have_outfit("swashbuckling getup"))
-  {
-    return get_getup();
-  }
+  if (get_getup()) return true;
+  if (collect_insults()) return true;
 
   log("Do something with the pirates?");
   wait(15);

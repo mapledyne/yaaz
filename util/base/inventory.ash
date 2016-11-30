@@ -326,7 +326,8 @@ void stock_item(item it, int qty)
     return;
   }
 
-  int total = qty - item_amount(it);
+  int total = qty - (item_amount(it) + equipped_amount(it));
+
   int price = npc_price(it);
   int meat_buffer = 10;
 

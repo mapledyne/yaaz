@@ -114,16 +114,34 @@ familiar choose_familiar(string fam)
       break;
     case "all res":
     case "cold res":
+    case "hot res":
+    case "stench res":
+    case "sleaze res":
     case "spooky res":
+      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l candy corn costume]) > 0)
+      {
+        newbie = $familiar[trick-or-treating tot];
+        break;
+      }
       newbie = choose_familiar_from_list($familiars[exotic parrot]);
       break;
     case "meat":
+      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l pirate costume]) > 0)
+      {
+        newbie = $familiar[trick-or-treating tot];
+        break;
+      }
       newbie = choose_familiar_from_list($familiars[adventurous spelunker, angry jung man, grimstone golem, leprechaun, cheshire bat, nervous tick, hobo monkey, he-boulder, coffee pixie]);
       break;
     case "init":
       newbie = choose_familiar_from_list($familiars[Happy Medium, Xiblaxian Holo-Companion, Oily Woim]);
       break;
     case "items":
+      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l ninja costume]) > 0)
+      {
+        newbie = $familiar[trick-or-treating tot];
+        break;
+      }
       newbie = choose_familiar_from_list($familiars[Rockin\' Robin, Adventurous Spelunker, Grimstone Golem, ancient yuletide troll, Intergnat, Angry Jung Man, Bloovian Groose, Slimeling, Baby Gravy Fairy, green pixie, crimbo elf, flaming gravy fairy, dandy lion, coffee pixie, syncopated turtle]);
       break;
     case "attack":

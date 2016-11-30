@@ -16,6 +16,13 @@ void buy_things()
 
   stock_item($item[the big book of pirate insults]);
 
+  if (have_familiar($familiar[trick-or-treating tot]))
+  {
+    stock_item($item[li'l unicorn costume]);
+    stock_item($item[li'l candy corn costume]);
+
+  }
+
   if ((item_amount($item[dictionary]) + item_amount($item[abridged dictionary])) == 0)
   {
     stock_item($item[abridged dictionary]);
