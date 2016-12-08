@@ -82,9 +82,12 @@ void sell_things()
 
 
   // keep one:
+  sell_all($item[broken sword], 1);
   sell_all($item[cold ninja mask], 1);
+  sell_all($item[cold water bottle], 1);
   sell_all($item[dead guy's watch], 1);
   sell_all($item[freshwater pearl necklace], 1);
+  sell_all($item[goatskin umbrella], 1);
 
   sell_all($item[knob goblin scimitar], 1); // worth keeping?
 
@@ -113,6 +116,11 @@ void sell_things()
   if (have_familiar($familiar[misshapen animal skeleton]))
   {
     sell_all($item[pile of dusty animal bones]);
+  }
+
+  if (have_familiar($familiar[stab bat]))
+  {
+    sell_all($item[batblade], 1);
   }
 
   // keep three around for catburgling.
@@ -167,6 +175,13 @@ void sell_things()
   if (have_familiar($familiar[syncopated turtle]))
   {
     sell_all($item[syncopated turtle]);
+  }
+
+  if (quest_status("questL11Doctor") == FINISHED)
+  {
+    sell_all($item[bloodied surgical dungarees]);
+  } else {
+    sell_all($item[bloodied surgical dungarees], 1);
   }
 
 }

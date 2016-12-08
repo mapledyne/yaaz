@@ -11,6 +11,8 @@ import "util/iotm/ltt.ash";
 import "util/iotm/timespinner.ash";
 import "util/iotm/numberology.ash";
 import "util/iotm/teatree.ash";
+import "util/iotm/island_glaciest.ash";
+import "util/iotm/thanksgarden.ash";
 
 void iotm()
 {
@@ -18,7 +20,11 @@ void iotm()
   // yeah, not an IotM. Unsure a better place to put it for now.
   numberology();
   teatree();
-  
+
+  island_glaciest();
+
+  thansgarden();
+
   terminal();
 
   deck();

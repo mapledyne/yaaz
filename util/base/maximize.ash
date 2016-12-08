@@ -145,6 +145,7 @@ void max_effects(string target)
       effect_maintain($effect[butt-rock hair]);
       effect_maintain($effect[dexteri tea]);
       effect_maintain($effect[lycanthropy\, eh?]);
+      effect_maintain($effect[locks like the raven]);
       effect_maintain($effect[The Moxious Madrigal]);
       effect_maintain($effect[spiky hair]);
       effect_maintain($effect[Knob Goblin Lust Frenzy]);

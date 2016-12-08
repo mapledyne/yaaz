@@ -245,6 +245,9 @@ void prep(location loc)
 
   cast_surplus_mp();
 
+  // Things we may as well use. Low cost and sometimes helpful:
+  effect_maintain($effect[bloodstain-resistant]);
+
   while (my_meat() > 1000
       && setting("hermit_complete") != "true"
       && setting("no_clover") != "true"

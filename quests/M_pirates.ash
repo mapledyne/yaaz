@@ -80,6 +80,9 @@ boolean collect_insults()
   if (item_amount($item[the big book of pirate insults]) == 0)
     return false;
 
+  if (pirate_insults() >= 6)
+    return false;
+
   while (pirate_insults() < 6)
   {
     if (item_amount($item[Cap'm Caronch's Map]) > 0)
@@ -94,13 +97,16 @@ boolean collect_insults()
     boolean b = dg_adventure($location[The Obligatory Pirate's Cove]);
     if (!b) return true;
   }
-  log(wrap(pirate_insults(), COLOR_ITEM) + " discovered.");
+  log(wrap(pirate_insults(), COLOR_ITEM) + " pirate insults discovered.");
   return true;
 }
 
 boolean M_pirates()
 {
   if (to_int(get_property("lastIslandUnlock")) < my_ascensions())
+    return false;
+
+  if (i_a($item[pirate fledges]) > 0)
     return false;
 
   if (get_getup()) return true;
