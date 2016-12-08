@@ -23,7 +23,7 @@ void iotm()
 
   island_glaciest();
 
-  thansgarden();
+  thanksgarden();
 
   terminal();
 
