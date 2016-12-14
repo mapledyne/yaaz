@@ -134,6 +134,17 @@ int turners()
   return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);
 }
 
+boolean have_cubeling_items()
+{
+  if (i_a($item[eleven-foot pole]) == 0)
+    return false;
+  if (i_a($item[pick-o-matic lockpicks]) == 0)
+    return false;
+  if (i_a($item[ring of detect boring doors]) == 0)
+    return false;
+
+  return true;
+}
 
 item spooky_quest_item()
 {
@@ -444,7 +455,7 @@ int palindome_items()
                        photograph of an ostrich egg,
                        photograph of a red nugget,
                        photograph of god,
-                       &quot;I Love Me\, Vol. I&quot;]
+                       [7262]&quot;I Love Me\, Vol. I&quot;]
   {
     if (item_amount(it) > 0)
       count += 1;

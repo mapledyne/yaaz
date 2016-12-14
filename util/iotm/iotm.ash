@@ -40,7 +40,7 @@ void iotm()
 
   ltt();
 
-  protonic();
+  //protonic(); // better handled in the main (yaaz.ash) loop
 
   timespinner();
 

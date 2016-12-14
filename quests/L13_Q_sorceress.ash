@@ -290,6 +290,8 @@ boolean loop_tower(int level)
     case 12:
       log("Go and break the prism and free " + wrap("King Raplh", COLOR_MONSTER) + " or, you know, don't.");
       return false;
+    case FINISHED:
+      return false;
     default:
       warning("Trying to do the Sorceress tower but I don't know where we are in the quest.");
       warning("We're at step " + level + ", which I don't recognize.");
@@ -310,7 +312,8 @@ boolean L13_Q_sorceress()
     return false;
   if (quest_status("questL11MacGuffin") != FINISHED)
     return false;
-
+  if (quest_status("questL13Final") == FINISHED)
+    return false;
 
   while (loop_tower(quest_status("questL13Final")))
   {

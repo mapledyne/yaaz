@@ -1,6 +1,10 @@
 import "util/base/monsters.ash";
 import "util/base/locations.ash";
 import "util/base/quests.ash";
+import "util/adventure/adventure.ash";
+
+// Note: Crossing streams functions are in maximize.ash since they're only
+// used at this point to maximize stats.
 
 boolean ghost_hunting()
 {
@@ -17,7 +21,7 @@ location ghost_location()
   return to_location(get_property("ghostLocation"));
 }
 
-location protonic()
+location protonic_loc()
 {
   if (!ghost_hunting())
     return $location[none];
@@ -27,22 +31,21 @@ location protonic()
   return ghost_loc;
 }
 
-void cross_streams(string player)
+
+boolean protonic()
 {
-  if (i_a($item[protonic accelerator pack]) == 0)
-    return;
+  location prot = protonic_loc();
+  if (prot != $location[none])
+  {
+    log("Who ya gonna call? No one. You're going to trap the ghost in " + wrap(prot) + " and keep it for yourself.");
+    wait(3);
+    set_property("ghostLocation", "");
 
-  if (to_boolean(get_property("_streamsCrossed")))
-    return;
-
-  log("Crossing streams with " + wrap(player, COLOR_MONSTER) + ".");
-  cli_execute("crossstreams " + player);
-}
-
-void cross_streams()
-{
-  string p = get_property("streamCrossDefaultTarget");
-  cross_streams(p);
+    maximize("", $item[protonic accelerator pack]);
+    manuel_add_location(prot);
+    return dg_adventure(prot);
+  }
+  return false;
 }
 
 void main()

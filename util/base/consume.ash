@@ -318,7 +318,7 @@ item[int] consume_list()
 void max_consumption()
 {
   // use up all of our space.
-
+  return;
 }
 
 void drink_irresponibly()

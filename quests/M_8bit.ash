@@ -5,6 +5,9 @@ boolean M_8bit()
   if (item_amount($item[digital key]) > 0)
     return false;
 
+  if (quest_status("questL13Final") > 3)
+    return false;
+
   if (item_amount($item[continuum transfunctioner]) == 0)
     return false;
 

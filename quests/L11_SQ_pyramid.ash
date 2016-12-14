@@ -45,9 +45,9 @@ void turn_wheel_until(int position)
 
 boolean L11_SQ_pyramid()
 {
-  if (item_amount($item[Holy MacGuffin]) > 0)
+  if (item_amount($item[[7965]Holy MacGuffin]) > 0)
   {
-    log("Visiting the council to turn in the " + wrap($item[Holy MacGuffin]) + ".");
+    log("Visiting the council to turn in the " + wrap($item[[7965]Holy MacGuffin]) + ".");
     council();
     return true;
   }
@@ -89,7 +89,7 @@ boolean L11_SQ_pyramid()
   {
     log("Off to fight " + wrap($monster[ed the undying]) + ".");
     dg_adventure($location[the lower chambers], "");
-    log("Visiting the council to turn in the " + wrap($item[Holy MacGuffin]) + ".");
+    log("Visiting the council to turn in the " + wrap($item[[7965]Holy MacGuffin]) + ".");
     council();
     return true;
   }

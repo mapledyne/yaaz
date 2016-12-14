@@ -290,13 +290,15 @@ void prep(location loc)
     }
   }
 
+  heart();
+
   cast_things(loc);
 
   pulverize_things();
   sell_things();
   buy_things();
-  use_things();
   make_things();
+  use_things();
   closet_things();
   cast_meat_spells(loc);
   class_specific_prep(my_class(), loc);
@@ -304,8 +306,6 @@ void prep(location loc)
   mall_or_clan();
 
   manuel();
-
-  heart();
 
 }
 

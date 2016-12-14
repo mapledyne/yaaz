@@ -84,18 +84,18 @@ boolean L11_SQ_palindome()
     case UNSTARTED:
       log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
       get_photographs();
-      if(item_amount($item[&quot;I Love Me\, Vol. I&quot;]) == 0)
+      if(item_amount($item[[7262]&quot;I Love Me\, Vol. I&quot;]) == 0)
         return false;
 
       equip($item[Talisman o' Namsilat]);
-      log("Using the " + wrap($item[&quot;I Love Me\, Vol. I&quot;]) + ".");
-      use(1, $item[&quot;I Love Me\, Vol. I&quot;]);
+      log("Using the " + wrap($item[[7262]&quot;I Love Me\, Vol. I&quot;]) + ".");
+      use(1, $item[[7262]&quot;I Love Me\, Vol. I&quot;]);
 
       log("Going to arrange some photographs in Dr. Awkward's office.");
       visit_url("place.php?whichplace=palindome&action=pal_drlabel");
       visit_url("choice.php?pwd&whichchoice=872&option=1&photo1=2259&photo2=7264&photo3=7263&photo4=7265");
 
-      log("Reading " + wrap($item[&quot;I Love Me\, Vol. I&quot;]) + ".");
+      log("Reading " + wrap($item[[7262]&quot;I Love Me\, Vol. I&quot;]) + ".");
       use(1, $item[&quot;2 Love Me\, Vol. 2&quot;]);
       log("Visiting Mr. Alarm.");
       equip($item[talisman o' namsilat]);

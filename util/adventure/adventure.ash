@@ -1,7 +1,6 @@
 import "util/prep/prep.ash";
 import "util/adventure/counters.ash";
 import "util/base/inventory.ash";
-import "util/iotm/protonic.ash";
 import "util/iotm/manuel.ash";
 import "util/base/util.ash";
 import "util/progress.ash";
@@ -25,16 +24,6 @@ boolean overrides()
   if (counters())
     return true;
 
-  location prot = protonic();
-  if (prot != $location[none])
-  {
-    log("Who ya gonna call? No one. You're going to trap the ghost in " + wrap(prot) + " and keep it for yourself.");
-    wait(3);
-    maximize("", $item[protonic accelerator pack]);
-    manuel_add_location(prot);
-    return adv1(prot, -1, "");
-  }
-
   if (quest_status("questL10Garbage") == FINISHED
       && i_a($item[wand of nagamar]) == 0
       && item_amount($item[disassembled clover]) > 0
@@ -46,25 +35,6 @@ boolean overrides()
     {
       log("Making a " + wrap($item[wand of nagamar]) + ".");
       create(1, $item[wand of nagamar]);
-    }
-  }
-
-  // we have a function for this, but I don't want to use it here since the
-  // file it's in (familiars.ash) is the right place for it, but I can't
-  // include that here because of import loops.
-  boolean have_cubeling = (i_a($item[eleven-foot pole]) > 0 && i_a($item[pick-o-matic lockpicks]) > 0 && i_a($item[ring of detect boring doors]) > 0);
-
-  if (have_cubeling && !get_property("dailyDungeonDone").to_boolean() && quest_status("questL13Final") < 3)
-  {
-    if (i_a($item[sneaky pete's key]) == 0 || i_a($item[boris's key]) == 0 || i_a($item[jarlsberg's key]) == 0 || setting("always_daily_with_cubeling") == "true")
-    {
-      maximize("", $item[ring of detect boring doors]);
-      manuel_add_location($location[the daily dungeon]);
-      while (!get_property("dailyDungeonDone").to_boolean())
-      {
-        adv1($location[the daily dungeon], -1, "");
-      }
-      return true;
     }
   }
 

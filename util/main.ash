@@ -8,3 +8,4 @@ import "util/iotm/iotm.ash";
 import "util/base/maximize.ash";
 import "util/pvp.ash";
 import "util/base/util.ash";
+import "util/base/monsters.ash";

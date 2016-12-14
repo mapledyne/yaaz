@@ -3,6 +3,7 @@ import "util/progress.ash";
 import "yaaz/yaaz-begin.ash";
 
 import "quests/M_misc.ash";
+import "quests/M_dailydungeon.ash";
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
@@ -25,6 +26,8 @@ import "quests/L11_Q_macguffin.ash";
 import "quests/L12_Q_war.ash";
 import "quests/L13_Q_sorceress.ash";
 
+import "util/iotm/protonic.ash";
+
 boolean ascend_loop()
 {
 
@@ -36,12 +39,16 @@ boolean ascend_loop()
   // If you do no work in one of these functions, you should
   // generally return false to let the next quest in line run.
 
+  // Check to see if we have a ghost to catch:
+  if (protonic()) return true;
+
   // misc things we should probably just do as soon as we can:
   if (M_misc()) return true; // These shouldn't consume turns, just visiting people to kick things off.
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
   if (M_pirates()) return true;
+  if (M_dailydungeon()) return true;
 
   // do a bit earlier than other order to get the Knob opened earlier.
   // earlier knob == earlier dispensary if we get a KGE outfit.

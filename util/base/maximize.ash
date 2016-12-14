@@ -4,7 +4,6 @@ import "util/base/effects.ash";
 import "util/base/familiars.ash";
 import "util/iotm/terminal.ash";
 import "util/iotm/bookshelf.ash";
-import "util/iotm/protonic.ash";
 
 void do_maximize(string target, string outfit, item it);
 void maximize(string target, string outfit, item it, familiar fam);
@@ -14,6 +13,30 @@ void maximize(string target, string outfit);
 void maximize(string target);
 void maximize();
 void max_effects(string target);
+
+// protonic accelerator stuff:
+void cross_streams(string player);
+void cross_streams();
+
+
+void cross_streams(string player)
+{
+  if (i_a($item[protonic accelerator pack]) == 0)
+    return;
+
+  if (to_boolean(get_property("_streamsCrossed")))
+    return;
+
+  log("Crossing streams with " + wrap(player, COLOR_MONSTER) + ".");
+  cli_execute("crossstreams " + player);
+}
+
+void cross_streams()
+{
+  string p = get_property("streamCrossDefaultTarget");
+  cross_streams(p);
+}
+
 
 void do_maximize(string target, string outfit, item it)
 {

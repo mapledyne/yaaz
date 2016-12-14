@@ -11,6 +11,9 @@ boolean M10_star_key()
   if (item_amount($item[steam-powered model rocketship]) == 0)
     return false;
 
+  if (quest_status("questL13Final") > 3)
+    return false;
+
   log("Going to the " + wrap($location[the hole in the sky]) + " to make " + wrap($item[richard's star key]) + ".");
 
   while(creatable_amount($item[richard's star key]) == 0)

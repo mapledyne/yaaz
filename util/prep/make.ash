@@ -66,6 +66,8 @@ void make_things()
     make_if_needed($item[richard's star key], msg);
   }
 
+  make_if_needed($item[rusty metal key], "to open an orcish meat locker.");
+
   make_if_needed($item[wand of nagamar]);
 
   if (my_path() != "Nuclear Autumn")
