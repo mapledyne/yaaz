@@ -1,3 +1,16 @@
+airblaster gun	0
+cheap studded belt	0
+microplushie: bropane	0
+microplushie: dorkonide	0
+microplushie: ermahgerdic acid	0
+microplushie: fauxnerdite	0
+microplushie: gothochondria	0
+microplushie: hippylase	0
+microplushie: hipsterine	0
+microplushie: hobomosome	0
+microplushie: otakulone	0
+microplushie: raverdrine	0
+microplushie: sororitrate	0
 stuffed angry cow	0
 stuffed astral badger	0
 stuffed baron von ratsworth	0

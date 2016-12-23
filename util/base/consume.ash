@@ -194,6 +194,15 @@ boolean can_drink(item it)
   return true;
 }
 
+boolean can_consume(item it)
+{
+  if (can_eat(it)) return true;
+  if (can_drink(it)) return true;
+  if (can_chew(it)) return true;
+  if (it.usable) return true;
+  return false;
+}
+
 boolean try_chew(item it)
 {
 print("Try chew " + it);

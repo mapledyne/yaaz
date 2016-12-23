@@ -60,6 +60,8 @@ void effect_maintain(effect ef)
   {
     if (!be_good(it))
       return;
+    if (!can_consume(it))
+      return;
 
     // buy one if we need it and can afford it:
     if (item_amount(it) == 0)

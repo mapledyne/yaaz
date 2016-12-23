@@ -31,12 +31,15 @@ void pulverize_things()
   // Always keep one:
   pulverize_all_but_one($item[attorney's badge]);
   pulverize_all_but_one($item[burnt snowpants]);
+  pulverize_all_but_one($item[candy dress shoes]);
+  pulverize_all_but_one($item[candy necktie]);
   pulverize_all_but_one($item[compression stocking]);
+  pulverize_all_but_one($item[gingerbread gavel]);
   pulverize_all_but_one($item[goatskin umbrella]);
+  pulverize_all_but_one($item[filthy knitted dread sack]);
+  pulverize_all_but_one($item[homoerotic frat-paddle]);
   pulverize_all_but_one($item[little black book]);
   pulverize_all_but_one($item[pygmy briefs]);
-  pulverize_all_but_one($item[homoerotic frat-paddle]);
-  pulverize_all_but_one($item[filthy knitted dread sack]);
 
   // we may want some of these if not relying on muscle:
   pulverize_keep_if($item[punk rock jacket], my_primestat() != $stat[muscle]);
@@ -68,6 +71,8 @@ void pulverize_things()
   pulverize_keep_if($item[happiness], my_primestat() == $stat[moxie]);
   pulverize_keep_if($item[hippy bongo], my_primestat() == $stat[moxie]);
   pulverize_keep_if($item[magilaser blastercannon], my_primestat() == $stat[moxie]);
+
+  pulverize_keep_if($item[autocalliope], my_class() == $class[accordion thief]);
 
 
   // Stuff below this are things we'll pulverize based on quest status:

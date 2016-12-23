@@ -1,0 +1,98 @@
+dense meat stack	0
+Meat Paste	0
+meat stack	0
+
+# Sell all
+ancient protein powder	0
+Anticheese	0
+Antique greaves	0
+Antique helmet	0
+Antique spear	0
+Antique shield	0
+Awful Poetry Journal	0
+Beach Glass Bead	0
+bit-o-cactus	0
+Black Pixel	0
+Clay Peace-Sign Bead	0
+Decorative Fountain	0
+Empty Cloaca-Cola Bottle	0
+Enchanted Barbell	0
+Fancy Bath Salts	0
+fat stacks of cash	0
+Frigid Ninja Stars	0
+Giant Moxie Weed	0
+Half of a Gold Tooth	0
+handful of moss	0
+huge gold coin	0
+Imp Ale	0
+Keel-Haulin\' Knife	0
+Kokomo Resort Pass	0
+Mad Train Wine	0
+magicalness-in-a-can	0
+Margarita	0
+Martini	0
+Mineapple	0
+Moxie Weed	0
+Ninja mop	0
+Patchouli Incense Stick	0
+Phat Turquoise Bead	0
+Photoprotoneutron Torpedo	0
+Procrastination Potion	0
+Ratgut	0
+Smelted Roe	0
+Spicy Jumping Bean Burrito	0
+Spicy Bean Burrito	0
+Strongness Elixir	0
+Sunken Chest	0
+suntan lotion of moxiousness	0
+Tambourine Bells	0
+Tequila Sunrise	0
+white satin shield	0
+Windchimes	0
+valuable trinket	0
+
+# keep one:
+1-ball	1
+2-ball	1
+3-ball	1
+4-ball	1
+5-ball	1
+6-ball	1
+7-ball	1
+7-foot dwarven mattock	1
+amulet of extreme plot significance	1
+ancient machete	1
+broken sword	1
+cold ninja mask	1
+cold water bottle	1
+dead guy's watch	1
+freshwater pearl necklace	1
+goatskin umbrella	1
+
+# Keep ... 2?
+bum cheek	2
+
+# Worth keeping?
+knob goblin scimitar	1
+
+# starter items (keep one):
+turtle totem	1
+seal-clubbing club	1
+saucepan	1
+stolen accordion	1
+disco ball	1
+
+# battlefield items for coins:
+# bullet-proof corduroys	1
+communications windchimes	0
+didgeridooka	0
+green clay bead	0
+hippy protest button	0
+fire poi	0
+flowing hippy skirt	0
+oversized pipe	0
+pink clay bead	0
+purple clay bead	0
+# reinforced beaded headband	1
+# round purple sunglasses	1
+# wicker shield	0

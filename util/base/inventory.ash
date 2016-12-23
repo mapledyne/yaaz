@@ -1,5 +1,6 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
+import "util/base/settings.ash";
 
 int i_a(item it);
 int wad_total();
@@ -56,35 +57,44 @@ void use_all(item it)
 	use_all(it, 0);
 }
 
+boolean should_pulverize()
+{
+  boolean config = to_boolean(setting("aggresive_pulverize", "false"));
+  if (config) return true;
+
+  // artificial limiter - why make more wads if we're swimming in them?
+  if (wad_total() < (spleen_limit() * 3))
+    return true;
+
+    return false;
+}
+
 void pulverize_all(item it)
 {
-	// artificial limiter - why make more wads if we're swimming in them?
-	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 0)
-	{
-		log("Pulverizing " + item_amount(it) + " " + wrap(it, item_amount(it)) + ".");
-		cli_execute("pulverize " + item_amount(it) + " " + it);
-	}
+  if (!should_pulverize()) return;
+  if (item_amount(it) == 0) return;
+
+	log("Pulverizing " + item_amount(it) + " " + wrap(it, item_amount(it)) + ".");
+	cli_execute("pulverize " + item_amount(it) + " " + it);
 }
 
 void pulverize_all_but_one(item it)
 {
-	// artificial limiter - why make more wads if we're swimming in them?
-	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 1)
-	{
-		int qty = (item_amount(it)-1);
-		log("Pulverizing " + qty + " " + wrap(it, qty) + ".");
-		cli_execute("pulverize " + qty + " " + it);
-	}
+  if (!should_pulverize()) return;
+  if (item_amount(it) < 2) return;
+
+	int qty = (item_amount(it)-1);
+	log("Pulverizing " + qty + " " + wrap(it, qty) + ".");
+	cli_execute("pulverize " + qty + " " + it);
 }
 
 void pulverize(item it)
 {
-	// artificial limiter - why make more wads if we're swimming in them?
-	if (wad_total() < spleen_limit() * 2 && item_amount(it) > 0)
-	{
-		log("Pulverizing 1 " + wrap(it) + ".");
-		cli_execute("pulverize 1 " + it);
-	}
+  if (!should_pulverize()) return;
+  if (item_amount(it) == 0) return;
+
+	log("Pulverizing 1 " + wrap(it) + ".");
+	cli_execute("pulverize 1 " + it);
 }
 
 void pulverize_keep_if(item it, boolean keep_if)
@@ -366,6 +376,10 @@ void sell_all(item it, int keep)
     sell_coin_item(it, keep);
     return;
   }
+
+  // don't actually sell things for meat on Fist paths:
+  if (my_path() == "Way of the Surprising Fist")
+    return;
 
   int qty = item_amount(it) - keep;
   if (qty <= 0)

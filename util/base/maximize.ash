@@ -153,6 +153,7 @@ void max_effects(string target)
       cross_streams();
       break;
     case "muscle":
+      max_effects("stats");
       effect_maintain($effect[Extreme Muscle Relaxation]);
       effect_maintain($effect[Football Eyes]);
       effect_maintain($effect[feroci tea]);
@@ -162,17 +163,27 @@ void max_effects(string target)
       effect_maintain($effect[superheroic]);
       effect_maintain($effect[Truly Gritty]);
       effect_maintain($effect[Woad Warrior]);
+      if (!have_love_song())
+        effect_maintain($effect[broken heart]);
+      if (!have_love_song())
+        effect_maintain($effect[sweet heart]);
       break;
     case "moxie":
+      max_effects("stats");
       effect_maintain($effect[Newt Gets In Your Eyes]);
       effect_maintain($effect[butt-rock hair]);
       effect_maintain($effect[dexteri tea]);
       effect_maintain($effect[lycanthropy\, eh?]);
       effect_maintain($effect[locks like the raven]);
+      effect_maintain($effect[Mysteriously Handsome]);
       effect_maintain($effect[The Moxious Madrigal]);
       effect_maintain($effect[spiky hair]);
       effect_maintain($effect[Knob Goblin Lust Frenzy]);
       effect_maintain($effect[sugar rush]);
+      if (!have_love_song())
+        effect_maintain($effect[cold hearted]);
+      if (!have_love_song())
+        effect_maintain($effect[lustful heart]);
       break;
     case "mysticality":
       max_effects("stats");
@@ -180,36 +191,66 @@ void max_effects(string target)
       effect_maintain($effect[dweeby]);
       effect_maintain($effect[moose wisdom]);
       effect_maintain($effect[rainy soul miasma]);
+      effect_maintain($effect[ready to snap]);
       effect_maintain($effect[seeing colors]);
       effect_maintain($effect[carrrsmic]);
       effect_maintain($effect[wit tea]);
+      if (!have_love_song())
+        effect_maintain($effect[withered heart]);
+      if (!have_love_song())
+        effect_maintain($effect[fiery heart]);
 
       uneffect($effect[sugar rush]);
 
       break;
     case "meat":
+      effect_maintain($effect[blackberry politeness]);
       effect_maintain($effect[chari tea]);
+      effect_maintain($effect[Cranberry Cordiality]);
+      effect_maintain($effect[eyes wide propped]);
+      effect_maintain($effect[sticky fingers]);
       effect_maintain($effect[polka of plenty]);
+      effect_maintain($effect[so you can work more...]);
+      effect_maintain($effect[The Ballad of Richie Thingfinder]);
+      effect_maintain($effect[wasabi sinuses]);
       terminal_enhance($effect[meat.enh]);
       if (!have_colored_tongue())
         effect_maintain($effect[red tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
+      if (!have_love_song())
+        effect_maintain($effect[sweet heart]);
+      if (!to_boolean(get_property("concertVisited"))
+          && get_property("sidequestArenaCompleted") == "fratboy")
+      {
+        cli_execute("concert winklered");
+      }
+
       break;
     case "items":
-      effect_maintain($effect[eye of the seal]);
       effect_maintain($effect[ermine eyes]);
+      effect_maintain($effect[eagle eyes]);
+      effect_maintain($effect[eye of the seal]);
+      effect_maintain($effect[eyes wide propped]);
       effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
       effect_maintain($effect[ocelot eyes]);
       effect_maintain($effect[peeled eyeballs]);
       effect_maintain($effect[serendipi tea]);
       effect_maintain($effect[singer's faithful ocelot]);
-      effect_maintain($effect[withered heart]);
+      effect_maintain($effect[The Ballad of Richie Thingfinder]);
       terminal_enhance($effect[items.enh]);
+      if (!have_love_song())
+        effect_maintain($effect[withered heart]);
       if (!have_colored_tongue())
         effect_maintain($effect[blue tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
+      if (!to_boolean(get_property("concertVisited"))
+          && get_property("sidequestArenaCompleted") == "hippy")
+      {
+        cli_execute("concert dilated pupils");
+      }
+
       break;
     case "init":
       effect_maintain($effect[alacri tea]);
@@ -231,6 +272,8 @@ void max_effects(string target)
       {
         cli_execute("concert white-boy angst");
       }
+      if (!have_love_song())
+        effect_maintain($effect[lustful heart]);
       break;
     case "-combat":
     case "noncombat":
@@ -250,12 +293,17 @@ void max_effects(string target)
       uneffect($effect[The Sonata of Sneakiness]);
       break;
     case "ml":
+      effect_maintain($effect[ashen burps]);
       effect_maintain($effect[Drescher's Annoying Noise]);
-      effect_maintain($effect[pride of the puffin]);
       effect_maintain($effect[tortious]);
       effect_maintain($effect[eau d'enmity]);
       effect_maintain($effect[high colognic]);
       effect_maintain($effect[mediocri tea]);
+      effect_maintain($effect[Mysteriously Handsome]);
+      effect_maintain($effect[pride of the puffin]);
+      effect_maintain($effect[red lettered]);
+      effect_maintain($effect[2092]); //[Sweetbreads Flambé]
+      effect_maintain($effect[Ur-Kel's Aria of Annoyance]);
       change_mcd(10);
       break;
     case "familiar exp":
@@ -281,6 +329,8 @@ void max_effects(string target)
         effect_maintain($effect[green tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
+      if (!have_love_song())
+        effect_maintain($effect[cold hearted]);
       break;
     case "resistance base":
       effect_maintain($effect[elemental saucesphere]);
@@ -366,6 +416,9 @@ void max_effects(string target)
       break;
     case "stench spell damage":
       break;
+    case "spell damage":
+      effect_maintain($effect[Puzzle Fury]);
+      break;
 
     default:
       if (!have_colored_tongue())
@@ -374,6 +427,10 @@ void max_effects(string target)
         effect_maintain($effect[purple tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[green tongue]);
+      if (!have_love_song())
+        effect_maintain($effect[fiery heart]);
+      if (!have_love_song())
+        effect_maintain($effect[broken heart]);
       break;
   }
 

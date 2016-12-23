@@ -1,8 +1,28 @@
 import "util/base/util.ash";
 
+boolean have_love_song()
+{
+  foreach ef in $effects[broken heart,
+                         fiery heart,
+                         cold hearted,
+                         sweet heart,
+                         withered heart,
+                         lustful heart]
+  {
+    if (have_effect(ef) > 0)
+      return true;
+  }
+  return false;
+}
+
 boolean have_colored_tongue()
 {
-  foreach ef in $effects[orange tongue, blue tongue, purple tongue, green tongue, red tongue, black tongue]
+  foreach ef in $effects[orange tongue,
+                         blue tongue,
+                         purple tongue,
+                         green tongue,
+                         red tongue,
+                         black tongue]
   {
     if (have_effect(ef) > 0)
       return true;

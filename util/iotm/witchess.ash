@@ -67,6 +67,11 @@ void witchess()
       witchess($item[armored prawn]);
       continue;
     }
+    if (item_amount($item[greek fire]) == 0)
+    {
+      witchess($item[greek fire]);
+      continue;
+    }
     witchess($item[Sacramento wine]);
   }
 }

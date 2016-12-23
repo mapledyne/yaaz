@@ -105,6 +105,7 @@ void make_things()
   // *** Less requirements, but still sometimes useful or fun:
 
   make_if_needed($item[ratskin belt], "for a meat bonus item.");
+  make_if_needed($item[asshat], "because it's funny.");
 
   // rainbow summons:
   while (have_all_wads()
