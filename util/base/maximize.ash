@@ -176,6 +176,7 @@ void max_effects(string target)
       effect_maintain($effect[lycanthropy\, eh?]);
       effect_maintain($effect[locks like the raven]);
       effect_maintain($effect[Mysteriously Handsome]);
+      effect_maintain($effect[notably lovely]);
       effect_maintain($effect[The Moxious Madrigal]);
       effect_maintain($effect[spiky hair]);
       effect_maintain($effect[Knob Goblin Lust Frenzy]);
@@ -189,6 +190,7 @@ void max_effects(string target)
       max_effects("stats");
       effect_maintain($effect[baconstoned]);
       effect_maintain($effect[dweeby]);
+      effect_maintain($effect[OMG WTF]);
       effect_maintain($effect[moose wisdom]);
       effect_maintain($effect[rainy soul miasma]);
       effect_maintain($effect[ready to snap]);
@@ -325,6 +327,7 @@ void max_effects(string target)
       effect_maintain($effect[empathy]);
       effect_maintain($effect[loyal tea]);
       effect_maintain($effect[heart of green]);
+      effect_maintain($effect[Over-Familiar With Dactyls]);
       if (!have_colored_tongue())
         effect_maintain($effect[green tongue]);
       if (!have_colored_tongue())
@@ -335,6 +338,7 @@ void max_effects(string target)
     case "resistance base":
       effect_maintain($effect[elemental saucesphere]);
       effect_maintain($effect[astral shell]);
+      effect_maintain($effect[egged on]);
       effect_maintain($effect[oiled-up]);
       effect_maintain($effect[well-oiled]);
       effect_maintain($effect[spiro gyro]);
@@ -417,9 +421,18 @@ void max_effects(string target)
     case "stench spell damage":
       break;
     case "spell damage":
+      effect_maintain($effect[OMG WTF]);
       effect_maintain($effect[Puzzle Fury]);
       break;
-
+    case "critical":
+      effect_maintain($effect[notably lovely]);
+      break;
+    case "damage":
+      effect_maintain($effect[superheroic]);
+      break;
+    case "ranged damage":
+      effect_maintain($effect[notably lovely]);
+      break;
     default:
       if (!have_colored_tongue())
         effect_maintain($effect[orange tongue]);
@@ -431,6 +444,8 @@ void max_effects(string target)
         effect_maintain($effect[fiery heart]);
       if (!have_love_song())
         effect_maintain($effect[broken heart]);
+      if (my_primestat() != $stat[mysticality])
+        effect_maintain($effect[bastard!]);
       break;
   }
 

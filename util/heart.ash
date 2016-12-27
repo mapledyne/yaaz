@@ -8,6 +8,9 @@ import <zlib.ash>;
 string[int] prank_msgs;
 file_to_map(DATA_DIR + "pranks.txt", prank_msgs);
 
+string[int] arrow_msgs;
+file_to_map(DATA_DIR + "arrows.txt", arrow_msgs);
+
 boolean blacklisted(string player)
 {
   if (player ≈ my_name())
@@ -82,25 +85,49 @@ void heart_msg(string player, string msg)
   save_daily_setting("hearted_" + player, "true");
 }
 
-boolean mail_heart_item(string player, item toy, string message)
+
+boolean mail_heart_item(string player, int[item] toys, string message)
 {
-  if (item_amount(toy) == 0)
+  int count = 0;
+  string toy_list = "";
+  foreach it, i in toys
+  {
+    if (item_amount(it) < i)
+      return false;
+    if (length(toy_list) > 0)
+    {
+      toy_list += ", ";
+    }
+    toy_list += i + " " + wrap(it, i);
+    count += i;
+  }
+
+  if (count == 0)
     return false;
 
-  //  boolean kmail(string recipient ,string message ,int meat ,int [item]  goodies ,string inside_note )
-  heart_msg(player, "sending them one " + wrap(toy) + ".");
+  heart_msg(player, "sending them: " + toy_list);
   string msg = message;
   string inside_msg = message;
+
+  //  boolean kmail(string recipient ,string message ,int meat ,int [item]  goodies ,string inside_note )
+  kmail(player, msg, 0, toys, inside_msg);
+  return true;
+}
+
+boolean mail_heart_item(string player, item toy, string message)
+{
   int[item] stuff;
   stuff[toy] = 1;
-  kmail(player, msg, 0, stuff, inside_msg);
-  return true;
+  return mail_heart_item(player, stuff, message);
+
+  return false;
 }
 
 boolean mail_heart_item(string player, item toy)
 {
   return mail_heart_item(player, toy, "Random heart-y-ness. Enjoy!");
 }
+
 
 void do_heart_thing(string player)
 {
@@ -158,6 +185,15 @@ void do_heart_thing(string player)
                         fake fake vomit]
   {
     if (mail_heart_item(player, toy, "Random 'heart'-y ness.")) return;
+  }
+
+  if (item_amount($item[arrowgram]) > 0)
+  {
+    int num = random(count(arrow_msgs));
+    string arrow_msg = prank_msgs[num];
+    heart_msg(player, "sending an " + wrap($item[arrowgram]) + " to them ('" + arrow_msg + "').");
+    visit_url("curse.php?action=use?&pwd&whichitem=4940&targetplayer=" + player + "&arrowtext=" + arrow_msg);
+    return;
   }
 
   log(HEART + " Apparently we're out of heart-y things to do right now. Sad.");

@@ -28,6 +28,8 @@ int get_cleanliness(location l)
       return to_int(get_property("crimbo16ReindeerChakraCleanliness"));
     case $location[crimbo's beard]:
       return to_int(get_property("crimbo16BeardChakraCleanliness"));
+    case $location[crimbo's hat]:
+      return to_int(get_property("crimbo16CrimboHatChakraCleanliness"));
     default:
       return 0;
   }
@@ -47,7 +49,8 @@ void clean_one()
                              crimbo's boots,
                              crimbo's jelly,
                              crimbo's reindeer,
-                             crimbo's beard]
+                             crimbo's beard,
+                             crimbo's hat]
   {
     int clean = get_cleanliness(chak);
     if (clean < top)
@@ -69,6 +72,7 @@ void clean_one()
   max += ", +equip crystal belt buckle";
   max += ", +equip saffron antaravasaka";
   max += ", +equip saffron uttarasanga";
+  max += ", +equip krampus horn";
 
   dg_adventure(target, max);
 

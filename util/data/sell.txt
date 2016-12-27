@@ -7,6 +7,7 @@ ancient protein powder	0
 Anticheese	0
 Antique greaves	0
 Antique helmet	0
+antique packet of ketchup	0
 Antique spear	0
 Antique shield	0
 Awful Poetry Journal	0
@@ -15,6 +16,7 @@ bit-o-cactus	0
 Black Pixel	0
 Clay Peace-Sign Bead	0
 Decorative Fountain	0
+dollar-sign bag	0
 Empty Cloaca-Cola Bottle	0
 Enchanted Barbell	0
 Fancy Bath Salts	0
@@ -47,12 +49,14 @@ Sunken Chest	0
 suntan lotion of moxiousness	0
 Tambourine Bells	0
 Tequila Sunrise	0
+whalebone corset	0
 white satin shield	0
 Windchimes	0
 valuable trinket	0
 
 # keep one:
 1-ball	1
+1337 7r0uZ0RZ	1
 2-ball	1
 3-ball	1
 4-ball	1
@@ -68,9 +72,19 @@ cold water bottle	1
 dead guy's watch	1
 freshwater pearl necklace	1
 goatskin umbrella	1
+vampire collar	1
 
 # Keep ... 2?
 bum cheek	2
+
+# Keep a handful (combat items we want a couple of, but not too many)
+adder	5
+ancient spice	5
+ancient frozen dinner	5
+all-purpose cleaner	5
+angry farmer candy	10
+ant agonist	10
+anti-anti-antidote	20
 
 # Worth keeping?
 knob goblin scimitar	1

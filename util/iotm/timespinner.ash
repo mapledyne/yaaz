@@ -32,15 +32,25 @@ boolean time_prank(string player, string msg)
 
   if (contains_text(ret, oops))
   {
-    log("Trying to send " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but someone beat you to it.");
+    log("Trying to send a " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but someone beat you to it.");
     visit_url("choice.php?pwd&whichchoice=1198&option=2");
     return false;
   }
 
+  oops = "has already been pranked enough today";
+
+  if (contains_text(ret, oops))
+  {
+    log("Trying to send a " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but they've been pranked too much today.");
+    visit_url("choice.php?pwd&whichchoice=1198&option=2");
+    return false;
+  }
+
+
   oops = "You didn't think of a real player";
   if (contains_text(ret, oops))
   {
-    log("Trying to send " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but that doesn't seem to be a player.");
+    log("Trying to send a " + wrap("Time Prank", COLOR_ITEM) + " to " + wrap(player, COLOR_MONSTER) + ", but that doesn't seem to be a player.");
     visit_url("choice.php?pwd&whichchoice=1198&option=2");
     return false;
   }

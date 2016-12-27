@@ -1,9 +1,21 @@
+37x37x37 puzzle cube	0
 airblaster gun	0
+amulet of yendor	0
 cheap studded belt	0
+giant designer sunglasses	0
+
+# Haggis stuff:
+haggis socks	0
+mr. haggis	0
+haggis-infused soap	0
+haggis-wrapped haggis-stuffed haggis	0
+McLeod's Hard Haggis-Ade	0
+
+# Microplushie
 microplushie: bropane	0
 microplushie: dorkonide	0
 microplushie: ermahgerdic acid	0
-microplushie: fauxnerdite	0
+microplushie: fauxnerditide	0
 microplushie: gothochondria	0
 microplushie: hippylase	0
 microplushie: hipsterine	0
@@ -11,6 +23,8 @@ microplushie: hobomosome	0
 microplushie: otakulone	0
 microplushie: raverdrine	0
 microplushie: sororitrate	0
+
+# Stuffed ... things.
 stuffed angry cow	0
 stuffed astral badger	0
 stuffed baron von ratsworth	0
@@ -19,6 +33,7 @@ stuffed crazy bastard sword	0
 stuffed cocoabo	0
 stuffed flaming gravy fairy	0
 stuffed frozen gravy fairy	0
+stuffed hand turkey	0
 stuffed key	0
 stuffed magimechtech micromechamech	0
 stuffed meat	0
@@ -37,6 +52,13 @@ stuffed martini	0
 stuffed baby gravy fairy	0
 stuffed crazy bastard sword	0
 stuffed scary death orb	0
+
+# LCD Games
 LCD Game: Garbage River	0
 LCD Game: Food Eater	0
 LCD Game: Burger Belt	0
+
+# Bacelets
+rubber WWSPD? bracelet	0
+rubber WWBD? bracelet	0
+rubber WWJD? bracelet	0

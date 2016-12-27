@@ -29,17 +29,28 @@ void pulverize_things()
 
 
   // Always keep one:
+  pulverize_all_but_one($item[antique machete]);
   pulverize_all_but_one($item[attorney's badge]);
+  pulverize_all_but_one($item[black helmet]);
   pulverize_all_but_one($item[burnt snowpants]);
   pulverize_all_but_one($item[candy dress shoes]);
   pulverize_all_but_one($item[candy necktie]);
+  pulverize_all_but_one($item[charming flute]);
   pulverize_all_but_one($item[compression stocking]);
+  pulverize_all_but_one($item[drowsy sword]);
+  pulverize_all_but_one($item[filthy knitted dread sack]);
   pulverize_all_but_one($item[gingerbread gavel]);
   pulverize_all_but_one($item[goatskin umbrella]);
-  pulverize_all_but_one($item[filthy knitted dread sack]);
+  pulverize_all_but_one($item[headhunter necktie]);
   pulverize_all_but_one($item[homoerotic frat-paddle]);
+  pulverize_all_but_one($item[leather chaps]);
   pulverize_all_but_one($item[little black book]);
+  pulverize_all_but_one($item[mesh cap]);
   pulverize_all_but_one($item[pygmy briefs]);
+  pulverize_all_but_one($item[Unfortunato's foolscap]);
+  pulverize_all_but_one($item[sphygmomanometer]);
+  pulverize_all_but_one($item[rubber ribcage]);
+  pulverize_all_but_one($item[white satin pants]);
 
   // we may want some of these if not relying on muscle:
   pulverize_keep_if($item[punk rock jacket], my_primestat() != $stat[muscle]);

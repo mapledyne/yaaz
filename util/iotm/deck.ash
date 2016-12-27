@@ -120,6 +120,9 @@ void consume_cards()
     cheat_deck("clubs", "more PVP fights");
   }
 
+  cheat_deck("ancestral recall", "more adventures");
+  cheat_deck("island", "more adventures");
+
   int left = 15 - to_int(get_property("_deckCardsDrawn"));
 
   if (left < 5 && can_adventure())
@@ -135,11 +138,21 @@ void consume_cards()
   if (!can_deck())
     return;
 
+/*
   log("You have " + left + " draws left of the "+ wrap($item[deck of every card]) + ".");
   log("This is enough to cheat for something, but I'm undecided what to cheat for.");
   log("Maybe get something heart-y like the " + wrap($item[gift card]) + ", or more");
   log("meat with the " + wrap($item[1952 mickey mantle card]) + ", or something else.");
   wait(10);
+*/
+
+  log("You have some cards left from the " + wrap($item[deck of every card]) + ". I've cheated for what I want, so just using the rest up randomly.");
+  wait(5);
+  while(can_deck() && can_adventure())
+  {
+    use(1, $item[deck of every card]);
+  }
+
 }
 
 void main()

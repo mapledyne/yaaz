@@ -1,5 +1,6 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
+import "util/base/settings.ash";
 
 boolean manuel_exclude_monster(monster mon)
 {
@@ -65,8 +66,14 @@ void maintain_avatar()
   {
     if (is_avatar_potion(it))
     {
-      log("Putting " + wrap(it) + " into the closet to reduce clutter.");
-      put_closet(inventory[it], it);
+      if (closet_amount(it) < 5)
+      {
+        log("Putting " + wrap(it) + " into the closet to reduce clutter.");
+        put_closet(inventory[it], it);
+      } else {
+        log("Discarding " + wrap(it) + " since we have plenty.");
+        autosell(inventory[it], it);
+      }
     }
   }
   // if we already have an avatar potion active, bail.

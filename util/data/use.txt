@@ -10,6 +10,8 @@ carton of astral energy drinks	0
 collection of tiny spooky objects	0
 cornucopia	0
 CSA discount card	0
+d6	0
+d8	0
 dungeon dragon chest	0
 duct tape wallet	0
 Effermint&trade; tablets	0
