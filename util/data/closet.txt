@@ -1,7 +1,6 @@
 37x37x37 puzzle cube	0
 airblaster gun	0
 amulet of yendor	0
-cheap studded belt	0
 giant designer sunglasses	0
 
 # Haggis stuff:

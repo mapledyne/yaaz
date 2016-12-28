@@ -1,6 +1,7 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
 import "util/base/settings.ash";
+import "util/base/inventory.ash";
 
 boolean manuel_exclude_monster(monster mon)
 {
@@ -71,8 +72,7 @@ void maintain_avatar()
         log("Putting " + wrap(it) + " into the closet to reduce clutter.");
         put_closet(inventory[it], it);
       } else {
-        log("Discarding " + wrap(it) + " since we have plenty.");
-        autosell(inventory[it], it);
+        stash(it, 0);
       }
     }
   }

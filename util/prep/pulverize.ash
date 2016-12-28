@@ -1,4 +1,5 @@
 import "util/base/inventory.ash";
+import "util/base/quests.ash";
 
 boolean can_pulverize()
 {
@@ -20,70 +21,75 @@ void pulverize_things()
     buy(1, $item[tenderizing hammer]);
   }
 
-  // Always pulverize:
-  pulverize_all($item[gaia beads]);
-  pulverize_all($item[hippy medical kit]);
-  pulverize_all($item[Lockenstock&trade; sandals]);
-  pulverize_all($item[smirking shrunken head]);
-  pulverize_all($item[wicker shield]);
 
+  int[item] pulv_items;
+  file_to_map(DATA_DIR + "pulverize.txt", pulv_items);
 
-  // Always keep one:
-  pulverize_all_but_one($item[antique machete]);
-  pulverize_all_but_one($item[attorney's badge]);
-  pulverize_all_but_one($item[black helmet]);
-  pulverize_all_but_one($item[burnt snowpants]);
-  pulverize_all_but_one($item[candy dress shoes]);
-  pulverize_all_but_one($item[candy necktie]);
-  pulverize_all_but_one($item[charming flute]);
-  pulverize_all_but_one($item[compression stocking]);
-  pulverize_all_but_one($item[drowsy sword]);
-  pulverize_all_but_one($item[filthy knitted dread sack]);
-  pulverize_all_but_one($item[gingerbread gavel]);
-  pulverize_all_but_one($item[goatskin umbrella]);
-  pulverize_all_but_one($item[headhunter necktie]);
-  pulverize_all_but_one($item[homoerotic frat-paddle]);
-  pulverize_all_but_one($item[leather chaps]);
-  pulverize_all_but_one($item[little black book]);
-  pulverize_all_but_one($item[mesh cap]);
-  pulverize_all_but_one($item[pygmy briefs]);
-  pulverize_all_but_one($item[Unfortunato's foolscap]);
-  pulverize_all_but_one($item[sphygmomanometer]);
-  pulverize_all_but_one($item[rubber ribcage]);
-  pulverize_all_but_one($item[white satin pants]);
+  foreach it, i in pulv_items
+  {
+    pulverize(it, i);
+  }
 
   // we may want some of these if not relying on muscle:
-  pulverize_keep_if($item[punk rock jacket], my_primestat() != $stat[muscle]);
 
-  // Only keep if we're not playing mysticality:
-  pulverize_keep_if($item[giant gym membership card], my_primestat() != $stat[mysticality]);
 
-  // Only keep if we're muscle:
-  pulverize_keep_if($item[black sword], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[giant cactus quill], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[giant safety pin], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[giant turkey leg], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[pointed stick], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[ridiculously huge sword], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[spiked femur], my_primestat() == $stat[muscle]);
-  pulverize_keep_if($item[wolf mask], my_primestat() == $stat[muscle]);
+  boolean[item] muscle_items = $items[black sword,
+                                      giant cactus quill,
+                                      giant gym membership card,
+                                      giant safety pin,
+                                      giant turkey leg,
+                                      pointed stick,
+                                      ridiculously huge sword,
+                                      spiked femur,
+                                      wolf mask];
 
-  // Only keep if we're mysticality:
-  pulverize_keep_if($item[ancient ice cream scoop], my_primestat() == $stat[mysticality]);
-  pulverize_keep_if($item[big bad voodoo mask], my_primestat() == $stat[mysticality]);
-  pulverize_keep_if($item[brown felt tophat], my_primestat() == $stat[mysticality]);
-  pulverize_keep_if($item[giant artisanal rice peeler], my_primestat() == $stat[mysticality]);
+  boolean[item] moxie_items = $items[a butt tuba,
+                                     armgun,
+                                     bone flute,
+                                     buoybottoms,
+                                     frigid hanky&#363;,
+                                     happiness,
+                                     hippy bongo,
+                                     magilaser blastercannon,
+                                     punk rock jacket,
+                                     world's smallest violin];
 
-  // only keep if we're moxie:
-  pulverize_keep_if($item[armgun], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[bone flute], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[buoybottoms], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[frigid hanky&#363;], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[happiness], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[hippy bongo], my_primestat() == $stat[moxie]);
-  pulverize_keep_if($item[magilaser blastercannon], my_primestat() == $stat[moxie]);
+  boolean[item] mysticality_items = $items[ancient ice cream scoop,
+                                           big bad voodoo mask,
+                                           brown felt tophat,
+                                           giant artisanal rice peeler];
 
-  pulverize_keep_if($item[autocalliope], my_class() == $class[accordion thief]);
+  if (my_primestat() != $stat[muscle])
+  {
+    foreach it in muscle_items
+    {
+      pulverize(it, 0);
+    }
+  }
+
+  if (my_primestat() != $stat[mysticality])
+  {
+    foreach it in mysticality_items
+    {
+      pulverize(it, 0);
+    }
+  }
+
+  if (my_primestat() != $stat[moxie])
+  {
+    foreach it in moxie_items
+    {
+      pulverize(it, 0);
+    }
+  }
+
+  if (my_class() != $class[accordion thief])
+  {
+    foreach it in $items[autocalliope]
+    {
+      pulverize(it, 0);
+    }
+  }
 
 
   // Stuff below this are things we'll pulverize based on quest status:

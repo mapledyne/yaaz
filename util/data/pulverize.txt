@@ -1,0 +1,73 @@
+# Pulverize all:
+gaia beads	0
+hippy medical kit	0
+Lockenstock&trade; sandals	0
+smirking shrunken head	0
+wicker shield	0
+
+# Keep one:
+antique machete	1
+attorney's badge	1
+bejeweled cufflinks	1
+black helmet	1
+bloody clown pants	1
+burnt snowpants	1
+C.A.R.N.I.V.O.R.E. button	1
+candy dress shoes	1
+candy necktie	1
+carpathian longsword	1
+charming flute	1
+compression stocking	1
+costume sword	1
+drowsy sword	1
+eXtreme Bi-Polar Fleece Vest	1
+filthy knitted dread sack	1
+giant discarded torn-up glove	1
+gingerbread gavel	1
+goatskin umbrella	1
+grungy bandana	1
+headhunter necktie	1
+homoerotic frat-paddle	1
+infernal insoles	1
+knob goblin harem veil	1
+leather chaps	1
+little black book	1
+lord spookyraven's ear trumpet	1
+mesh cap	1
+orange peel hat	1
+pygmy briefs	1
+plastic nunchaku	1
+ratskin belt	1
+rusty chain necklace	1
+rubber ribcage	1
+sawblade shield	1
+sphygmomanometer	1
+titanium assault umbrella	1
+Unfortunato's foolscap	1
+white satin pants	1
+wonderwall shield	1
+world's smallest violin	1
+wrench bracelet	1
+
+# Keep three (it's an accessory), but we should pulv the rest post-quest.
+head mirror	3
+
+# Keep one, though we may kill the last one depending on other circumstances
+a butt tuba	1
+punk rock jacket	1
+giant gym membership card	1
+black sword	1
+giant cactus quill	1
+giant safety pin	1
+giant turkey leg	1
+pointed stick	1
+ridiculously huge sword	1
+spiked femur	1
+wolf mask	1
+ancient ice cream scoop	1
+big bad voodoo mask	1
+brown felt tophat	1
+giant artisanal rice peeler	1
+
+# Accordions:
+autocalliope	1

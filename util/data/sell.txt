@@ -66,12 +66,32 @@ valuable trinket	0
 7-foot dwarven mattock	1
 amulet of extreme plot significance	1
 ancient machete	1
+bone abacus	1
 broken sword	1
+chopsticks	1
 cold ninja mask	1
 cold water bottle	1
 dead guy's watch	1
+extreme mittens	1
+extreme scarf	1
+eyepatch	1
+fleshy lump	1
 freshwater pearl necklace	1
 goatskin umbrella	1
+knob goblin elite helm	1
+knob goblin elite pants	1
+knob goblin elite polearm	1
+knob goblin elite shirt	1
+knob goblin harem pants	1
+knob goblin pants	1
+knob goblin spatula	1
+knob goblin tongs	1
+misty cape	1
+misty cloak	1
+misty robe	1
+Mr. Screege's spectacles	1
+sabre teeth	1
+snowboarder pants	1
 vampire collar	1
 
 # Keep ... 2?
@@ -85,6 +105,7 @@ all-purpose cleaner	5
 angry farmer candy	10
 ant agonist	10
 anti-anti-antidote	20
+salacious crumbs	20
 
 # Worth keeping?
 knob goblin scimitar	1

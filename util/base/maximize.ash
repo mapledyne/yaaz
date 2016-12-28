@@ -197,6 +197,7 @@ void max_effects(string target)
       effect_maintain($effect[seeing colors]);
       effect_maintain($effect[carrrsmic]);
       effect_maintain($effect[wit tea]);
+      effect_maintain($effect[well owl be!]);
       if (!have_love_song())
         effect_maintain($effect[withered heart]);
       if (!have_love_song())
@@ -423,6 +424,7 @@ void max_effects(string target)
     case "spell damage":
       effect_maintain($effect[OMG WTF]);
       effect_maintain($effect[Puzzle Fury]);
+      effect_maintain($effect[well owl be!]);
       break;
     case "critical":
       effect_maintain($effect[notably lovely]);

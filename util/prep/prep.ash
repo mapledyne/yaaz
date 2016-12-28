@@ -7,6 +7,7 @@ import "util/heart.ash";
 import "util/base/consume.ash";
 import "util/prep/sell.ash";
 import "util/prep/buy.ash";
+import "util/prep/clan.ash";
 import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
@@ -300,6 +301,7 @@ void prep(location loc)
   make_things();
   use_things();
   closet_things();
+  clan_things();
   cast_meat_spells(loc);
   class_specific_prep(my_class(), loc);
   prep_fishing(loc);

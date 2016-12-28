@@ -66,26 +66,52 @@ boolean should_pulverize()
   if (wad_total() < (spleen_limit() * 3))
     return true;
 
-    return false;
+  return false;
+}
+
+void stash(item it, int keep)
+{
+  string config = setting("use_stash", "z");
+  if (config == "z")
+  {
+    config = "false";
+    log("Please set the variable " + wrap(SETTING_PREFIX + "_use_stash", COLOR_ITEM) + " to 'true' or 'false'");
+    log("Setting to 'true' will add the items in clan.txt to the clan stash.");
+    wait(5);
+    save_daily_setting("use_stash", "false");
+  }
+  if (!to_boolean(config)) return;
+
+  int num = item_amount(it) - keep;
+  if (num <= 0) return;
+
+  log("Adding " + num + " " + wrap(it, num) + " to the clan stash.");
+  put_stash(num, it);
+}
+
+void pulverize(item it, int keep)
+{
+  if (!should_pulverize()) return;
+  int num = item_amount(it) - keep;
+  if (num <= 0) return;
+
+  string kp = "";
+
+  if (keep > 0)
+    kp = " (keeping " + keep + ")";
+
+	log("Pulverizing " + num + " " + wrap(it, num) + kp + ".");
+	cli_execute("pulverize " + num + " " + it);
 }
 
 void pulverize_all(item it)
 {
-  if (!should_pulverize()) return;
-  if (item_amount(it) == 0) return;
-
-	log("Pulverizing " + item_amount(it) + " " + wrap(it, item_amount(it)) + ".");
-	cli_execute("pulverize " + item_amount(it) + " " + it);
+  pulverize(it, 0);
 }
 
 void pulverize_all_but_one(item it)
 {
-  if (!should_pulverize()) return;
-  if (item_amount(it) < 2) return;
-
-	int qty = (item_amount(it)-1);
-	log("Pulverizing " + qty + " " + wrap(it, qty) + ".");
-	cli_execute("pulverize " + qty + " " + it);
+  pulverize(it, 1);
 }
 
 void pulverize(item it)
