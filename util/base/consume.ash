@@ -2,6 +2,7 @@ import "util/base/print.ash";
 import "util/base/util.ash";
 import "util/base/settings.ash";
 import "util/iotm/clanvip.ash";
+import "util/base/util.ash";
 
 boolean is_spleen_item(item it);
 boolean is_booze_item(item it);
@@ -20,7 +21,8 @@ boolean drunk();
 
 boolean block_auto_consume(item it)
 {
-  return ($items[sandwich of the gods,
+  return ($items[baked stuffing,
+                 sandwich of the gods,
                  grim fairy tale,
                  groose grease,
                  powdered gold,
@@ -205,11 +207,9 @@ boolean can_consume(item it)
 
 boolean try_chew(item it)
 {
-print("Try chew " + it);
   if (!can_chew(it))
     return false;
   log("Chewing a " + wrap(it) + ". Expected adventures: " + to_string(adv_per_consumption(it)));
-  print("Try chew " + it);
 
   if (is_npc_item(it))
   {
@@ -261,8 +261,8 @@ boolean try_drink(item it)
   {
     if (have_effect($effect[ode to booze]) == 0)
     {
-    // TODO: Consider tossing out other buffs if we have too many songs in our head.
       log("Casting " + wrap($skill[the ode to booze]) + " for better booze action.");
+      if (!can_cast_song()) uneffect_song();
       use_skill(1, $skill[the ode to booze]);
     }
   }

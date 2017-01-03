@@ -174,3 +174,39 @@ void progress(int qty, int total, string msg)
 {
   progress(qty, total, msg, "green");
 }
+
+string comma_format(int i)
+{
+  if ( i < 1000 )
+  return "" + i;
+
+  int mod = 0;
+
+  string piece = "";
+  string result = "";
+
+  while ( i >= 1000 )
+  {
+  mod = i % 1000;
+
+  if ( mod < 10 )
+  piece = "00" + mod;
+  else if ( mod < 100 )
+  piece = "0" + mod;
+  else
+  piece = "" + mod;
+
+  if ( result == "" )
+  result = piece;
+  else
+  result = piece + "," + result;
+
+  i = i - (i % 1000);
+  i = i / 1000;
+  }
+
+  if ( i != 0 )
+  result = i + "," + result;
+
+  return result;
+}

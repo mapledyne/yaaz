@@ -153,31 +153,6 @@ void progress_sheet_detail(string detail)
     }
   }
 
-
-  if (do_detail("royalty", detail)
-      && to_int(get_property("royalty")) > 0)
-  {
-
-    int max = to_int(setting("royalty_max", "0"));
-    if (max == 0)
-    {
-      string roy = visit_url("museum.php?floor=4&place=royalboards");
-
-
-      int index = index_of( roy , "showplayer" );
-      int start = index_of( roy , "<b>" , index ) + 3;
-      int end   = index_of( roy , "</b>" , start );
-      string player = substring( roy , start , end );
-
-      start = index_of( roy , "<td>" , end ) + 4;
-      end   = index_of( roy , "</td>" , start );
-
-      max = to_int(substring( roy , start , end ));
-      save_daily_setting("royalty_max", max);
-
-    }
-    progress(to_int(get_property("royalty")), max, "royalty", "blue");
-  }
 }
 
 void progress_sheet(string detail)
@@ -301,6 +276,48 @@ void progress_sheet(string detail)
     progress(friar_things(), 3, "Friar ceremony objects (" + dodecagram + " dodecagram, " + candles + " candles, " + butterknife + " butterknife)");
   }
 
+  if (quest_active("questM10Azazel"))
+  {
+    progress(item_amount($item[imp air]), 5, "imp airs");
+    if (i_a($item[observational glasses]) == 0)
+    {
+      task("Find the " + wrap($item[observational glasses]) + ".");
+    }
+
+    progress(item_amount($item[bus pass]), 5, "bus passes");
+    string band = "";
+    if (jim() != $item[none])
+    {
+      band += "Jim";
+    }
+    if (flargwurm() != $item[none])
+    {
+      if (band != "")
+        band += ", ";
+      band += "Flargwurm";
+    }
+    if (bognort() != $item[none])
+    {
+      if (band != "")
+        band += ", ";
+      band += "Bognort";
+    }
+    if (stinkface() != $item[none])
+    {
+      if (band != "")
+        band += ", ";
+      band += "Stinkface";
+    }
+
+    if (length(band) > 0)
+    {
+      band = " (" + band + ")";
+    }
+
+    progress(backstage_items(), 4, "backstage items" + band);
+
+  }
+
   // TODO: Count hot wings?
 
   if (quest_active("questL07Cyrptic"))
@@ -368,6 +385,12 @@ void progress_sheet(string detail)
     if (quest_status("questL10Garbage") == 8)
       progress($location[The Castle in the Clouds in the Sky (Ground Floor)].turns_spent, 11, "progress to open the top floor of the castle");
 
+  }
+
+  if (quest_status("questM21Dance") == FINISHED
+      && $location[the haunted ballroom].turns_spent < 5)
+  {
+    progress($location[The Haunted Ballroom].turns_spent, 5, "delay on The Haunted Ballroom");
   }
 
   if (quest_active("questL11MacGuffin"))

@@ -34,7 +34,6 @@ int get_cheese()
   while(item_amount(cheese) < 3 && can_adventure())
   {
     dg_adventure(goatlet, "items");
-    progress(item_amount(cheese), 3, "goat cheese");
   }
   remove_attract($monster[dairy goat]);
   return item_amount(cheese);

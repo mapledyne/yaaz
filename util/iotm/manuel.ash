@@ -69,8 +69,9 @@ void maintain_avatar()
     {
       if (closet_amount(it) < 5)
       {
-        log("Putting " + wrap(it) + " into the closet to reduce clutter.");
-        put_closet(inventory[it], it);
+        int qty = min(inventory[it], 5 - closet_amount(it));
+        log("Putting " + qty + " " + wrap(it, qty) + " into the closet to reduce clutter.");
+        put_closet(qty, it);
       } else {
         stash(it, 0);
       }
@@ -168,8 +169,8 @@ void manuel_progress(location loc)
     return;
 
   int have = manuel_location(loc);
-//  if (setting("manuel_always_show_progress") != "true" && (have == max))
-//    return;
+  if (setting("manuel_always_show_progress") != "true" && (have == max))
+    return;
 
   progress(have, max, "Monster Manuel factoids from " + loc);
 }

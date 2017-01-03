@@ -1,7 +1,8 @@
+import "util/main.ash";
 
 int plushie_sets()
 {
-  int total = item_amount($item[microplushie: bropane]);
+  int total = i_a($item[microplushie: bropane]);
 
   foreach it in $items[microplushie: bropane,
                        microplushie: dorkonide,
@@ -15,7 +16,7 @@ int plushie_sets()
                        microplushie: raverdrine,
                        microplushie: sororitrate]
   {
-    total = min(total, item_amount(it));
+    total = min(total, i_a(it));
   }
   return total;
 }
@@ -44,6 +45,7 @@ void yaaz_aftercore()
     take_stash(stash_amount(it), it);
   }
 
+  print("You have " + plushie_sets() + " Microplushie set(s).");
 
 }
 

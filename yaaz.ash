@@ -28,6 +28,8 @@ import "quests/L13_Q_sorceress.ash";
 
 import "util/iotm/protonic.ash";
 
+import "util/base/level_up.ash";
+
 boolean ascend_loop()
 {
 
@@ -82,6 +84,7 @@ boolean ascend_loop()
   if (M_8bit()) return true;
   if (M10_star_key()) return true;
 
+  if (level_up()) return true;
   log("Ran out of things to do in this script. Either a quest is missing, or maybe we should level?");
   return false;
 }

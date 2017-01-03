@@ -165,6 +165,62 @@ boolean have_all_wads()
 	return true;
 }
 
+item jim()
+{
+  if (item_amount($item[Comfy Pillow]) > 0)
+    return $item[Comfy Pillow];
+  if (item_amount($item[Sponge Cake]) > 0)
+    return $item[Sponge Cake];
+  return $item[none];
+}
+
+item flargwurm()
+{
+  if (item_amount($item[Booze-Soaked Cherry]) > 0)
+    return $item[Booze-Soaked Cherry];
+  if (jim() != $item[sponge cake] && item_amount($item[sponge cake]) == 1)
+    return $item[sponge cake];
+  if (item_amount($item[sponge cake]) > 1)
+    return $item[sponge cake];
+  return $item[none];
+}
+
+item bognort()
+{
+  if (item_amount($item[Giant Marshmallow]) > 0)
+    return $item[Giant Marshmallow];
+  if (item_amount($item[Gin-Soaked Blotter Paper]) > 0)
+    return $item[Gin-Soaked Blotter Paper];
+  return $item[none];
+}
+
+item stinkface()
+{
+  if (item_amount($item[Beer-Scented Teddy Bear]) > 0)
+    return $item[Beer-Scented Teddy Bear];
+  if (bognort() != $item[Gin-Soaked Blotter Paper] && item_amount($item[Gin-Soaked Blotter Paper]) == 1)
+    return $item[Gin-Soaked Blotter Paper];
+  if (item_amount($item[Gin-Soaked Blotter Paper]) > 1)
+    return $item[Gin-Soaked Blotter Paper];
+  return $item[none];
+}
+
+
+int backstage_items()
+{
+  int count = 0;
+  if (jim() != $item[none])
+    count += 1;
+  if (flargwurm() != $item[none])
+    count += 1;
+  if (bognort() != $item[none])
+    count += 1;
+  if (stinkface() != $item[none])
+    count += 1;
+
+  return count;
+}
+
 int turners()
 {
   return item_amount($item[crumbling wooden wheel]) + item_amount($item[tomb ratchet]);

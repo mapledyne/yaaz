@@ -13,6 +13,7 @@ void maximize(string target, string outfit);
 void maximize(string target);
 void maximize();
 void max_effects(string target);
+void max_effects(string target, boolean aggressive);
 
 // protonic accelerator stuff:
 void cross_streams(string player);
@@ -94,6 +95,8 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target == 'noncombat')
     target = '-combat';
 
+  max_effects("familiar weight", false);
+
   if (target == '')
     target = default_maximize_string();
 
@@ -102,6 +105,11 @@ void maximize(string target, string outfit, item it, familiar fam)
   foreach t in split_map
   {
     max_effects(split_map[t]);
+  }
+
+  if (familiar_weight(my_familiar()) < 20)
+  {
+    max_effects("familiar experience", false);
   }
 }
 
@@ -135,11 +143,11 @@ void maximize()
   maximize("");
 }
 
-void max_effects(string target)
+void max_effects(string target, boolean aggressive)
 {
   switch(target)
   {
-    case "stats":
+    case "exp":
       effect_maintain($effect[mutated]);
       effect_maintain($effect[sealed brain]);
       effect_maintain($effect[slightly larger than usual]);
@@ -210,12 +218,15 @@ void max_effects(string target)
       effect_maintain($effect[blackberry politeness]);
       effect_maintain($effect[chari tea]);
       effect_maintain($effect[Cranberry Cordiality]);
+      effect_maintain($effect[disco leer]);
       effect_maintain($effect[eyes wide propped]);
       effect_maintain($effect[sticky fingers]);
       effect_maintain($effect[polka of plenty]);
+      effect_maintain($effect[preternatural greed]);
       effect_maintain($effect[so you can work more...]);
       effect_maintain($effect[The Ballad of Richie Thingfinder]);
       effect_maintain($effect[wasabi sinuses]);
+      effect_maintain($effect[thanksgetting]);
       terminal_enhance($effect[meat.enh]);
       if (!have_colored_tongue())
         effect_maintain($effect[red tongue]);
@@ -236,11 +247,14 @@ void max_effects(string target)
       effect_maintain($effect[eye of the seal]);
       effect_maintain($effect[eyes wide propped]);
       effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
+//      effect_maintain($effect[hip to the jive]);
       effect_maintain($effect[ocelot eyes]);
       effect_maintain($effect[peeled eyeballs]);
+      effect_maintain($effect[2091]); // [Sacré Mental]
       effect_maintain($effect[serendipi tea]);
       effect_maintain($effect[singer's faithful ocelot]);
       effect_maintain($effect[The Ballad of Richie Thingfinder]);
+      effect_maintain($effect[thanksgetting]);
       terminal_enhance($effect[items.enh]);
       if (!have_love_song())
         effect_maintain($effect[withered heart]);
@@ -260,15 +274,18 @@ void max_effects(string target)
       effect_maintain($effect[all fired up]);
       effect_maintain($effect[adorable lookout]);
       effect_maintain($effect[Hiding in Plain Sight]);
+      effect_maintain($effect[Jacked In]);
       effect_maintain($effect[lustful heart]);
       effect_maintain($effect[Sepia Tan]);
       effect_maintain($effect[Song of Slowness]);
       effect_maintain($effect[Springy Fusilli]);
       effect_maintain($effect[sugar rush]);
+      effect_maintain($effect[suspicious gaze]);
       effect_maintain($effect[Ticking Clock]);
       effect_maintain($effect[the glistening]);
       effect_maintain($effect[Walberg\'s Dim Bulb]);
       effect_maintain($effect[well-swabbed ear]);
+
       terminal_enhance($effect[init.enh]);
       if (!to_boolean(get_property("concertVisited"))
           && get_property("sidequestArenaCompleted") == "fratboy")
@@ -280,6 +297,7 @@ void max_effects(string target)
       break;
     case "-combat":
     case "noncombat":
+      effect_maintain($effect[gummed shoes]);
       effect_maintain($effect[Fresh Scent]);
       effect_maintain($effect[Smooth Movements]);
       effect_maintain($effect[The Sonata of Sneakiness]);
@@ -293,6 +311,7 @@ void max_effects(string target)
       effect_maintain($effect[hippy stench]);
       effect_maintain($effect[irritabili tea]);
       effect_maintain($effect[High Colognic]);
+      effect_maintain($effect[lion in ambush]);
       uneffect($effect[The Sonata of Sneakiness]);
       break;
     case "ml":
@@ -308,6 +327,10 @@ void max_effects(string target)
       effect_maintain($effect[2092]); //[Sweetbreads Flambé]
       effect_maintain($effect[Ur-Kel's Aria of Annoyance]);
       change_mcd(10);
+      if (aggressive)
+      {
+        effect_maintain($effect[Too Noir For Snoir]);
+      }
       break;
     case "familiar exp":
       effect_maintain($effect[Blue Swayed]);
@@ -317,9 +340,13 @@ void max_effects(string target)
         effect_maintain($effect[green tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
-      if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
+      if (aggressive)
       {
-        cli_execute("friars familiar");
+        if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
+        {
+          cli_execute("friars familiar");
+        }
+
       }
       break;
     case "familiar weight":
@@ -335,6 +362,12 @@ void max_effects(string target)
         effect_maintain($effect[black tongue]);
       if (!have_love_song())
         effect_maintain($effect[cold hearted]);
+
+      if (aggressive)
+      {
+        effect_maintain($effect[thanksgetting]);
+      }
+
       break;
     case "resistance base":
       effect_maintain($effect[elemental saucesphere]);
@@ -344,6 +377,7 @@ void max_effects(string target)
       effect_maintain($effect[well-oiled]);
       effect_maintain($effect[spiro gyro]);
       effect_maintain($effect[red door syndrome]);
+      effect_maintain($effect[thanksgetting]);
       if (my_familiar() == $familiar[exotic parrot])
       {
         max_effects("familiar weight");
@@ -396,10 +430,12 @@ void max_effects(string target)
     case "cold damage":
       effect_maintain($effect[cold hands]);
       effect_maintain($effect[yet tea]);
+      effect_maintain($effect[icy glare]);
       max_effects("elemental damage");
       break;
     case "cold spell damage":
       effect_maintain($effect[cold hands]);
+      effect_maintain($effect[icy glare]);
       break;
     case "sleaze damage":
       effect_maintain($effect[Amorous]);
@@ -411,6 +447,7 @@ void max_effects(string target)
       break;
     case "spooky damage":
       effect_maintain($effect[boo tea]);
+      effect_maintain($effect[snarl of the timberwolf]);
       max_effects("elemental damage");
       break;
     case "spooky spell damage":
@@ -422,6 +459,7 @@ void max_effects(string target)
     case "stench spell damage":
       break;
     case "spell damage":
+      effect_maintain($effect[arched eyebrow of the archmage]);
       effect_maintain($effect[OMG WTF]);
       effect_maintain($effect[Puzzle Fury]);
       effect_maintain($effect[well owl be!]);
@@ -430,7 +468,19 @@ void max_effects(string target)
       effect_maintain($effect[notably lovely]);
       break;
     case "damage":
+      effect_maintain($effect[aspect of the twinklefairy]);
+      effect_maintain($effect[chalky hand]);
+      effect_maintain($effect[deadly flashing blade]);
+      effect_maintain($effect[engorged weapon]);
+      effect_maintain($effect[jackasses' symphony of destruction]);
+      effect_maintain($effect[football eyes]);
+      effect_maintain($effect[rage of the reindeer]);
+      effect_maintain($effect[scowl of the auk]);
       effect_maintain($effect[superheroic]);
+      effect_maintain($effect[tenacity of the snapper]);
+      effect_maintain($effect[truly gritty]);
+      effect_maintain($effect[twinkly weapon]);
+//      effect_maintain($effect[ponderous potency]);
       break;
     case "ranged damage":
       effect_maintain($effect[notably lovely]);
@@ -451,4 +501,9 @@ void max_effects(string target)
       break;
   }
 
+}
+
+void max_effects(string target)
+{
+  max_effects(target, true);
 }

@@ -113,11 +113,15 @@ void pulverize_things()
   pulverize_keep_if($item[bloodied surgical dungarees], quest_status("questL11Doctor") < 10);
   pulverize_keep_if($item[half-size scalpel], quest_status("questL11Doctor") < 10 || my_primestat() == $stat[muscle]);
 
-
-  // war items:
-  pulverize_keep_if($item[bullet-proof corduroys], quest_status("questL12War") < 10);
-  pulverize_keep_if($item[reinforced beaded headband], quest_status("questL12War") < 10);
-  pulverize_keep_if($item[round purple sunglasses], quest_status("questL12War") < 10);
+  if (quest_status("questL12War") >= 10)
+  {
+    pulverize($item[bullet-proof corduroys], 0);
+    pulverize($item[reinforced beaded headband], 0);
+    pulverize($item[round purple sunglasses], 0);
+    pulverize($item[beer helmet], 0);
+    pulverize($item[distressed denim pants], 0);
+    pulverize($item[bejeweled pledge pin], 0);
+  }
 
   // some more aggressive work if we aren't flush in wads:
   if (to_int(get_property("lastGuildStoreOpen")) == my_ascensions()

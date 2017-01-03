@@ -51,8 +51,6 @@ boolean cheat_deck(string s, string msg)
   return cli_execute("cheat " + s);
 }
 
-
-
 boolean pick_a_card()
 {
   // maybe get some stats?

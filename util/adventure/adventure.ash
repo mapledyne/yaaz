@@ -24,7 +24,7 @@ boolean overrides()
   if (counters())
     return true;
 
-  if (quest_status("questL10Garbage") == FINISHED
+/*  if (quest_status("questL10Garbage") == FINISHED
       && i_a($item[wand of nagamar]) == 0
       && item_amount($item[disassembled clover]) > 0
       && my_path() != "Nuclear Autumn")
@@ -36,7 +36,7 @@ boolean overrides()
       log("Making a " + wrap($item[wand of nagamar]) + ".");
       create(1, $item[wand of nagamar]);
     }
-  }
+  } */
 
   return false;
 }

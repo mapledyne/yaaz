@@ -106,6 +106,11 @@ boolean L07_Q_cyrpt()
 	if (quest_status("questL07Cyrptic") == FINISHED)
 	  return false;
 
+	if (my_daycount() == 1 && get_campground() contains $item[cornucopia])
+	{
+		log("Skipping the Cyrpt quest for today. Tomorrow we'll have some " + wrap($item[cashew], 2) + " and can use them to our advantage.");
+		return false;
+	}
 
 	if(item_amount($item[chest of the bonerdagon]) == 1)
 	{

@@ -10,6 +10,17 @@ boolean guild_store_open();
 float average_range(string avg);
 boolean can_adventure();
 
+// these really should be in effects.ash, but are here to avoid an import loop.
+// Need to sort this sort of problem out sometime...
+void uneffect(effect ef);
+void uneffect_song();
+boolean is_song(skill sk);
+boolean is_song(effect ef);
+int songs_in_head();
+int max_songs();
+boolean can_cast_song();
+
+
 string SCRIPT = "yaaz";
 string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
@@ -133,4 +144,77 @@ skill thrall_to_skill(thrall slave)
     default:
       return $skill[none];
   }
+}
+
+boolean is_song(skill sk)
+{
+  return (sk.class == $class[accordion thief] && sk.buff);
+}
+
+boolean is_song(effect ef)
+{
+  skill sk = to_skill(ef);
+  return is_song(sk);
+}
+
+int songs_in_head()
+{
+  int count = 0;
+  foreach buff in my_effects()
+  {
+    if (is_song(buff))
+      count++;
+  }
+  return count;
+}
+
+int max_songs()
+{
+  // this obviously could be handled better...
+  if (have_skill($skill[mariachi memory])) return 4;
+  return 3;
+}
+
+boolean can_cast_song()
+{
+  return songs_in_head() < max_songs();
+}
+
+void uneffect_song()
+{
+  effect song = $effect[none];
+  foreach ef in my_effects()
+  {
+    if (!is_song(ef)) continue;
+    if (have_effect(ef) < have_effect(song) || song == $effect[none])
+    {
+      song = ef;
+    }
+  }
+  uneffect(song);
+}
+
+boolean uneffect(effect ef)
+{
+	if(have_effect(ef) == 0)
+		return true;
+
+	if(cli_execute("uneffect " + ef))
+		return true;
+
+  if (ef == $effect[beaten up] && have_effect(ef) > 0)
+  {
+    // not great, but don't have a better plan right now.
+    log("Unsure how else to get rid of " + wrap(ef) + ", so going to take a quick rest.");
+    wait(3);
+    cli_execute("rest");
+  }
+
+	if(item_amount($item[Soft Green Echo Eyedrop Antidote]) > 0)
+	{
+    log("Removing the effect " + wrap(ef) + " with a " + wrap($item[Soft Green Echo Eyedrop Antidote]) + ".");
+		visit_url("uneffect.php?pwd=&using=Yep.&whicheffect=" + to_int(ef));
+		return true;
+	}
+	return false;
 }

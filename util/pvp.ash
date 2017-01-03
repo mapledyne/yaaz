@@ -5,9 +5,9 @@ import "util/base/maximize.ash";
 
 //  Numeric: ("Numeric", "numericSwagger", "back to")
 
-string PVP_SEASON = "Holiday";
-string PVP_SWAGGER = "holidaySwagger";
-string PVP_FIGHT = "All Bundled Up";
+string PVP_SEASON = "Bear";
+string PVP_SWAGGER = "bearSwagger";
+string PVP_FIGHT = "Barely Dressed";
 
 void pvp();
 void effects_for_pvp();
@@ -126,6 +126,9 @@ void dress_for_pvp()
     case "Holiday":
       maximize("cold res, -combat");
       return;
+    case "Bear":
+      cli_execute("outfit birthday suit");
+      return;
   }
 }
 
@@ -149,12 +152,16 @@ void effects_for_pvp()
       }
       max_effects("familiar exp");
       break;
+    case "Bear":
+      max_effects("damage");
+      max_effects("cold res");
+      break;
   }
 }
 
 void pvp_rollover()
 {
-  dress_for_pvp();
+//  dress_for_pvp();
   effects_for_pvp();
 }
 

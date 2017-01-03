@@ -1,59 +1,5 @@
 import "util/main.ash";
 
-item jim()
-{
-  if (item_amount($item[Comfy Pillow]) > 0)
-    return $item[Comfy Pillow];
-  if (item_amount($item[Sponge Cake]) > 0)
-    return $item[Sponge Cake];
-  return $item[none];
-}
-
-item flargwurm()
-{
-  if (item_amount($item[Booze-Soaked Cherry]) > 0)
-    return $item[Booze-Soaked Cherry];
-  if (jim() != $item[sponge cake] && item_amount($item[sponge cake]) == 1)
-    return $item[sponge cake];
-  if (item_amount($item[sponge cake]) > 1)
-    return $item[sponge cake];
-  return $item[none];
-}
-
-item bognort()
-{
-  if (item_amount($item[Giant Marshmallow]) > 0)
-    return $item[Giant Marshmallow];
-  if (item_amount($item[Gin-Soaked Blotter Paper]) > 0)
-    return $item[Gin-Soaked Blotter Paper];
-  return $item[none];
-}
-
-item stinkface()
-{
-  if (item_amount($item[Beer-Scented Teddy Bear]) > 0)
-    return $item[Beer-Scented Teddy Bear];
-  if (bognort() != $item[Gin-Soaked Blotter Paper] && item_amount($item[Gin-Soaked Blotter Paper]) == 1)
-    return $item[Gin-Soaked Blotter Paper];
-  if (item_amount($item[Gin-Soaked Blotter Paper]) > 1)
-    return $item[Gin-Soaked Blotter Paper];
-  return $item[none];
-}
-
-int backstage_items()
-{
-  int count = 0;
-  if (jim() != $item[none])
-    count += 1;
-  if (flargwurm() != $item[none])
-    count += 1;
-  if (bognort() != $item[none])
-    count += 1;
-  if (stinkface() != $item[none])
-    count += 1;
-
-  return count;
-}
 
 boolean laugh_loop()
 {
@@ -69,13 +15,6 @@ boolean laugh_loop()
     max = "combat, items";
 
   dg_adventure($location[the laugh floor], max);
-  progress(item_amount($item[imp air]), 5, "imp airs");
-  if (i_a($item[observational glasses]) == 0)
-  {
-    log("Still looking for the " + wrap($item[observational glasses]) + " also.");
-  } else {
-    log("We've found the " + wrap($item[observational glasses]) + ".");
-  }
   return true;
 }
 
@@ -90,38 +29,19 @@ boolean backstage_loop()
     max = "items, combat";
 
   dg_adventure($location[infernal rackets backstage], max);
-  progress(item_amount($item[bus pass]), 5, "bus passes");
-  string band = "";
-  if (jim() != $item[none])
-  {
-    band += "Jim";
-  }
-  if (flargwurm() != $item[none])
-  {
-    if (band != "")
-      band += ", ";
-    band += "Flargwurm";
-  }
-  if (bognort() != $item[none])
-  {
-    if (band != "")
-      band += ", ";
-    band += "Bognort";
-  }
-  if (stinkface() != $item[none])
-  {
-    if (band != "")
-      band += ", ";
-    band += "Stinkface";
-  }
-
-  progress(backstage_items(), 4, "backstage items (" + band + ")");
   return true;
 }
 
 boolean M06_pandemonium()
 {
-
+  foreach steel in $items[steel margarita,
+                          steel lasagna,
+                          steel-scented air freshener]
+  {
+    if (item_amount(steel) > 0)
+      try_consume(steel);
+  }
+  
   if (have_skill($skill[liver of steel]))
     return false;
   if (have_skill($skill[stomach of steel]))

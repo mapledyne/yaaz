@@ -18,6 +18,11 @@ boolean L09_SQ_oilpeak()
     progress = to_int(get_property("oilPeakProgress"));
   } until (progress == 0 || !b);
 
+  if (progress == 0 && !contains_text($location[oil peak].noncombat_queue, "Unimpressed with Pressure"))
+  {
+    dg_adventure($location[oil peak]);
+  }
+
   return true;
 }
 

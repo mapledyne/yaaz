@@ -75,7 +75,15 @@ boolean start_the_war(string side)
 
   maximize("", "filthy hippy disguise");
   if (!have_outfit(war_outfit()))
+  {
     log("Off to get the " + wrap(outfit, COLOR_ITEM) + " from the " + wrap(camp) + ".");
+
+    set_property("choiceAdventure141", 2); // random food
+    set_property("choiceAdventure142", 2); // random food
+    set_property("choiceAdventure145", 2); // random food
+    set_property("choiceAdventure146", 2); // random food
+
+  }
   while (!have_outfit(war_outfit()))
   {
     boolean b = dg_adventure(camp);
@@ -97,8 +105,8 @@ boolean start_the_war(string side)
 
   set_property("choiceAdventure143", 3); // fight war pledge
   set_property("choiceAdventure144", 3); // fight drill sergeant
-  set_property("choiceAdventure145", 4); // start the war
-  set_property("choiceAdventure146", 4); // start the war
+  set_property("choiceAdventure145", 3); // start the war
+  set_property("choiceAdventure146", 3); // start the war
 
   while (quest_status("warProgress") == UNSTARTED)
   {

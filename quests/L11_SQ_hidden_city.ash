@@ -308,10 +308,8 @@ boolean L11_SQ_hidden_city()
       return false;
 
     log("Trying to open the " + wrap("Hidden City", COLOR_LOCATION) + ".");
-    boolean b = dg_adventure($location[The Hidden Temple]);
-    if (!b)
-      return false;
 
+    visit_url("adventure.php?snarfblat=280");
     visit_url("choice.php?whichchoice=582&option=2&pwd");
     visit_url("choice.php?whichchoice=580&option=2&pwd");
     visit_url("choice.php?whichchoice=584&option=4&pwd");

@@ -1,5 +1,17 @@
 import "util/main.ash";
 
+boolean consume_ballroom_delay()
+{
+  if ($location[the haunted ballroom].turns_spent >= 5) return false;
+
+  while ($location[the haunted ballroom].turns_spent < 5)
+  {
+    boolean b = dg_adventure($location[the haunted ballroom], "");
+    if (!b) return true;
+  }
+  return true;
+}
+
 boolean M_spookyraven()
 {
   if (quest_status("questM20Necklace") == 4)
@@ -22,7 +34,9 @@ boolean M_spookyraven()
   }
 
   if (quest_status("questM21Dance") == FINISHED)
-    return false;
+  {
+    return consume_ballroom_delay();
+  }
 
   // bail if we're unlikely to kill things easily enough (using a representative monster):
   if (expected_damage($monster[malevolent hair clog]) > my_maxhp() / 10)

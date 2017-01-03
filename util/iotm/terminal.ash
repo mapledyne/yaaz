@@ -302,29 +302,47 @@ void terminal()
     if (item_amount(ext) >= 5)
     {
     // if we have plenty of food/booze, maybe consider getting something else:
-      if (!have_terminal_chip("CRAM") && item_amount($item[source essence]) > 1000 && have_terminal_file("cram.ext"))
+      if (!have_terminal_chip("CRAM")
+          && item_amount($item[source essence]) > 1000
+          && have_terminal_file("cram.ext"))
       {
         ext = $item[Source terminal CRAM chip];
       }
-      else if (!have_terminal_chip("DRAM") && item_amount($item[source essence]) > 1000 && have_terminal_file("dram.ext"))
+      else if (!have_terminal_chip("DRAM")
+               && item_amount($item[source essence]) > 1000
+               && have_terminal_file("dram.ext"))
       {
         ext = $item[Source terminal DRAM chip];
       }
-      else if (!have_terminal_chip("TRAM") && item_amount($item[source essence]) > 1000 && have_terminal_file("tram.ext"))
+      else if (!have_terminal_chip("TRAM")
+               && item_amount($item[source essence]) > 1000
+               && have_terminal_file("tram.ext"))
       {
         ext = $item[Source terminal TRAM chip];
       }
-      else if (to_int(get_property("sourceTerminalGram")) <  10 && item_amount($item[source essence]) > 100 && have_terminal_file("gram.ext"))
+      else if (to_int(get_property("sourceTerminalGram")) < 10
+               && item_amount($item[source essence]) > 100
+               && have_terminal_file("gram.ext"))
       {
         ext = $item[Source terminal GRAM chip];
       }
-      else if (to_int(get_property("sourceTerminalPram")) <  10 && item_amount($item[source essence]) > 100 && have_terminal_file("pram.ext"))
+      else if (to_int(get_property("sourceTerminalPram")) < 10
+               && item_amount($item[source essence]) > 100
+               && have_terminal_file("pram.ext"))
       {
         ext = $item[Source terminal PRAM chip];
       }
-      else if (to_int(get_property("sourceTerminalSpam")) <  10 && item_amount($item[source essence]) > 100 && have_terminal_file("spam.ext"))
+      else if (to_int(get_property("sourceTerminalSpam")) < 10
+               && item_amount($item[source essence]) > 100
+               && have_terminal_file("spam.ext"))
       {
         ext = $item[Source terminal SPAM chip];
+      }
+      else if (!have_familiar($familiar[software bug])
+               && item_amount($item[source essence]) > 10000
+               && have_terminal_file("familiar.ext"))
+      {
+        ext = $item[software bug];
       }
     }
 

@@ -216,7 +216,7 @@ boolean L11_SQ_desert()
         {
           count = count + 1;
           dg_adventure($location[The Oasis], "combat,  0.5 items");
-          if (count > 10)
+          if (count > 10 && item_amount($item[drum machine]) == 0)
           {
             error ("Took too long finding the " + wrap($item[drum machine]) + ". Aborting so we can find out why.");
             abort();

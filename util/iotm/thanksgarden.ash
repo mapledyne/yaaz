@@ -6,18 +6,11 @@ import "util/base/quests.ash";
 
 void harvest_thanksgarden()
 {
-  if (setting("thanksgarden_checked") == "true")
-    return;
-
-  string camp = visit_url('campground.php');
-  if (contains_text(camp, 'cornucopias') || my_daycount() == 1)
+  if (get_campground()[$item[cornucopia]] > 1)
   {
     log("Harvesting the " + wrap("Thanksgarden", COLOR_ITEM) + ".");
     visit_url('campground.php?action=garden');
   }
-
-  save_daily_setting("thanksgarden_checked", "true");
-
 }
 
 void stuffing()
