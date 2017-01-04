@@ -41,6 +41,20 @@ boolean overrides()
   return false;
 }
 
+boolean yz_adventure_bypass(location loc)
+{
+
+  boolean adv;
+
+  manuel_add_location(loc);
+  adv = adv1(loc, -1, "");
+
+  progress_sheet();
+
+  return adv;
+}
+
+
 boolean dg_adventure(location loc, string maximize)
 {
   if (my_inebriety() > inebriety_limit())
@@ -77,14 +91,7 @@ boolean dg_adventure(location loc, string maximize)
     maximize(maximize);
   }
 
-  boolean adv;
-
-  manuel_add_location(loc);
-  adv = adventure(1, loc);
-
-  progress_sheet();
-
-  return adv;
+  return yz_adventure_bypass(loc);
 }
 
 boolean dg_adventure(location loc)

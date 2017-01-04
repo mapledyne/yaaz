@@ -42,4 +42,12 @@ void main(int round, monster foe, string page)
     use_skill(1, $skill[digitize]);
   }
 
+  if (foe == $monster[your shadow] && have_skill($skill[Ambidextrous Funkslinging]))
+  {
+    // this could obviously use some much better finesse.
+    throw_items($item[gauze garter], $item[gauze garter]);
+    throw_items($item[gauze garter], $item[gauze garter]);
+    throw_items($item[gauze garter], $item[gauze garter]);
+  }
+
 }

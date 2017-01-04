@@ -27,6 +27,7 @@ boolean level_up()
     if (!do_leveling_thing()) return true;
   }
   log("Level Up! Now let's see what else we can do.");
+  council();
   return true;
 }
 

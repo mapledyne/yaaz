@@ -1,4 +1,5 @@
 import "util/main.ash";
+import "util/base/consume.ash";
 
 boolean have_staff_of_ed()
 {
@@ -35,9 +36,6 @@ void turn_wheel_until(int position)
     else if (item_amount($item[tomb ratchet]) > 0)
     {
       string v = visit_url("choice.php?whichchoice=929&option=2&pwd");
-    } else
-    {
-      abort("You should have a way to turn the wheels before getting here.");
     }
     current = to_int(get_property("pyramidPosition"));
   }
@@ -74,10 +72,10 @@ boolean L11_SQ_pyramid()
     dg_adventure($location[The Upper Chamber]);
   }
 
-  if (quest_status("questL11Pyramid") < 3)
+  if (quest_status("questL11Pyramid") < 3 || turners() < 10)
   {
     add_attract($monster[tomb rat]);
-    while (quest_status("questL11Pyramid") < 3)
+    while (quest_status("questL11Pyramid") < 3 || turners() < 10)
     {
       maximize("items");
       dg_adventure($location[The Middle Chamber]);
@@ -85,44 +83,32 @@ boolean L11_SQ_pyramid()
     remove_attract($monster[tomb rat]);
   }
 
-  if (to_boolean(get_property("lowerChamberUnlock")))
+  if (my_adventures() < 15) return false; // do this later.
+  // Should try consuming something at this point instead of just skipping
+
+
+  log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
+  turn_wheel_until(4);
+  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+
+  log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
+  turn_wheel_until(3);
+  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+
+  log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
+  turn_wheel_until(1);
+  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+
+  log("Off to fight " + wrap($monster[ed the undying]) + ".");
+  maximize("");
+  while (item_amount($item[[7965]Holy MacGuffin]) == 0)
   {
-    log("Off to fight " + wrap($monster[ed the undying]) + ".");
-    dg_adventure($location[the lower chambers], "");
-    log("Visiting the council to turn in the " + wrap($item[[7965]Holy MacGuffin]) + ".");
-    council();
-    return true;
+    yz_adventure_bypass($location[the lower chambers]);
   }
-
-  if (item_amount($item[ancient bomb]) > 0)
-  {
-    log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
-    turn_wheel_until(1);
-    visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-    return true;
-  }
-
-
-  if (item_amount($item[ancient bronze token]) > 0)
-  {
-    log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
-    turn_wheel_until(3);
-    visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-    return true;
-  }
-
-  if (item_amount($item[ancient bronze token]) == 0)
-  {
-    log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
-    turn_wheel_until(4);
-    visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-    return true;
-  }
-
-  log("Ed should be unlocked?");
-  wait(15);
-
+  log("Visiting the council to turn in the " + wrap($item[[7965]Holy MacGuffin]) + ".");
+  council();
   return true;
+
 }
 
 void main()

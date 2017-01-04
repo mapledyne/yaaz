@@ -353,6 +353,7 @@ void max_effects(string target, boolean aggressive)
       // consider this, but it's also -10% all stats...
       // effect_maintain($effect[heavy petting]);
       effect_maintain($effect[empathy]);
+      effect_maintain($effect[leash of linguini]);
       effect_maintain($effect[loyal tea]);
       effect_maintain($effect[heart of green]);
       effect_maintain($effect[Over-Familiar With Dactyls]);

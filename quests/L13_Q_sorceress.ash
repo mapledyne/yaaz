@@ -148,7 +148,7 @@ void max_contest(string max, int num)
   if (baddies >= 0)
     return;
 
-  log("Heading to the Naught Sorceress's contest. Next up, " + max + "!");
+  log("Heading to the Naughty Sorceress's contest. Next up, " + max + "!");
   switch (to_lower_case(max))
   {
     default:
@@ -242,6 +242,85 @@ boolean contest_race()
   return false;
 }
 
+boolean hedge_maze_hard_way()
+{
+  error("The alternate path on the hedge maze isn't automated yet, sorry.");
+  wait(5);
+  return false;
+}
+
+boolean hedge_maze()
+{
+  boolean hard_way = false;
+
+  maximize("all res");
+  foreach el in $elements[hot, cold, sleaze, spooky, stench]
+  {
+    if (elemental_resistance(el) < 65) hard_way = true;
+  }
+  if (hard_way)
+  {
+    return hedge_maze_hard_way();
+  }
+  set_property("choiceAdventure1004", 1);
+  set_property("choiceAdventure1005", 2);
+  set_property("choiceAdventure1008", 2);
+  set_property("choiceAdventure1011", 2);
+
+  restore_hp(my_maxhp() * 0.95);
+
+  yz_adventure_bypass($location[the hedge maze]);
+
+  return true;
+}
+
+boolean door_keys()
+{
+  string collection = visit_url('place.php?whichplace=nstower_door');
+
+  log("Unlocking the perplexing tower door.");
+
+  if (contains_text(collection, "lock_boris.gif"))
+  {
+    log("Using the " + wrap($item[boris's key]));
+    visit_url('place.php?whichplace=nstower_door&action=ns_lock1');
+  }
+
+  if (contains_text(collection, "lock_jarlsberg.gif"))
+  {
+    log("Using the " + wrap($item[jarlsberg's key]));
+    visit_url('place.php?whichplace=nstower_door&action=ns_lock2');
+  }
+
+  if (contains_text(collection, "lock_pete.gif"))
+  {
+    log("Using the " + wrap($item[sneaky pete's key]));
+    visit_url('place.php?whichplace=nstower_door&action=ns_lock3');
+  }
+
+  if (contains_text(collection, "lock_star.gif"))
+  {
+    log("Using the " + wrap($item[richard's star key]));
+    visit_url('place.php?whichplace=nstower_door&action=ns_lock4');
+  }
+
+  if (contains_text(collection, "lock_digital.gif"))
+  {
+    log("Using the " + wrap($item[digital key]));
+    visit_url('place.php?whichplace=nstower_door&action=ns_lock5');
+  }
+
+  if (contains_text(collection, "lock_skeleton.gif"))
+  {
+    log("Using the " + wrap($item[skeleton key]));
+    visit_url('place.php?whichplace=nstower_door&action=ns_lock6');
+  }
+
+  visit_url('place.php?whichplace=nstower_door&action=ns_doorknob');
+
+  return true;
+}
+
 boolean loop_tower(int level)
 {
   switch(level)
@@ -270,11 +349,9 @@ boolean loop_tower(int level)
       visit_url("choice.php?pwd=&whichchoice=1022&option=1");
       return true;
     case 4:
-      log("Hedge Maze is not yet automated.");
-      return false;
+      return hedge_maze();
     case 5:
-      log("Perplexing door keys not yet automated.");
-      return false;
+      return door_keys();
     case 6:
       return wall_of_skin();
     case 7:

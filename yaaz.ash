@@ -30,12 +30,22 @@ import "util/iotm/protonic.ash";
 
 import "util/base/level_up.ash";
 
+int current_level;
+
 boolean ascend_loop()
 {
 
   if (!can_adventure())
     return false;
 
+
+  if (current_level != my_level())
+  {
+    log("We've gained a level. Checking out the council to see what's new.");
+    current_level = my_level();
+    council();
+  }
+  
   // returning true here ultimately just causes us to start this
   // function over again.
   // If you do no work in one of these functions, you should
@@ -92,6 +102,8 @@ boolean ascend_loop()
 
 void ascend()
 {
+  current_level = my_level();
+
   day_begin();
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);
