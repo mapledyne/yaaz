@@ -2,6 +2,8 @@ import "util/base/print.ash";
 import "util/base/util.ash";
 import "util/base/settings.ash";
 
+boolean DEBUG_TROPHY = false;
+
 string COLOR_TROPHY = "blue";
 
 void trophy_progress(int cur, int max, string msg)
@@ -78,85 +80,35 @@ int [item] parse_consumables()
 
 }
 
-void black_pudding()
-{
-	if (!(trophies contains 60))
-		return;
 
-	int eaten = consumed[$item[black pudding]];
-	eaten = eaten * 0.35;
-  if (eaten < 240)
-  {
-    trophy_progress(eaten, 240, "Awwww, Yeah trophy progress (approx)");
-  } else {
-		trophy_progress(eaten, 240, "Awwww, Yeah trophy should be available soon");
+void basic_consumption_trophy(item it, int qty, int trophy, string parens)
+{
+	if (!(trophies contains trophy) && !DEBUG_TROPHY) return;
+
+	int eaten = consumed[it];
+	if (eaten == 0) return;
+
+	string name = all_trophies[trophy].name;
+
+	if (length(parens) > 0) parens = " (" + parens + ")";
+
+	if (eaten < qty)
+	{
+		trophy_progress(eaten, qty, name + " progress" + parens);
+		int price = historical_price(it);
+		if (price > 0)
+		{
+			int total = (qty - eaten) * price;
+			log("Price of one " + wrap(it) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
+		}
+	} else {
+		trophy_progress(eaten, qty, name + " trophy should be available" + parens);
 	}
 }
 
-void gyros()
+void basic_consumption_trophy(item it, int qty, int trophy)
 {
-	if (!(trophies contains 129))
-		return;
-
-	int eaten = consumed[$item[warbear gyro]];
-	if (eaten < 108)
-	{
-		trophy_progress(eaten, 108, "Gyro Hero trophy progress");
-		int price = historical_price($item[warbear gyro]);
-		int total = (108 - eaten) * price;
-		log("Price of a " + wrap($item[warbear gyro]) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
-	} else {
-		trophy_progress(eaten, 108, "Gyro Hero trophy should be available");
-	}
-
-}
-
-void milk()
-{
-	if (!(trophies contains 147))
-		return;
-
-	int eaten = consumed[$item[gallon of milk]];
-	if (eaten < 7)
-	{
-		trophy_progress(eaten, 7, "Gallon of Milk trophy progress");
-		int price = historical_price($item[gallon of milk]);
-		int total = (7 - eaten) * price;
-		log("Price of a " + wrap($item[gallon of milk]) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
-	} else {
-		trophy_progress(eaten, 7, "Gallon of Milk trophy should be available");
-	}
-
-}
-
-void bloodweiser()
-{
-	if (!(trophies contains 117))
-		return;
-
-	int eaten = consumed[$item[bottle of bloodweiser]];
-	if (eaten < 50)
-	{
-		trophy_progress(eaten, 50, "Full Heart trophy progress");
-	} else {
-		trophy_progress(eaten, 50, "Full Heart trophy should be available (have Blood Porter effect)");
-	}
-
-}
-
-void koolaid()
-{
-	if (!(trophies contains 118))
-		return;
-
-	int eaten = consumed[$item[electric Kool-Aid]];
-	if (eaten < 50)
-	{
-		trophy_progress(eaten, 50, "Extended Capacity trophy progress");
-	} else {
-		trophy_progress(eaten, 50, "Extended Capacity trophy should be available (have Electrtic, Kool effect)");
-	}
-
+	basic_consumption_trophy(it, qty, trophy, "");
 }
 
 
@@ -251,7 +203,7 @@ void spirits()
 
 	if (drank < 66)
 	{
-		trophy_progress(drank, 66, "Siphoned Spirits trophy progress");
+		trophy_progress(drank, 66, "Siphoned Spirits progress");
 		string suggest;
 		int count = 0;
 		foreach it in missing_list
@@ -301,22 +253,72 @@ void royalty()
 		progress(to_int(get_property("royalty")), max, "royalty", "blue");
 		int price = historical_price($item[cuppa royal tea]);
 		int total = (max - to_int(get_property("royalty"))) * price;
-		log("Price of a " + wrap($item[cuppa royal tea]) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
+		log("Price of one " + wrap($item[cuppa royal tea]) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
 
 	}
+}
+
+int familiar_weight_total()
+{
+	int total = 0;
+	foreach f in $familiars[]
+	{
+		if (have_familiar(f))
+		{
+			total += familiar_weight(f);
+		}
+	}
+	return total;
+}
+
+
+void basic_trophy(int have, int needed, int trophy)
+{
+	if (!(trophies contains trophy) && !DEBUG_TROPHY) return;
+
+	string msg = all_trophies[trophy].name;
+
+	if (have < needed)
+	{
+		msg += " progress";
+	} else {
+		msg += " should be avaiable";
+	}
+
+	trophy_progress(have, needed, msg);
+
 }
 
 void trophy()
 {
 	consumed = parse_consumables();
 	trophies = parse_trophies();
-	black_pudding();
-	gyros();
-	spirits();
-	bloodweiser();
-	koolaid();
-	milk();
-	royalty();
+	basic_consumption_trophy($item[white canadian], 30, 3);
+	basic_trophy(familiar_weight_total(), 100, 4);
+	basic_trophy(familiar_weight_total(), 300, 5);
+	basic_consumption_trophy($item[spaghetti with Skullheads], 5, 9);
+	basic_consumption_trophy($item[tomato daiquiri], 5, 10);
+	basic_consumption_trophy($item[ghuol guolash], 11, 11);
+	basic_consumption_trophy($item[herb brownies], 420, 14);
+	basic_consumption_trophy($item[white chocolate and tomato pizza], 5, 15);
+	basic_trophy(familiar_weight_total(), 500, 16);
+	basic_consumption_trophy($item[lucky surprise egg], 50, 17);
+	if (in_hardcore()) basic_trophy(my_meat(), 1000000, 34);
+	if (my_class() == $class[seal clubber]) basic_trophy(my_level(), 30, 40);
+	if (my_class() == $class[turtle tamer]) basic_trophy(my_level(), 30, 41);
+	if (my_class() == $class[pastamancer]) basic_trophy(my_level(), 30, 42);
+	if (my_class() == $class[sauceror]) basic_trophy(my_level(), 30, 43);
+	if (my_class() == $class[disco bandit]) basic_trophy(my_level(), 30, 44);
+	if (my_class() == $class[accordion thief]) basic_trophy(my_level(), 30, 44);
+	basic_consumption_trophy($item[black pudding], 446, 60, "very approx");
+	basic_consumption_trophy($item[around the world], 80, 61);
+	spirits(); // 105
+	basic_consumption_trophy($item[bottle of bloodweiser], 50, 117, "need Blood Porder effect, also");
+	basic_consumption_trophy($item[electric Kool-Aid], 50, 118, "need Electric, Kool effect, also");
+	basic_consumption_trophy($item[warbear gyro], 50, 129);
+	basic_consumption_trophy($item[gallon of milk], 7, 147);
+	royalty(); // not a trophy, but seems to fit here in the spirit of things.
+
 }
 
 void main()
