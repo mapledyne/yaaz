@@ -61,8 +61,8 @@ boolean L05_Q_goblin()
     while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
       dg_adventure(outskirts, "");
-      return true;
     }
+    return true;
   }
 
   if (quest_status("questL05Goblin") == FINISHED)

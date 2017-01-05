@@ -55,7 +55,7 @@ void get_hippy_disguise()
 {
   if (!have_outfit("filthy hippy disguise"))
   {
-    log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + " first.");
+    log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + ".");
     while (!have_outfit("filthy hippy disguise"))
     {
       boolean b = dg_adventure($location[hippy camp]);

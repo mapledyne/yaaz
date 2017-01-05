@@ -312,10 +312,25 @@ void trophy()
 	if (my_class() == $class[accordion thief]) basic_trophy(my_level(), 30, 44);
 	basic_consumption_trophy($item[black pudding], 446, 60, "very approx");
 	basic_consumption_trophy($item[around the world], 80, 61);
+	basic_trophy(to_int(get_property("camerasUsed")), 40, 90);
+	if (my_path() == "Way of the Surprising Fist") basic_trophy(to_int(get_property("totalCharitableDonations")), 1000000, 100);
+	if (my_path() == "Avatar of Boris") basic_trophy(my_level(), 30, 104);
 	spirits(); // 105
+	if (my_path() == "Avatar of Jarlsberg") basic_trophy(my_level(), 30, 113);
 	basic_consumption_trophy($item[bottle of bloodweiser], 50, 117, "need Blood Porder effect, also");
 	basic_consumption_trophy($item[electric Kool-Aid], 50, 118, "need Electric, Kool effect, also");
+	basic_trophy(to_int(get_property("boneAbacusVictories")), 1000, 124);
 	basic_consumption_trophy($item[warbear gyro], 50, 129);
+	if (my_path() == "Avatar of Sneaky Pete") basic_trophy(my_level(), 30, 136);
+	basic_consumption_trophy($item[mini-martini], 7, 139);
+
+	int spel = 0;
+	for x from 0 to length(get_property("spelunkyUpgrades")) - 1
+	{
+		if (char_at(get_property("spelunkyUpgrades"), x) == 'Y') spel++;
+	}
+	basic_trophy(spel, 9, 140);
+
 	basic_consumption_trophy($item[gallon of milk], 7, 147);
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 

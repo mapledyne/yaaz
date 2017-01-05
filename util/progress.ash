@@ -72,7 +72,7 @@ void progress_sheet_detail(string detail)
   if (do_detail("smiles", detail)
       && smiles_remaining() > 0)
   {
-    progress(5 - smiles_remaining(), total_smiles(), "smiles from your Golden Mr. Accessory");
+    progress(5 - smiles_remaining(), total_smiles(), "smiles from your Golden Mr. Accessory", "blue");
   }
 
   if (do_detail("floundry", detail)
@@ -97,7 +97,7 @@ void progress_sheet_detail(string detail)
       && to_int(get_property("_snojoFreeFights")) < 10)
   {
     int fights = to_int(get_property("_snojoFreeFights"));
-    progress(fights, 10, "freesnojo fights", "blue");
+    progress(fights, 10, "free snojo fights", "blue");
   }
 
   if (do_detail("protonic", detail)
@@ -121,7 +121,7 @@ void progress_sheet_detail(string detail)
 
     if (used < 10)
     {
-      progress(used, 10, "Time Spinner minutes used", "blue");
+      progress(used, 10, wrap($item[time spinner]) + " minutes used", "blue");
       if (!to_boolean(get_property("_timeSpinnerReplicatorUsed")))
       {
         task("use Time Spinner replicator");
@@ -216,19 +216,51 @@ void progress_sheet(string detail)
 
   if (quest_status("questM12Pirate") > 0 && quest_status("questM12Pirate") < 5)
   {
-    // list taken from the excellent "guide" relay script:
-    float [int] insult_success_likelyhood;
-    insult_success_likelyhood[0] = 0;
-    insult_success_likelyhood[1] = 0;
-    insult_success_likelyhood[2] = 0;
-    insult_success_likelyhood[3] = 1.79;
-    insult_success_likelyhood[4] = 7.1;
-    insult_success_likelyhood[5] = 17.86;
-    insult_success_likelyhood[6] = 35.7;
-    insult_success_likelyhood[7] = 62.5;
-    insult_success_likelyhood[8] = 100;
     int current = pirate_insults();
-    progress(current, 8, "pirate insults (" + insult_success_likelyhood[current] + "% chance)");
+    progress(current, 8, "pirate insults (" + pirate_insult_success() + "% chance)");
+  }
+
+  if (quest_status("questM12Pirate") == 5)
+  {
+
+    string mop = UNCHECKED;
+    string ball = UNCHECKED;
+    string shampoo  = UNCHECKED;
+    int fledge_count = 0;
+    if (item_amount($item[mizzenmast mop]) > 0)
+    {
+      mop = CHECKED;
+      fledge_count++;
+    }
+    if (item_amount($item[ball polish]) > 0)
+    {
+      ball = CHECKED;
+      fledge_count++;
+    }
+    if (item_amount($item[rigging shampoo]) > 0)
+    {
+      shampoo = CHECKED;
+      fledge_count++;
+    }
+
+    progress(fledge_count, 3, wrap($location[The F'c'le]) + " items (" + mop + "Mop, " + ball + "Polish, " + shampoo + "Shampoo)");
+
+  }
+
+  if (quest_active("questL02Larva"))
+  {
+    task("Find the " + wrap($item[mosquito larva]));
+  }
+
+  if (quest_active("questL04Bat"))
+  {
+    int walls = quest_status("questL04Bat");
+    if (walls < 4)
+    {
+      progress(walls, 3, "walls destroyed in the " + wrap("Bat Hole", COLOR_LOCATION));
+    } else {
+      task("Defeat the " + wrap($monster[boss bat]));
+    }
   }
 
   if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)
@@ -318,36 +350,43 @@ void progress_sheet(string detail)
 
   }
 
-  // TODO: Count hot wings?
+  if (quest_status("questL06Friar") > UNSTARTED
+      && quest_status("questM12Pirate") < 3
+      && item_amount($item[hot wing]) < 3)
+  {
+    progress(item_amount($item[hot wing]), 3, wrap($item[hot wing], 3) + " for use with the " + wrap($item[orcish frat house blueprints]));
+  }
 
   if (quest_active("questL07Cyrptic"))
   {
     int evil = 200 - to_int(get_property("cyrptTotalEvilness"));
     progress(evil, 200, "Cyrpt progress");
-    if (get_property("cyrptAlcoveEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in Alcove");
+    if (get_property("cyrptAlcoveEvilness").to_int() > 0 && get_property("cyrptAlcoveEvilness").to_int() < 50)
+      progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled alcove]));
 
-    if (get_property("cyrptCrannyEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in Cranny");
+    if (get_property("cyrptCrannyEvilness").to_int() > 0 && get_property("cyrptCrannyEvilness").to_int() < 50)
+      progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled cranny]));
 
-    if (get_property("cyrptNicheEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in Niche");
+    if (get_property("cyrptNicheEvilness").to_int() > 0 && get_property("cyrptNicheEvilness").to_int() < 50)
+      progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled niche]));
 
-    if (get_property("cyrptNookEvilness").to_int() > 0)
-      progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in Nook");
+    if (get_property("cyrptNookEvilness").to_int() > 0 && get_property("cyrptNookEvilness").to_int() < 50)
+      progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled nook]));
 
   }
 
-  int ore = item_amount($item[asbestos ore]);
-  if (quest_status("questL08Trapper") < 2 && ore > 0 && ore < 3)
+  if (quest_status("questL08Trapper") == 1)
   {
-    progress(ore, 3, "ore for the trapper");
-  }
+    item ore_wanted = to_item(get_property("trapperOre"));
+    if (ore_wanted != $item[none])
+    {
+      int ore = item_amount(ore_wanted);
+      progress(ore, 3, wrap(ore_wanted) + " for the trapper");
 
-  int cheese = item_amount($item[goat cheese]);
-  if (quest_status("questL08Trapper") < 2 && cheese > 0 && cheese < 3)
-  {
-    progress(cheese, 3, "cheese for the trapper");
+      int cheese = item_amount($item[goat cheese]);
+      progress(cheese, 3, wrap($item[goat cheese]) + " for the trapper");
+    }
+
   }
 
   if (quest_status("questL08Trapper") == 3

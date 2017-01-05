@@ -1,5 +1,92 @@
 import "util/main.ash";
 
+// stolen from cc_ascend, which has other great work in it, too.
+string beer_pong(string page)
+{
+	record r {
+		string insult;
+		string retort;
+	};
+
+	r [int] insults;
+	insults[1].insult="Arrr, the power of me serve'll flay the skin from yer bones!";
+	insults[1].retort="Obviously neither your tongue nor your wit is sharp enough for the job.";
+	insults[2].insult="Do ye hear that, ye craven blackguard?  It be the sound of yer doom!";
+	insults[2].retort="It can't be any worse than the smell of your breath!";
+	insults[3].insult="Suck on <i>this</i>, ye miserable, pestilent wretch!";
+	insults[3].retort="That reminds me, tell your wife and sister I had a lovely time last night.";
+	insults[4].insult="The streets will run red with yer blood when I'm through with ye!";
+	insults[4].retort="I'd've thought yellow would be more your color.";
+	insults[5].insult="Yer face is as foul as that of a drowned goat!";
+	insults[5].retort="I'm not really comfortable being compared to your girlfriend that way.";
+	insults[6].insult="When I'm through with ye, ye'll be crying like a little girl!";
+	insults[6].retort="It's an honor to learn from such an expert in the field.";
+	insults[7].insult="In all my years I've not seen a more loathsome worm than yerself!";
+	insults[7].retort="Amazing!  How do you manage to shave without using a mirror?";
+	insults[8].insult="Not a single man has faced me and lived to tell the tale!";
+	insults[8].retort="It only seems that way because you haven't learned to count to one.";
+
+	while(!page.contains_text("victory laps"))
+	{
+		string old_page = page;
+
+		if(!page.contains_text("Insult Beer Pong"))
+		{
+			abort("You don't seem to be playing Insult Beer Pong.");
+		}
+
+		if(page.contains_text("Phooey"))
+		{
+			log("Looks like something went wrong and you lost.");
+			return page;
+		}
+
+		foreach i in insults
+		{
+			if(page.contains_text(insults[i].insult))
+			{
+				if(page.contains_text(insults[i].retort))
+				{
+					log("Found appropriate retort for insult.");
+					log("Insult: " + insults[i].insult);
+					log("Retort: " + insults[i].retort);
+					page = visit_url("beerpong.php?value=Retort!&response=" + i);
+					break;
+				}
+				else
+				{
+					warning("Looks like you needed a retort you haven't learned.");
+					log("Insult: " + insults[i].insult);
+					log("Retort: " + insults[i].retort);
+
+					// Give a bad retort
+					page = visit_url("beerpong.php?value=Retort!&response=9");
+					return page;
+				}
+			}
+		}
+
+		if(page == old_page)
+		{
+			abort("String not found. There may be an error with one of the insult or retort strings.");
+		}
+	}
+
+	log("You won a thrilling game of Insult Beer Pong!");
+	return page;
+}
+
+boolean try_beer_pong()
+{
+  set_property("choiceAdventure187", "0");
+	string page = visit_url("adventure.php?snarfblat=157");
+	if(contains_text(page, "Arrr You Man Enough?"))
+	{
+    log("Attempting beer pong. Chance of success is " + pirate_insult_success() + "%.");
+		page = beer_pong(visit_url("choice.php?pwd&whichchoice=187&option=1"));
+	}
+	return contains_text(page, "Victory Laps");
+}
 
 void open_belowdecks()
 {
@@ -63,13 +150,15 @@ boolean get_talisman()
 
 boolean get_getup()
 {
+  if (my_basestat($stat[moxie]) < 25) return false;
+
   if (have_outfit("swashbuckling getup"))
     return false;
 
   log("Get the swashbuckling getup...");
   while(!have_outfit("swashbuckling getup"))
   {
-    boolean b = dg_adventure($location[The Obligatory Pirate's Cove]);
+    boolean b = dg_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
     if (!b) return true;
   }
   return true;
@@ -83,9 +172,12 @@ boolean collect_insults()
   if (pirate_insults() >= 6)
     return false;
 
+  set_property("choiceAdventure187", "2");
+
   while (pirate_insults() < 6)
   {
-    if (item_amount($item[Cap'm Caronch's Map]) > 0)
+    if (item_amount($item[Cap'm Caronch's Map]) > 0
+        && item_amount($item[Cap'm Caronch's nasty booty]) == 0)
     {
       log("Off to fight the " + wrap($monster[booty crab]) + ".");
       maximize("");
@@ -93,11 +185,10 @@ boolean collect_insults()
       return true;
     }
 
-    maximize("", "swashbuckling getup");
+    maximize("combat", "swashbuckling getup");
     boolean b = dg_adventure($location[Barrrney's barrr]);
     if (!b) return true;
   }
-  log(wrap(pirate_insults(), COLOR_ITEM) + " pirate insults discovered.");
   return true;
 }
 
@@ -151,25 +242,26 @@ boolean get_skirt()
 boolean fcle()
 {
 
-  if (i_a($item[pirate fledges]) == 0) return false;
+  if (i_a($item[pirate fledges]) > 0) return false;
+  if (quest_status("questM12Pirate") < 5) return false;
 
   // The ordering here determines what familiar is used.
   // If we left it always at "combat, items" and didn't have the dog,
   // it'd default to a 'default' familiar, and we want to fall back to an
   // items familiar in this case.
   string max = "items, combat";
-  if (have_familiar($familiar[jumpsuited hound dog]))
+  if (have_familiar($familiar[jumpsuited hound dog]) && setting("100familiar") == "")
   {
     max = "combat, items";
   }
 
   log("Off to get our " + wrap($item[pirate fledges]) + ".");
 
-  while ((item_amount($item[rigging shampoo]) == 0)
-         && (item_amount($item[ball polish]) == 0)
-         && (item_amount($item[mizzenmast mop]) == 0))
+  while (item_amount($item[rigging shampoo]) == 0
+         || item_amount($item[ball polish]) == 0
+         || item_amount($item[mizzenmast mop]) == 0)
   {
-    maximize(max);
+    maximize(max, "swashbuckling getup");
     boolean b = dg_adventure($location[The F\'c\'le]);
     if (!b) return true;
   }
@@ -215,11 +307,20 @@ boolean M_pirates()
 
   if (get_blueprints()) return true;
 
-  if (quest_status("questM12Pirate") == 5)
+  if (quest_status("questM12Pirate") == 2)
   {
     if (get_skirt()) return true;
     equip($item[frilly skirt]);
+    set_property("choiceAdventure188", 3);
     use(1, $item[orcish frat house blueprints]);
+    return true;
+  }
+
+  if (quest_status("questM12Pirate") > 2
+      && quest_status("questM12Pirate") < 5)
+  {
+    outfit("swashbuckling getup");
+    while(!try_beer_pong()) { }
     return true;
   }
 

@@ -49,7 +49,8 @@ void day_end()
 void main()
 {
 	warning("This script will consume resources as if you're at the end of your day.");
-	warning("If you want to adventure more, press ESC now. This script can cause you to overdrink!");
+	warning("If you want to adventure more, press ESC now.");
+  warning("This script will prep you for rollover, but won't make you overdrink. Do that manually.");
 	wait(15);
 	day_end();
 }

@@ -32,13 +32,15 @@ boolean toot()
   {
     log("Visiting " + wrap("The Toot Oriole", COLOR_LOCATION) + " to kick things off.");
     visit_url("tutorial.php?action=toot");
+    council();
   }
   return false;
 }
 
 boolean continuum()
 {
-  if(i_a($item[continuum transfunctioner]) > 0)
+  if (i_a($item[continuum transfunctioner]) > 0
+      || quest_status("questL02Larva") == UNSTARTED)
     return false;
 
   log("Going to get the " + wrap($item[continuum transfunctioner]) + " from the mystic.");

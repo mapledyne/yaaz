@@ -188,10 +188,6 @@ void pvp()
     log(CLUB + " PVP swagger: " + get_property("availableSwagger"));
     int totalSwag = to_int(get_property(PVP_SWAGGER));
     log(CLUB + " " + PVP_SEASON + " swagger: " + totalSwag);
-    if (totalSwag > 1000)
-    {
-      log(CLUB + " You've earned enough swagger to get the seasonal item if you haven't already picked it up.");
-    }
     wait(5);
   }
 

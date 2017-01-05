@@ -16,6 +16,7 @@ bit-o-cactus	0
 Black Pixel	0
 Clay Peace-Sign Bead	0
 Decorative Fountain	0
+diamond-studded cane	0
 dollar-sign bag	0
 Empty Cloaca-Cola Bottle	0
 Enchanted Barbell	0

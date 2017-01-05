@@ -3,6 +3,8 @@ import "util/base/consume.ash";
 import "util/base/quests.ash";
 import "util/base/util.ash";
 
+
+
 item effect_to_item(effect ef)
 {
   item def = $item[none];
@@ -144,6 +146,7 @@ void effect_maintain(effect ef)
   {
     if (have_skill(sk))
     {
+      if (is_turtle_buff(sk) && i_a($item[turtle totem]) == 0) return;
       log("Adding effect " + wrap(ef) + " by casting " + wrap(sk) + ".");
       if (is_song(ef))
       {
@@ -239,6 +242,8 @@ void cast_surplus_mp()
     if(my_mp() < (my_maxmp() * 0.8))
       break;
     skill sk = to_skill(effect_list[ef]);
+    if (is_turtle_buff(sk) && i_a($item[turtle totem]) == 0)
+      continue;
     log("Casting " + wrap(sk) + " to use up surplus MP.");
     use_skill(1, sk);
   }

@@ -66,3 +66,21 @@ int pirate_insults()
   }
   return count;
 }
+
+float pirate_insult_success()
+{
+  float [int] insult_success_likelyhood;
+  insult_success_likelyhood[0] = 0;
+  insult_success_likelyhood[1] = 0;
+  insult_success_likelyhood[2] = 0;
+  insult_success_likelyhood[3] = 1.79;
+  insult_success_likelyhood[4] = 7.1;
+  insult_success_likelyhood[5] = 17.86;
+  insult_success_likelyhood[6] = 35.7;
+  insult_success_likelyhood[7] = 62.5;
+  insult_success_likelyhood[8] = 100;
+  int current = pirate_insults();
+
+  return insult_success_likelyhood[current];
+
+}

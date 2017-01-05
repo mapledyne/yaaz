@@ -146,6 +146,17 @@ skill thrall_to_skill(thrall slave)
   }
 }
 
+boolean is_turtle_buff(skill sk)
+{
+  return (sk.class == $class[turtle tamer] && sk.buff);
+}
+
+boolean is_turtle_buff(effect ef)
+{
+  skill sk = to_skill(ef);
+  return is_turtle_buff(sk);
+}
+
 boolean is_song(skill sk)
 {
   return (sk.class == $class[accordion thief] && sk.buff);
