@@ -49,6 +49,15 @@ boolean yz_adventure_bypass(location loc)
   manuel_add_location(loc);
   adv = adv1(loc, -1, "");
 
+  if (loc == $location[the haunted bedroom])
+  {
+    string v = visit_url("/campground.php");
+    if (contains_text(v, "the now-still nightstand"))
+    {
+      adv = adv1(loc, -1, "");
+    }
+  }
+
   progress_sheet();
 
   return adv;

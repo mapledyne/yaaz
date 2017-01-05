@@ -121,7 +121,7 @@ void progress_sheet_detail(string detail)
 
     if (used < 10)
     {
-      progress(used, 10, wrap($item[time spinner]) + " minutes used", "blue");
+      progress(used, 10, wrap($item[time-spinner]) + " minutes used", "blue");
       if (!to_boolean(get_property("_timeSpinnerReplicatorUsed")))
       {
         task("use Time Spinner replicator");

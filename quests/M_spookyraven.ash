@@ -14,23 +14,23 @@ boolean consume_ballroom_delay()
 
 boolean M_spookyraven()
 {
-  if (quest_status("questM20Necklace") == 4)
+  if (item_amount($item[lady spookyraven's necklace]) > 0)
   {
-    log("Returning the " + wrap($item[ghost of a necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER) + ".");
+    log("Returning " + wrap($item[lady spookyraven's necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER) + ".");
     visit_url("place.php?whichplace=manor1&action=manor1_ladys");
+    return true;
+  }
+
+  if (quest_status("questM20Necklace") == FINISHED && quest_status("questM21Dance") < 1)
+  {
+    log("Talking to " + wrap("Lady Spookyraven", COLOR_MONSTER) + " to see about dancing.");
+    visit_url("place.php?whichplace=manor2&action=manor2_ladys");
     return true;
   }
 
   if (quest_status("questM21Dance") < 0)
   {
     return false;
-  }
-
-  if (quest_status("questM21Dance") == 0)
-  {
-    log("Talking to " + wrap("Lady Spookyraven", COLOR_MONSTER) + " to see about dancing.");
-    visit_url("place.php?whichplace=manor2&action=manor2_ladys");
-    return true;
   }
 
   if (quest_status("questM21Dance") == FINISHED)

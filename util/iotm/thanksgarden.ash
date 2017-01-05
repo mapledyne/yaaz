@@ -59,6 +59,11 @@ void thanksgarden()
 
   harvest_thanksgarden();
 
+  if (quest_status("questL07Cyrptic") < FINISHED)
+  {
+    stock_item($item[gravy boat]);
+  }
+
   stuffing();
 }
 

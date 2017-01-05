@@ -3,6 +3,7 @@ import "util/base/util.ash";
 import "util/base/settings.ash";
 import "util/iotm/clanvip.ash";
 import "util/base/util.ash";
+import "util/base/quests.ash";
 
 boolean is_spleen_item(item it);
 boolean is_booze_item(item it);
@@ -21,8 +22,11 @@ boolean drunk();
 
 boolean block_auto_consume(item it)
 {
-  return ($items[baked stuffing,
-                 sandwich of the gods,
+
+  if (it == $item[baked stuffing] && quest_status("questL12War") != FINISHED) return true;
+  if (it == $item[warm gravy] && quest_status("questL07Cyrptic") != FINISHED) return true;
+
+  return ($items[sandwich of the gods,
                  grim fairy tale,
                  groose grease,
                  powdered gold,

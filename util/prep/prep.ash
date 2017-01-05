@@ -17,6 +17,8 @@ import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
 import "util/iotm/deck.ash";
 
+import <zlib.ash>
+
 void meat_cast(skill sk, effect ef, int avg)
 {
 
@@ -219,6 +221,27 @@ void cast_things(location loc)
   }
 }
 
+void cast_if(skill sk, boolean doit)
+{
+  if (!doit) return;
+  if (!have_skill(sk)) return;
+  if (!be_good(sk)) return;
+
+  if (my_mp() < (mp_cost(sk) * 5)) return; // wait until we have an MP buffer
+
+  use_skill(1, sk);
+}
+
+void cast_one_time_things()
+{
+  cast_if($skill[Advanced Cocktailcrafting], to_int(get_property("cocktailSummons")) == 0);
+  cast_if($skill[Advanced Saucecrafting], to_int(get_property("reagentSummons")) == 0);
+  cast_if($skill[Pastamastery], to_int(get_property("noodleSummons")) == 0);
+  cast_if($skill[summon crimbo candy], to_int(get_property("_candySummons")) == 0);
+  cast_if($skill[Perfect Freeze], !to_boolean(get_property("perfectFreezeUsed")));
+  cast_if($skill[Summon Holiday Fun!], !to_boolean(get_property("_holidayFunUsed")));
+}
+
 void prep(location loc)
 {
 
@@ -230,7 +253,6 @@ void prep(location loc)
    if (my_hp() < (my_maxhp() * 0.75))
    {
      log("Restoring health...");
-     wait(3);
      restore_hp(my_maxhp() * 0.9);
    }
 
@@ -238,13 +260,10 @@ void prep(location loc)
    if (my_mp() < (my_maxmp() * 0.5))
    {
      log("Restoring MP...");
-     wait(3);
      restore_mp(my_maxmp() * 0.6);
    }
 
  }
-
-  cast_surplus_mp();
 
   // Things we may as well use. Low cost and sometimes helpful:
   effect_maintain($effect[bloodstain-resistant]);
@@ -272,6 +291,9 @@ void prep(location loc)
   get_totem();
   get_saucepan();
   get_accordion();
+
+  cast_one_time_things();
+  cast_surplus_mp();
 
   consume();
 
