@@ -4,7 +4,6 @@ import "util/base/quests.ash";
 import "util/base/util.ash";
 
 
-
 item effect_to_item(effect ef)
 {
   item def = $item[none];
@@ -51,6 +50,9 @@ item effect_to_item(effect ef)
                          warm gravy,
                          bread roll]
     {
+      if (it == $item[baked stuffing] && quest_status("questL12War") != FINISHED) continue;
+      if (it == $item[warm gravy] && quest_status("questL07Cyrptic") != FINISHED) continue;
+
       if (item_amount(it) > 0 || creatable_amount(it) > 0)
         return it;
     }

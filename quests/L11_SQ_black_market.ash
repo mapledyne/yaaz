@@ -5,7 +5,7 @@ familiar bird = $familiar[reassembled blackbird];
 if (my_path() == "Bees Hate You")
   bird = $familiar[reconstituted crow];
 
-void do_one_market_adv()
+boolean do_one_market_adv()
 {
   if (creatable_amount($item[reassembled blackbird]) > 0)
   {
@@ -36,9 +36,10 @@ void do_one_market_adv()
     maximize(max);
   }
   int bee = item_amount($item[beehive]);
-  dg_adventure($location[the black forest]);
+  boolean b = dg_adventure($location[the black forest]);
   if (bee < item_amount($item[beehive]))
     log(wrap($item[beehive]) + " found!");
+  return b;
 }
 
 boolean market_loop()
@@ -58,8 +59,7 @@ boolean market_loop()
       return true;
     case 0:
     case 1:
-      do_one_market_adv();
-      return true;
+      return do_one_market_adv();
     case 2:
       if (item_amount($item[forged identification documents]) == 0)
       {

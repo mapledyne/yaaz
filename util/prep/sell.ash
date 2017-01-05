@@ -11,10 +11,10 @@ void sell_things()
     sell_all(it, i);
   }
 
-  while (my_meat() < 5000 && item_amount($item[1952 Mickey Mantle card]) > 0)
+  while (my_meat() < 5000 && have($item[1952 Mickey Mantle card]))
     sell_one($item[1952 Mickey Mantle card]);
 
-  while (my_meat() < 5000 && item_amount($item[commemorative war stein]) > 0)
+  while (my_meat() < 5000 && have($item[commemorative war stein]))
     sell_one($item[commemorative war stein]);
 
 

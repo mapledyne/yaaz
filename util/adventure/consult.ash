@@ -6,6 +6,13 @@ import <zlib.ash>;
 
 void main(int round, monster foe, string page)
 {
+
+  if (have_skill($skill[extract jelly]))
+  {
+    if (foe.attack_element != $element[none]
+        || foe.phylum == $phylum[fish]) use_skill(1, $skill[extract jelly]);
+  }
+
   if (ghosts contains foe && have_equipped($item[protonic accelerator pack]))
   {
     if (expected_damage(foe) < (my_hp() / 2))

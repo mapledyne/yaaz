@@ -18,6 +18,13 @@ boolean M10_star_key()
 
   while(creatable_amount($item[richard's star key]) == 0)
   {
+    if (item_amount($item[star chart]) > 0 && my_familiar() == $familiar[space jellyfish])
+    {
+      set_property("choiceAdventure1221", 2); // astronomer (/star chart)
+    } else {
+      set_property("choiceAdventure1221", 1); // skin flute (/stars + lines)
+    }
+
     boolean b = dg_adventure($location[the hole in the sky], "items");
     if (!b)
       return true;

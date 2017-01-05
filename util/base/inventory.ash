@@ -24,6 +24,14 @@ int count_set(boolean[item] things)
   return counter;
 }
 
+// a very simply way to check to see if we "have" something.
+boolean have(item toy)
+{
+  if (item_amount(toy) > 0) return true;
+  if (equipped_amount(toy) > 0) return true;
+
+  return false;
+}
 
 int i_a(item i)
 {

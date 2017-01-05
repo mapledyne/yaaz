@@ -19,39 +19,6 @@ import "util/iotm/deck.ash";
 
 import <zlib.ash>
 
-void meat_cast(skill sk, effect ef, int avg)
-{
-
-  if (!have_skill(sk))
-    return;
-
-  if (turns_per_cast(sk) == 0)
-    return;
-
-  if (have_effect(ef) == 0)
-  {
-    float sk_cost = (mp_cost(sk)*1.0) / turns_per_cast(sk);
-    if (sk_cost * cost_per_mp() < avg)
-    {
-      log("Cost to cast " + wrap(sk) + " seems cost effective here. Meat avg gain: " + avg + ", cost avg: " + sk_cost * cost_per_mp() + ".");
-      use_skill(sk);
-    }
-  }
-
-}
-
-void cast_meat_spells(location loc)
-{
-  if (loc == $location[none])
-    return;
-
-  float avg_meat = avg_meat_per_adv(loc);
-
-  float meat_pct = avg_meat * 0.01;
-
-  meat_cast($skill[The Polka of Plenty], $effect[Polka of Plenty], meat_pct * 50);
-}
-
 
 void prep_turtle_tamer()
 {
@@ -115,21 +82,6 @@ void class_specific_prep(class cl, location loc)
 
 }
 
-void consider_mall(item it)
-{
-  if (item_amount(it) == 0)
-    return;
-
-  log("You may want to give this to your clan, or maybe put in the mall: " + wrap(it) + ".");
-  log("In the meantime, moving these to your closet until you decide.");
-  put_closet(item_amount(it), it);
-}
-
-void mall_or_clan()
-{
-  consider_mall($item[gift card]);
-}
-
 void prep_fishing(location loc)
 {
   if (is_fishing_hole(loc))
@@ -142,7 +94,14 @@ void prep_fishing(location loc)
 void cast_things(location loc)
 {
 
-  while (have_skill($skill[ancestral recall]) && to_int(get_property("_ancestralRecallCasts")) < 10 && item_amount($item[blue mana]) > 0)
+  // Things we may as well use. Low cost and sometimes helpful:
+  effect_maintain($effect[bloodstain-resistant]);
+
+  effect_maintain($effect[Neuroplastici Tea]);
+  effect_maintain($effect[flexibili Tea]);
+  effect_maintain($effect[Physicali Tea]);
+
+  while (have_skill($skill[ancestral recall]) && to_int(get_property("_ancestralRecallCasts")) < 10 && have($item[blue mana]))
   {
     log("Casting " + wrap($skill[ancestral recall]) + " to get us a few more adventures.");
     use_skill(1, $skill[ancestral recall]);
@@ -265,9 +224,6 @@ void prep(location loc)
 
  }
 
-  // Things we may as well use. Low cost and sometimes helpful:
-  effect_maintain($effect[bloodstain-resistant]);
-
   while (my_meat() > 1000
       && setting("hermit_complete") != "true"
       && setting("no_clover") != "true"
@@ -276,7 +232,7 @@ void prep(location loc)
 
     while ($coinmaster[hermit].available_tokens == 0)
     {
-      if (item_amount($item[chewing gum on a string]) == 0)
+      if (!have($item[chewing gum on a string]))
         buy(1, $item[chewing gum on a string]);
       use(1, $item[chewing gum on a string]);
     }
@@ -324,10 +280,8 @@ void prep(location loc)
   use_things();
   closet_things();
   clan_things();
-  cast_meat_spells(loc);
   class_specific_prep(my_class(), loc);
   prep_fishing(loc);
-  mall_or_clan();
 
   manuel();
 

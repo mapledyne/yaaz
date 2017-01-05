@@ -2,7 +2,7 @@ import "util/main.ash";
 
 void day_begin()
 {
-  log("Turns used this ascension: " + my_turncount() + ", over " + my_daycount() + " days.");
+  log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ", over " + wrap(my_daycount(), COLOR_LOCATION) + " days.");
   log("Beginning start-of-day prep.");
 
   if (!in_hardcore())

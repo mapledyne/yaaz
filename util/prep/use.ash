@@ -20,14 +20,6 @@ void use_things()
     use(1, $item[orcish meat locker]);
   }
 
-  if (to_int(get_property("currentMojoFilters")) < 3
-      && item_amount($item[mojo filter]) > 0
-      && my_spleen_use() > 0)
-  {
-    log("Using a " + wrap($item[mojo filter]) + ".");
-    use(1, $item[mojo filter]);
-  }
-
   if (!have_familiar($familiar[misshapen animal skeleton]))
   {
     use_all($item[pile of dusty animal bones]);

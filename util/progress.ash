@@ -65,6 +65,13 @@ boolean do_detail(string test, string detail)
   return test == detail || detail == "all";
 }
 
+void smoke_if_got_it(item it)
+{
+  if (item_amount(it) == 0) return;
+
+  task("You have a " + wrap(it) + ". Manually use or closet (or sell, or whatever)");
+}
+
 void progress_sheet_detail(string detail)
 {
   // extra details for the sheet when requested.
@@ -408,7 +415,7 @@ void progress_sheet(string detail)
 
       int boo = to_int(get_property("booPeakProgress"));
       if (boo > 0)
-        progress(100 - boo, 100, "A-Boo peak hauntedness cleared");
+        progress(100 - boo, 100, wrap($location[a-boo peak]) + " hauntedness cleared");
       int twin = twinpeak_progress();
       if (twin < 4)
         progress(twin, 4, "Twin peak progress");
@@ -419,7 +426,12 @@ void progress_sheet(string detail)
   if (quest_active("questL10Garbage"))
   {
     if (item_amount($item[s.o.c.k.]) == 0)
+    {
       progress(immateria(), 4, "Immateria found");
+      if (immateria() == 4)
+        task("Find the " + wrap($item[s.o.c.k.]));
+
+    }
 
     if (quest_status("questL10Garbage") == 8)
       progress($location[The Castle in the Clouds in the Sky (Ground Floor)].turns_spent, 11, "progress to open the top floor of the castle");
@@ -429,17 +441,25 @@ void progress_sheet(string detail)
   if (quest_status("questM21Dance") == FINISHED
       && $location[the haunted ballroom].turns_spent < 5)
   {
-    progress($location[The Haunted Ballroom].turns_spent, 5, "delay on The Haunted Ballroom");
+    progress($location[The Haunted Ballroom].turns_spent, 5, "delay on " + wrap($location[The Haunted Ballroom]));
   }
 
   if (quest_active("questL11MacGuffin"))
   {
     if (quest_active("questL11Black"))
-      progress(get_property("blackForestProgress").to_int(), 5, "black forest progress");
+      progress(get_property("blackForestProgress").to_int(), 5, "progress through " + wrap($location[the black forest]));
 
-    int desert = to_int(get_property("desertExploration"));
-    if (desert < 100)
+    if (quest_status("questL11Black") > UNSTARTED
+        && item_amount($item[beehive]) == 0)
+    {
+      task("Find a " + wrap($item[beehive]));
+    }
+
+    if (quest_active("questL11Desert"))
+    {
+      int desert = to_int(get_property("desertExploration"));
       progress(desert, "desert explored");
+    }
 
     if (quest_active("questL11Worship"))
     {
@@ -584,7 +604,75 @@ void progress_sheet(string detail)
       // TODO: Find a way to track wall of meat progress...
   }
 
+  if (quest_status("questL06Friar") > UNSTARTED && i_a($item[wand of nagamar]) == 0)
+  {
+    int wand = 0;
+    string wand_parts = "";
+    if (item_amount($item[ruby W]) > 0 || item_amount($item[WA]) > 0)
+    {
+      wand_parts = "W";
+      wand++;
+    }
+    if (item_amount($item[metallic a]) > 0 || item_amount($item[WA]) > 0)
+    {
+      if (length(wand_parts) > 0) wand_parts += ", ";
+      wand_parts += "A";
+      wand++;
+    }
+    if (item_amount($item[lowercase n]) > 0 || item_amount($item[nd]) > 0)
+    {
+      if (length(wand_parts) > 0) wand_parts += ", ";
+      wand_parts += "N";
+      wand++;
+    }
+    if (item_amount($item[heavy d]) > 0 || item_amount($item[nd]) > 0)
+    {
+    if (length(wand_parts) > 0) wand_parts += ", ";
+    wand_parts += "D";
+      wand++;
+    }
+
+    if (length(wand_parts) > 0) wand_parts = " (" + wand_parts + ")";
+
+    progress(wand, 4, "make a " + wrap($item[wand of nagamar]) + wand_parts);
+  }
+
   progress_sheet_detail(detail);
+
+  for x from 1 to 25
+  {
+    if (get_counters("Digitize monster", x, x) != "")
+    {
+      dg_print("Digitized monster (" + wrap(to_monster(get_property("_sourceTerminalDigitizeMonster"))) + ") coming up in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
+    }
+
+    if (get_counters("Semirare window begin", x, x) != "")
+    {
+      string last_rare = "";
+      if (to_location(get_property("semirareLocation")) != $location[none])
+      {
+        last_rare = " (previous: " + wrap(to_location(get_property("semirareLocation"))) + ")";
+      }
+      dg_print("Semirare window begins in " + x + " turns. " + last_rare, COLOR_TASK);
+    }
+
+    if (get_counters("Semirare window end", x, x) != "")
+    {
+      dg_print("Semirare window ends in " + x + " turns.", COLOR_TASK);
+    }
+
+  }
+
+  foreach puff in $items[cuppa uncertain tea,
+                         cuppa gill tea,
+                         cuppa royal tea,
+                         cuppa sobrie tea,
+                         cuppa voraci tea,
+                         mojo filter]
+  {
+    smoke_if_got_it(puff);
+  }
+
 }
 
 void progress_sheet()

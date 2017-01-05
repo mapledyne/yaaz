@@ -57,7 +57,9 @@ void do_maximize(string target, string outfit, item it)
     {
       max = max + ", ";
     }
-    max = max + "+equip " + it;
+    // converting to their item number here dodges some parsing problems, like
+    // items with numbers in their name ('kol con 13 snowglobe', etc).
+    max = max + "+equip [" + to_int(it) + "]";
   }
 
   if (max != "")
@@ -84,6 +86,20 @@ void maximize(string target, string outfit, item it, familiar fam)
   string[int] split_map;
   split_map = split_string(target, ", ");
 
+  item snowglobe = $item[9133]; // kol con 13 snowglobe
+
+  // if we're going with all-defaults, favor the snowglobe as an item
+  // it won't ever get picked by the maximiser, but it nice to use sometimes
+
+  if (target == ""
+      && it == $item[none]
+      && outfit == ""
+      && fam == $familiar[none]
+      && have(snowglobe))
+  {
+    it = snowglobe;
+  }
+
   if (fam != $familiar[none])
     choose_familiar(fam);
   else
@@ -95,7 +111,7 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target == 'noncombat')
     target = '-combat';
 
-// need to figure this out so it doens't turn out to be too expensive:
+// need to figure this out so it doesn't turn out to be too expensive:
 //  max_effects("familiar weight", false);
 
   if (target == '')
@@ -148,7 +164,7 @@ void max_effects(string target, boolean aggressive)
 {
   switch(target)
   {
-    case "exp":
+    case "stats":
       effect_maintain($effect[mutated]);
       effect_maintain($effect[sealed brain]);
       effect_maintain($effect[slightly larger than usual]);
@@ -160,6 +176,11 @@ void max_effects(string target, boolean aggressive)
         cli_execute("concert elvish");
       }
       cross_streams();
+      if (!to_boolean(get_property("telescopeLookedHigh")))
+      {
+        log("Looking in the telescope to get " + wrap($effect[starry-eyed]));
+        cli_execute("telescope look high");
+      }
       break;
     case "muscle":
       max_effects("stats");
@@ -171,6 +192,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[Steroid Boost]);
       effect_maintain($effect[superheroic]);
       effect_maintain($effect[Truly Gritty]);
+      effect_maintain($effect[twen tea]);
       effect_maintain($effect[Woad Warrior]);
       if (!have_love_song())
         effect_maintain($effect[broken heart]);
@@ -190,6 +212,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[spiky hair]);
       effect_maintain($effect[Knob Goblin Lust Frenzy]);
       effect_maintain($effect[sugar rush]);
+      effect_maintain($effect[twen tea]);
       if (!have_love_song())
         effect_maintain($effect[cold hearted]);
       if (!have_love_song())
@@ -205,6 +228,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[ready to snap]);
       effect_maintain($effect[seeing colors]);
       effect_maintain($effect[carrrsmic]);
+      effect_maintain($effect[twen tea]);
       effect_maintain($effect[wit tea]);
       effect_maintain($effect[well owl be!]);
       if (!have_love_song())
@@ -283,6 +307,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[sugar rush]);
       effect_maintain($effect[suspicious gaze]);
       effect_maintain($effect[Ticking Clock]);
+      effect_maintain($effect[twen tea]);
       effect_maintain($effect[the glistening]);
       effect_maintain($effect[Walberg\'s Dim Bulb]);
       effect_maintain($effect[well-swabbed ear]);
@@ -464,6 +489,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[arched eyebrow of the archmage]);
       effect_maintain($effect[OMG WTF]);
       effect_maintain($effect[Puzzle Fury]);
+      effect_maintain($effect[twen tea]);
       effect_maintain($effect[well owl be!]);
       break;
     case "critical":
@@ -481,11 +507,13 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[superheroic]);
       effect_maintain($effect[tenacity of the snapper]);
       effect_maintain($effect[truly gritty]);
+      effect_maintain($effect[twen tea]);
       effect_maintain($effect[twinkly weapon]);
 //      effect_maintain($effect[ponderous potency]);
       break;
     case "ranged damage":
       effect_maintain($effect[notably lovely]);
+      effect_maintain($effect[twen tea]);
       break;
     default:
       if (!have_colored_tongue())

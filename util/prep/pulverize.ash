@@ -12,7 +12,7 @@ void pulverize_things()
   if (!have_skill($skill[pulverize]))
     return;
 
-  if (item_amount($item[tenderizing hammer]) == 0)
+  if (!have($item[tenderizing hammer]))
   {
     // don't do this unless we have surplus meat.
     if (my_meat() < 5000 && my_level() > 5)
