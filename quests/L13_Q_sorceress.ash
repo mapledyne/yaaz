@@ -17,6 +17,7 @@ boolean wall_of_skin()
     return false;
   }
   log(wrap($monster[wall of skin]) + " defeated.");
+  cli_execute("refresh inv");
   return true;
 }
 
@@ -187,6 +188,9 @@ void max_contest(string max, int num)
       break;
     case "stench":
       maximize("stench damage, stench spell damage");
+      break;
+    case "spooky":
+      maximize("spooky damage, spooky spell damage");
       break;
   }
   log("All dressed up and somewhere to go, the Registration Desk.");

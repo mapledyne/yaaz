@@ -242,7 +242,7 @@ boolean L11_SQ_desert()
   }
 
   int count = starting_adv_count - my_adventures();
-  log("It took you " + count + " adventures, but you've discovered the pyramid in the desert!");
+  log("You've discovered the pyramid in the desert!");
   return true;
 }
 

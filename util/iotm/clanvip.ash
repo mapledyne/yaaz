@@ -13,7 +13,7 @@ void vip_hottub()
 
 boolean can_vip()
 {
-  return (item_amount($item[clan vip lounge key]) > 0);
+  return (have($item[clan vip lounge key]));
 }
 
 boolean can_vip_drink()

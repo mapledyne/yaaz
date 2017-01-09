@@ -23,7 +23,7 @@ boolean M_dailydungeon()
   }
 
   if (!have_familiar($familiar[Gelatinous Cubeling])
-      && item_amount($item[deck of every card]) == 0
+      && !have($item[deck of every card])
       && my_level() > 4
       && hero_keys() < 3)
   {

@@ -18,7 +18,8 @@ boolean can_witchess()
 
 void witchess(item it)
 {
-  if(get_campground() contains $item[Witchess Set] && get_property("_witchessFights").to_int() < 5)
+  if(get_campground() contains $item[Witchess Set]
+     && get_property("_witchessFights").to_int() < 5)
   {
     int choice = 0;
     switch(it)
@@ -62,12 +63,12 @@ void witchess()
   while (can_witchess())
   {
     maximize("");
-    if (item_amount($item[armored prawn]) == 0)
+    if (!have($item[armored prawn]))
     {
       witchess($item[armored prawn]);
       continue;
     }
-    if (item_amount($item[greek fire]) == 0)
+    if (!have($item[greek fire]))
     {
       witchess($item[greek fire]);
       continue;

@@ -25,9 +25,9 @@ boolean L11_Q_macguffin()
   if (L11_SQ_summoning()) return true;
   if (L11_SQ_pyramid()) return true;
 
-  if (item_amount($item[[7965]Holy MacGuffin]) > 0)
+  if (item_amount($item[[2334]Holy MacGuffin]) > 0)
   {
-    log("Returning the " + wrap($item[[7965]Holy MacGuffin]) + " to the council.");
+    log("Returning the " + wrap($item[[2334]Holy MacGuffin]) + " to the council.");
     council();
     return true;
   }

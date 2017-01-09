@@ -526,8 +526,6 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[fiery heart]);
       if (!have_love_song())
         effect_maintain($effect[broken heart]);
-      if (my_primestat() != $stat[mysticality])
-        effect_maintain($effect[bastard!]);
       break;
   }
 

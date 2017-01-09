@@ -6,7 +6,9 @@ import "util/base/util.ash";
 
 boolean can_deck()
 {
-  if (can_adventure() && item_amount($item[deck of every card]) > 0 && to_int(get_property("_deckCardsDrawn")) < 15)
+  if (can_adventure()
+      && have($item[deck of every card])
+      && to_int(get_property("_deckCardsDrawn")) < 15)
     return true;
   return false;
 }
@@ -108,7 +110,8 @@ void consume_cards()
 
   log("Using up our " + wrap($item[deck of every card]) + " draws.");
 
-  if (quest_status("questL11Worship") < 2 && item_amount($item[stone wool]) < 2)
+  if (quest_status("questL11Worship") < 2
+      && item_amount($item[stone wool]) < 2)
   {
     cheat_deck("sheep", "stone wool to help with the hidden city");
   }

@@ -103,6 +103,11 @@ void open_belowdecks()
   }
 
   log("Opening up " + wrap($location[belowdecks]) + ".");
+
+	set_property("choiceAdventure189", "1");
+	set_property("oceanAction", "continue");
+	set_property("oceanDestination", to_lower_case(my_primestat()));
+
   while (quest_status("questM12Pirate") != FINISHED)
   {
     maximize("-combat", $item[pirate fledges]);

@@ -101,11 +101,11 @@ boolean L11_SQ_pyramid()
 
   log("Off to fight " + wrap($monster[ed the undying]) + ".");
   maximize("");
-  while (item_amount($item[[7965]Holy MacGuffin]) == 0)
+  while (item_amount($item[[2334]Holy MacGuffin]) == 0)
   {
     yz_adventure_bypass($location[the lower chambers]);
   }
-  log("Visiting the council to turn in the " + wrap($item[[7965]Holy MacGuffin]) + ".");
+  log("Visiting the council to turn in the " + wrap($item[[2334]Holy MacGuffin]) + ".");
   council();
   return true;
 

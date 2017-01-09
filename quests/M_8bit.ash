@@ -2,17 +2,17 @@ import "util/main.ash";
 
 boolean M_8bit()
 {
-  if (item_amount($item[digital key]) > 0)
+  if (have($item[digital key]))
     return false;
 
   if (quest_status("questL13Final") > 3)
     return false;
 
-  if (item_amount($item[continuum transfunctioner]) == 0)
+  if (!have($item[continuum transfunctioner]))
     return false;
 
   add_attract($monster[blooper]);
-  while(item_amount($item[digital key]) == 0)
+  while(!have($item[digital key]))
   {
       if (creatable_amount($item[digital key]) > 0)
       {

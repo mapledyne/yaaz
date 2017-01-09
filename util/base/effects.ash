@@ -244,7 +244,11 @@ void cast_surplus_mp()
     if(my_mp() < (my_maxmp() * 0.8))
       break;
     skill sk = to_skill(effect_list[ef]);
-    if (is_turtle_buff(sk) && i_a($item[turtle totem]) == 0)
+    if (is_turtle_buff(sk) && !have($item[turtle totem]))
+      continue;
+    if (is_thief_buff(sk) && !have($item[stolen accordion]))
+      continue;
+    if (is_sauceror_buff(sk) && !have($item[saucepan]))
       continue;
     log("Casting " + wrap(sk) + " to use up surplus MP.");
     use_skill(1, sk);

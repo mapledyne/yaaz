@@ -41,7 +41,7 @@ boolean M_guild()
   }
 
   log("Retreiving the " + wrap(it) + " from " + wrap(loc) + ".");
-  while(item_amount(it) == 0 || my_primestat() == $stat[moxie])
+  while(!have(it) || my_primestat() == $stat[moxie])
   {
     if (my_primestat() == $stat[moxie])
     {
@@ -50,7 +50,8 @@ boolean M_guild()
       maximize("");
     }
     boolean b = dg_adventure(loc);
-    if (equipped_item($slot[pants]) == $item[none] && my_primestat() == $stat[moxie])
+    if (equipped_item($slot[pants]) == $item[none]
+        && my_primestat() == $stat[moxie])
       break;
     if (!b)
       return true;

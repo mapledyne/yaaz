@@ -25,7 +25,7 @@ location[string] parse_holes() {
 
 boolean can_get_floundry_item()
 {
-  if (item_amount($item[fishin' pole]) == 0)
+  if (!have($item[fishin' pole]))
     return false;
 		// TODO: This parameter doesn't seem 100% reliable:
   if (to_boolean(get_property("_floundryItemUsed")))
@@ -151,7 +151,7 @@ void floundry()
 
 boolean is_fishing_hole(location loc)
 {
-  if (item_amount($item[fishin' pole]) == 0)
+  if (!have($item[fishin' pole]))
     return false;
 
   floundry_daily_check();

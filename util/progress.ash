@@ -67,7 +67,7 @@ boolean do_detail(string test, string detail)
 
 void smoke_if_got_it(item it)
 {
-  if (item_amount(it) == 0) return;
+  if (!have(it)) return;
 
   task("You have a " + wrap(it) + ". Manually use or closet (or sell, or whatever)");
 }
@@ -83,7 +83,7 @@ void progress_sheet_detail(string detail)
   }
 
   if (do_detail("floundry", detail)
-      && item_amount($item[fishin' pole]) == 0
+      && !have($item[fishin' pole])
       && !to_boolean(get_property("_floundryItemUsed")))
   {
     task("get item from the floundry");
@@ -108,7 +108,7 @@ void progress_sheet_detail(string detail)
   }
 
   if (do_detail("protonic", detail)
-      && i_a($item[protonic accelerator pack]) > 0
+      && have($item[protonic accelerator pack])
       && to_location(get_property("ghostLocation")) != $location[none])
   {
     task("defeat ghost (" + get_property("ghostLocation")+ ")");
@@ -122,7 +122,7 @@ void progress_sheet_detail(string detail)
   }
 
   if (do_detail("timespinner", detail)
-      && item_amount($item[time-spinner]) > 0)
+      && have($item[time-spinner]))
   {
     int used = to_int(get_property("_timeSpinnerMinutesUsed"));
 
@@ -137,7 +137,7 @@ void progress_sheet_detail(string detail)
   }
 
   if (do_detail("deck", detail)
-      &&item_amount($item[deck of every card]) > 0
+      && have($item[deck of every card])
       && to_int(get_property("_deckCardsDrawn")) < 15)
   {
     progress(to_int(get_property("_deckCardsDrawn")), 15, "Deck of Every Card cards drawn", "blue");
@@ -173,19 +173,19 @@ void progress_sheet(string detail)
 
   level_progress();
 
-  if (item_amount($item[bitchin' meatcar]) == 0)
+  if (!have($item[bitchin' meatcar]))
   {
     task("Build a bitchin' meatcar");
   }
 
-  if (item_amount($item[dingy dinghy]) == 0
-      && item_amount($item[bitchin' meatcar]) > 0)
+  if (!have($item[dingy dinghy])
+      && have($item[bitchin' meatcar]))
   {
-    if (item_amount($item[dinghy plans]) == 0)
+    if (!have($item[dinghy plans]))
     {
       progress(item_amount($item[Shore Inc. Ship Trip Scrip]), 3, "shore scrip for the dinghy plans");
     }
-    if (item_amount($item[dingy planks]) == 0)
+    if (!have($item[dingy planks]))
     {
       task("buy dinghy planks");
     }
@@ -199,14 +199,14 @@ void progress_sheet(string detail)
     string boris = UNCHECKED;
     string jarl = UNCHECKED;
 
-    if (item_amount($item[boris's key]) > 0) boris = CHECKED;
-    if (item_amount($item[jarlsberg's key]) > 0) jarl = CHECKED;
-    if (item_amount($item[sneaky pete's key]) > 0) pete = CHECKED;
+    if (have($item[boris's key])) boris = CHECKED;
+    if (have($item[jarlsberg's key])) jarl = CHECKED;
+    if (have($item[sneaky pete's key])) pete = CHECKED;
 
     progress(keys, 3, "hero keys (" + boris + "Boris, " + pete + "Pete, " + jarl + "Jarlsberg)");
 
     if (quest_status("questL07Cyrptic") > UNSTARTED
-        && item_amount($item[skeleton key]) == 0)
+        && !have($item[skeleton key]))
     {
       task("make skeleton key");
     }
@@ -234,17 +234,17 @@ void progress_sheet(string detail)
     string ball = UNCHECKED;
     string shampoo  = UNCHECKED;
     int fledge_count = 0;
-    if (item_amount($item[mizzenmast mop]) > 0)
+    if (have($item[mizzenmast mop]))
     {
       mop = CHECKED;
       fledge_count++;
     }
-    if (item_amount($item[ball polish]) > 0)
+    if (have($item[ball polish]))
     {
       ball = CHECKED;
       fledge_count++;
     }
-    if (item_amount($item[rigging shampoo]) > 0)
+    if (have($item[rigging shampoo]))
     {
       shampoo = CHECKED;
       fledge_count++;
@@ -270,12 +270,14 @@ void progress_sheet(string detail)
     }
   }
 
-  if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)
+  if (quest_status("questL05Goblin") < 1 && !have($item[Knob Goblin encryption key]))
   {
     progress($location[The Outskirts of Cobb's Knob].turns_spent, 11, "turns in the Outskirts of Cobb's Knob to get the encryption key");
   }
 
-  if (item_amount($item[digital key]) == 0 && item_amount($item[white pixel]) > 0 && quest_status("questL13Final") < 5)
+  if (!have($item[digital key])
+      && have($item[continuum transfunctioner])
+      && quest_status("questL13Final") < 5)
   {
     progress(item_amount($item[white pixel]), 30, "digital key");
   }
@@ -291,11 +293,11 @@ void progress_sheet(string detail)
     string shoes = UNCHECKED;
     string gown = UNCHECKED;
     string puff = UNCHECKED;
-    if (item_amount($item[Lady Spookyraven's powder puff]) > 0)
+    if (have($item[Lady Spookyraven's powder puff]))
       puff = CHECKED;
-    if (item_amount($item[Lady Spookyraven's dancing shoes]) > 0)
+    if (have($item[Lady Spookyraven's dancing shoes]))
       shoes = CHECKED;
-    if (item_amount($item[Lady Spookyraven's finest gown]) > 0)
+    if (have($item[Lady Spookyraven's finest gown]))
       gown = CHECKED;
     progress(dancing_items(), 3, "dancing things found (" + puff + " puff, " + shoes + " shoes, " + gown + " gown)");
   }
@@ -305,11 +307,11 @@ void progress_sheet(string detail)
     string dodecagram = UNCHECKED;
     string candles = UNCHECKED;
     string butterknife = UNCHECKED;
-    if (item_amount($item[dodecagram]) > 0)
+    if (have($item[dodecagram]))
       dodecagram = CHECKED;
-    if (item_amount($item[box of birthday candles]) > 0)
+    if (have($item[box of birthday candles]))
       candles = CHECKED;
-    if (item_amount($item[eldritch butterknife]) > 0)
+    if (have($item[eldritch butterknife]))
       butterknife = CHECKED;
 
     progress(friar_things(), 3, "Friar ceremony objects (" + dodecagram + " dodecagram, " + candles + " candles, " + butterknife + " butterknife)");
@@ -318,7 +320,7 @@ void progress_sheet(string detail)
   if (quest_active("questM10Azazel"))
   {
     progress(item_amount($item[imp air]), 5, "imp airs");
-    if (i_a($item[observational glasses]) == 0)
+    if (!have($item[observational glasses]))
     {
       task("Find the " + wrap($item[observational glasses]) + ".");
     }
@@ -425,16 +427,31 @@ void progress_sheet(string detail)
 
   if (quest_active("questL10Garbage"))
   {
-    if (item_amount($item[s.o.c.k.]) == 0)
+
+    if (quest_status("questL10Garbage") < 2)
+    {
+      if (!have($item[enchanted bean]))
+        task("Get an " + wrap($item[enchanted bean]));
+      else
+        task("Grow the beanstalk.");
+    }
+
+    if (!have($item[s.o.c.k.]))
     {
       progress(immateria(), 4, "Immateria found");
+      progress($location[penultimate fantasy airship].turns_spent, 20, "minimum turns in the airship to find the " + wrap($item[s.o.c.k.]) + ".");
       if (immateria() == 4)
         task("Find the " + wrap($item[s.o.c.k.]));
-
     }
+
+    if (quest_status("questL10Garbage") == 7)
+      task("Open the " + wrap($location[The Castle in the Clouds in the Sky (Basement)]));
 
     if (quest_status("questL10Garbage") == 8)
       progress($location[The Castle in the Clouds in the Sky (Ground Floor)].turns_spent, 11, "progress to open the top floor of the castle");
+
+    if (quest_status("questL10Garbage") == 9)
+      task("Spin the garbage wheel");
 
   }
 
@@ -450,7 +467,7 @@ void progress_sheet(string detail)
       progress(get_property("blackForestProgress").to_int(), 5, "progress through " + wrap($location[the black forest]));
 
     if (quest_status("questL11Black") > UNSTARTED
-        && item_amount($item[beehive]) == 0)
+        && !have($item[beehive]))
     {
       task("Find a " + wrap($item[beehive]));
     }
@@ -461,9 +478,19 @@ void progress_sheet(string detail)
       progress(desert, "desert explored");
     }
 
-    if (quest_active("questL11Worship"))
+    if (quest_status("questL11Worship") >= 3 && quest_status("questL11Worship") < FINISHED)
     {
+      if (!have($item[antique machete])) task("Find an " + wrap($item[antique machete]));
       progress(item_amount($item[stone triangle]), 4, "stone triangles from the Hidden City");
+
+      if (quest_status("questL11Doctor") == UNSTARTED)
+        progress($location[An Overgrown Shrine (Southwest)].turns_spent, 3, "defeated southwest/hospital " + wrap($monster[dense liana]));
+      if (quest_status("questL11Spare") == UNSTARTED)
+        progress($location[An Overgrown Shrine (Southeast)].turns_spent, 3, "defeated southeast/bowling " + wrap($monster[dense liana]));
+      if (quest_status("questL11Business") == UNSTARTED)
+        progress($location[An Overgrown Shrine (Northeast)].turns_spent, 3, "defeated northeast/office " + wrap($monster[dense liana]));
+      if (quest_status("questL11Curses") == UNSTARTED)
+        progress($location[An Overgrown Shrine (Northwest)].turns_spent, 3, "defeated northwest/apartment " + wrap($monster[dense liana]));
 
       int surgeon = to_int(get_property("hiddenHospitalProgress"));
       if (quest_active("questL11Doctor"))
@@ -472,14 +499,16 @@ void progress_sheet(string detail)
         progress(s, 5, "surgeonosity (" + (s * 10) + "% to find protector spirit)");
       }
 
-      if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
+      if (quest_active("questL11DSpare"))
+      {
         progress(to_int(get_property("hiddenBowlingAlleyProgress")), 5, "bowling balls rolled");
+      }
 
       if (quest_active("questL11Business"))
       {
-        if (item_amount($item[McClusky file (complete)]) == 0)
+        if (!have($item[McClusky file (complete)]))
         {
-          if (item_amount($item[boring binder clip]) == 0)
+          if (!have($item[boring binder clip]))
           {
             task("get boring binder clip");
           }
@@ -500,6 +529,7 @@ void progress_sheet(string detail)
           curse = 3;
         progress(curse, 3, "curses for the penthouse");
       }
+
 
     }
 
@@ -526,7 +556,7 @@ void progress_sheet(string detail)
       {
         progress(scavenger_hunt_items(), 6, "manor scavenger hunt items");
       } else {
-        if (i_a($item[unstable fulminate]) == 0)
+        if (!have($item[unstable fulminate]))
         {
           task("make unstable fulminate");
         } else {
@@ -557,7 +587,7 @@ void progress_sheet(string detail)
           count = 2;
         if (have_effect($effect[filthworm guard stench]) > 0)
           count = 3;
-        if (item_amount($item[heart of the filthworm queen]) > 0)
+        if (have($item[heart of the filthworm queen]))
           count = 4;
 
         progress(count, 4, "Orchard filthworm progress");
@@ -604,28 +634,28 @@ void progress_sheet(string detail)
       // TODO: Find a way to track wall of meat progress...
   }
 
-  if (quest_status("questL06Friar") > UNSTARTED && i_a($item[wand of nagamar]) == 0)
+  if (quest_status("questL06Friar") > UNSTARTED && !have($item[wand of nagamar]))
   {
     int wand = 0;
     string wand_parts = "";
-    if (item_amount($item[ruby W]) > 0 || item_amount($item[WA]) > 0)
+    if (have($item[ruby W]) || have($item[WA]))
     {
       wand_parts = "W";
       wand++;
     }
-    if (item_amount($item[metallic a]) > 0 || item_amount($item[WA]) > 0)
+    if (have($item[metallic a]) || have($item[WA]))
     {
       if (length(wand_parts) > 0) wand_parts += ", ";
       wand_parts += "A";
       wand++;
     }
-    if (item_amount($item[lowercase n]) > 0 || item_amount($item[nd]) > 0)
+    if (have($item[lowercase n]) || have($item[nd]))
     {
       if (length(wand_parts) > 0) wand_parts += ", ";
       wand_parts += "N";
       wand++;
     }
-    if (item_amount($item[heavy d]) > 0 || item_amount($item[nd]) > 0)
+    if (have($item[heavy d]) || have($item[nd]))
     {
     if (length(wand_parts) > 0) wand_parts += ", ";
     wand_parts += "D";
@@ -646,13 +676,19 @@ void progress_sheet(string detail)
       dg_print("Digitized monster (" + wrap(to_monster(get_property("_sourceTerminalDigitizeMonster"))) + ") coming up in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
     }
 
+    string last_rare = "";
+    if (to_location(get_property("semirareLocation")) != $location[none])
+    {
+      last_rare = " (previous: " + wrap(to_location(get_property("semirareLocation"))) + ")";
+    }
+
+    if (get_counters("Fortune Cookie", x, x) != "")
+    {
+      dg_print("Semirare in " + x + " turns." + last_rare, COLOR_TASK);
+    }
+
     if (get_counters("Semirare window begin", x, x) != "")
     {
-      string last_rare = "";
-      if (to_location(get_property("semirareLocation")) != $location[none])
-      {
-        last_rare = " (previous: " + wrap(to_location(get_property("semirareLocation"))) + ")";
-      }
       dg_print("Semirare window begins in " + x + " turns. " + last_rare, COLOR_TASK);
     }
 

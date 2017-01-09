@@ -33,21 +33,22 @@ void stuffing()
     stock_item($item[stuffing fluffer], stock);
   }
 
-  if (quest_status("questL12War") != STARTED)
+  if (quest_status("questL12War") != 1)
     return;
 
-  if (item_amount($item[stuffing fluffer]) == 0)
+  if (!have($item[stuffing fluffer]))
     return;
 
-  while(item_amount($item[stuffing fluffer]) > 0
+  while(have($item[stuffing fluffer])
         && stuffing_used < stuffing_max)
   {
+    log("Throwing a " + wrap($item[stuffing fluffer]) + " into the war.");
     boolean u = use(1, $item[stuffing fluffer]);
     if (u)
     {
       stuffing_used += 1;
       save_setting("stuffing_used", stuffing_used);
-    }
+    } else { break; }
   }
 
 }

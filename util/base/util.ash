@@ -157,6 +157,28 @@ boolean is_turtle_buff(effect ef)
   return is_turtle_buff(sk);
 }
 
+boolean is_sauceror_buff(skill sk)
+{
+  return (sk.class == $class[sauceror] && sk.buff);
+}
+
+boolean is_sauceror_buff(effect ef)
+{
+  skill sk = to_skill(ef);
+  return is_sauceror_buff(sk);
+}
+
+boolean is_thief_buff(skill sk)
+{
+  return (sk.class == $class[accordion thief] && sk.buff);
+}
+
+boolean is_thief_buff(effect ef)
+{
+  skill sk = to_skill(ef);
+  return is_thief_buff(sk);
+}
+
 boolean is_song(skill sk)
 {
   return (sk.class == $class[accordion thief] && sk.buff);
