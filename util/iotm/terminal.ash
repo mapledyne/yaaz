@@ -346,7 +346,7 @@ void terminal()
       }
     }
 
-    if (i_a($item[source shades]) == 0 && item_amount($item[source essence]) > 100)
+    if (!have($item[source shades]) && item_amount($item[source essence]) > 100)
       ext = $item[source shades];
 
     if (my_path() == "Nuclear Autumn"

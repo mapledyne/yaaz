@@ -68,7 +68,7 @@ void day_end()
   }
   progress_sheet("all");
   manuel_progress();
-
+ 
 }
 
 void main()

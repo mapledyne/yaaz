@@ -45,7 +45,7 @@ boolean ascend_loop()
     current_level = my_level();
     council();
   }
-  
+
   // returning true here ultimately just causes us to start this
   // function over again.
   // If you do no work in one of these functions, you should
@@ -99,10 +99,32 @@ boolean ascend_loop()
   return false;
 }
 
+void skill_warning()
+{
+  if (!have_skill($skill[pulverize]))
+  {
+    warning("This script is written assuming you have the " + wrap($skill[pulverize]) + "skill.");
+    warning("It'll work without it, but be inefficient in several ways. I really recommend getting");
+    warning(wrap($skill[pulverize]) + " before really getting into using this script.");
+    wait(10);
+  }
+
+  if (!have_skill($skill[Ambidextrous Funkslinging]))
+  {
+    warning("This script is written assuming you have the " + wrap($skill[Ambidextrous Funkslinging]) + "skill.");
+    warning("It'll work without it, but will fail fighting " + wrap($monster[your shadow]) + ".");
+    warning("Get " + wrap($skill[Ambidextrous Funkslinging]) + " to really utilize this script.");
+    warning("In the meantime, you'll also have to get supplies to fight " + wrap($monster[your shadow]) + " and plan to handle that fight yourself.");
+    wait(10);
+  }
+
+}
 
 void ascend()
 {
   current_level = my_level();
+
+  skill_warning();
 
   day_begin();
   log("Day startup tasks complete. About to begin doing stuff.");

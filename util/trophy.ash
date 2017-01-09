@@ -289,6 +289,38 @@ void basic_trophy(int have, int needed, int trophy)
 
 }
 
+void nom_something()
+{
+	int[item] nomlist;
+
+	foreach nom in $items[]
+	{
+		if ((nom.fullness > 0
+		    || nom.inebriety > 0)
+				&& !(consumed contains nom))
+		{
+			nomlist[nom] = historical_price(nom);
+			if (nomlist[nom] == 0) nomlist[nom] = 2147483647; // MAXINT
+		}
+	}
+	sort nomlist by value;
+
+	string nom_msg = "";
+	int count = 0;
+	foreach n in nomlist
+	{
+		if (count > 2) break;
+		if (length(nom_msg) > 0) nom_msg += ", ";
+
+		nom_msg += wrap(n);
+		int cost = historical_price(n);
+		if (cost > 0) nom_msg += " (" + cost + " meat)";
+		count++;
+	}
+	if (length(nom_msg) > 0)
+		log("Interested in consuming something you haven't yet? Try one of: " + nom_msg);
+}
+
 void trophy()
 {
 	consumed = parse_consumables();
@@ -334,6 +366,7 @@ void trophy()
 	basic_consumption_trophy($item[gallon of milk], 7, 147);
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 
+	nom_something();
 }
 
 void main()

@@ -3,6 +3,7 @@ import "util/base/util.ash";
 import "util/base/settings.ash";
 
 int i_a(item it);
+boolean have(item toy);
 int wad_total();
 void use_all(item it);
 void pulverize_all(item it);
@@ -125,7 +126,7 @@ void pulverize_all_but_one(item it)
 void pulverize(item it)
 {
   if (!should_pulverize()) return;
-  if (item_amount(it) == 0) return;
+  if (!have(it)) return;
 
 	log("Pulverizing 1 " + wrap(it) + ".");
 	cli_execute("pulverize 1 " + it);
@@ -157,17 +158,17 @@ int wad_total()
 
 boolean have_all_wads()
 {
-	if (item_amount($item[twinkly wad]) == 0)
+	if (!have($item[twinkly wad]))
 	 	return false;
-	if (item_amount($item[cold wad]) == 0)
+	if (!have($item[cold wad]))
 	 	return false;
-	if (item_amount($item[hot wad]) == 0)
+	if (!have($item[hot wad]))
 	 	return false;
-	if (item_amount($item[spooky wad]) == 0)
+	if (!have($item[spooky wad]))
 	 	return false;
-	if (item_amount($item[sleaze wad]) == 0)
+	if (!have($item[sleaze wad]))
 	 	return false;
-	if (item_amount($item[stench wad]) == 0)
+	if (!have($item[stench wad]))
 		return false;
 
 	return true;
@@ -175,36 +176,36 @@ boolean have_all_wads()
 
 item jim()
 {
-  if (item_amount($item[Comfy Pillow]) > 0)
+  if (have($item[Comfy Pillow]))
     return $item[Comfy Pillow];
-  if (item_amount($item[Sponge Cake]) > 0)
+  if (have($item[Sponge Cake]))
     return $item[Sponge Cake];
   return $item[none];
 }
 
 item flargwurm()
 {
-  if (item_amount($item[Booze-Soaked Cherry]) > 0)
+  if (have($item[Booze-Soaked Cherry]))
     return $item[Booze-Soaked Cherry];
   if (jim() != $item[sponge cake] && item_amount($item[sponge cake]) == 1)
     return $item[sponge cake];
-  if (item_amount($item[sponge cake]) > 1)
+  if (have($item[sponge cake]) > 1)
     return $item[sponge cake];
   return $item[none];
 }
 
 item bognort()
 {
-  if (item_amount($item[Giant Marshmallow]) > 0)
+  if (have($item[Giant Marshmallow]))
     return $item[Giant Marshmallow];
-  if (item_amount($item[Gin-Soaked Blotter Paper]) > 0)
+  if (have($item[Gin-Soaked Blotter Paper]))
     return $item[Gin-Soaked Blotter Paper];
   return $item[none];
 }
 
 item stinkface()
 {
-  if (item_amount($item[Beer-Scented Teddy Bear]) > 0)
+  if (have($item[Beer-Scented Teddy Bear]))
     return $item[Beer-Scented Teddy Bear];
   if (bognort() != $item[Gin-Soaked Blotter Paper] && item_amount($item[Gin-Soaked Blotter Paper]) == 1)
     return $item[Gin-Soaked Blotter Paper];
@@ -236,11 +237,11 @@ int turners()
 
 boolean have_cubeling_items()
 {
-  if (i_a($item[eleven-foot pole]) == 0)
+  if (!have($item[eleven-foot pole]))
     return false;
-  if (i_a($item[pick-o-matic lockpicks]) == 0)
+  if (!have($item[pick-o-matic lockpicks]))
     return false;
-  if (i_a($item[ring of detect boring doors]) == 0)
+  if (!have($item[ring of detect boring doors]))
     return false;
 
   return true;
@@ -278,7 +279,7 @@ int scavenger_hunt_items()
 
 int mcclusky_items()
 {
-	if (item_amount($item[McClusky file (complete)]) > 0)
+	if (have($item[McClusky file (complete)]))
 		return 6;
 
 	return count_set($items[McClusky file (page 1),
@@ -290,14 +291,9 @@ int mcclusky_items()
 
 int ninja_snowman_items()
 {
-	int ninja = 0;
-
-	foreach toy in $items[ninja rope, ninja crampons, ninja carabiner]
-	{
-		if (item_amount(toy) > 0)
-			ninja += 1;
-	}
-	return ninja;
+  return count_set($items[ninja rope,
+                   ninja crampons,
+                   ninja carabiner]);
 }
 
 int immateria()
@@ -310,7 +306,7 @@ int immateria()
 
 void make_if_needed(item it, string msg)
 {
-  if (i_a(it) == 0 && creatable_amount(it) > 0)
+  if (!have(it) && creatable_amount(it) > 0)
   {
     if (msg != "")
     {
@@ -338,7 +334,8 @@ item yellow_ray_item()
 
 boolean have_flyers()
 {
-  return (item_amount($item[rock band flyers]) > 0 || item_amount($item[jam band flyers]) > 0);
+  return (have($item[rock band flyers])
+          || have($item[jam band flyers]));
 }
 
 int friar_things()
@@ -367,11 +364,11 @@ int total_clovers()
 int hero_keys()
 {
   int keys = 0;
-  if (item_amount($item[sneaky pete's key]) > 0)
+  if (have($item[sneaky pete's key]))
     keys += 1;
-  if (item_amount($item[boris's key]) > 0)
+  if (have($item[boris's key]))
     keys += 1;
-  if (item_amount($item[jarlsberg's key]) > 0)
+  if (have($item[jarlsberg's key]))
     keys += 1;
 
   return keys;
@@ -485,14 +482,14 @@ void sell_all(item it)
 
 void sell_one(item it)
 {
-	if (item_amount(it) == 0)
+	if (!have(it))
 		return;
 	sell_all(it, item_amount(it) - 1);
 }
 
 void get_one(item it)
 {
-	if (item_amount(it) > 0)
+	if (have(it))
 		return;
 	if (!is_npc_item(it))
 	{
@@ -520,7 +517,7 @@ void get_accordion()
 {
   if (npc_price($item[toy accordion]) == 0)
     return;
-	if((i_a($item[Antique Accordion]) == 0) && (i_a($item[toy accordion]) == 0) && my_meat() > 300 && !($classes[Accordion Thief, Avatar of Boris, Avatar of Jarlsberg, Avatar of Sneaky Pete, Ed] contains my_class()))
+	if((!have($item[Antique Accordion])) && (!have($item[toy accordion])) && my_meat() > 300 && !($classes[Accordion Thief, Avatar of Boris, Avatar of Jarlsberg, Avatar of Sneaky Pete, Ed] contains my_class()))
 	{
     log("Getting an accordion.");
 		get_one($item[toy accordion]);
@@ -531,7 +528,7 @@ void get_totem()
 {
   if (npc_price($item[chewing gum on a string]) == 0)
     return;
-	while(i_a($item[turtle totem]) == 0 && my_meat() > 300)
+	while(!have($item[turtle totem]) && my_meat() > 300)
 	{
     log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[turtle totem]) + ".");
 		get_one($item[chewing gum on a string]);
@@ -543,7 +540,7 @@ void get_saucepan()
 {
   if (npc_price($item[chewing gum on a string]) == 0)
     return;
-	while(i_a($item[saucepan]) == 0 && my_meat() > 300)
+	while(!have($item[saucepan]) && my_meat() > 300)
 	{
     log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[saucepan]) + ".");
 		get_one($item[chewing gum on a string]);
@@ -561,7 +558,7 @@ int palindome_items()
                        photograph of god,
                        [7262]&quot;I Love Me\, Vol. I&quot;]
   {
-    if (item_amount(it) > 0)
+    if (have(it))
       count += 1;
   }
 	return count;

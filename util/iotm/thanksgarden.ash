@@ -10,6 +10,8 @@ void harvest_thanksgarden()
   {
     log("Harvesting the " + wrap("Thanksgarden", COLOR_ITEM) + ".");
     visit_url('campground.php?action=garden');
+    log("I wonder what we just won. Opening the " + wrap($item[cornucopia], item_amount($item[cornucopia])) + ".");
+    use(item_amount($item[cornucopia]), $item[cornucopia]);
   }
 }
 
