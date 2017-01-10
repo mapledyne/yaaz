@@ -1,7 +1,7 @@
 import "util/main.ash";
 
 // stolen from cc_ascend, which has other great work in it, too.
-string beer_pong(string page)
+boolean beer_pong(string page)
 {
 	record r {
 		string insult;
@@ -38,7 +38,7 @@ string beer_pong(string page)
 		if(page.contains_text("Phooey"))
 		{
 			log("Looks like something went wrong and you lost.");
-			return page;
+			return false;
 		}
 
 		foreach i in insults
@@ -61,7 +61,7 @@ string beer_pong(string page)
 
 					// Give a bad retort
 					page = visit_url("beerpong.php?value=Retort!&response=9");
-					return page;
+					return false;
 				}
 			}
 		}
@@ -73,19 +73,20 @@ string beer_pong(string page)
 	}
 
 	log("You won a thrilling game of Insult Beer Pong!");
-	return page;
+	return true;
 }
 
 boolean try_beer_pong()
 {
   set_property("choiceAdventure187", "0");
 	string page = visit_url("adventure.php?snarfblat=157");
+	boolean won = false;
 	if(contains_text(page, "Arrr You Man Enough?"))
 	{
     log("Attempting beer pong. Chance of success is " + pirate_insult_success() + "%.");
-		page = beer_pong(visit_url("choice.php?pwd&whichchoice=187&option=1"));
+		won = beer_pong(visit_url("choice.php?pwd&whichchoice=187&option=1"));
 	}
-	return contains_text(page, "Victory Laps");
+	return won;
 }
 
 void open_belowdecks()
@@ -203,7 +204,7 @@ boolean get_capm_map()
 
   while (item_amount($item[Cap'm Caronch's Map]) == 0)
   {
-    maximize("", "swashbuckling outfit");
+    maximize("", "swashbuckling getup");
     boolean b = dg_adventure($location[barrrney's barrr]);
     if (!b) return true;
   }
@@ -218,7 +219,7 @@ boolean get_blueprints()
 
   while (item_amount($item[Orcish Frat House blueprints]) == 0)
   {
-    maximize("", "swashbuckling outfit");
+    maximize("", "swashbuckling getup");
     boolean b = dg_adventure($location[barrrney's barrr]);
     if (!b) return true;
   }
@@ -247,7 +248,7 @@ boolean get_skirt()
 boolean fcle()
 {
 
-  if (i_a($item[pirate fledges]) > 0) return false;
+  if (have($item[pirate fledges])) return false;
   if (quest_status("questM12Pirate") < 5) return false;
 
   // The ordering here determines what familiar is used.
@@ -262,14 +263,17 @@ boolean fcle()
 
   log("Off to get our " + wrap($item[pirate fledges]) + ".");
 
-  while (item_amount($item[rigging shampoo]) == 0
+  while ((item_amount($item[rigging shampoo]) == 0
          || item_amount($item[ball polish]) == 0
          || item_amount($item[mizzenmast mop]) == 0)
+				 && !have($item[pirate fledges]))
   {
     maximize(max, "swashbuckling getup");
     boolean b = dg_adventure($location[The F\'c\'le]);
     if (!b) return true;
   }
+
+	if (have($item[pirate fledges])) return true;
 
 
   if((item_amount($item[rigging shampoo]) == 1)
@@ -303,7 +307,7 @@ boolean M_pirates()
 
   if (get_capm_map()) return true;
 
-  if (item_amount($item[Cap'm Caronch's Map]) > 0)
+  if (item_amount($item[Cap'm Caronch's Map]) > 0 && quest_status("questM12Pirate")  < 1)
   {
     log("Using " + wrap($item[Cap'm Caronch's Map]) + ".");
     use(1, $item[Cap'm Caronch's Map]);

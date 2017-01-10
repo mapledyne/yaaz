@@ -221,6 +221,23 @@ void progress_sheet(string detail)
     progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
   }
 
+  if (have_outfit("swashbuckling getup") && quest_status("questM12Pirate") == UNSTARTED)
+  {
+    task("Find " + wrap($item[cap'm caronch's map]));
+  }
+  if (quest_status("questM12Pirate") == 0)
+  {
+    task("Get " + wrap($item[Cap'm Caronch's nasty booty]));
+  }
+  if (quest_status("questM12Pirate") == 1)
+  {
+    task("Get " + wrap($item[orcish frat house blueprints]));
+  }
+  if (quest_status("questM12Pirate") == 2)
+  {
+    task("Get " + wrap($item[cap'm caronch's dentures]));
+  }
+
   if (quest_status("questM12Pirate") > 0 && quest_status("questM12Pirate") < 5)
   {
     int current = pirate_insults();

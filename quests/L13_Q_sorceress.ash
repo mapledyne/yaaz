@@ -395,6 +395,7 @@ boolean L13_Q_sorceress()
     {
       log("Making a " + wrap($item[wand of nagamar]) + ".");
       create(1, $item[wand of nagamar]);
+      return true;
     }
   }
 

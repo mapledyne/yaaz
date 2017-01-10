@@ -35,13 +35,18 @@ boolean spinner_eat(item yum)
 
 }
 
-boolean can_spin_time()
+boolean can_spin_time(int min)
 {
   if (item_amount($item[time-spinner]) == 0)
     return false;
-  if (time_minutes() == 0)
+  if (time_minutes() < min)
     return false;
   return true;
+}
+
+boolean can_spin_time()
+{
+  return can_spin_time(1);
 }
 
 
