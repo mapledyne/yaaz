@@ -49,7 +49,7 @@ boolean M_guild()
     } else {
       maximize("");
     }
-    boolean b = dg_adventure(loc);
+    boolean b = yz_adventure(loc);
     if (equipped_item($slot[pants]) == $item[none]
         && my_primestat() == $stat[moxie])
       break;

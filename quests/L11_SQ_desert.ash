@@ -57,7 +57,7 @@ int open_oasis()
     } else {
       maximize("");
     }
-    dg_adventure(desert);
+    yz_adventure(desert);
     adv_spent += 1;
   }
   if (!is_oasis_open())
@@ -94,10 +94,10 @@ int open_gnasir()
 
       if (have_effect(ultrahydrated) == 0)
       {
-        dg_adventure(oasis);
+        yz_adventure(oasis);
         adv_spent += 1;
       }
-      dg_adventure(desert);
+      yz_adventure(desert);
       adv_spent += 1;
     }
     if (!is_gnasir_open())
@@ -215,7 +215,7 @@ boolean L11_SQ_desert()
         while (item_amount($item[drum machine]) == 0)
         {
           count = count + 1;
-          dg_adventure($location[The Oasis], "combat,  0.5 items");
+          yz_adventure($location[The Oasis], "combat,  0.5 items");
           if (count > 10 && item_amount($item[drum machine]) == 0)
           {
             error ("Took too long finding the " + wrap($item[drum machine]) + ". Aborting so we can find out why.");
@@ -227,7 +227,7 @@ boolean L11_SQ_desert()
     }
 
     if (have_effect($effect[Ultrahydrated]) == 0) {
-      dg_adventure($location[The Oasis]);
+      yz_adventure($location[The Oasis]);
       continue;
     }
 
@@ -238,7 +238,7 @@ boolean L11_SQ_desert()
       maximize("");
     }
 
-    dg_adventure($location[The Arid\, Extra-Dry Desert]);
+    yz_adventure($location[The Arid\, Extra-Dry Desert]);
   }
 
   int count = starting_adv_count - my_adventures();

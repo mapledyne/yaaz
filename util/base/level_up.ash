@@ -8,7 +8,7 @@ boolean do_leveling_thing()
 
   if (quest_status("questM20Necklace") == FINISHED)
   {
-    return dg_adventure($location[the haunted gallery], "exp, ml, -combat");
+    return yz_adventure($location[the haunted gallery], "exp, ml, -combat");
   }
   log("Unsure how to level at this, ahem, level.");
   wait(10);

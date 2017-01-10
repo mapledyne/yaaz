@@ -21,7 +21,7 @@ boolean M_8bit()
         continue;
       }
       maximize("items", $item[continuum transfunctioner]);
-      boolean b = dg_adventure($location[8-bit realm]);
+      boolean b = yz_adventure($location[8-bit realm]);
       if (!b)
         break;
   }

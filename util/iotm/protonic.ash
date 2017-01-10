@@ -42,7 +42,7 @@ boolean protonic()
     set_property("ghostLocation", "");
 
     maximize("", $item[protonic accelerator pack]);
-    return dg_adventure(prot);
+    return yz_adventure(prot);
   }
   return false;
 }

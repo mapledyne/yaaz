@@ -12,7 +12,7 @@ boolean do_friar_area(location loc, item it)
   }
   maximize("noncombat");
   max_effects("items");
-  dg_adventure(loc);
+  yz_adventure(loc);
   return true;
 }
 

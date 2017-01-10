@@ -6,7 +6,7 @@ boolean consume_ballroom_delay()
 
   while ($location[the haunted ballroom].turns_spent < 5)
   {
-    boolean b = dg_adventure($location[the haunted ballroom], "");
+    boolean b = yz_adventure($location[the haunted ballroom], "");
     if (!b) return true;
   }
   return true;
@@ -56,7 +56,7 @@ boolean M_spookyraven()
       maximize("-combat");
     }
 
-    boolean b = dg_adventure(bath);
+    boolean b = yz_adventure(bath);
     if (!b)
       return true;
   }
@@ -114,7 +114,7 @@ boolean M_spookyraven()
       maximize();
     }
 
-    boolean b = dg_adventure(bed);
+    boolean b = yz_adventure(bed);
     cli_execute("choice-goal");
     cli_execute("choice-goal");
 
@@ -137,7 +137,7 @@ boolean M_spookyraven()
       maximize("-combat");
     }
 
-    boolean b = dg_adventure(gallery);
+    boolean b = yz_adventure(gallery);
     if (!b)
       return true;
   }
@@ -154,7 +154,7 @@ boolean M_spookyraven()
 
   visit_url("place.php?whichplace=manor2&action=manor2_ladys");
 
-  dg_adventure($location[the haunted ballroom]);
+  yz_adventure($location[the haunted ballroom]);
   log("Dancing complete!");
   return true;
 }

@@ -112,7 +112,7 @@ boolean timespinner_future()
     {
       save_daily_setting("spinner_notice", "true");
       warning("You have the " + wrap($item[time-spinner]) + " but I don't know how to visit the far future.");
-      warning("If you set the property 'dg_far_future', I'll try to visit the future for you and replciate things.");
+      warning("If you set the property 'yz_far_future', I'll try to visit the future for you and replciate things.");
       warning("I recommend Ezandora's FarFuture script");
       wait(3);
     }

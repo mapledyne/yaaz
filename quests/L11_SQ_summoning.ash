@@ -23,7 +23,7 @@ boolean get_wine_bomb()
 
   while (i_a($item[wine bomb]) == 0)
   {
-    dg_adventure($location[the haunted boiler room], "ml, equip unstable fulminate");
+    yz_adventure($location[the haunted boiler room], "ml, equip unstable fulminate");
   }
 
   remove_attract($monster[monstrous boiler]);
@@ -51,7 +51,7 @@ boolean get_blasting()
   add_attract($monster[cabinet of dr. limpieza]);
   while (item_amount($item[blasting soda]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
   {
-    dg_adventure($location[the haunted laundry room], "items");
+    yz_adventure($location[the haunted laundry room], "items");
     if (creatable_amount($item[unstable fulminate]) > 0)
       create(1, $item[unstable fulminate]);
   }
@@ -81,7 +81,7 @@ boolean get_vinegar()
   add_attract($monster[possessed wine rack]);
   while (item_amount($item[bottle of Chateau de Vinegar]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
   {
-    dg_adventure($location[the haunted wine cellar], "items");
+    yz_adventure($location[the haunted wine cellar], "items");
     if (creatable_amount($item[unstable fulminate]) > 0)
       create(1, $item[unstable fulminate]);
 
@@ -99,7 +99,7 @@ void open_cellar()
     {
       max = "-combat";
     }
-    dg_adventure($location[the haunted ballroom]);
+    yz_adventure($location[the haunted ballroom]);
   }
 
   if (quest_status("questL11Manor") <= STARTED)
@@ -128,7 +128,7 @@ boolean open_summoning_scavenge()
       log("Off to get the " + wrap(i) + " from " + wrap(l) + ".");
       while (item_amount(i) == 0)
       {
-        boolean b = dg_adventure(l, "-combat");
+        boolean b = yz_adventure(l, "-combat");
         if (!b) return true;
       }
       return true;
@@ -201,7 +201,7 @@ boolean do_spookyraven()
       if (open_summoning()) return true;
       log("Going to try to kill " + wrap($monster[lord spookyraven]) + ".");
       visit_url('place.php?whichplace=manor4&action=manor4_chamberwall_label');
-      dg_adventure($location[summoning chamber], "all res");
+      yz_adventure($location[summoning chamber], "all res");
       return true;
   }
 }

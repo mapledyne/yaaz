@@ -18,7 +18,7 @@ void get_turner()
 
   while(turners() == 0)
   {
-    dg_adventure($location[The Middle Chamber], "items");
+    yz_adventure($location[The Middle Chamber], "items");
   }
 }
 
@@ -69,7 +69,7 @@ boolean L11_SQ_pyramid()
   while (quest_status("questL11Pyramid") < 1)
   {
     maximize("noncombat");
-    dg_adventure($location[The Upper Chamber]);
+    yz_adventure($location[The Upper Chamber]);
   }
 
   if (quest_status("questL11Pyramid") < 3 || turners() < 10)
@@ -78,7 +78,7 @@ boolean L11_SQ_pyramid()
     while (quest_status("questL11Pyramid") < 3 || turners() < 10)
     {
       maximize("items");
-      dg_adventure($location[The Middle Chamber]);
+      yz_adventure($location[The Middle Chamber]);
     }
     remove_attract($monster[tomb rat]);
   }

@@ -4,7 +4,7 @@ import "util/base/war_support.ash";
 void get_junkyard_item()
 {
   location loc = to_location(get_property("currentJunkyardLocation"));
-  dg_adventure(loc, "");
+  yz_adventure(loc, "");
 }
 
 boolean L12_SQ_junkyard(string side)

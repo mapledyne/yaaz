@@ -23,7 +23,7 @@ string prep_for_king()
     while (item_amount(cake) == 0 && can_adventure())
     {
       maximize("", "Knob Goblin Elite Guard Uniform");
-      dg_adventure($location[cobb's knob kitchens]);
+      yz_adventure($location[cobb's knob kitchens]);
       if (creatable_amount(cake) > 0)
       {
         create(1, cake);
@@ -43,7 +43,7 @@ boolean L05_Q_goblin()
   {
     log("Opening the Knob Goblin dispensary.");
     maximize("outfit knob goblin elite guard uniform");
-    return dg_adventure($location[Cobb's knob barracks]);
+    return yz_adventure($location[Cobb's knob barracks]);
   }
 
   if (item_amount($item[knob goblin encryption key]) > 0 && item_amount($item[cobb's knob map]) > 0)
@@ -60,7 +60,7 @@ boolean L05_Q_goblin()
     log("Adventuring in " + wrap(outskirts) + " to get the " + wrap($item[Knob Goblin encryption key]) + ".");
     while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
-      dg_adventure(outskirts, "");
+      yz_adventure(outskirts, "");
     }
     return true;
   }
@@ -90,7 +90,7 @@ boolean L05_Q_goblin()
     add_attract($monster[knob goblin harem girl]);
     while(!have_outfit("Knob Goblin Harem Girl Disguise") && can_adventure())
     {
-      dg_adventure(harem, "items");
+      yz_adventure(harem, "items");
     }
     remove_attract($monster[knob goblin harem girl]);
     return true;
@@ -117,7 +117,7 @@ boolean L05_Q_goblin()
   }
   log("Off to fight the " + wrap($monster[knob goblin king]) + ".");
   maximize("", disguise);
-  dg_adventure($location[Throne Room]);
+  yz_adventure($location[Throne Room]);
 
   // TODO: Check if defeated!
   log("Going to let the council know.");

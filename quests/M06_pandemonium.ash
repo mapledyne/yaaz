@@ -14,7 +14,7 @@ boolean laugh_loop()
   if (item_amount($item[imp air]) >= 5)
     max = "combat, items";
 
-  dg_adventure($location[the laugh floor], max);
+  yz_adventure($location[the laugh floor], max);
   return true;
 }
 
@@ -28,7 +28,7 @@ boolean backstage_loop()
   if (backstage_items() == 4)
     max = "items, combat";
 
-  dg_adventure($location[infernal rackets backstage], max);
+  yz_adventure($location[infernal rackets backstage], max);
   return true;
 }
 

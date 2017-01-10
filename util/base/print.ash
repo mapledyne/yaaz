@@ -82,14 +82,14 @@ string wrap(coinmaster c)
   return wrap(c, COLOR_COINMASTER);
 }
 
-void dg_print(string msg, string color)
+void yz_print(string msg, string color)
 {
   print_html("<font color='" + color + "'>" + msg + "</font>");
 }
 
 void log(string msg)
 {
-	dg_print(msg, COLOR_LOG);
+	yz_print(msg, COLOR_LOG);
 }
 
 void log_adv(int turns, string msg)
@@ -102,12 +102,12 @@ void log_adv(int turns, string msg)
 
 void error(string msg)
 {
-  dg_print(msg, COLOR_ERROR);
+  yz_print(msg, COLOR_ERROR);
 }
 
 void warning(string msg)
 {
-  dg_print(msg, COLOR_WARNING);
+  yz_print(msg, COLOR_WARNING);
 }
 
 void warning_no_estimate()
@@ -117,12 +117,12 @@ void warning_no_estimate()
 
 void advice(string msg)
 {
-  dg_print(msg, COLOR_ADVICE);
+  yz_print(msg, COLOR_ADVICE);
 }
 
 void task(string msg)
 {
-  dg_print(UNCHECKED + " " + msg, COLOR_TASK);
+  yz_print(UNCHECKED + " " + msg, COLOR_TASK);
 }
 
 void progress(int percent);

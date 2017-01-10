@@ -296,7 +296,7 @@ void progress_sheet(string detail)
       && have($item[continuum transfunctioner])
       && quest_status("questL13Final") < 5)
   {
-    progress(item_amount($item[white pixel]), 30, "digital key");
+    progress(item_amount($item[white pixel]), 30, "make a " + wrap($item[digital key]));
   }
   int desks = to_int(get_property("writingDesksDefeated"));
 
@@ -690,7 +690,7 @@ void progress_sheet(string detail)
   {
     if (get_counters("Digitize monster", x, x) != "")
     {
-      dg_print("Digitized monster (" + wrap(to_monster(get_property("_sourceTerminalDigitizeMonster"))) + ") coming up in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
+      yz_print("Digitized monster (" + wrap(to_monster(get_property("_sourceTerminalDigitizeMonster"))) + ") coming up in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
     }
 
     string last_rare = "";
@@ -701,17 +701,17 @@ void progress_sheet(string detail)
 
     if (get_counters("Fortune Cookie", x, x) != "")
     {
-      dg_print("Semirare in " + x + " turns." + last_rare, COLOR_TASK);
+      yz_print("Semirare in " + x + " turns." + last_rare, COLOR_TASK);
     }
 
     if (get_counters("Semirare window begin", x, x) != "")
     {
-      dg_print("Semirare window begins in " + x + " turns. " + last_rare, COLOR_TASK);
+      yz_print("Semirare window begins in " + x + " turns. " + last_rare, COLOR_TASK);
     }
 
     if (get_counters("Semirare window end", x, x) != "")
     {
-      dg_print("Semirare window ends in " + x + " turns.", COLOR_TASK);
+      yz_print("Semirare window ends in " + x + " turns.", COLOR_TASK);
     }
 
   }

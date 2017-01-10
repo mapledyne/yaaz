@@ -4,7 +4,7 @@ void plant_beanstalk()
 {
   while(item_amount($item[enchanted bean]) == 0 && quest_status("questL10Garbage") < 2)
   {
-    dg_adventure($location[the beanbat chamber], "items");
+    yz_adventure($location[the beanbat chamber], "items");
   }
 
   if (quest_status("questL10Garbage") < 2)
@@ -26,7 +26,7 @@ void get_sock()
     {
       max = "items";
     }
-    boolean b = dg_adventure($location[the penultimate fantasy airship], max);
+    boolean b = yz_adventure($location[the penultimate fantasy airship], max);
   }
   remove_attract($monster[quiet healer]);
 
@@ -65,7 +65,7 @@ void open_ground_floor()
   }
   while (can_adventure() && quest_status("questL10Garbage") == 7)
   {
-    boolean b = dg_adventure($location[The Castle in the Clouds in the Sky (Basement)]);
+    boolean b = yz_adventure($location[The Castle in the Clouds in the Sky (Basement)]);
     if (!b)
       return;
   }
@@ -99,7 +99,7 @@ void open_top_floor()
       set_property("choiceAdventure1026", 3); // skip
     }
 
-    boolean b = dg_adventure(ground, "items");
+    boolean b = yz_adventure(ground, "items");
     if (!b)
       return;
   }
@@ -147,7 +147,7 @@ void spin_garbage_wheel()
 
     set_property("choiceAdventure679", 1); // complete quest
 
-    boolean b = dg_adventure($location[The Castle in the Clouds in the Sky (Top Floor)]);
+    boolean b = yz_adventure($location[The Castle in the Clouds in the Sky (Top Floor)]);
     if (!b)
       return;
   }

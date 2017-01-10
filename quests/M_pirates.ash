@@ -112,7 +112,7 @@ void open_belowdecks()
   while (quest_status("questM12Pirate") != FINISHED)
   {
     maximize("-combat", $item[pirate fledges]);
-    dg_adventure($location[the poop deck]);
+    yz_adventure($location[the poop deck]);
   }
   log(wrap($location[belowdecks]) + " opened.");
 }
@@ -148,7 +148,7 @@ boolean get_talisman()
   while(item_amount($item[Talisman o' Namsilat]) == 0)
   {
     maximize("items", $item[pirate fledges]);
-    dg_adventure($location[belowdecks]);
+    yz_adventure($location[belowdecks]);
     maybe_make_talisman();
   }
   return true;
@@ -164,7 +164,7 @@ boolean get_getup()
   log("Get the swashbuckling getup...");
   while(!have_outfit("swashbuckling getup"))
   {
-    boolean b = dg_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
+    boolean b = yz_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
     if (!b) return true;
   }
   return true;
@@ -192,7 +192,7 @@ boolean collect_insults()
     }
 
     maximize("combat", "swashbuckling getup");
-    boolean b = dg_adventure($location[Barrrney's barrr]);
+    boolean b = yz_adventure($location[Barrrney's barrr]);
     if (!b) return true;
   }
   return true;
@@ -205,7 +205,7 @@ boolean get_capm_map()
   while (item_amount($item[Cap'm Caronch's Map]) == 0)
   {
     maximize("", "swashbuckling getup");
-    boolean b = dg_adventure($location[barrrney's barrr]);
+    boolean b = yz_adventure($location[barrrney's barrr]);
     if (!b) return true;
   }
   return true;
@@ -220,7 +220,7 @@ boolean get_blueprints()
   while (item_amount($item[Orcish Frat House blueprints]) == 0)
   {
     maximize("", "swashbuckling getup");
-    boolean b = dg_adventure($location[barrrney's barrr]);
+    boolean b = yz_adventure($location[barrrney's barrr]);
     if (!b) return true;
   }
   return true;
@@ -239,7 +239,7 @@ boolean get_skirt()
   log("Head to the " + wrap($location[the degrassi knoll gym]) + " to get a " + wrap($item[frilly skirt]) + ".");
   while (i_a($item[frilly skirt]) == 0)
   {
-    boolean b = dg_adventure($location[the degrassi knoll gym], "items");
+    boolean b = yz_adventure($location[the degrassi knoll gym], "items");
     if (!b) return true;
   }
   return true;
@@ -269,7 +269,7 @@ boolean fcle()
 				 && !have($item[pirate fledges]))
   {
     maximize(max, "swashbuckling getup");
-    boolean b = dg_adventure($location[The F\'c\'le]);
+    boolean b = yz_adventure($location[The F\'c\'le]);
     if (!b) return true;
   }
 
@@ -285,7 +285,7 @@ boolean fcle()
     use(1, $item[ball polish]);
     use(1, $item[mizzenmast mop]);
     outfit("swashbuckling getup");
-    dg_adventure($location[The F\'c\'le]);
+    yz_adventure($location[The F\'c\'le]);
     return true;
   }
 

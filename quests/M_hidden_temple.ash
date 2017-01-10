@@ -20,7 +20,7 @@ boolean M_hidden_temple()
      set_property("choiceAdventure505", 2);
      while (item_amount($item[tree-holed coin]) < 1)
      {
-        if (!dg_adventure($location[The Spooky Forest], "-combat"))
+        if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
      }
   }
@@ -31,7 +31,7 @@ boolean M_hidden_temple()
      set_property("choiceAdventure506", 2);
      while (item_amount($item[Spooky-Gro fertilizer]) < 1)
      {
-        if (!dg_adventure($location[The Spooky Forest], "-combat"))
+        if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
      }
   }
@@ -43,7 +43,7 @@ boolean M_hidden_temple()
      set_property("choiceAdventure504", 3);
      while (item_amount($item[spooky sapling]) < 1)
      {
-        if (!dg_adventure($location[The Spooky Forest], "-combat"))
+        if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
      }
      set_property("choiceAdventure504", 4);
@@ -56,7 +56,7 @@ boolean M_hidden_temple()
      set_property("choiceAdventure507", 1);
      while (item_amount($item[Spooky Temple map]) < 1)
      {
-        if (!dg_adventure($location[The Spooky Forest], "-combat"))
+        if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
      }
   }

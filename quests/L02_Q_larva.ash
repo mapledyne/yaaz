@@ -19,7 +19,7 @@ boolean larva_loop()
       set_property("choiceAdventure502", 2);
       set_property("choiceAdventure505", 1);
       maximize("noncombat");
-      dg_adventure($location[The spooky forest]);
+      yz_adventure($location[The spooky forest]);
       return true;
     case 1:
       log("Returning the " + wrap($item[mosquito larva]) + " to the council.");

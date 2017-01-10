@@ -48,7 +48,7 @@ boolean L12_SQ_lighthouse(string side)
         && item_amount($item[barrel of gunpowder]) < 5)
   {
     // we'll bail out if we digitize the lobsterfrogman but otherwise try to get all the barrels
-    boolean b = dg_adventure($location[sonofa beach], "combat");
+    boolean b = yz_adventure($location[sonofa beach], "combat");
     if (!b)
       return true;
   }

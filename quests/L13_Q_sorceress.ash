@@ -10,7 +10,7 @@ boolean wall_of_skin()
   }
 
   maximize("");
-  dg_adventure($location[tower level 1]);
+  yz_adventure($location[tower level 1]);
   if (quest_status("questL13Final") == 6)
   {
     warning("Something happened. We should be past the Wall of Skin, but aren't for some reason.");
@@ -32,11 +32,11 @@ boolean wall_of_bones()
   {
     location ground = $location[the castle in the clouds in the sky (ground floor)];
     maximize("noncombat");
-    dg_adventure(ground);
+    yz_adventure(ground);
   }
 
   maximize("");
-  dg_adventure($location[tower level 3]);
+  yz_adventure($location[tower level 3]);
   if (quest_status("questL13Final") == 8)
   {
     warning("Something happened. We should be past the " + wrap($monster[wall of bones]) + ", but aren't for some reason.");
@@ -52,7 +52,7 @@ boolean wall_of_meat()
   while (quest_status("questL13Final") == 7 && counter < 10)
   {
     maximize("meat, +effective");
-    dg_adventure($location[tower level 2]);
+    yz_adventure($location[tower level 2]);
     counter += 1;
   }
 
@@ -69,7 +69,7 @@ boolean wall_of_meat()
 boolean mirror()
 {
   set_property("choiceAdventure1015", 1);
-  dg_adventure($location[tower level 4]);
+  yz_adventure($location[tower level 4]);
 
   if (quest_status("questL13Final") == 9)
   {
@@ -89,7 +89,7 @@ boolean shadow()
     return false;
   }
   maximize("");
-  dg_adventure($location[tower level 5]);
+  yz_adventure($location[tower level 5]);
 
   if (quest_status("questL13Final") == 10)
   {
@@ -104,7 +104,7 @@ boolean sorceress()
 {
 
   maximize("");
-  dg_adventure($location[the naughty sorceress' chamber]);
+  yz_adventure($location[the naughty sorceress' chamber]);
 
   if (quest_status("questL13Final") == 11)
   {
@@ -222,7 +222,7 @@ boolean contest_race()
   if (get_property("nsContestants1").to_int() > 0)
   {
     maximize();
-    dg_adventure($location[fastest adventurer contest]);
+    yz_adventure($location[fastest adventurer contest]);
     return true;
   }
 
@@ -231,7 +231,7 @@ boolean contest_race()
     location loc = get_challenge_loc(get_property("nsChallenge1"));
 
     maximize();
-    dg_adventure(loc);
+    yz_adventure(loc);
     return true;
   }
 
@@ -240,7 +240,7 @@ boolean contest_race()
     location loc = get_challenge_loc(get_property("nsChallenge2"));
 
     maximize();
-    dg_adventure(loc);
+    yz_adventure(loc);
     return true;
   }
   return false;
@@ -390,7 +390,7 @@ boolean L13_Q_sorceress()
       && my_path() != "Nuclear Autumn")
   {
     log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
-    boolean clove = dg_clover($location[The Castle in the Clouds in the Sky (Basement)]);
+    boolean clove = yz_clover($location[The Castle in the Clouds in the Sky (Basement)]);
     if (clove)
     {
       log("Making a " + wrap($item[wand of nagamar]) + ".");

@@ -10,22 +10,22 @@ void check_stones()
 
   if (item_amount($item[scorched stone sphere]) > 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Southeast)]);
+    yz_adventure($location[An Overgrown Shrine (Southeast)]);
   }
 
   if (item_amount($item[crackling stone sphere]) > 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Northeast)]);
+    yz_adventure($location[An Overgrown Shrine (Northeast)]);
   }
 
   if (item_amount($item[dripping stone sphere]) > 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Southwest)]);
+    yz_adventure($location[An Overgrown Shrine (Southwest)]);
   }
 
   if (item_amount($item[moss-covered stone sphere]) > 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Northwest)]);
+    yz_adventure($location[An Overgrown Shrine (Northwest)]);
   }
 }
 
@@ -40,7 +40,7 @@ void get_machete()
   maximize("");
   while (i_a($item[antique machete]) == 0)
   {
-    boolean b = dg_adventure($location[the hidden park]);
+    boolean b = yz_adventure($location[the hidden park]);
     if (!b)
       return;
   }
@@ -69,35 +69,35 @@ boolean do_liana()
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northeast)]) + ".");
   while(quest_status("questL11Business") < 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Northeast)]);
+    yz_adventure($location[An Overgrown Shrine (Northeast)]);
   }
 
   if (quest_status("questL11Curses") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northwest)]) + ".");
   while(quest_status("questL11Curses") < 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Northwest)]);
+    yz_adventure($location[An Overgrown Shrine (Northwest)]);
   }
 
   if (quest_status("questL11Doctor") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southwest)]) + ".");
   while(quest_status("questL11Doctor") < 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Southwest)]);
+    yz_adventure($location[An Overgrown Shrine (Southwest)]);
   }
 
   if (quest_status("questL11Spare") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southeast)]) + ".");
   while(quest_status("questL11Spare") < 0)
   {
-    dg_adventure($location[An Overgrown Shrine (Southeast)]);
+    yz_adventure($location[An Overgrown Shrine (Southeast)]);
   }
 
   if ($location[A Massive Ziggurat].turns_spent < 3)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
   while ($location[A Massive Ziggurat].turns_spent < 3)
   {
-    dg_adventure($location[A Massive Ziggurat]);
+    yz_adventure($location[A Massive Ziggurat]);
   }
 
   return false;
@@ -123,16 +123,16 @@ boolean bowling()
       log("Buying a " + wrap($item[Bowl Of Scorpions]) + " to get away from a " + wrap($monster[drunk pygmy]) + ".");
       buy(1, $item[Bowl Of Scorpions]);
     }
-    dg_adventure($location[the hidden bowling alley], "items");
+    yz_adventure($location[the hidden bowling alley], "items");
   }
   remove_attract($monster[pygmy bowler]);
   while(item_amount($item[bowling ball]) == 0)
   {
-    dg_adventure($location[the hidden bowling alley], "items");
+    yz_adventure($location[the hidden bowling alley], "items");
   }
 
   log("Off to defeat the " + wrap($monster[ancient protector spirit]) + ".");
-  dg_adventure($location[the hidden bowling alley], "elemental dmg");
+  yz_adventure($location[the hidden bowling alley], "elemental dmg");
 
   return true;
 }
@@ -150,7 +150,7 @@ boolean hospital()
   while(to_int(get_property("hiddenHospitalProgress")) < 6)
   {
     maximize("mainstat, +effective, elemental dmg, 50 surgeonosity");
-    dg_adventure($location[the hidden hospital]);
+    yz_adventure($location[the hidden hospital]);
   }
   remove_attract($monster[pygmy witch surgeon]);
   log(wrap($location[the hidden hospital]) + " cleared.");
@@ -178,7 +178,7 @@ boolean office()
       log("Trying to get the rest of the " + wrap("McClusky File", COLOR_ITEM) + " from the " + wrap($location[the hidden apartment building]));
       return false;
     }
-    dg_adventure($location[the hidden office building], "");
+    yz_adventure($location[the hidden office building], "");
   }
   remove_attract($monster[pygmy witch accountant]);
   log(wrap($location[the hidden office building]) + " cleared.");
@@ -208,7 +208,7 @@ boolean apartment()
       log("Trying to drink a " + wrap($item[cursed punch]) + " for the extra curse.");
       try_consume($item[cursed punch]);
     }
-    dg_adventure($location[the hidden apartment building], "");
+    yz_adventure($location[the hidden apartment building], "");
   }
   remove_attract($monster[pygmy shaman]);
   log(wrap($location[the hidden apartment building]) + " cleared.");
@@ -224,7 +224,7 @@ boolean fight_spirit()
   }
 
   log("Fighting the " + $monster[Protector Spectre] + ".");
-  dg_adventure($location[A Massive Ziggurat], "elemental damage");
+  yz_adventure($location[A Massive Ziggurat], "elemental damage");
 
   return true;
 }
@@ -245,7 +245,7 @@ boolean get_nose()
       warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");
       while(can_adventure() && item_amount($item[stone wool]) == 0)
       {
-        boolean b = dg_adventure($location[the hidden temple], "items");
+        boolean b = yz_adventure($location[the hidden temple], "items");
         if (!b)
           return true;
       }
@@ -265,7 +265,7 @@ boolean get_nose()
 
 	log("Going to get a " + wrap($item[The Nostril of the Serpent]) + ".");
 
-  dg_adventure($location[The Hidden Temple]);
+  yz_adventure($location[The Hidden Temple]);
 	cli_execute("refresh inv");
 	return true;
 }
@@ -291,7 +291,7 @@ boolean L11_SQ_hidden_city()
         warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");
         while(can_adventure() && item_amount($item[stone wool]) == 0)
         {
-          boolean b = dg_adventure($location[the hidden temple], "items");
+          boolean b = yz_adventure($location[the hidden temple], "items");
           if (!b)
             return true;
         }

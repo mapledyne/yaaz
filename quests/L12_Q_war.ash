@@ -58,7 +58,7 @@ void get_hippy_disguise()
     log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + ".");
     while (!have_outfit("filthy hippy disguise"))
     {
-      boolean b = dg_adventure($location[hippy camp]);
+      boolean b = yz_adventure($location[hippy camp]);
       if (!b)
         return;
     }
@@ -86,7 +86,7 @@ boolean start_the_war(string side)
   }
   while (!have_outfit(war_outfit()))
   {
-    boolean b = dg_adventure(camp);
+    boolean b = yz_adventure(camp);
     if (!b)
       return true;
   }
@@ -111,7 +111,7 @@ boolean start_the_war(string side)
   while (quest_status("warProgress") == UNSTARTED)
   {
     maximize("items, -combat", war_outfit());
-    boolean b = dg_adventure(camp);
+    boolean b = yz_adventure(camp);
     if (!b)
       return true;
   }
@@ -192,7 +192,7 @@ boolean L12_Q_war(string side)
     while(!war_orchard_accessible())
     {
       maximize("", war_outfit());
-      boolean b = dg_adventure(battle);
+      boolean b = yz_adventure(battle);
       if (!b)
         return true;
     }
@@ -202,7 +202,7 @@ boolean L12_Q_war(string side)
   while(war_defeated() < 1000)
   {
     maximize("", war_outfit());
-    boolean b = dg_adventure(battle);
+    boolean b = yz_adventure(battle);
     if (!b)
       return true;
   }

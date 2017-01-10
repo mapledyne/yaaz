@@ -36,7 +36,7 @@ boolean do_one_market_adv()
     maximize(max);
   }
   int bee = item_amount($item[beehive]);
-  boolean b = dg_adventure($location[the black forest]);
+  boolean b = yz_adventure($location[the black forest]);
   if (bee < item_amount($item[beehive]))
     log(wrap($item[beehive]) + " found!");
   return b;
@@ -71,7 +71,7 @@ boolean market_loop()
           buy(1, $item[forged identification documents]);
         }
       } else {
-        dg_adventure($location[The Shore\, Inc. Travel Agency]);
+        yz_adventure($location[The Shore\, Inc. Travel Agency]);
       }
       return true;
     default:

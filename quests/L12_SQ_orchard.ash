@@ -57,7 +57,7 @@ boolean L12_SQ_orchard()
   while (item_amount($item[heart of the filthworm queen]) == 0)
   {
     check_orchard_effects();
-    boolean b = dg_adventure(pick_orchard_location(), "items");
+    boolean b = yz_adventure(pick_orchard_location(), "items");
     if (!b)
       return true;
   }

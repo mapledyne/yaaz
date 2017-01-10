@@ -25,7 +25,7 @@ boolean get_photographs()
       max = "items";
     }
     maximize(max, $item[talisman o' namsilat]);
-    boolean b = dg_adventure($location[inside the palindome]);
+    boolean b = yz_adventure($location[inside the palindome]);
     if (!b)
       return true;
   }
@@ -55,7 +55,7 @@ boolean stunt_nut_stew()
       log("Going to get a blessing from the Friars.");
       visit_url("friars.php?pwd&action=buffs&bro=1&button='Blessed Be'");
     }
-    boolean b = dg_adventure($location[whitey's grove], "combat, items");
+    boolean b = yz_adventure($location[whitey's grove], "combat, items");
     if (!b)
       return true;
   }

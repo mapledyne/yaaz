@@ -62,7 +62,7 @@ boolean get_stench_res()
   wait(3);
   while (i_a($item[Pine-Fresh air freshener]) == 0)
   {
-    boolean b = dg_adventure($location[the bat hole entrance], "items");
+    boolean b = yz_adventure($location[the bat hole entrance], "items");
     if (!b)
       return false;
   }
@@ -97,7 +97,7 @@ boolean L04_Q_bats()
           if (!get_stench_res())
             return false;
           log("Going to clover for some " + wrap($item[sonar-in-a-biscuit]) + ".");
-          dg_clover($location[guano junction]);
+          yz_clover($location[guano junction]);
           break;
         }
         log("We don't have a clover to get a " + wrap($item[sonar-in-a-biscuit]) + ", so doing it the hard way.");
@@ -106,7 +106,7 @@ boolean L04_Q_bats()
         {
           if (!get_stench_res())
             return false;
-          dg_adventure($location[guano junction]);
+          yz_adventure($location[guano junction]);
           break;
         }
       case 2:
@@ -123,7 +123,7 @@ boolean L04_Q_bats()
           loc = $location[guano junction];
           get_stench_res();
         }
-        dg_adventure(loc);
+        yz_adventure(loc);
         break;
       case 3:
         string max = "";
@@ -138,7 +138,7 @@ boolean L04_Q_bats()
             change_mcd(8);
           }
         }
-        dg_adventure($location[the boss bat's lair], max);
+        yz_adventure($location[the boss bat's lair], max);
         break;
       case 4:
         log(wrap($monster[boss bat]) + " defeated. Going back to the council.");

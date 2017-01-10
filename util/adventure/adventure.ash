@@ -8,9 +8,9 @@ import "util/base/locations.ash";
 import "util/base/settings.ash";
 
 boolean overrides();
-boolean dg_clover(location loc);
-boolean dg_adventure(location loc, string maximize);
-boolean dg_adventure(location loc);
+boolean yz_clover(location loc);
+boolean yz_adventure(location loc, string maximize);
+boolean yz_adventure(location loc);
 
 
 boolean overrides()
@@ -50,7 +50,7 @@ boolean yz_adventure_bypass(location loc)
 }
 
 
-boolean dg_adventure(location loc, string maximize)
+boolean yz_adventure(location loc, string maximize)
 {
   if (my_inebriety() > inebriety_limit())
   {
@@ -89,12 +89,12 @@ boolean dg_adventure(location loc, string maximize)
   return yz_adventure_bypass(loc);
 }
 
-boolean dg_adventure(location loc)
+boolean yz_adventure(location loc)
 {
-  return dg_adventure(loc, "none");
+  return yz_adventure(loc, "none");
 }
 
-boolean dg_clover(location loc)
+boolean yz_clover(location loc)
 {
   item clover = $item[disassembled clover];
   item tenleaf = $item[ten-leaf clover];

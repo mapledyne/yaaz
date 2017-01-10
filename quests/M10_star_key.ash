@@ -25,7 +25,7 @@ boolean M10_star_key()
       set_property("choiceAdventure1221", 1); // skin flute (/stars + lines)
     }
 
-    boolean b = dg_adventure($location[the hole in the sky], "items");
+    boolean b = yz_adventure($location[the hole in the sky], "items");
     if (!b)
       return true;
   }

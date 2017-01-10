@@ -18,7 +18,7 @@ boolean twin_adventure(string max)
   {
     use(1, $item[rusty hedge trimmers]);
   } else {
-    return dg_adventure($location[twin peak]);
+    return yz_adventure($location[twin peak]);
   }
   if ($monsters[bearpig topiary animal,
                 elephant (meatcar?) topiary animal,
@@ -172,7 +172,7 @@ boolean L09_SQ_twin()
 	if($location[twin peak].turns_spent == 0)
 	{
 		set_property("choiceAdventure605", "1");
-		dg_adventure($location[Twin Peak]);
+		yz_adventure($location[Twin Peak]);
 	}
 
   int peak = to_int(get_property("twinPeakProgress"));
@@ -230,7 +230,7 @@ boolean L09_SQ_twin()
   int status = to_int(get_property("twinPeakProgress"));
   repeat
   {
-    boolean b = dg_adventure($location[twin peak], "");
+    boolean b = yz_adventure($location[twin peak], "");
     if (!b)
       return true;
   } until (status != to_int(get_property("twinPeakProgress")));

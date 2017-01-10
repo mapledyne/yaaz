@@ -17,7 +17,7 @@ boolean kill_yetis()
   while(item_amount($item[Groar's fur]) == 0)
   {
     string max = "cold res, meat, " + default_maximize_string();
-    boolean b = dg_adventure($location[mist-shrouded peak]);
+    boolean b = yz_adventure($location[mist-shrouded peak]);
   }
   return true;
 }
@@ -33,7 +33,7 @@ int get_cheese()
   add_attract($monster[dairy goat]);
   while(item_amount(cheese) < 3 && can_adventure())
   {
-    dg_adventure(goatlet, "items");
+    yz_adventure(goatlet, "items");
   }
   remove_attract($monster[dairy goat]);
   return item_amount(cheese);
@@ -84,7 +84,7 @@ boolean peak_ninja()
       warning("If you can modify your rate you may be able to just rerun this script, otherwise this may be a bug.");
       abort();
     }
-    boolean b = dg_adventure($location[lair of the ninja snowmen]);
+    boolean b = yz_adventure($location[lair of the ninja snowmen]);
     if (!b)
       return true;
   }
@@ -135,7 +135,7 @@ boolean trapper_items()
 
     if (item_amount($item[disassembled clover]) > 0)
     {
-      dg_clover($location[Itznotyerzitz Mine]);
+      yz_clover($location[Itznotyerzitz Mine]);
       continue;
     }
 

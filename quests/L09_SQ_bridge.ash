@@ -26,10 +26,10 @@ void do_one_bridge_adv()
   // clover it, but only if we have spare clovers
   if (item_amount($item[disassembled clover]) > 1)
   {
-    dg_clover($location[the smut orc logging camp]);
+    yz_clover($location[the smut orc logging camp]);
     return;
   }
-  dg_adventure($location[the smut orc logging camp], "items");
+  yz_adventure($location[the smut orc logging camp], "items");
 }
 
 boolean bridge_loop()

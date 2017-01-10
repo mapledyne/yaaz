@@ -44,7 +44,7 @@ boolean M_dailydungeon()
   while (!to_boolean(get_property("dailyDungeonDone")))
   {
     maximize("", $item[ring of detect boring doors]);
-    boolean b = dg_adventure($location[the daily dungeon]);
+    boolean b = yz_adventure($location[the daily dungeon]);
     if (!b)
       return true;
   }

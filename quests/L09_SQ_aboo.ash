@@ -11,7 +11,7 @@ boolean L09_SQ_aboo()
       return false;
 
     log("Off to light the fire at " + wrap($location[a-boo peak]) + ".");
-    dg_adventure($location[a-boo peak]);
+    yz_adventure($location[a-boo peak]);
     return true;
   }
 
@@ -27,7 +27,7 @@ boolean L09_SQ_aboo()
       && to_int(get_property("booPeakProgress")) == 100
       && item_amount($item[a-boo clue]) == 0)
   {
-    dg_clover($location[a-boo peak]);
+    yz_clover($location[a-boo peak]);
   }
   while (to_int(get_property("booPeakProgress")) > 0
          && can_adventure())
@@ -41,7 +41,7 @@ boolean L09_SQ_aboo()
       set_property("choiceAdventure611", "1");
     }
 
-    boolean b = dg_adventure($location[a-boo peak], max);
+    boolean b = yz_adventure($location[a-boo peak], max);
     if (!b)
       return true;
   }

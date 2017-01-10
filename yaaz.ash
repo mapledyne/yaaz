@@ -148,10 +148,33 @@ void settings_warning()
   }
 }
 
+void intro()
+{
+
+  log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ".");
+
+  if (setting("no_intro") == "true") return;
+
+  log("This is an automated ascension script, but has some additional features.");
+  string help = "To get more information, run the " + SCRIPT + "-help.ash script. In the meantime,";
+  help += "make sure your HP/MP Usage is set to what you'd like and your Custom Combat is set.";
+  log(help);
+  log("");
+  log("Custom combat should look something like:");
+  print("[default]");
+  print("consult yaaz-consult.ash");
+  print("consult WHAM.ash");
+  log("Essentially: you should consult yaaz-consult.ash first, then do whatever it is you want to in order to complete the combat.");
+  log("This script doesn't actively run the combats outside of some special cases in yaaz-consult.ash");
+  log("To remove this messages: set " + SETTING_PREFIX + "_no_intro=true");
+  wait(5);
+}
+
 void ascend()
 {
   current_level = my_level();
 
+  intro();
   skill_warning();
 
   settings_warning();
