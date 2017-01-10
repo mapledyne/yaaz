@@ -4,6 +4,7 @@ import "util/base/settings.ash";
 import "util/iotm/clanvip.ash";
 import "util/base/util.ash";
 import "util/base/quests.ash";
+import "util/iotm/timespinner.ash";
 
 boolean is_spleen_item(item it);
 boolean is_booze_item(item it);
@@ -169,7 +170,8 @@ boolean can_eat(item it)
 {
   if (item_amount(it) == 0
       && creatable_amount(it) == 0
-      && (!is_npc_item(it) || npc_price(it) == 0))
+      && (!is_npc_item(it) || npc_price(it) == 0)
+      && !is_spinner_food(it))
     return false;
   if (!is_food_item(it))
     return false;
@@ -242,11 +244,21 @@ boolean try_eat(item it)
   if (is_npc_item(it))
   {
     if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
-      return false;
-    return cli_execute("eat 1 " + it);
+    {
+      if (!is_spinner_food(it))
+        return false;
+    } else {
+      return cli_execute("eat 1 " + it);
+    }
   }
-
-  return eat(1, it);
+  if (have(it))
+  {
+    return eat(1, it);
+  } else if (is_spinner_food(it))
+  {
+    spinner_eat(it);
+  }
+  return false;
 }
 
 boolean try_drink(item it)
@@ -303,7 +315,11 @@ item[int] consume_list()
     if (is_vip_item(it) && !can_vip())
       continue;
 
-    if (!is_npc_item(it) && item_amount(it) == 0 && creatable_amount(it) == 0 && !is_vip_item(it))
+    if (!is_npc_item(it)
+        && item_amount(it) == 0
+        && creatable_amount(it) == 0
+        && !is_vip_item(it)
+        && !is_spinner_food(it))
       continue;
 
     float avg = adv_per_consumption(it);
@@ -314,10 +330,14 @@ item[int] consume_list()
     if (block_auto_consume(it))
       continue;
 
-    if (is_npc_item(it) && npc_price(it) == 0)
+    if (is_npc_item(it)
+        && npc_price(it) == 0
+        && !is_spinner_food(it))
       continue;
 
-    if (is_npc_item(it) && npc_price(it) > (my_meat() / 2))
+    if (is_npc_item(it)
+        && npc_price(it) > (my_meat() / 2)
+        && !is_spinner_food(it))
       continue;
 
       noms[count] = it;

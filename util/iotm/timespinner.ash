@@ -2,12 +2,37 @@ import "util/base/settings.ash";
 import "util/base/print.ash";
 import "util/progress.ash";
 
+import <zlib.ash>
+
 int time_minutes()
 {
   if (item_amount($item[time-spinner]) == 0)
     return 0;
 
   return 10 - to_int(get_property("_timeSpinnerMinutesUsed"));
+}
+
+boolean is_spinner_food(item yum)
+{
+  if (!list_contains(get_property("_timeSpinnerFoodAvailable"), to_int(yum)))
+    return false;
+  if (time_minutes() < 3)
+    return false;
+
+  return true;
+}
+
+boolean spinner_eat(item yum)
+{
+  if (!is_spinner_food(yum)) return false;
+
+  string url = "choice.php?pwd&whichchoice=1197&option=1&foodid=" + to_int(yum);
+
+  visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
+  visit_url("choice.php?pwd&whichchoice=1195&option=2");
+  string ret = visit_url(url);
+  return true;
+
 }
 
 boolean can_spin_time()
@@ -19,11 +44,12 @@ boolean can_spin_time()
   return true;
 }
 
+
 boolean time_prank(string player, string msg)
 {
   if (!can_spin_time())
     false;
-  return false;
+
   string url = "choice.php?pwd&whichchoice=1198&option=1&pl=" + player + "&th=" + msg;
 
   visit_url("inv_use.php?pwd=&which=3&whichitem=9104");

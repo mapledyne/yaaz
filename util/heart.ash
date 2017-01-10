@@ -145,7 +145,13 @@ void do_heart_thing(string player)
     progress_sheet("smiles");
     return;
   }
-  if (can_spin_time())
+
+  // only spin pranks once our stomach is full in case we want to re-eat
+  // food from the past first (or if we already don't have the minutes to
+  // re-eat, then don't sweat it and prank-away!)
+  if (can_spin_time()
+      && (my_fullness() < fullness_limit()
+          || time_minutes() < 3))
   {
     int num = random(count(prank_msgs));
     string prank_msg = prank_msgs[num];
