@@ -19,15 +19,6 @@ void day_begin()
 
   iotm();
 
-  if (!hippy_stone_broken() && setting("no_pvp") != "true")
-  {
-    warning("You haven't broken your Hippy Stone to enable PvP.");
-    warning("This script can handle PvP for you if you break the stone.");
-    warning("If you don't want to fight in PvP, and don't want this message,");
-    log("set " + SETTING_PREFIX + "_no_pvp=true");
-    warning("Otherwise, his ESC and go break that stone!");
-    wait(10);
-  }
 }
 
 void main()

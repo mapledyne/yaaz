@@ -23,6 +23,7 @@ boolean time_prank(string player, string msg)
 {
   if (!can_spin_time())
     false;
+  return false;
   string url = "choice.php?pwd&whichchoice=1198&option=1&pl=" + player + "&th=" + msg;
 
   visit_url("inv_use.php?pwd=&which=3&whichitem=9104");

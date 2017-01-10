@@ -189,7 +189,7 @@ item flargwurm()
     return $item[Booze-Soaked Cherry];
   if (jim() != $item[sponge cake] && item_amount($item[sponge cake]) == 1)
     return $item[sponge cake];
-  if (have($item[sponge cake]) > 1)
+  if (item_amount($item[sponge cake]) > 1)
     return $item[sponge cake];
   return $item[none];
 }

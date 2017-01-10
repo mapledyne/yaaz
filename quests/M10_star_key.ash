@@ -5,10 +5,10 @@ boolean M10_star_key()
   if (quest_status("questL10Garbage") != FINISHED)
     return false;
 
-  if (item_amount($item[richard's star key]) > 0)
+  if (have($item[richard's star key]))
     return false;
 
-  if (item_amount($item[steam-powered model rocketship]) == 0)
+  if (!have($item[steam-powered model rocketship]))
     return false;
 
   if (quest_status("questL13Final") > 3)
@@ -18,7 +18,7 @@ boolean M10_star_key()
 
   while(creatable_amount($item[richard's star key]) == 0)
   {
-    if (item_amount($item[star chart]) > 0 && my_familiar() == $familiar[space jellyfish])
+    if (have($item[star chart]) && my_familiar() == $familiar[space jellyfish])
     {
       set_property("choiceAdventure1221", 2); // astronomer (/star chart)
     } else {

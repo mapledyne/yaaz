@@ -39,7 +39,7 @@ boolean toot()
 
 boolean continuum()
 {
-  if (i_a($item[continuum transfunctioner]) > 0
+  if (have($item[continuum transfunctioner])
       || quest_status("questL02Larva") == UNSTARTED)
     return false;
 
@@ -55,9 +55,9 @@ boolean continuum()
 
 boolean dingy()
 {
-  if (item_amount($item[Dingy dinghy]) > 0)
+  if (have($item[Dingy dinghy]))
     return false;
-  if (item_amount($item[bitchin' meatcar]) == 0)
+  if (!have($item[bitchin' meatcar]))
     return false;
   if (my_adventures() < 30)
     return false;
@@ -67,19 +67,20 @@ boolean dingy()
     buy(1, $item[dingy planks]);
   }
 
-  while (item_amount($item[Shore Inc. Ship Trip Scrip]) < 3 && item_amount($item[dinghy plans]) == 0)
+  while (item_amount($item[Shore Inc. Ship Trip Scrip]) < 3 && !have($item[dinghy plans]))
   {
     log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
     adventure(1, $location[The Shore\, Inc. Travel Agency]);
     progress_sheet();
   }
-  if (item_amount($item[dinghy plans]) == 0)
+  if (!have($item[dinghy plans]))
   {
     log("Buying " + wrap($item[dinghy plans]) + ".");
     cli_execute("acquire dinghy plans");
   }
 
-  if (item_amount($item[dinghy plans]) > 0 && item_amount($item[dingy planks]) > 0)
+  if (have($item[dinghy plans])
+      && have($item[dingy planks]))
   {
     log("Making a " + wrap($item[Dingy dinghy]) + ".");
     use(1, $item[dinghy plans]);

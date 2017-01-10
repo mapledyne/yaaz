@@ -384,8 +384,20 @@ boolean loop_tower(int level)
 boolean L13_Q_sorceress()
 {
 
-  // TODO: Get the Wand if you don't have it (it should clover automatically,
-  // but we should adventure for it if we don't have it at a certain point).
+  if (quest_status("questL10Garbage") == FINISHED
+      && !have($item[wand of nagamar])
+      && item_amount($item[disassembled clover]) > 0
+      && my_path() != "Nuclear Autumn")
+  {
+    log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
+    boolean clove = dg_clover($location[The Castle in the Clouds in the Sky (Basement)]);
+    if (clove)
+    {
+      log("Making a " + wrap($item[wand of nagamar]) + ".");
+      create(1, $item[wand of nagamar]);
+    }
+  }
+
   if (my_level() < 13)
     return false;
 

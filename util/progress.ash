@@ -439,7 +439,7 @@ void progress_sheet(string detail)
     if (!have($item[s.o.c.k.]))
     {
       progress(immateria(), 4, "Immateria found");
-      progress($location[penultimate fantasy airship].turns_spent, 20, "minimum turns in the airship to find the " + wrap($item[s.o.c.k.]) + ".");
+      progress($location[the penultimate fantasy airship].turns_spent, 20, "minimum turns in the airship to find the " + wrap($item[s.o.c.k.]) + ".");
       if (immateria() == 4)
         task("Find the " + wrap($item[s.o.c.k.]));
     }

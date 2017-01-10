@@ -120,11 +120,41 @@ void skill_warning()
 
 }
 
+void settings_warning()
+{
+  if (to_float(get_property("mpAutoRecovery")) < 0.1)
+  {
+    warning("Your auto restore MP settings seems to not be set.");
+    warning("Set it to what you think is right for you in the 'HP/MP Usage' tab.");
+    warning("(A reasonable default is to restore at 50%, recovering up to 60%)");
+    abort('Rerun this script once this setting is changed.');
+  }
+  if (to_float(get_property("hpAutoRecovery")) < 0.1)
+  {
+    warning("Your auto restore HP settings seem to not be set.");
+    warning("Set it to what you think is right for you in the 'HP/MP Usage' tab.");
+    warning("(A reasonable default is to restore at 60%, recovering up to 90%)");
+    abort('Rerun this script once this setting is changed.');
+  }
+
+  if (!hippy_stone_broken() && setting("no_pvp") != "true")
+  {
+    warning("You haven't broken your Hippy Stone to enable PvP.");
+    warning("This script can handle PvP for you if you break the stone.");
+    warning("If you don't want to fight in PvP, and don't want this message,");
+    log("set " + SETTING_PREFIX + "_no_pvp=true");
+    warning("Otherwise, his ESC and go break that stone!");
+    wait(10);
+  }
+}
+
 void ascend()
 {
   current_level = my_level();
 
   skill_warning();
+
+  settings_warning();
 
   day_begin();
   log("Day startup tasks complete. About to begin doing stuff.");
