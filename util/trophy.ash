@@ -335,6 +335,7 @@ void trophy()
 	basic_consumption_trophy($item[white chocolate and tomato pizza], 5, 15);
 	basic_trophy(familiar_weight_total(), 500, 16);
 	basic_consumption_trophy($item[lucky surprise egg], 50, 17);
+	basic_trophy(to_int(get_property("sexChanges")), 30, 33);
 	if (in_hardcore()) basic_trophy(my_meat(), 1000000, 34);
 	if (my_class() == $class[seal clubber]) basic_trophy(my_level(), 30, 40);
 	if (my_class() == $class[turtle tamer]) basic_trophy(my_level(), 30, 41);
