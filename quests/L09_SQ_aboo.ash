@@ -15,14 +15,14 @@ boolean L09_SQ_aboo()
     return true;
   }
 
-
+/*
 
   if (get_property("warProgress") == "unstarted")
   {
     log("We're waiting a bit to complete A-Boo peak in case it's helpful for the flyers and such.");
     return false;
   }
-
+*/
   if (item_amount($item[disassembled clover]) > 0
       && to_int(get_property("booPeakProgress")) == 100
       && item_amount($item[a-boo clue]) == 0)

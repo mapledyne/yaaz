@@ -178,6 +178,8 @@ void pvp()
 
     if (pvp_attacks_left() > 0)
     {
+      log("About to get dressed and set up effects for PVP.");
+      wait(5);
       cli_execute("checkpoint");
       dress_for_pvp();
       effects_for_pvp();

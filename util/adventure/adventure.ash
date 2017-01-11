@@ -64,10 +64,7 @@ boolean yz_adventure(location loc, string maximize)
     return false;
   }
 
-  while (overrides())
-  {
-    // keep trying overrides() until it has nothing to do and returns false.
-  }
+  if (overrides()) return true;
 
   if (!location_open(loc))
   {

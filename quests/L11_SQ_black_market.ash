@@ -99,7 +99,7 @@ boolean L11_SQ_black_market()
   if (quest_status("questL11Black") == FINISHED)
   {
     int total = turns - my_adventures();
-    log(wrap($item[your father's macguffin diary]) + " found. It took " + total + " turns.");
+    log(wrap($item[your father's macguffin diary]) + " found.");
     return true;
   } else {
     if (counter == 30)

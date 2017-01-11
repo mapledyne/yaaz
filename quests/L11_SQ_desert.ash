@@ -26,7 +26,7 @@ void get_compass()
     if (i_a(compass) == 0)
     {
       log("Getting a " + wrap(compass) + ".");
-      if (item_amount($item[Shore Inc. Ship Trip Scrip]) == 0)
+      if (!have($item[Shore Inc. Ship Trip Scrip]))
       {
         log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
         adventure(1, $location[The Shore\, Inc. Travel Agency]);
@@ -45,7 +45,7 @@ boolean is_oasis_open()
   return false;
 }
 
-int open_oasis()
+boolean open_oasis()
 {
   int max_adv = 10;
   int adv_spent = 0;
@@ -57,16 +57,11 @@ int open_oasis()
     } else {
       maximize("");
     }
-    yz_adventure(desert);
+    boolean b = yz_adventure(desert);
+    if (!b) return true;
     adv_spent += 1;
   }
-  if (!is_oasis_open())
-  {
-    log("Could not open " + wrap(oasis) + " for some reason. Try adventuring in " + wrap(desert) + " manually to open it.");
-    abort();
-  }
-  log_adv(adv_spent, "to open " + wrap(oasis) + ".");
-  return adv_spent;
+  return true;
 }
 
 boolean is_gnasir_open()
@@ -126,7 +121,7 @@ boolean L11_SQ_desert()
   if (!is_oasis_open())
   {
     log(wrap(oasis) + " hasn't been found yet. Adventuring in " + wrap(desert) + " to open it.");
-    turns += open_oasis();
+    if (open_oasis()) return true;
   }
 
   // Gnasir
@@ -212,11 +207,11 @@ boolean L11_SQ_desert()
         log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
         wait(1);
         int count = 0;
-        while (item_amount($item[drum machine]) == 0)
+        while (!have($item[drum machine]))
         {
           count = count + 1;
           yz_adventure($location[The Oasis], "combat,  0.5 items");
-          if (count > 10 && item_amount($item[drum machine]) == 0)
+          if (count > 10 && !have($item[drum machine]))
           {
             error ("Took too long finding the " + wrap($item[drum machine]) + ". Aborting so we can find out why.");
             abort();

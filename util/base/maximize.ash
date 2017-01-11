@@ -52,8 +52,7 @@ void do_maximize(string target, string outfit, item it)
     max = max + "outfit " + outfit;
   }
 
-  if (it != $item[none]
-      && outfit == "")
+  if (it != $item[none])
   {
     if (max != "")
     {
@@ -90,18 +89,12 @@ string default_maximize_string()
 
 void maximize(string target, string outfit, item it, familiar fam)
 {
-  if (get_property("sidequestNunsCompleted") == "none"
-      && to_int(get_property("currentNunneryMeat")) < 100000
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
-      && !contains_text(target, "meat")
-      && length(get_counters("digitize monster", 0, 0)) > 0)
+
+  // if we're doing the flyers, let's boost ML as we go.
+  if (have_flyers() && get_property("sidequestNunsCompleted") == "none")
   {
-    // doing Nuns trick and our monster just came up:
-    // this logic should be moved to overrides().
-    target = "meat";
-    outfit = "frat warrior fatigues";
-    it = $item[none];
-    fam = $familiar[none];
+    if (target != "") target = target + ", ";
+    target += "ml";
   }
 
   string[int] split_map;
@@ -127,7 +120,19 @@ void maximize(string target, string outfit, item it, familiar fam)
     choose_familiar(split_map[0]);
 
   if (target == 'rollover')
+  {
     target = 'adv, pvp fights';
+    familiar pet = to_familiar(setting("100familiar"));
+    if (pet != $familiar[none]
+        && pet != $familiar[Trick-or-Treating Tot]
+        && have_familiar($familiar[Trick-or-Treating Tot]))
+    {
+      warning("You're trying to do a 100% familiar run (" + wrap(pet) + ").");
+      warning("But if you switch to a " + wrap($familiar[Trick-or-Treating Tot]) + " for rollover, you'll get some extra adventures (equip the " + wrap($item[li'l unicorn costume]) + ").");
+      warning("Yaaz will automatically switch back before adventuring if you use the script, but you'll want to be careful not to manually adventure. You'll have to make this familiar change manually, but there's little downside if you're careful not to adventure afterwards.");
+      wait(3);
+    }
+  }
 
   if (target == 'noncombat')
     target = '-combat';

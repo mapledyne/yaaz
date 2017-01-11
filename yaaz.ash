@@ -153,21 +153,38 @@ void intro()
 
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ".");
 
-  if (setting("no_intro") == "true") return;
+  if (setting("no_intro") != "true")
+  {
+    log("This is an automated ascension script, but has some additional features.");
+    string help = "To get more information, run the " + SCRIPT + "-help.ash script. In the meantime,";
+    help += "make sure your HP/MP Usage is set to what you'd like and your Custom Combat is set.";
+    log(help);
+    log("");
+    log("Custom combat should look something like:");
+    print("[default]");
+    print("consult yaaz-consult.ash");
+    print("consult WHAM.ash");
+    log("Essentially: you should consult yaaz-consult.ash first, then do whatever it is you want to in order to complete the combat.");
+    log("This script doesn't actively run the combats outside of some special cases in yaaz-consult.ash");
+    log("To remove this messages: set " + SETTING_PREFIX + "_no_intro=true");
+    wait(5);
+  }
 
-  log("This is an automated ascension script, but has some additional features.");
-  string help = "To get more information, run the " + SCRIPT + "-help.ash script. In the meantime,";
-  help += "make sure your HP/MP Usage is set to what you'd like and your Custom Combat is set.";
-  log(help);
-  log("");
-  log("Custom combat should look something like:");
-  print("[default]");
-  print("consult yaaz-consult.ash");
-  print("consult WHAM.ash");
-  log("Essentially: you should consult yaaz-consult.ash first, then do whatever it is you want to in order to complete the combat.");
-  log("This script doesn't actively run the combats outside of some special cases in yaaz-consult.ash");
-  log("To remove this messages: set " + SETTING_PREFIX + "_no_intro=true");
-  wait(5);
+  if (my_turncount() == 0)
+  {
+    familiar pet = to_monster(setting("100familiar"));
+    if (pet == $familiar[none])
+    {
+      log("You don't have a familiar selected to do a 100% run with. This may be correct (and I'll use the best familiar I can find for each quest), but if you want to complete a 100% run, hit ESC and set the variable before rerunning:");
+      print("set yz_100familiar=mosquito");
+      log("If you're not doing a tour guide run, then do nothing and I'll carry on my way.");
+    } else {
+      log("You have a familiar selected to do a 100% run with. I'm pausing here so you can check it in case you had it set from a previous ascension. If you want to change it, hit ESC and change the setting:");
+      print("set yz_100familiar=mosquito");
+      log("If you're wanting a tour guide run with your " + wrap(pet) + ", then do nothing and I'll carry on my way.");
+    }
+    wait(10);
+  }
 }
 
 void ascend()

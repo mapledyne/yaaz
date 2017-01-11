@@ -1,6 +1,7 @@
 import "util/base/print.ash";
 import "util/base/inventory.ash";
 import "util/base/quests.ash";
+import "util/base/maximize.ash";
 
 location pick_semi_rare_location()
 {
@@ -57,11 +58,25 @@ boolean dance_card()
   return true;
 }
 
+boolean digitized_monster()
+{
+  if (get_property("sidequestNunsCompleted") == "none"
+      && to_int(get_property("currentNunneryMeat")) < 100000
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+      && get_counters("digitize monster", 0, 0) != "")
+  {
+    log("We're about to see a digitized " + wrap($monster[dirty thieving brigand]) + ".");
+    maximize("meat");
+    return adventure(1, $location[the haunted pantry]);
+  }
+  return false;
+}
+
 boolean counters()
 {
-  if (semi_rare())
-    return true;
-  if (dance_card())
-    return true;
+  if (semi_rare()) return true;
+  if (dance_card()) return true;
+  if (digitized_monster()) return true;
+
   return false;
 }
