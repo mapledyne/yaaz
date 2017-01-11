@@ -1,6 +1,7 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
 import "util/base/settings.ash";
+import "util/base/consume.ash";
 
 boolean DEBUG_TROPHY = false;
 
@@ -282,38 +283,52 @@ void basic_trophy(int have, int needed, int trophy)
 	{
 		msg += " progress";
 	} else {
-		msg += " should be avaiable";
+		msg += " should be available";
 	}
 
 	trophy_progress(have, needed, msg);
 
 }
 
+int nom_sorter(item it)
+{
+	int price = historical_price(it);
+
+	if (price == 0) price = 2147483647; // MAXINT
+	if (can_consume(it)) price = price / 100;
+
+	return price;
+}
+
 void nom_something()
 {
-	int[item] nomlist;
+	item[int] nomlist;
 
+	int nom_count = 0;
 	foreach nom in $items[]
 	{
 		if ((nom.fullness > 0
 		    || nom.inebriety > 0)
 				&& !(consumed contains nom))
 		{
-			nomlist[nom] = historical_price(nom);
-			if (nomlist[nom] == 0) nomlist[nom] = 2147483647; // MAXINT
+			if (nom == $item[ice stein]) continue; // not tracked by consumption history
+			nomlist[nom_count] = nom;
+			nom_count++;
 		}
 	}
-	sort nomlist by value;
+
+	sort nomlist by nom_sorter(value);
 
 	string nom_msg = "";
 	int count = 0;
 	foreach n in nomlist
 	{
+		item nom = nomlist[n];
 		if (count > 2) break;
 		if (length(nom_msg) > 0) nom_msg += ", ";
 
-		nom_msg += wrap(n);
-		int cost = historical_price(n);
+		nom_msg += wrap(nom);
+		int cost = historical_price(nom);
 		if (cost > 0) nom_msg += " (" + cost + " meat)";
 		count++;
 	}

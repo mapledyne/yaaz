@@ -88,10 +88,13 @@ void heart_msg(string player, string msg)
 
 boolean mail_heart_item(string player, int[item] toys, string message)
 {
+  boolean force_gift = false;
   int count = 0;
   string toy_list = "";
   foreach it, i in toys
   {
+    if (it == $item[holiday fun!]) force_gift = true;
+
     if (item_amount(it) < i)
       return false;
     if (length(toy_list) > 0)
@@ -110,7 +113,12 @@ boolean mail_heart_item(string player, int[item] toys, string message)
   string inside_msg = message;
 
   //  boolean kmail(string recipient ,string message ,int meat ,int [item]  goodies ,string inside_note )
-  kmail(player, msg, 0, toys, inside_msg);
+  if (force_gift)
+  {
+    send_gift(player, msg, 0, toys, inside_msg);
+  } else {
+    kmail(player, msg, 0, toys, inside_msg);
+  }
   return true;
 }
 
@@ -159,8 +167,9 @@ void do_heart_thing(string player)
     return;
   }
 
-  if (mail_heart_item(player, $item[almost-dead walkie-talkie])) return;
+  if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else.")) return;
   if (mail_heart_item(player, $item[gift card])) return;
+  if (mail_heart_item(player, $item[holiday fun!], "Holiday chat messages! Happy Holiday, whatever one is coming up next.")) return;
 
   if (item_amount($item[roll of toilet paper]) > 0)
   {

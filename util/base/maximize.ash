@@ -137,8 +137,7 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target == 'noncombat')
     target = '-combat';
 
-// need to figure this out so it doesn't turn out to be too expensive:
-//  max_effects("familiar weight", false);
+  if (add_familiar_weight) max_effects("familiar weight", false);
 
   if (target == '')
     target = default_maximize_string();

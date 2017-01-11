@@ -1,3 +1,5 @@
+import "util/base/inventory.ash";
+
 boolean is_vip_item(item it);
 boolean can_vip_drink();
 boolean can_vip_drink(item it);

@@ -2,6 +2,7 @@ import "util/base/inventory.ash";
 import "util/base/settings.ash";
 import <zlib.ash>
 
+boolean add_familiar_weight = false;
 
 void equip_familiar(familiar fam)
 {
@@ -96,10 +97,13 @@ familiar choose_familiar(string fam)
     return newbie;
   }
 
+  add_familiar_weight = true;
+
   switch(fam)
   {
     case "rollover":
       newbie = choose_familiar_from_list($familiars[trick-or-treating tot]);
+      add_familiar_weight = false;
       break;
     case "all res":
     case "cold res":
@@ -115,7 +119,7 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[exotic parrot]);
       break;
     case "meat":
-      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l pirate costume]) > 0)
+      if (have_familiar($familiar[trick-or-treating tot]) && have($item[li'l pirate costume]))
       {
         newbie = $familiar[trick-or-treating tot];
         break;
@@ -126,7 +130,7 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[Happy Medium, Xiblaxian Holo-Companion, Oily Woim]);
       break;
     case "items":
-      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l ninja costume]) > 0)
+      if (have_familiar($familiar[trick-or-treating tot]) && have($item[li'l ninja costume]))
       {
         newbie = $familiar[trick-or-treating tot];
         break;
@@ -140,18 +144,29 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
       break;
     default: // everything that doesnt't have a set items. Should usually be stat familiars.
-      newbie = choose_familiar_from_list($familiars[rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, gelatinous cubeling]);
+      newbie = choose_familiar_from_list($familiars[intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, gelatinous cubeling]);
+      add_familiar_weight = false;
       break;
   }
 
+
   if (newbie == $familiar[none] && fam != "stats")
+  {
     newbie = choose_familiar("stats");
+    add_familiar_weight = false;
+  }
 
   if (newbie == $familiar[none] && fam != "items" && fam != "stats")
+  {
     newbie = choose_familiar("items");
+    add_familiar_weight = false;
+  }
 
   if (newbie == $familiar[none])
+  {
     newbie = choose_familiar("mosquito");
+    add_familiar_weight = false;
+  }
 
   equip_familiar(newbie);
   return newbie;

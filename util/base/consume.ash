@@ -5,6 +5,7 @@ import "util/iotm/clanvip.ash";
 import "util/base/util.ash";
 import "util/base/quests.ash";
 import "util/iotm/timespinner.ash";
+import "util/base/inventory.ash";
 
 boolean is_spleen_item(item it);
 boolean is_booze_item(item it);
