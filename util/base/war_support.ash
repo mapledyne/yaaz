@@ -11,11 +11,16 @@ string war_side()
   return "";
 }
 
-string war_outfit()
+string war_outfit(string side)
 {
-  if (war_side() == 'hippy')
+  if (side == 'hippy')
     return 'War Hippy Fatigues';
   return 'Frat Warrior Fatigues';
+}
+
+string war_outfit()
+{
+  return war_outfit(war_side());
 }
 
 boolean war_orchard_accessible()
@@ -24,6 +29,33 @@ boolean war_orchard_accessible()
     return true;
   return war_defeated() >= 64;
 }
+
+boolean war_nuns_accessible()
+{
+  if (war_side() == 'hippy')
+    return true;
+  return war_defeated() >= 192;
+}
+
+boolean war_nuns_trick()
+{
+
+  if (war_side() != "fratboy") return false; // no need
+  if (!to_boolean(setting("war_nuns_trick", false))) return false; // setting not enabled.
+
+  if (!have_outfit("war hippy fatigues")) return false;
+
+/*
+  if (!educated("digitize.edu"))
+  {
+    warning("You've said you want to do the Nuns Trick, but you can't digitize foes.");
+    warning("There may be other ways to do this, but I don't know them.");
+    abort("Do the Nuns manually, change the setting (yz_war_nuns_trick), or get a Source Terminal.");
+  }
+*/
+  return true;
+}
+
 
 boolean war_junkyard()
 {
@@ -47,6 +79,11 @@ if (my_path() == "Bees Hate You")
 boolean war_lighthouse()
 {
   return to_boolean(setting("war_lighthouse", "true"));
+}
+
+boolean war_nuns()
+{
+  return to_boolean(setting("war_nuns", "true"));
 }
 
 int war_defeated()

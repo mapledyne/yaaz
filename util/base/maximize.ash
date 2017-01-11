@@ -42,6 +42,7 @@ void cross_streams()
 void do_maximize(string target, string outfit, item it)
 {
   string max = target;
+
   if (outfit != "")
   {
     if (max != "")
@@ -51,7 +52,8 @@ void do_maximize(string target, string outfit, item it)
     max = max + "outfit " + outfit;
   }
 
-  if (it != $item[none])
+  if (it != $item[none]
+      && outfit == "")
   {
     if (max != "")
     {
@@ -62,19 +64,24 @@ void do_maximize(string target, string outfit, item it)
     max = max + "+equip [" + to_int(it) + "]";
   }
 
-  if (max != "")
+  foreach nope in $items[hilarious comedy prop,
+                         training legwarmers]
   {
-    max = max + ", ";
+    if (have(nope))
+    {
+      if (max != "") max += ", ";
+      max += "-equip [" + to_int(nope) + "]";
+    }
   }
-  max += "-equip hilarious comedy prop, -equip training legwarmers";
 
+  log("Maximizing equipment based on: " + max);
   maximize(max, false);
 }
 
 string default_maximize_string()
 {
   string def = "mainstat, 0.4 hp  +effective, mp regen";
-  if (my_buffedstat($stat[muscle]) > my_buffedstat($stat[moxie]))
+  if (my_primestat() == $stat[muscle])
   {
     def += ", +shield";
   }
@@ -83,13 +90,27 @@ string default_maximize_string()
 
 void maximize(string target, string outfit, item it, familiar fam)
 {
+  if (get_property("sidequestNunsCompleted") == "none"
+      && to_int(get_property("currentNunneryMeat")) < 100000
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+      && !contains_text(target, "meat")
+      && length(get_counters("digitize monster", 0, 0)) > 0)
+  {
+    // doing Nuns trick and our monster just came up:
+    // this logic should be moved to overrides().
+    target = "meat";
+    outfit = "frat warrior fatigues";
+    it = $item[none];
+    fam = $familiar[none];
+  }
+
   string[int] split_map;
   split_map = split_string(target, ", ");
 
   item snowglobe = $item[9133]; // kol con 13 snowglobe
 
   // if we're going with all-defaults, favor the snowglobe as an item
-  // it won't ever get picked by the maximiser, but it nice to use sometimes
+  // it won't ever get picked by the maximizer, but it nice to use sometimes
 
   if (target == ""
       && it == $item[none]

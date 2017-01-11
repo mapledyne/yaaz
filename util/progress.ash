@@ -593,6 +593,23 @@ void progress_sheet(string detail)
         progress(flyerML, "flyers delivered");
       }
 
+      if (war_nuns()
+          && get_property("sidequestNunsCompleted") == "none"
+          && (war_nuns_accessible() || war_nuns_trick()))
+      {
+        string nuns_msg = "Meat returned to the Nuns";
+        float drop = 1 + (numeric_modifier("meat drop") / 100);
+        float min_meat = $monster[dirty thieving brigand].min_meat * drop;
+        float max_meat = $monster[dirty thieving brigand].max_meat * drop;
+        int remaining = 100000 - to_int(get_property("currentNunneryMeat"));
+
+        int max_turns = round(remaining / min_meat);
+        int min_turns = round(remaining / max_meat);
+
+        nuns_msg += " (est remaining turns: " + min_turns + "-" + max_turns + ")";
+        progress(to_int(get_property("currentNunneryMeat")), 100000, nuns_msg);
+      }
+
       if (war_orchard()
           && war_orchard_accessible()
           && get_property("sidequestOrchardCompleted") == "none")
@@ -737,4 +754,5 @@ void main()
 {
   print("Current progress in a few things:");
   progress_sheet("all");
+
 }
