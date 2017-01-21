@@ -31,7 +31,7 @@ boolean wall_of_bones()
   while (item_amount($item[electric boning knife]) == 0)
   {
     location ground = $location[the castle in the clouds in the sky (ground floor)];
-    maximize("noncombat");
+    maximize("-combat");
     yz_adventure(ground);
   }
 

@@ -83,7 +83,7 @@ boolean war_lighthouse()
 
 boolean war_nuns()
 {
-  return to_boolean(setting("war_nuns", "true"));
+  return to_boolean(setting("war_nuns", "false"));
 }
 
 int war_defeated()

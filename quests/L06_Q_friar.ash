@@ -10,7 +10,7 @@ boolean do_friar_area(location loc, item it)
     log("We have the " + wrap(it) + ".");
     return false;
   }
-  maximize("noncombat");
+  maximize("-combat");
   max_effects("items");
   yz_adventure(loc);
   return true;

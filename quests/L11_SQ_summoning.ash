@@ -2,7 +2,7 @@ import "util/main.ash";
 
 boolean get_wine_bomb()
 {
-  if (i_a($item[wine bomb]) > 0)
+  if (have($item[wine bomb]))
   {
     return false;
   }
@@ -11,7 +11,7 @@ boolean get_wine_bomb()
     create(1, $item[unstable fulminate]);
   }
 
-  if (i_a($item[unstable fulminate]) == 0)
+  if (!have($item[unstable fulminate]))
   {
     warning("You don't have the " + wrap($item[unstable fulminate]) + " or the ingredients to make it.");
     return false;
@@ -21,9 +21,10 @@ boolean get_wine_bomb()
 
   log("Going after the " + wrap($monster[monstrous boiler]) + " to make the " + wrap($item[wine bomb]));
 
-  while (i_a($item[wine bomb]) == 0)
+  while (!have($item[wine bomb]))
   {
-    yz_adventure($location[the haunted boiler room], "ml, equip unstable fulminate");
+    maximize("ml", $item[unstable fulminate]);
+    yz_adventure($location[the haunted boiler room]);
   }
 
   remove_attract($monster[monstrous boiler]);
@@ -208,12 +209,6 @@ boolean do_spookyraven()
 
 boolean L11_SQ_summoning()
 {
-
-  if (to_int(get_property("writingDesksDefeated")) >= 5 && list_contains(setting("digitize_list"), $monster[writing desk]))
-  {
-    string new_list = list_remove(setting("digitize_list"), $monster[writing desk]);
-    save_setting("digitize_list", new_list);
-  }
 
   if (quest_status("questL11Manor") == FINISHED)
     return false;

@@ -1,11 +1,17 @@
 import "util/base/monsters.ash";
 import "util/base/inventory.ash";
 import "util/base/settings.ash";
+import "util/iotm/terminal.ash";
 
 import <zlib.ash>;
 
 void main(int round, monster foe, string page)
 {
+  if (foe == $monster[protector spectre])
+  {
+    print("Whoa - why can't we seem to be able to script this Spectre fight?");
+    print("At least we know we got this far...");
+  }
 
   if (have_skill($skill[extract jelly]))
   {
@@ -21,6 +27,27 @@ void main(int round, monster foe, string page)
       use_skill(1, $skill[shoot ghost]);
       use_skill(1, $skill[shoot ghost]);
       use_skill(1, $skill[trap ghost]);
+    }
+  }
+  monster digitized = to_monster(get_property("_sourceTerminalDigitizeMonster"));
+
+  if (have_skill($skill[digitize]) && digitize_remaining() > 0)
+  {
+    switch (foe)
+    {
+      case $monster[dirty thieving brigand]:
+      if (to_int(get_property("currentNunneryMeat")) < 94000)
+      {
+        break;
+      }
+      case $monster[ninja snowman assassin]:
+      case $monster[writing desk]:
+      case $monster[lobsterfrogman]:
+        if (digitized != foe)
+        {
+          use_skill(1, $skill[digitize]);
+        }
+        break;
     }
   }
 
@@ -39,14 +66,6 @@ void main(int round, monster foe, string page)
     string new_list = list_remove(duplicate_list, foe);
     save_setting("duplicate_list", new_list);
     use_skill(1, $skill[duplicate]);
-  }
-
-  string digitize_list = setting("digitize_list");
-  if (list_contains(digitize_list, foe) && have_skill($skill[digitize]))
-  {
-    string new_list = list_remove(digitize_list, foe);
-    save_setting("digitize_list", new_list);
-    use_skill(1, $skill[digitize]);
   }
 
   if (foe == $monster[your shadow] && have_skill($skill[Ambidextrous Funkslinging]))

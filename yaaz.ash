@@ -87,12 +87,13 @@ boolean ascend_loop()
   if (L09_Q_topping()) return true;
   if (L10_Q_garbage()) return true;
   if (L11_Q_macguffin()) return true;
-  if (L13_Q_sorceress()) return true;
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
   if (M_8bit()) return true;
   if (M10_star_key()) return true;
+
+  if (L13_Q_sorceress()) return true;
 
   if (level_up()) return true;
   log("Ran out of things to do in this script. Either a quest is missing, or maybe we should level?");
@@ -172,7 +173,7 @@ void intro()
 
   if (my_turncount() == 0)
   {
-    familiar pet = to_monster(setting("100familiar"));
+    familiar pet = to_familiar(setting("100familiar"));
     if (pet == $familiar[none])
     {
       log("You don't have a familiar selected to do a 100% run with. This may be correct (and I'll use the best familiar I can find for each quest), but if you want to complete a 100% run, hit ESC and set the variable before rerunning:");

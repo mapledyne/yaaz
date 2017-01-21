@@ -131,10 +131,31 @@ void use_things()
     save_daily_setting("used_tonic_djinn", "true");
   }
 
+  if (numeric_modifier("stench resistance") > 0
+      && have($item[the Slug Lord's map]))
+  {
+    log("Following " + wrap($item[the Slug Lord's map]) + " to get the " + wrap($item[pants of the Slug Lord]) + ".");
+    use(1, $item[the Slug Lord's map]);
+  }
+
+  // getting the asparagus knife takes adventures, so not going to do that
+  // automatically. If, however, we come across is naturally, then may as well...
+  if (have($item[dr. hobo's map])
+      && have($item[asparagus knife]))
+  {
+    if (!have($item[cool whip]))
+    {
+      buy(1, $item[cool whip]);
+    }
+    log("Going to get " + wrap($item[dr. hobo's scalpel]) + ".");
+    equip($item[cool whip]);
+    use(1, $item[dr. hobo's map]);
+  }
+
   // get new familiars as you find them:
   foreach f in $familiars[]
   {
-    if (!have_familiar(f) && item_amount(f.hatchling) > 0)
+    if (!have_familiar(f) && have(f.hatchling))
     {
       log("Putting a " + wrap(f.hatchling) + " in your terrarium so you can have a " + wrap(f) + " familiar.");
       use(1, f.hatchling);

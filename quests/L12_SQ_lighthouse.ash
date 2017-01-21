@@ -30,6 +30,15 @@ boolean L12_SQ_lighthouse(string side)
   if (quest_status("questL12War") > 1)
     return false;
 
+  if (get_property("sidequestNunsCompleted") == "none"
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+      && setting("war_nuns_trick") == "true")
+  {
+    log("Skipping the Lighthouse quest for now since the " + wrap($monster[dirty thieving brigand]) + " is digitized and that quest isn't complete yet.");
+    return false;
+  }
+
+
   if (item_amount($item[barrel of gunpowder]) >= 5)
   {
     return_gunpowder();
@@ -42,7 +51,6 @@ boolean L12_SQ_lighthouse(string side)
     return false;
   }
 
-  add_digitize($monster[lobsterfrogman]);
   while(to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[lobsterfrogman]
         && can_adventure()
         && item_amount($item[barrel of gunpowder]) < 5)
@@ -52,7 +60,6 @@ boolean L12_SQ_lighthouse(string side)
     if (!b)
       return true;
   }
-  remove_digitize($monster[lobsterfrogman]);
   return true;
 }
 

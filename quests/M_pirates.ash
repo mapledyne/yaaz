@@ -156,7 +156,8 @@ boolean get_talisman()
 
 boolean get_getup()
 {
-  if (my_basestat($stat[moxie]) < 25) return false;
+	if (my_basestat($stat[moxie]) < 25) return false; // needed for pants
+	if (my_basestat($stat[mysticality]) < 25) return false; // needed for parrot
 
   if (have_outfit("swashbuckling getup"))
     return false;

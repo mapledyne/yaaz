@@ -168,9 +168,9 @@ void print_candy_options()
     item[int] candies = pick_candies(ef);
     if (count(candies) == 0)
     {
-      log("Cannot gain effect: " + ef);
+      log("Cannot gain effect: " + wrap(ef));
     } else {
-      log("Can gain effect: " + ef + " from " + wrap(candies[0]) + " and " + wrap(candies[1]));
+      log("Can gain effect: " + wrap(ef) + " from " + wrap(candies[0]) + " and " + wrap(candies[1]));
     }
   }
 

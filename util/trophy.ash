@@ -368,7 +368,7 @@ void trophy()
 	basic_consumption_trophy($item[bottle of bloodweiser], 50, 117, "need Blood Porder effect, also");
 	basic_consumption_trophy($item[electric Kool-Aid], 50, 118, "need Electric, Kool effect, also");
 	basic_trophy(to_int(get_property("boneAbacusVictories")), 1000, 124);
-	basic_consumption_trophy($item[warbear gyro], 50, 129);
+	basic_consumption_trophy($item[warbear gyro], 108, 129);
 	if (my_path() == "Avatar of Sneaky Pete") basic_trophy(my_level(), 30, 136);
 	basic_consumption_trophy($item[mini-martini], 7, 139);
 

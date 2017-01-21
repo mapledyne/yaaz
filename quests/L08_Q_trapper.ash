@@ -72,7 +72,7 @@ boolean peak_ninja()
     log("The " + wrap($monster[ninja snowman assassin]) + " has been digitized, so going to wait for them to show before continuing the peak.");
     return false;
   }
-  add_digitize($monster[ninja snowman assassin]);
+
   while (ninja_snowman_items() < 3
          && to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[ninja snowman assassin])
   {

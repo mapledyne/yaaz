@@ -1,4 +1,5 @@
 import "util/base/print.ash";
+import "util/base/inventory.ash";
 import <zlib.ash>;
 
 boolean can_extrude();
@@ -196,6 +197,21 @@ int enhances_remaining()
     max += 1;
 
   return max - to_int(get_property("_sourceTerminalEnhanceUses"));
+}
+
+int digitize_remaining()
+{
+  int max = 1;
+  if (list_contains(get_property("sourceTerminalChips"), "TRIGRAM", ","))
+    max += 1;
+  if (list_contains(get_property("sourceTerminalChips"), "TRAM", ","))
+    max += 1;
+  return max - to_int(get_property("_sourceTerminalDigitizeUses"));
+}
+
+monster digitized_monster()
+{
+  return to_monster(get_property("_sourceTerminalDigitizeMonster"));
 }
 
 boolean can_extrude()

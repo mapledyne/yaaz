@@ -37,7 +37,8 @@ boolean block_auto_consume(item it)
                  instant karma,
                  Falcon&trade; Maltese Liquor,
                  hardboiled egg,
-                 hot wing] contains it);
+                 hot wing,
+                 soft green echo eyedrop antidote martini] contains it);
 }
 
 boolean all_full()
@@ -257,7 +258,7 @@ boolean try_eat(item it)
     return eat(1, it);
   } else if (is_spinner_food(it))
   {
-    spinner_eat(it);
+    return spinner_eat(it);
   }
   return false;
 }
@@ -390,6 +391,22 @@ boolean try_consume(item it)
 boolean consume_best()
 {
   item[int] noms = consume_list();
+
+  int count = 0;
+  foreach nom, it in noms
+  {
+    if (can_consume(it))
+    {
+      print("Considering consuming: " + it);
+      count++;
+    }
+    if (count > 5)
+    {
+      wait(20);
+      break;
+    }
+  }
+
   foreach nom, it in noms
   {
      if (try_consume(it))

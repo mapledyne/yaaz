@@ -64,7 +64,8 @@ void do_maximize(string target, string outfit, item it)
   }
 
   foreach nope in $items[hilarious comedy prop,
-                         training legwarmers]
+                         training legwarmers,
+                         actual reality goggles]
   {
     if (have(nope))
     {
@@ -79,16 +80,25 @@ void do_maximize(string target, string outfit, item it)
 
 string default_maximize_string()
 {
-  string def = "mainstat, 0.4 hp  +effective, mp regen";
-  if (my_primestat() == $stat[muscle])
-  {
-    def += ", +shield";
-  }
+  string def = "mainstat, 0.4 hp, mp regen";
   return def;
 }
 
 void maximize(string target, string outfit, item it, familiar fam)
 {
+
+  if (target == '')
+    target = default_maximize_string();
+
+  if (target != "") target = target + ", ";
+  target += "effective";
+
+  if (my_primestat() == $stat[muscle]
+      && to_slot(it) != $slot[off-hand])
+  {
+    if (target != "") target = target + ", ";
+    target += "+shield";
+  }
 
   // if we're doing the flyers, let's boost ML as we go.
   if (have_flyers() && get_property("sidequestNunsCompleted") == "none")
@@ -119,7 +129,7 @@ void maximize(string target, string outfit, item it, familiar fam)
   else
     choose_familiar(split_map[0]);
 
-  if (target == 'rollover')
+  if (contains_text(target, 'rollover'))
   {
     target = 'adv, pvp fights';
     familiar pet = to_familiar(setting("100familiar"));
@@ -134,13 +144,7 @@ void maximize(string target, string outfit, item it, familiar fam)
     }
   }
 
-  if (target == 'noncombat')
-    target = '-combat';
-
   if (add_familiar_weight) max_effects("familiar weight", false);
-
-  if (target == '')
-    target = default_maximize_string();
 
   do_maximize(target, outfit, it);
 
@@ -347,7 +351,6 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[lustful heart]);
       break;
     case "-combat":
-    case "noncombat":
       effect_maintain($effect[gummed shoes]);
       effect_maintain($effect[Fresh Scent]);
       effect_maintain($effect[Smooth Movements]);

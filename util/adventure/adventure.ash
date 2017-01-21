@@ -44,6 +44,15 @@ boolean yz_adventure_bypass(location loc)
     }
   }
 
+  if (loc == $location[the naughty sorceress' chamber])
+  {
+    string v = visit_url("/campground.php");
+    if (contains_text(v, "The Naughty Sorceress"))
+    {
+      adv = adv1(loc, -1, "");
+    }
+  }
+
   progress_sheet();
 
   return adv;

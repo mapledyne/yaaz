@@ -4,6 +4,43 @@ import "util/base/print.ash";
 import "util/base/settings.ash";
 
 boolean open_location(location loc);
+location pick_semi_rare_location();
+
+
+location pick_semi_rare_location()
+{
+  location last = to_location(get_property("semirareLocation"));
+
+  if (quest_status("questL10Garbage") >= 9
+      && to_boolean(setting("war_nuns", "false"))
+      && get_property("sidequestNunsCompleted") == "none"
+      && last != $location[The Castle in the Clouds in the Sky (Top Floor)])
+  {
+    return $location[The Castle in the Clouds in the Sky (Top Floor)];
+  }
+
+  // if we don't have the KGE outfit, get it for dispensary access.
+  if (!have_outfit("Knob Goblin Elite Guard Uniform")
+      && last != $location[Cobb's Knob Barracks])
+  {
+    return $location[Cobb's Knob Barracks];
+  }
+
+  // Get some stone wool if useful:
+  if (!hidden_temple_unlocked() && item_amount($item[stone wool]) < 2)
+  {
+    if (quest_status("questL11Worship") < 3)
+      return $location[The Hidden Temple];
+  }
+
+  if (last == $location[the haunted pantry])
+  {
+    return $location[the sleazy back alley];
+  }
+  return $location[the haunted pantry];
+}
+
+
 
 boolean location_open(location l)
 {

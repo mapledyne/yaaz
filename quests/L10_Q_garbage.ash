@@ -37,6 +37,14 @@ void open_ground_floor()
   if (quest_status("questL10Garbage") != 7)
     return;
 
+
+  if (have($item[amulet of extreme plot significance]))
+  {
+    maximize("", $item[amulet of extreme plot significance]);
+  } else {
+    maximize("");
+  }
+
   // this could be smarter (travel without the umbrella equipped, then skip out
   // through the mousehole, equip umbrella, and come right back)
   set_property("choiceAdventure669", 1); // either open ground floor (with umbrella) or fitness choice (without)
@@ -51,18 +59,14 @@ void open_ground_floor()
   else
     set_property("choiceAdventure671", 4); // Fitness choice (670)
 
-  if (i_a($item[amulet of extreme plot significance]) > 0)
-  {
-    maximize("", $item[amulet of extreme plot significance]);
-  } else {
-    maximize("");
-  }
-  if (i_a($item[titanium assault umbrella]) > 0
+
+  if (have($item[titanium assault umbrella])
       && !have_equipped($item[titanium assault umbrella])
       && my_path() != "Way of the Surprising Fist")
   {
     equip($item[titanium assault umbrella]);
   }
+
   while (can_adventure() && quest_status("questL10Garbage") == 7)
   {
     boolean b = yz_adventure($location[The Castle in the Clouds in the Sky (Basement)]);
@@ -108,25 +112,27 @@ void open_top_floor()
 
 void spin_garbage_wheel()
 {
-  while (quest_status("questL10Garbage") == 9 && can_adventure())
+  while ((quest_status("questL10Garbage") == 9
+          || !have($item[steam-powered model rocketship]))
+         && can_adventure())
   {
-    if (i_a($item[mohawk wig]) > 0)
+    if (!have($item[mohawk wig]))
       maximize("");
     else
       maximize("",$item[mohawk wig]);
 
     // steampunk choice
-    if (item_amount($item[steam-powered model rocketship]) == 0)
+    if (!have($item[steam-powered model rocketship]))
       set_property("choiceAdventure677", 2); // model rocketship
-    else if (item_amount($item[model airship]) > 0)
+    else if (have($item[model airship]))
       set_property("choiceAdventure677", 1); // complete quest
-    else if (item_amount($item[drum 'n' bass 'n' drum 'n' bass record]) > 0)
+    else if (have($item[drum 'n' bass 'n' drum 'n' bass record]))
       set_property("choiceAdventure677", 4); // goth choice
     else
       set_property("choiceAdventure677", 1); // pick a fight
 
     // goth choice
-    if (item_amount($item[drum 'n' bass 'n' drum 'n' bass record]) > 0)
+    if (have($item[drum 'n' bass 'n' drum 'n' bass record]))
       set_property("choiceAdventure675", 2); // complete quest
     else
       set_property("choiceAdventure675", 4); // steampunk choice
@@ -138,7 +144,7 @@ void spin_garbage_wheel()
       set_property("choiceAdventure678", 4); // raver choice
 
     // raver choice
-    if (item_amount($item[drum 'n' bass 'n' drum 'n' bass record]) == 0)
+    if (!have($item[drum 'n' bass 'n' drum 'n' bass record]))
       set_property("choiceAdventure676", 3); // get record
     else if (have_equipped($item[mohawk wig]))
       set_property("choiceAdventure676", 4); // punk choice
@@ -196,6 +202,11 @@ boolean garbage_loop()
       council();
       return true;
     case FINISHED:
+      if (!have($item[steam-powered model rocketship]))
+      {
+        spin_garbage_wheel();
+        return true;
+      }
       return false;
   }
 }
@@ -204,7 +215,8 @@ boolean L10_Q_garbage()
 {
   if (my_level() < 10)
     return false;
-  if (quest_status("questL10Garbage") == FINISHED)
+  if (quest_status("questL10Garbage") == FINISHED
+      && have($item[steam-powered model rocketship]))
     return false;
 
   int status = quest_status("questL10Garbage");

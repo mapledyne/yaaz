@@ -23,7 +23,7 @@ void get_compass()
   //Get the UV Compass.
   if (can_equip_compass())
   {
-    if (i_a(compass) == 0)
+    if (!have(compass))
     {
       log("Getting a " + wrap(compass) + ".");
       if (!have($item[Shore Inc. Ship Trip Scrip]))
@@ -228,11 +228,13 @@ boolean L11_SQ_desert()
 
     if (can_equip_compass())
     {
+    log("COMPASS!");
       maximize("", compass);
     } else {
       maximize("");
     }
 
+wait(5);
     yz_adventure($location[The Arid\, Extra-Dry Desert]);
   }
 

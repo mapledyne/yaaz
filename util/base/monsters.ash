@@ -20,8 +20,6 @@ void add_attract(monster mon);
 void remove_attract(monster mon);
 void add_yellow_ray(monster mon);
 void remove_yellow_ray(monster mon);
-void add_digitize(monster mon);
-void remove_digitize(monster mon);
 void add_duplicate(monster mon);
 void remove_duplicate(monster mon);
 
@@ -69,39 +67,4 @@ void remove_attract(monster mon)
   vars["BatMan_attract"] = attract_list;
   updatevars();
 
-}
-
-void add_digitize(monster mon)
-{
-  if (mon == $monster[none])
-    return;
-
-  string digitize_list = setting("digitize_list");
-
-  if (contains_text(digitize_list, mon))
-    return;
-
-  log("Adding " + wrap(mon) + " to the digitize list.");
-
-  digitize_list = list_add(digitize_list, mon);
-
-  save_daily_setting("digitize_list", digitize_list);
-
-}
-
-void remove_digitize(monster mon)
-{
-  if (mon == $monster[none])
-    return;
-
-  string digitize_list = setting("digitize_list");
-
-  if (!contains_text(digitize_list, mon))
-  {
-    return;
-  }
-
-  log("Removing " + wrap(mon) + " from the digitize list.");
-  digitize_list = list_remove(digitize_list, mon);
-  save_daily_setting("digitize_list", digitize_list);
 }

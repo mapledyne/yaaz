@@ -18,7 +18,7 @@ boolean larva_loop()
     case 0:
       set_property("choiceAdventure502", 2);
       set_property("choiceAdventure505", 1);
-      maximize("noncombat");
+      maximize("-combat");
       yz_adventure($location[The spooky forest]);
       return true;
     case 1:

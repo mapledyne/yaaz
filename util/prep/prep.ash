@@ -203,7 +203,6 @@ void cast_one_time_things()
 
 void prep(location loc)
 {
-
  if (my_path() != "Actually Ed the Undying")
  {
    if (have_effect($effect[beaten up]) > 0)
@@ -284,6 +283,12 @@ void prep(location loc)
   prep_fishing(loc);
 
   manuel();
+
+
+  if (have_effect($effect[majorly poisoned]) > 0)
+    uneffect($effect[majorly poisoned]);
+
+  if (loc != $location[none]) auto_mcd(loc);
 
 }
 

@@ -18,7 +18,7 @@ void clear_alcove()
 	if(get_property("cyrptAlcoveEvilness").to_int() > 0)
 	{
 
-		maximize("noncombat");
+		maximize("-combat");
 		choose_familiar("init");
 		max_effects("init");
 
@@ -64,7 +64,9 @@ void clear_nook()
 
 		while (get_property("cyrptNookEvilness").to_int() > 0 && can_adventure())
 		{
-			maximize("items", $item[gravy boat]);
+		warning("Look: equiping the hobo code binder to get the code. This addition should be removed.");
+		wait(5);
+			maximize("items, equip hobo code binder", $item[gravy boat]);
 			yz_adventure($location[The Defiled Nook]);
 			if(item_amount($item[evil eye]) > 0)
 			{

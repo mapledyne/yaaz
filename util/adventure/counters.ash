@@ -2,29 +2,8 @@ import "util/base/print.ash";
 import "util/base/inventory.ash";
 import "util/base/quests.ash";
 import "util/base/maximize.ash";
-
-location pick_semi_rare_location()
-{
-  location last = to_location(get_property("semirareLocation"));
-
-  // if we don't have the KGE outfit, get it for dispensary access.
-  foreach key,doodad in outfit_pieces("Knob Goblin Elite Guard Uniform")
-    if (i_a(doodad) == 0)
-      return $location[Cobb's Knob Barracks];
-
-  // Get some stone wool if useful:
-  if (hidden_temple_unlocked() && item_amount($item[stone wool]) < 2)
-  {
-    if (quest_status("questL11Worship") < 3)
-      return $location[The Hidden Temple];
-  }
-
-  if (last == $location[the haunted pantry])
-  {
-    return $location[the sleazy back alley];
-  }
-  return $location[the haunted pantry];
-}
+import "util/base/settings.ash";
+import "util/base/locations.ash";
 
 
 boolean semi_rare()
@@ -58,7 +37,7 @@ boolean dance_card()
   return true;
 }
 
-boolean digitized_monster()
+boolean digitized_monster_counter()
 {
   if (get_property("sidequestNunsCompleted") == "none"
       && to_int(get_property("currentNunneryMeat")) < 100000
@@ -72,11 +51,27 @@ boolean digitized_monster()
   return false;
 }
 
+boolean semi_rare_window()
+{
+  if ((get_counters("Semirare window begin", 0, 0) == ""
+      && get_counters("Semirare window end", 0, 39) == "")
+      || my_fullness() >= fullness_limit())
+    return false;
+
+  log("Semirare window is upon us but we don't know the exact number.");
+  log("Not optimal, but can't think of a better way to do this...");
+  wait(5);
+  log("Eating a " + wrap($item[fortune cookie]) + ".");
+  eat(1, $item[fortune cookie]);
+  return true;
+}
+
 boolean counters()
 {
+  if (semi_rare_window()) return true;
   if (semi_rare()) return true;
   if (dance_card()) return true;
-  if (digitized_monster()) return true;
+  if (digitized_monster_counter()) return true;
 
   return false;
 }

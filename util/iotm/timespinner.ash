@@ -14,7 +14,7 @@ int time_minutes()
 
 boolean is_spinner_food(item yum)
 {
-  if (!list_contains(get_property("_timeSpinnerFoodAvailable"), to_int(yum)))
+  if (!list_contains(get_property("_timeSpinnerFoodAvailable"), to_int(yum), ","))
     return false;
   if (time_minutes() < 3)
     return false;

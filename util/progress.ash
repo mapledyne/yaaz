@@ -5,6 +5,7 @@ import "util/base/settings.ash";
 import "util/base/war_support.ash";
 import "util/base/paths.ash";
 import "util/base/util.ash";
+import "util/base/locations.ash";
 
 int level_substats(int level)
 {
@@ -171,6 +172,15 @@ void progress_sheet(string detail)
     return;
   }
 
+  if (detail == "")
+  {
+    log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ".");
+  }
+  if (detail == "all")
+  {
+    log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ", over " + wrap(my_daycount(), COLOR_LOCATION) + " days.");
+  }
+
   level_progress();
 
   if (!have($item[bitchin' meatcar]))
@@ -211,6 +221,16 @@ void progress_sheet(string detail)
       task("make skeleton key");
     }
 
+  }
+  if (have($item[steam-powered model rocketship])
+      && !have($item[richard's star key]))
+  {
+    int star = min(item_amount($item[star]), 8);
+    int line = min(item_amount($item[line]), 7);
+    int chart = min(item_amount($item[star chart]), 1);
+    int key_total = star + line + chart;
+    string key_msg = " ("+star+ " " + wrap($item[star], star) + ", " + line + " " + wrap($item[line], line) + ", " + chart + " " + wrap($item[star chart], chart) + ")";
+    progress(key_total, 16, "make " + wrap($item[richard's star key]) + key_msg);
   }
 
   if (quest_status("questL13Final") < 5
@@ -302,7 +322,7 @@ void progress_sheet(string detail)
 
   if (desks > 0 && desks < 5)
   {
-    progress(desks, 5, "writing desks defeated");
+    progress(desks, 5, "defeated " + wrap($monster[writing desk]));
   }
 
   if (quest_status("questM21Dance") > UNSTARTED && quest_status("questM21Dance") < 3)
@@ -470,6 +490,11 @@ void progress_sheet(string detail)
     if (quest_status("questL10Garbage") == 9)
       task("Spin the garbage wheel");
 
+  }
+  if (quest_status("questL10Garbage") >= 9
+      && !have($item[steam-powered model rocketship]))
+  {
+    task("Find a " + wrap($item[steam-powered model rocketship]));
   }
 
   if (quest_status("questM21Dance") == FINISHED
@@ -649,6 +674,96 @@ void progress_sheet(string detail)
       msg += " (" + war_multiplier() + "/turn, " + left + " turns remain)";
 
       progress(war_defeated(), 1000, msg);
+
+      int sq_completed = 0;
+      int sq_active = 0;
+      string sq_msg = "";
+      if (setting("war_nun", "false") == "true"
+          || get_property("sidequestLighthouseCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestLighthouseCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Nuns";
+        } else {
+          sq_msg += UNCHECKED + "Nuns";
+        }
+      }
+
+      if (setting("war_nuns", "false") == "true"
+          || get_property("sidequestNunsCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestNunsCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Nuns";
+        } else {
+          sq_msg += UNCHECKED + "Nuns";
+        }
+      }
+
+      if (setting("war_orchard", "true") == "true"
+          || get_property("sidequestOrchardCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestOrchardCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Orchard";
+        } else {
+          sq_msg += UNCHECKED + "Orchard";
+        }
+      }
+
+      if (setting("war_lighthouse", "true") == "true"
+          || get_property("sidequestLighthouseCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestLighthouseCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Lighthouse";
+        } else {
+          sq_msg += UNCHECKED + "Lighthouse";
+        }
+      }
+
+      if (setting("war_arena", "true") == "true"
+          || get_property("sidequestArenaCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestArenaCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Arena";
+        } else {
+          sq_msg += UNCHECKED + "Arena";
+        }
+      }
+
+      if (setting("war_junkyard", "true") == "true"
+          || get_property("sidequestJunkyardCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestJunkyardCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Junkyard";
+        } else {
+          sq_msg += UNCHECKED + "Junkyard";
+        }
+      }
+      sq_msg = "war sidequests (" + sq_msg + ")";
+      if (sq_active > 0) progress(sq_completed, sq_active, sq_msg);
+
   }
 
   if (quest_active("questL13Final"))
@@ -703,7 +818,7 @@ void progress_sheet(string detail)
 
   progress_sheet_detail(detail);
 
-  for x from 1 to 25
+  for x from 0 to 25
   {
     if (get_counters("Digitize monster", x, x) != "")
     {
@@ -713,22 +828,23 @@ void progress_sheet(string detail)
     string last_rare = "";
     if (to_location(get_property("semirareLocation")) != $location[none])
     {
-      last_rare = " (previous: " + wrap(to_location(get_property("semirareLocation"))) + ")";
+      last_rare = " (previous: " + wrap(to_location(get_property("semirareLocation")));
+      last_rare += ", next: " + wrap(pick_semi_rare_location()) +  ")";
     }
 
     if (get_counters("Fortune Cookie", x, x) != "")
     {
-      yz_print("Semirare in " + x + " turns." + last_rare, COLOR_TASK);
+      yz_print("Semirare in " + wrap(x, COLOR_MONSTER) + " turns." + last_rare, COLOR_TASK);
     }
 
     if (get_counters("Semirare window begin", x, x) != "")
     {
-      yz_print("Semirare window begins in " + x + " turns. " + last_rare, COLOR_TASK);
+      yz_print("Semirare window begins in " + wrap(x, COLOR_MONSTER) + " turns. " + last_rare, COLOR_TASK);
     }
 
     if (get_counters("Semirare window end", x, x) != "")
     {
-      yz_print("Semirare window ends in " + x + " turns.", COLOR_TASK);
+      yz_print("Semirare window ends in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
     }
 
   }
@@ -738,7 +854,9 @@ void progress_sheet(string detail)
                          cuppa royal tea,
                          cuppa sobrie tea,
                          cuppa voraci tea,
-                         mojo filter]
+                         mojo filter,
+                         instant karma,
+                         invisible string]
   {
     smoke_if_got_it(puff);
   }

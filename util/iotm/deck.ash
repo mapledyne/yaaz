@@ -72,7 +72,7 @@ boolean pick_a_card()
   // maybe get a hero key
   if (!have_familiar($familiar[gelatinous cubeling]) || to_familiar(setting("100familiar")) != $familiar[none])
   {
-    if (hero_keys() < 3)
+    if (hero_keys() < 3 && quest_status("questL13Final") < 3)
     {
       return cheat_deck("tower", "get a hero key");
     }

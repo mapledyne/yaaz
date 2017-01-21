@@ -1,5 +1,7 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
+import "util/base/inventory.ash";
+import "util/base/monsters.ash";
 
 boolean can_chateau()
 {
@@ -47,13 +49,8 @@ void chateau()
   }
 
   if (chateau_monster() == $monster[writing desk]
-      && i_a($item[ghost of a necklace]) == 0)
+      && !have($item[ghost of a necklace]))
   {
-    if (!list_contains(setting("digitize_list"), $monster[writing desk]))
-    {
-      string new_list = list_add(setting("digitize_list"), $monster[writing desk]);
-      save_setting("digitize_list", new_list);
-    }
     if (can_chateau_fight() && expected_damage($monster[writing desk]) < (my_hp() / 2))
     {
       log("Looks like we can fight a " + wrap($monster[writing desk]) +" now, so going to do that.");

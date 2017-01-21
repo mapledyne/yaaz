@@ -68,7 +68,7 @@ boolean L11_SQ_pyramid()
 
   while (quest_status("questL11Pyramid") < 1)
   {
-    maximize("noncombat");
+    maximize("-combat");
     yz_adventure($location[The Upper Chamber]);
   }
 

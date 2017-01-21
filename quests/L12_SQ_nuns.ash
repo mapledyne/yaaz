@@ -1,6 +1,6 @@
 import "util/main.ash";
 import "util/base/war_support.ash";
-imoprt "util/iotm/terminal.ash";
+import "util/iotm/terminal.ash";
 
 boolean do_nuns_quest(string side)
 {
@@ -9,9 +9,17 @@ boolean do_nuns_quest(string side)
   if (side == "hippy" && war_side() == "fratboy") doing_trick = true;
   int meat_recovered = to_int(get_property("currentNunneryMeat"));
 
+  if (doing_trick
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand])
+  {
+    log("We've digitized a " + wrap($monster[dirty thieving brigand]) + ", so will wait on the nuns quest until we've gotten the rest of the meat through that copy.");
+    return false;
+  }
+
   while (meat_recovered < 100000)
   {
     maximize("meat", war_outfit(side));
+    effect_maintain($effect[Sinuses For Miles]);
     int max_expected_meat = $monster[dirty thieving brigand].max_meat;
     max_expected_meat = max_expected_meat * (1 + (numeric_modifier("meat drop") / 100));
 
@@ -22,10 +30,6 @@ boolean do_nuns_quest(string side)
       {
         log("Skipping out on the rest of the nuns sidequest since we're doing the 'trick'.");
         break;
-
-      } else {
-        log("About to complete the nuns. Better copy a " + wrap($monster[dirty thieving brigand]) + ".");
-        add_attract($monster[dirty thieving brigand]);
       }
     }
 

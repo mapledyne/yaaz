@@ -5,6 +5,7 @@ import "quests/L12_SQ_junkyard.ash";
 import "quests/L12_SQ_arena.ash";
 import "quests/L12_SQ_lighthouse.ash";
 import "quests/L12_SQ_orchard.ash";
+import "quests/L12_SQ_nuns.ash";
 
 int sidequests(string side);
 int sidequests();
@@ -165,6 +166,12 @@ boolean L12_Q_war(string side)
       return true;
   }
 
+  if (war_nuns())
+  {
+    if (L12_SQ_nuns())
+      return true;
+  }
+
   if (war_orchard())
   {
     if (L12_SQ_orchard())
@@ -173,6 +180,10 @@ boolean L12_Q_war(string side)
 
   // handle case where the arena sidequest is paused while we wait for flyers to be delivered.
   if (war_arena() && get_property("sidequestArenaCompleted") == "none")
+    return false;
+
+  // handle case where the nuns sidequest is paused while we wait for digitized brigands
+  if (war_nuns() && get_property("sidequestNunsCompleted") == "none")
     return false;
 
   // handle case where the lighthouse sidequest is paused while we wait for digitized lobsterfrogmen
