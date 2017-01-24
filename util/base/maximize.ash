@@ -93,12 +93,14 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target != "") target = target + ", ";
   target += "effective";
 
-  if (my_primestat() == $stat[muscle]
-      && to_slot(it) != $slot[off-hand])
+/*  if (my_primestat() == $stat[muscle]
+      && to_slot(it) != $slot[off-hand]
+      && outfit == "")
   {
     if (target != "") target = target + ", ";
     target += "+shield";
   }
+*/
 
   // if we're doing the flyers, let's boost ML as we go.
   if (have_flyers() && get_property("sidequestNunsCompleted") == "none")
