@@ -223,7 +223,8 @@ void progress_sheet(string detail)
 
   }
   if (have($item[steam-powered model rocketship])
-      && !have($item[richard's star key]))
+      && !have($item[richard's star key])
+      && quest_status("questL13Final") < 5)
   {
     int star = min(item_amount($item[star]), 8);
     int line = min(item_amount($item[line]), 7);

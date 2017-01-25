@@ -33,17 +33,30 @@ void main(int round, monster foe, string page)
 
   if (have_skill($skill[digitize]) && digitize_remaining() > 0)
   {
+    int copiesmade = to_int(get_property("_sourceTerminalDigitizeMonsterCount"));
+
     switch (foe)
     {
       case $monster[dirty thieving brigand]:
-      if (to_int(get_property("currentNunneryMeat")) < 94000)
-      {
-        break;
-      }
+        if (to_int(get_property("currentNunneryMeat")) < 94000)
+        {
+          break;
+        }
       case $monster[ninja snowman assassin]:
+        if (digitized != foe)
+        {
+          use_skill(1, $skill[digitize]);
+        }
+        break;
       case $monster[writing desk]:
       case $monster[lobsterfrogman]:
-        if (digitized != foe)
+        int thingwanted = item_amount($item[barrel of gunpowder]);
+        if (foe == $monster[writing desk])
+        {
+          thingwanted = to_int(get_property("writingDesksDefeated"));
+        }
+
+        if (digitized != foe || (thingwanted < 5 && copiesmade > 2))
         {
           use_skill(1, $skill[digitize]);
         }

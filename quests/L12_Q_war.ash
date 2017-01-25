@@ -87,6 +87,7 @@ boolean start_the_war(string side)
   }
   while (!have_outfit(war_outfit()))
   {
+    maximize("", "filthy hippy disguise");
     boolean b = yz_adventure(camp);
     if (!b)
       return true;

@@ -15,3 +15,30 @@ scratch 'n' sniff wrestler sticker	10
 stick-on eyebrow piercing	0
 thinknerd T-shirt grab bag	0
 wind-up chattering teeth	0
+# Things we likely collect too many of:
+twinkly wad	100
+cold wad	100
+hot wad	100
+stench wad	100
+sleaze wad	100
+spooky wad	100
+twinkly nuggets	100
+stench nuggets	100
+cold nuggets	100
+hot nuggets	100
+sleaze nuggets	100
+spooky nuggets	100
+dry noodles	100
+bottle of rum	100
+unidentified jerky	100
+water pipe bomb	100
+gauze garter	100
+leathery rat skin	100
+magical ice cubes	100
+skeleton bone	100
+little paper umbrella	100
+mummy wrappings	100
+thin black candle	100
+star	100
+line	100
+ketchup hound	5
