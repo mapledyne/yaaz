@@ -862,6 +862,14 @@ void progress_sheet(string detail)
     smoke_if_got_it(puff);
   }
 
+  foreach toy in $items[special edition batfellow comic]
+  {
+    if (have(toy))
+    {
+      task("Consider using your " + wrap(toy) + ".");
+    }
+  }
+
 }
 
 void progress_sheet()

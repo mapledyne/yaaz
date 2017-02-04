@@ -31,6 +31,7 @@ boolean blacklisted(string player)
     case "ultibot":
     case "searchingchat":
     case "s t u p i d":
+    case "abulafia":
       return true;
   }
 }
@@ -167,7 +168,7 @@ void do_heart_thing(string player)
     return;
   }
 
-  if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else.")) return;
+  if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else. :)")) return;
   if (mail_heart_item(player, $item[gift card])) return;
   if (mail_heart_item(player, $item[holiday fun!], "Holiday chat messages! Happy Holiday, whatever one is coming up next.")) return;
 

@@ -1,4 +1,5 @@
 import "util/base/util.ash";
+import "util/base/quests.ash";
 
 string[6] floundry_fish;
 floundry_fish[0] = "carp";
@@ -146,7 +147,8 @@ void floundry()
 
   floundry_daily_check();
 
-  get_floundry_item();
+  if (quest_status("questL13Final") < FINISHED)
+	  get_floundry_item();
 }
 
 boolean is_fishing_hole(location loc)

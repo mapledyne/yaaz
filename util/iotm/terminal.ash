@@ -301,6 +301,75 @@ boolean have_terminal_chip(string chip)
   return false;
 }
 
+item pick_extrude_item()
+{
+  item ext = $item[hacked gibson];
+  if (item_amount($item[hacked gibson]) > item_amount($item[browser cookie]))
+  {
+    ext = $item[browser cookie];
+  }
+
+  if (item_amount(ext) >= 5)
+  {
+  // if we have plenty of food/booze, maybe consider getting something else:
+    if (!have_terminal_chip("CRAM")
+        && item_amount($item[source essence]) > 1000
+        && have_terminal_file("cram.ext"))
+    {
+      ext = $item[Source terminal CRAM chip];
+    }
+    else if (!have_terminal_chip("DRAM")
+             && item_amount($item[source essence]) > 1000
+             && have_terminal_file("dram.ext"))
+    {
+      ext = $item[Source terminal DRAM chip];
+    }
+    else if (!have_terminal_chip("TRAM")
+             && item_amount($item[source essence]) > 1000
+             && have_terminal_file("tram.ext"))
+    {
+      ext = $item[Source terminal TRAM chip];
+    }
+    else if (to_int(get_property("sourceTerminalGram")) < 10
+             && item_amount($item[source essence]) > 100
+             && have_terminal_file("gram.ext"))
+    {
+      ext = $item[Source terminal GRAM chip];
+    }
+    else if (to_int(get_property("sourceTerminalPram")) < 10
+             && item_amount($item[source essence]) > 100
+             && have_terminal_file("pram.ext"))
+    {
+      ext = $item[Source terminal PRAM chip];
+    }
+    else if (to_int(get_property("sourceTerminalSpam")) < 10
+             && item_amount($item[source essence]) > 100
+             && have_terminal_file("spam.ext"))
+    {
+      ext = $item[Source terminal SPAM chip];
+    }
+    else if (!have_familiar($familiar[software bug])
+             && item_amount($item[source essence]) > 10000
+             && have_terminal_file("familiar.ext"))
+    {
+      ext = $item[software bug];
+    }
+  }
+
+  if (!have($item[source shades]) && item_amount($item[source essence]) > 100)
+    ext = $item[source shades];
+
+  if (my_path() == "Nuclear Autumn"
+      && (ext == $item[hacked gibson] || ext == $item[browser cookie]))
+  {
+    warning("You can't use the food and booze from the Terminal in Nuclear Autumn, but it's not obvious what else to extrude.");
+    warning("Going to extrude a " + wrap(ext) + " since we don't want it to go to waste, but we won't be able to use it for a while.");
+    wait(3);
+  }
+  return ext;
+
+}
+
 void terminal()
 {
   if (!can_terminal())
@@ -309,70 +378,7 @@ void terminal()
   while(can_extrude() && item_amount($item[source essence]) > 10)
   {
 
-    item ext = $item[hacked gibson];
-    if (item_amount($item[hacked gibson]) > item_amount($item[browser cookie]))
-    {
-      ext = $item[browser cookie];
-    }
-
-    if (item_amount(ext) >= 5)
-    {
-    // if we have plenty of food/booze, maybe consider getting something else:
-      if (!have_terminal_chip("CRAM")
-          && item_amount($item[source essence]) > 1000
-          && have_terminal_file("cram.ext"))
-      {
-        ext = $item[Source terminal CRAM chip];
-      }
-      else if (!have_terminal_chip("DRAM")
-               && item_amount($item[source essence]) > 1000
-               && have_terminal_file("dram.ext"))
-      {
-        ext = $item[Source terminal DRAM chip];
-      }
-      else if (!have_terminal_chip("TRAM")
-               && item_amount($item[source essence]) > 1000
-               && have_terminal_file("tram.ext"))
-      {
-        ext = $item[Source terminal TRAM chip];
-      }
-      else if (to_int(get_property("sourceTerminalGram")) < 10
-               && item_amount($item[source essence]) > 100
-               && have_terminal_file("gram.ext"))
-      {
-        ext = $item[Source terminal GRAM chip];
-      }
-      else if (to_int(get_property("sourceTerminalPram")) < 10
-               && item_amount($item[source essence]) > 100
-               && have_terminal_file("pram.ext"))
-      {
-        ext = $item[Source terminal PRAM chip];
-      }
-      else if (to_int(get_property("sourceTerminalSpam")) < 10
-               && item_amount($item[source essence]) > 100
-               && have_terminal_file("spam.ext"))
-      {
-        ext = $item[Source terminal SPAM chip];
-      }
-      else if (!have_familiar($familiar[software bug])
-               && item_amount($item[source essence]) > 10000
-               && have_terminal_file("familiar.ext"))
-      {
-        ext = $item[software bug];
-      }
-    }
-
-    if (!have($item[source shades]) && item_amount($item[source essence]) > 100)
-      ext = $item[source shades];
-
-    if (my_path() == "Nuclear Autumn"
-        && (ext == $item[hacked gibson] || ext == $item[browser cookie]))
-    {
-      warning("You can't use the food and booze from the Terminal in Nuclear Autumn, but it's not obvious what else to extrude.");
-      warning("Going to extrude a " + wrap(ext) + " since we don't want it to go to waste, but we won't be able to use it for a while.");
-      wait(3);
-    }
-
+    item ext = pick_extrude_item();
     terminal_extrude(ext);
   }
 
