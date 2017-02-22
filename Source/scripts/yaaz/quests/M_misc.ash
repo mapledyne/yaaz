@@ -8,6 +8,7 @@ boolean untinker()
 
   if (quest_status("questM01Untinker") == UNSTARTED)
   {
+      warning("Fix the untinker quest.");
     log("Visiting the " + wrap("Untinker", COLOR_LOCATION) + " to start his quest.");
     visit_url("place.php?whichplace=forestvillage&preaction=screwquest&action=fv_untinker_quest");
     if (knoll_available())

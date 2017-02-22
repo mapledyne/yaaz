@@ -32,13 +32,13 @@ void check_stones()
 
 void get_machete()
 {
-  if (i_a($item[antique machete]) > 0)
+  if (have($item[antique machete]))
   {
     return;
   }
 
   maximize("");
-  while (i_a($item[antique machete]) == 0)
+  while (!have($item[antique machete]))
   {
     boolean b = yz_adventure($location[the hidden park]);
     if (!b)
@@ -48,21 +48,24 @@ void get_machete()
 
 boolean do_liana()
 {
-  if (i_a($item[antique machete]) == 0 || my_path() == "Way of the Surprising Fist")
+  if (!have($item[antique machete]) || my_path() == "Way of the Surprising Fist")
   {
     return false;
   }
 
-  if (quest_status("questL11Business") > -1 && quest_status("questL11Curses") > -1 && quest_status("questL11Doctor") > -1 && quest_status("questL11Spare") > -1)
+  if (quest_status("questL11Business") > -1
+      && quest_status("questL11Curses") > -1
+      && quest_status("questL11Doctor") > -1
+      && quest_status("questL11Spare") > -1)
   {
     return false;
   }
 
-  if (my_path() == "Way of the Surprising Fist")
+  maximize("");
+
+  if (my_path() != "Way of the Surprising Fist")
   {
-    maximize("");
-  } else {
-    maximize("", $item[antique machete]);
+    equip($slot[weapon], $item[antique machete]);
   }
 
   if(quest_status("questL11Business") < 0)
@@ -225,7 +228,7 @@ boolean fight_spirit()
 
   log("Fighting the " + $monster[Protector Spectre] + ".");
   yz_adventure($location[A Massive Ziggurat], "elemental damage");
-
+  run_combat();
   return true;
 }
 

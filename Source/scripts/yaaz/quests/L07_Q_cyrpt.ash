@@ -64,9 +64,7 @@ void clear_nook()
 
 		while (get_property("cyrptNookEvilness").to_int() > 0 && can_adventure())
 		{
-		warning("Look: equiping the hobo code binder to get the code. This addition should be removed.");
-		wait(5);
-			maximize("items, equip hobo code binder", $item[gravy boat]);
+			maximize("items", $item[gravy boat]);
 			yz_adventure($location[The Defiled Nook]);
 			if(item_amount($item[evil eye]) > 0)
 			{
@@ -108,7 +106,9 @@ boolean L07_Q_cyrpt()
 	if (quest_status("questL07Cyrptic") == FINISHED)
 	  return false;
 
-	if (my_daycount() == 1 && get_campground() contains $item[cornucopia])
+	if (my_daycount() == 1
+			&& get_campground() contains $item[cornucopia]
+			&& i_a($item[gravy boat]) == 0)
 	{
 		log("Skipping the Cyrpt quest for today. Tomorrow we'll have some " + wrap($item[cashew], 2) + " and can use them to our advantage.");
 		return false;

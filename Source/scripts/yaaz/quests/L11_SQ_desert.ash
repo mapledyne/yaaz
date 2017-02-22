@@ -228,7 +228,6 @@ boolean L11_SQ_desert()
 
     if (can_equip_compass())
     {
-    log("COMPASS!");
       maximize("", compass);
     } else {
       maximize("");

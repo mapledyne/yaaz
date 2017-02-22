@@ -195,6 +195,30 @@ void max_effects(string target, boolean aggressive)
 {
   switch(target)
   {
+    case "exp":
+      effect_maintain($effect[proficient pressure]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[orange tongue]);
+      if (!have_colored_tongue())
+        effect_maintain($effect[black tongue]);
+      switch(my_primestat())
+      {
+        case $stat[muscle]:
+          effect_maintain($effect[browbeaten]);
+          effect_maintain($effect[strong resolve]);
+          effect_maintain($effect[gummi-grin]);
+          break;
+        case $stat[moxie]:
+          effect_maintain($effect[sepia tan]);
+          effect_maintain($effect[flexibili Tea]);
+          break;
+        case $stat[mysticality]:
+          effect_maintain($effect[ready to snap]);
+          effect_maintain($effect[innately wise]);
+          effect_maintain($effect[Neuroplastici Tea]);
+          break;
+      }
+      break;
     case "stats":
       effect_maintain($effect[mutated]);
       effect_maintain($effect[sealed brain]);
@@ -280,7 +304,8 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[polka of plenty]);
       effect_maintain($effect[preternatural greed]);
       effect_maintain($effect[so you can work more...]);
-      effect_maintain($effect[The Ballad of Richie Thingfinder]);
+      // Not really ascension relevant:
+//      effect_maintain($effect[The Ballad of Richie Thingfinder]);
       effect_maintain($effect[wasabi sinuses]);
       effect_maintain($effect[thanksgetting]);
       terminal_enhance($effect[meat.enh]);
@@ -309,7 +334,8 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[2091]); // [Sacré Mental]
       effect_maintain($effect[serendipi tea]);
       effect_maintain($effect[singer's faithful ocelot]);
-      effect_maintain($effect[The Ballad of Richie Thingfinder]);
+      // Not really ascension relevant:
+//      effect_maintain($effect[The Ballad of Richie Thingfinder]);
       effect_maintain($effect[thanksgetting]);
       terminal_enhance($effect[items.enh]);
       if (!have_love_song())

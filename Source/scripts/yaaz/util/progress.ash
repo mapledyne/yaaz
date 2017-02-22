@@ -831,6 +831,8 @@ void progress_sheet(string detail)
     {
       last_rare = " (previous: " + wrap(to_location(get_property("semirareLocation")));
       last_rare += ", next: " + wrap(pick_semi_rare_location()) +  ")";
+    } else {
+      last_rare = " (next: " + wrap(pick_semi_rare_location()) +  ")";
     }
 
     if (get_counters("Fortune Cookie", x, x) != "")
@@ -862,11 +864,14 @@ void progress_sheet(string detail)
     smoke_if_got_it(puff);
   }
 
-  foreach toy in $items[special edition batfellow comic]
+  if (detail == "all")
   {
-    if (have(toy))
+    foreach toy in $items[special edition batfellow comic]
     {
-      task("Consider using your " + wrap(toy) + ".");
+      if (have(toy))
+      {
+        task("Consider using your " + wrap(toy) + ".");
+      }
     }
   }
 

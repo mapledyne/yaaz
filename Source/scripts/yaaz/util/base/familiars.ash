@@ -63,6 +63,10 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
         && contains_text(to_lower_case(f), "b"))
       continue;
 
+    if (f == $familiar[gelatinous cubeling]
+        && have_cubeling_items())
+      continue;
+
     if(have_familiar(f))
     {
       return f;
@@ -144,7 +148,7 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
       break;
     default: // everything that doesnt't have a set items. Should usually be stat familiars.
-      newbie = choose_familiar_from_list($familiars[intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid, gelatinous cubeling]);
+      newbie = choose_familiar_from_list($familiars[gelatinous cubeling, space jellyfish, intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid]);
       add_familiar_weight = false;
       break;
   }

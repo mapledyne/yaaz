@@ -213,7 +213,7 @@ boolean L12_Q_war(string side)
 
   while(war_defeated() < 1000)
   {
-    maximize("", war_outfit());
+    maximize("", war_outfit(), $item[hobo code binder], $familiar[none]);
     boolean b = yz_adventure(battle);
     if (!b)
       return true;

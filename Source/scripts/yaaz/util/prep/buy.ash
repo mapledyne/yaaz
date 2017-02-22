@@ -14,7 +14,14 @@ void buy_things()
 
   stock_item($item[anti-anti-antidote], 3);
 
-  stock_item($item[the big book of pirate insults]);
+  if (to_int(get_property("lastIslandUnlock")) == my_ascensions())
+  {
+    stock_item($item[the big book of pirate insults]);
+    if ((item_amount($item[dictionary]) + item_amount($item[abridged dictionary])) == 0)
+    {
+      stock_item($item[abridged dictionary]);
+    }
+  }
 
   if (have_familiar($familiar[trick-or-treating tot]))
   {
@@ -23,10 +30,6 @@ void buy_things()
 
   }
 
-  if ((item_amount($item[dictionary]) + item_amount($item[abridged dictionary])) == 0)
-  {
-    stock_item($item[abridged dictionary]);
-  }
 
   stock_item($item[gauze garter], 10 - item_amount($item[filthy poultice]));
   stock_item($item[filthy poultice], 10 - item_amount($item[gauze garter]));

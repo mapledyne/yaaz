@@ -25,6 +25,27 @@ file_to_map(DATA_DIR + "trophies.txt", all_trophies);
 trophyentry [int] trophies;
 int [item] consumed;
 
+record ItemImage
+{
+	string itemname;
+	string gifname;
+	string a;
+	string b;
+	string c;
+	string d;
+	string e;
+	string f;
+	string g;
+};
+
+ItemImage [int] concocktail, confood, conmeat, conmisc, consmith;
+
+boolean load_discovery_map(string fname, ItemImage[int] map)
+{
+	file_to_map(fname+".txt", map);
+	return true;
+}
+
 trophyentry [int] parse_trophies()
 {
 
@@ -40,6 +61,86 @@ trophyentry [int] parse_trophies()
 	}
 
 	return trophies;
+}
+
+boolean regCheck(string checkthis, string html)
+{
+	checkthis = replace_string(checkthis, "+", "\\+");
+	checkthis = replace_string(checkthis, "(0)", "\\(([0-9]+)\\)");
+	checkthis = replace_string(checkthis, "</b>", "(</a>){0,1}</b>");
+	checkthis = replace_string(checkthis, "</b> <font", "</b>(\\s){0,1}<font");
+	checkthis = replace_string(checkthis, "<font size=1>", "<font size=1>(?:<font size=2>\\[<a href=\"craft.php\\?mode=\\w+&a=\\d+&b=\\d+\">\\w+</a>\\]</font>)?");
+
+	matcher reg = create_matcher(checkthis, html);
+	if(reg.find())
+	{
+		return true;
+	}
+	return false;
+}
+
+boolean isInDisco(string name, string html, string a)
+{
+	if(a != "none")
+	{
+		return regCheck(a, html);
+	}
+	else
+	{
+		if(index_of(html, ">"+name+"<") != -1)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+string visit_discoveries(string url)
+{
+	matcher reg = create_matcher("<font size=2>.*?</font>", visit_url(url));
+	return replace_all(reg, "");
+}
+
+void discovery()
+{
+	string html = visit_discoveries("craft.php?mode=discoveries&what=combine");
+	item[int] things;
+
+	foreach x in conmeat
+	{
+		boolean haveit = isInDisco(conmeat[x].itemname, html, conmeat[x].gifname);
+		if (!haveit && conmeat[x].itemname != 'none')
+		{
+			things[count(things)] = to_item(conmeat[x].itemname);
+		}
+		if (count(things) > 2) break;
+	}
+
+	string msg;
+	foreach toy in things
+	{
+		if (length(msg) > 0)
+		{
+			msg += ", ";
+		}
+		msg += wrap(things[toy]);
+		int cost = 0;
+		foreach part in get_ingredients(things[toy])
+		{
+			if (historical_price(part) == 0)
+			{
+				cost = 0;
+				break;
+			}
+			cost += historical_price(part);
+		}
+		if (cost > 0)
+		{
+			msg += " (" + comma_format(cost) + " meat)";
+		}
+	}
+
+	log("Want to make something you haven't yet? Consider one of: " + msg);
 }
 
 int [item] parse_consumables()
@@ -58,18 +159,20 @@ int [item] parse_consumables()
 		string foodCons = entry_matcher.group(1);
 		string boozeCons = entry_matcher.group(2);
 
-    matcher foodMatcher = create_matcher("<a [^>]*>([^<]*)</a>&nbsp;&nbsp;&nbsp;</td><td>(\\d+)</td>", foodCons);
+    matcher foodMatcher = create_matcher("<a [^>]*>([^<]*)</a>&nbsp;&nbsp;&nbsp;</td><td>([\\d,]+)</td>", foodCons);
 
 		while(foodMatcher.find())
 		{
 //			string f = foodMatcher.group(1) + " - " + foodMatcher.group(2);
-      consumed[to_item(foodMatcher.group(1))] = to_int(foodMatcher.group(2));
+			string num = replace_string(foodMatcher.group(2),",","");
+      consumed[to_item(foodMatcher.group(1))] = to_int(num);
 		}
 
-		matcher boozeMatcher = create_matcher("<a [^>]*>([^<]*)</a>&nbsp;&nbsp;&nbsp;</td><td>(\\d+)</td>", boozeCons);
+		matcher boozeMatcher = create_matcher("<a [^>]*>([^<]*)</a>&nbsp;&nbsp;&nbsp;</td><td>([\\d,]+)</td>", boozeCons);
 		while(boozeMatcher.find())
 		{
 //			string b = boozeMatcher.group(1); // fixString(boozeMatcher.group(1));
+			string num = replace_string(boozeMatcher.group(2),",","");
 			consumed[to_item(boozeMatcher.group(1))] = to_int(boozeMatcher.group(2));
 		}
 	}
@@ -293,9 +396,30 @@ void basic_trophy(int have, int needed, int trophy)
 int nom_sorter(item it)
 {
 	int price = historical_price(it);
+	float fullness_mod = 100;
+	int full_mod = 100000;
 
-	if (price == 0) price = 2147483647; // MAXINT
-	if (can_consume(it)) price = price / 100;
+
+	if (item_amount(it) > 0)
+	{
+		price = -item_amount(it);
+		fullness_mod = 0.01;
+	}
+
+	if (fullness_limit() - my_fullness() <= 0
+	    && it.fullness > 0)
+	{
+		price = price + full_mod;
+	}
+
+	if (inebriety_limit() - my_inebriety() <= 0
+	    && it.inebriety > 0)
+	{
+		price = price + full_mod;
+	}
+
+	if (price == 0) price = 100000000;
+	if (can_consume(it)) price = price / fullness_mod;
 
 	return price;
 }
@@ -329,7 +453,14 @@ void nom_something()
 
 		nom_msg += wrap(nom);
 		int cost = historical_price(nom);
-		if (cost > 0) nom_msg += " (" + cost + " meat)";
+		if (item_amount(nom) > 0)
+		{
+			nom_msg += " (you have " + item_amount(nom) + ")";
+		}
+		else if (cost > 0)
+		{
+			nom_msg += " (" + comma_format(cost) + " meat)";
+		}
 		count++;
 	}
 	if (length(nom_msg) > 0)
@@ -338,6 +469,15 @@ void nom_something()
 
 void trophy()
 {
+	load_discovery_map("cc_snapshot_dis_meat", conmeat);
+	sort conmeat by random(1000000);
+/*
+	load_current_map("cc_snapshot_dis_cocktail", concocktail);
+	load_current_map("cc_snapshot_dis_food", confood);
+	load_current_map("cc_snapshot_dis_smith", consmith);
+	load_current_map("cc_snapshot_dis_misc", conmisc);
+*/
+
 	consumed = parse_consumables();
 	trophies = parse_trophies();
 	basic_consumption_trophy($item[white canadian], 30, 3);
@@ -383,6 +523,7 @@ void trophy()
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 
 	nom_something();
+	discovery();
 }
 
 void main()

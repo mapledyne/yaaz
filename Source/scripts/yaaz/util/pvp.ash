@@ -183,7 +183,9 @@ void pvp()
       cli_execute("checkpoint");
       dress_for_pvp();
       effects_for_pvp();
-      cli_execute("pvp fame " + PVP_FIGHT);
+      string fame = "fame";
+      if (can_interact()) fame = "loot";
+      cli_execute("pvp " + fame + " " + PVP_FIGHT);
       cli_execute("outfit checkpoint");
     }
     visit_url("peevpee.php?place=shop");
