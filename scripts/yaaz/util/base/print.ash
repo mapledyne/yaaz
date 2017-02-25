@@ -5,6 +5,7 @@ string COLOR_MONSTER = "blue";
 string COLOR_SKILL = "green";
 string COLOR_CLASS = "green";
 string COLOR_COINMASTER = "blue";
+string COLOR_STAT = "green";
 
 string COLOR_ERROR = "red";
 string COLOR_WARNING = "purple";
@@ -55,6 +56,11 @@ string wrap(thrall t)
 string wrap(monster m)
 {
   return wrap(m, COLOR_MONSTER);
+}
+
+string wrap(stat s)
+{
+  return wrap(s, COLOR_STAT);
 }
 
 string wrap(skill s)

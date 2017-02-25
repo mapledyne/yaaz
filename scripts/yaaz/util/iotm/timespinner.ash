@@ -31,6 +31,9 @@ boolean spinner_eat(item yum)
   visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
   visit_url("choice.php?pwd&whichchoice=1195&option=2");
   string ret = visit_url(url);
+
+  progress_sheet("timespinner");
+
   return true;
 
 }

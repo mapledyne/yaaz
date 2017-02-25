@@ -14,9 +14,12 @@ void day_begin()
   wait(5);
 
   maximize();
-  prep();
 
   iotm();
+
+  special();
+
+  prep();
 
 }
 

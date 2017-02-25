@@ -178,6 +178,14 @@ void cast_things(location loc)
       use_skill(1, target);
     }
   }
+
+  if (my_meat() > 10000)
+  {
+    // limiter on this so we don't cause MP restores to use up all of our meat.
+
+    effect_maintain($effect[Drescher's Annoying Noise]);
+    effect_maintain($effect[Ur-Kel's Aria of Annoyance]);
+  }
 }
 
 void cast_if(skill sk, boolean doit)
@@ -288,7 +296,19 @@ void prep(location loc)
   if (have_effect($effect[majorly poisoned]) > 0)
     uneffect($effect[majorly poisoned]);
 
-  if (loc != $location[none]) auto_mcd(loc);
+
+  // auto_mcd() seems to be way too easy on us and sets it to 0 more than I'd like.
+  //  if (loc != $location[none]) auto_mcd(loc);
+
+  if (!($locations[the boss bat's lair,
+                   Haert of the Cyrpt,
+                   Throne Room] contains loc))
+  {
+    int annoy = 10;
+    if (canadia_available()) annoy = 11;
+    if (current_mcd() != annoy)
+      change_mcd(annoy);
+  }
 
 }
 

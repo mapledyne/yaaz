@@ -25,7 +25,11 @@ boolean M10_star_key()
       set_property("choiceAdventure1221", 1); // skin flute (/stars + lines)
     }
 
-    boolean b = yz_adventure($location[the hole in the sky], "items");
+    familiar fam = $familiar[none];
+    if (have_familiar($familiar[space jellyfish]))
+      fam = $familiar[space jellyfish];
+    maximize("items", fam);
+    boolean b = yz_adventure($location[the hole in the sky]);
     if (!b)
       return true;
   }

@@ -211,11 +211,13 @@ void ascend()
   while(ascend_loop())
   {
     iotm();
+    special();
     manuel_progress();
     wait(5);
   }
 
   iotm();
+  special();
   manuel_progress();
   wait(5);
 

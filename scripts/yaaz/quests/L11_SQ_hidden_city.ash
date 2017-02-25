@@ -101,6 +101,7 @@ boolean do_liana()
   while ($location[A Massive Ziggurat].turns_spent < 3)
   {
     yz_adventure($location[A Massive Ziggurat]);
+    run_combat();
   }
 
   return false;

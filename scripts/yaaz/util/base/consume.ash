@@ -258,6 +258,7 @@ boolean try_eat(item it)
     return eat(1, it);
   } else if (is_spinner_food(it))
   {
+    log("Using our " + wrap($item[time-spinner]) + " to remember a " + wrap(it) + ".");
     return spinner_eat(it);
   }
   return false;
@@ -391,21 +392,6 @@ boolean try_consume(item it)
 boolean consume_best()
 {
   item[int] noms = consume_list();
-
-  int count = 0;
-  foreach nom, it in noms
-  {
-    if (can_consume(it))
-    {
-      print("Considering consuming: " + it);
-      count++;
-    }
-    if (count > 5)
-    {
-      wait(20);
-      break;
-    }
-  }
 
   foreach nom, it in noms
   {

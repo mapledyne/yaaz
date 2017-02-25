@@ -78,6 +78,8 @@ boolean open_location(location loc)
       return false;
     case $location[the overgrown lot]:
       return start_galaktik();
+    case $location[madness bakery]:
+      return start_bakery();
   }
 
 }

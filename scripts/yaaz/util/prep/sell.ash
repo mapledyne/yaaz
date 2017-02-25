@@ -105,4 +105,13 @@ void sell_things()
     sell_all($item[bloodied surgical dungarees], 1);
   }
 
+  // if we've started adventuring and are low on funds
+  // (wait a few turns to allow time for things like the 1952 card and such)
+  if (my_meat() < 1000 && my_turncount() > 5)
+  {
+    sell_all($item[hamethyst]);
+    sell_all($item[baconstone]);
+    sell_all($item[porquoise]);
+  }
+
 }

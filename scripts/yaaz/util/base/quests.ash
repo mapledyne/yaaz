@@ -67,6 +67,17 @@ int pirate_insults()
   return count;
 }
 
+boolean start_bakery()
+{
+  if (quest_status("questM25Armory") > UNSTARTED)
+    return true;
+  log("Starting the Armory quest to open the " + wrap($location[madness bakery]) + ".");
+  string temp = visit_url("shop.php?whichshop=armory");
+  temp = visit_url("shop.php?whichshop=armory&action=talk");
+  temp = visit_url("choice.php?pwd=&whichchoice=1065&option=1");
+  return true;
+}
+
 float pirate_insult_success()
 {
   float [int] insult_success_likelyhood;

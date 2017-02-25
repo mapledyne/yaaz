@@ -864,6 +864,12 @@ void progress_sheet(string detail)
     smoke_if_got_it(puff);
   }
 
+  int pulls = pulls_remaining();
+  if (pulls > 0)
+  {
+    progress(20 - pulls, 20, "pulls from storage used");
+  }
+
   if (detail == "all")
   {
     foreach toy in $items[special edition batfellow comic]
@@ -873,6 +879,17 @@ void progress_sheet(string detail)
         task("Consider using your " + wrap(toy) + ".");
       }
     }
+    if (get_property("gingerbreadCityAvailable") == "true")
+    {
+      task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
+    }
+
+    if (to_boolean(get_property("loveTunnelAvailable"))
+        && !to_boolean(get_property("_loveTunnelUsed")))
+    {
+      task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is available and hasn't been used today.");
+    }
+
   }
 
 }

@@ -112,14 +112,15 @@ void open_belowdecks()
   while (quest_status("questM12Pirate") != FINISHED)
   {
     maximize("-combat", $item[pirate fledges]);
-    yz_adventure($location[the poop deck]);
+    boolean b = yz_adventure($location[the poop deck]);
+		if (!b) return;
   }
   log(wrap($location[belowdecks]) + " opened.");
 }
 
 void maybe_make_talisman()
 {
-  while (item_amount($item[Talisman o' Namsilat]) == 0 && item_amount($item[gaudy key]) > 0)
+  while (!have($item[Talisman o' Namsilat]) && have($item[gaudy key]))
   {
     cli_execute("checkpoint");
     if (!have_equipped($item[pirate fledges]))
@@ -133,10 +134,10 @@ void maybe_make_talisman()
 
 boolean get_talisman()
 {
-  if (i_a($item[pirate fledges]) == 0)
+  if (!have($item[pirate fledges]))
     return false;
 
-  if (i_a($item[Talisman o' Namsilat]) > 0)
+  if (have($item[Talisman o' Namsilat]))
     return false;
 
   if (quest_status("questM12Pirate") != FINISHED)
@@ -145,11 +146,12 @@ boolean get_talisman()
     return true;
   }
 
-  while(item_amount($item[Talisman o' Namsilat]) == 0)
+  while(!have($item[Talisman o' Namsilat]))
   {
     maximize("items", $item[pirate fledges]);
-    yz_adventure($location[belowdecks]);
+    boolean b = yz_adventure($location[belowdecks]);
     maybe_make_talisman();
+		if (!b) return true;
   }
   return true;
 }

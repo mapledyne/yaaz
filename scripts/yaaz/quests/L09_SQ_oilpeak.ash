@@ -18,17 +18,20 @@ boolean L09_SQ_oilpeak()
 
   int progress = to_int(get_property("oilPeakProgress"));
 
-  if (progress == 0 && !contains_text($location[oil peak].noncombat_queue, "Unimpressed with Pressure"))
+  if (progress == 0
+      && !contains_text($location[oil peak].noncombat_queue, "Unimpressed with Pressure"))
   {
     log("Going to light the " + wrap($location[oil peak]));
     yz_adventure($location[oil peak]);
     return true;
   }
 
-  if (progress == 0)
+  if (progress == 0
+      && have_crudes()
+      && contains_text($location[oil peak].noncombat_queue, "Unimpressed with Pressure"))
+  {
     return false;
-
-  log("Off to light the " + wrap($location[oil peak]) + ".");
+  }
 
   boolean b;
   repeat

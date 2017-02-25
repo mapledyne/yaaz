@@ -28,23 +28,36 @@ boolean can_get_floundry_item()
 {
   if (!have($item[fishin' pole]))
     return false;
-		// TODO: This parameter doesn't seem 100% reliable:
+	if (to_boolean(setting("floundry_skip", "false")))
+		return false;
+	// TODO: This parameter doesn't seem 100% reliable:
   if (to_boolean(get_property("_floundryItemUsed")))
     return false;
 
   return true;
 }
 
-item pick_floundry_item()
+item pick_floundry_item(boolean alt)
 {
   if (!can_get_floundry_item())
     return $item[none];
 
     if (my_primestat() == $stat[muscle])
     {
-      return $item[fish hatchet];
+			if (!alt)
+      	return $item[fish hatchet];
+			else
+				return $item[bass clarinet];
     }
-    return $item[bass clarinet];
+		if (!alt)
+    	return $item[bass clarinet];
+		else
+			return $item[fish hatchet];
+}
+
+item pick_floundry_item()
+{
+	return pick_floundry_item(false);
 }
 
 int floundry_item_no(item it)
@@ -122,7 +135,23 @@ item get_floundry_item(item it)
 
 item get_floundry_item()
 {
-  return get_floundry_item(pick_floundry_item());
+	int tries = to_int(setting("floundry_attempts", "0"));
+	if (tries > 1)
+	{
+		warning("Tried to get a couple of things from the foundry but failed. It likely doesn't have enough fish for us.");
+		save_daily_setting("floundry_skip", "true");
+		return $item[none];
+	}
+	item fish;
+	if (tries == 0)
+			fish = pick_floundry_item();
+	else
+			fish = pick_floundry_item(true);
+	save_daily_setting("floundry_attempts", tries + 1);
+  fish = get_floundry_item(fish);
+	if (fish == $item[none])
+		return get_floundry_item();
+	return fish;
 }
 
 void floundry_daily_check()

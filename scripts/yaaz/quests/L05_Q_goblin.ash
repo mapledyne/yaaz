@@ -42,7 +42,11 @@ boolean L05_Q_goblin()
   if (to_int(get_property("lastDispensaryOpen")) < my_ascensions() && have_outfit("knob goblin elite guard uniform"))
   {
     log("Opening the Knob Goblin dispensary.");
-    maximize("outfit knob goblin elite guard uniform");
+    maximize("", "knob goblin elite guard uniform");
+    // there are some corner cases that won't leave us with this outfit on,
+    // so force the issue. (maximizer not wanting to give up on hands-free
+    // bonuses from kung fu hustler, for instance):
+    outfit("knob goblin elite guard uniform");
     return yz_adventure($location[Cobb's knob barracks]);
   }
 
