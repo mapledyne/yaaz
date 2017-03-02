@@ -96,6 +96,14 @@ void open_top_floor()
       abort("Open the top floor manually and then try this script again.");
     }
 
+    if (ground.turns_spent < 6
+        && to_location(get_property("lastAdventure")) == ground
+        && have($item[turkey blaster]))
+    {
+      log("Chewing a " + wrap($item[turkey blaster]) + " to speed up the ground floor.");
+      try_chew($item[turkey blaster]);
+    }
+
     if (item_amount($item[electric boning knife]) == 0)
     {
       set_property("choiceAdventure1026", 2); // get the boning knife

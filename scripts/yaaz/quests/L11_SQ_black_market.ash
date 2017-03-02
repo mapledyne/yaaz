@@ -31,10 +31,11 @@ boolean do_one_market_adv()
 
   if (item_amount(bird.hatchling) == 0 && have_familiar(bird))
   {
-    maximize(max, bird);
+    maximize(max, $item[blackberry galoshes], bird);
   } else {
-    maximize(max);
+    maximize(max, $item[blackberry galoshes]);
   }
+
   int bee = item_amount($item[beehive]);
   boolean b = yz_adventure($location[the black forest]);
   if (bee < item_amount($item[beehive]))
@@ -45,6 +46,7 @@ boolean do_one_market_adv()
 boolean market_loop()
 {
   int status = quest_status("questL11Black");
+  maybe_pull($item[blackberry galoshes]);
 
   switch (status)
   {

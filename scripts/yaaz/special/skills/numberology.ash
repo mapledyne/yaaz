@@ -1,4 +1,3 @@
-// yeah, not an IotM, but until there's a better place for it...
 import "base/print.ash";
 
 int moon_sign_id()

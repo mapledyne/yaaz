@@ -14,7 +14,8 @@ boolean twin_adventure(string max)
   }
 
   maximize(max);
-  if (item_amount($item[rusty hedge trimmers]) > 0)
+  maybe_pull($item[rusty hedge trimmers]);
+  if (have($item[rusty hedge trimmers]))
   {
     use(1, $item[rusty hedge trimmers]);
   } else {

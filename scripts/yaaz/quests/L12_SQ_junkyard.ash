@@ -1,10 +1,10 @@
 import "util/main.ash";
 import "util/base/war_support.ash";
 
-void get_junkyard_item()
+boolean get_junkyard_item()
 {
   location loc = to_location(get_property("currentJunkyardLocation"));
-  yz_adventure(loc, "");
+  return yz_adventure(loc, "");
 }
 
 boolean L12_SQ_junkyard(string side)
@@ -61,7 +61,8 @@ boolean L12_SQ_junkyard(string side)
     {
       abort("Unsure what to do with a blank Junkyard Location to continue on the junkyard quest.");
     } else {
-      get_junkyard_item();
+      boolean b = get_junkyard_item();
+      if (!b) return true;
     }
   }
   log("Junkyard sidequest complete.");

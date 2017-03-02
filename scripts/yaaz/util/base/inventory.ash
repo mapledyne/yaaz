@@ -25,7 +25,7 @@ int count_set(boolean[item] things)
   return counter;
 }
 
-// a very simply way to check to see if we "have" something.
+// a very simple way to check to see if we "have" something.
 boolean have(item toy)
 {
   if (item_amount(toy) > 0) return true;
@@ -76,6 +76,29 @@ boolean should_pulverize()
     return true;
 
   return false;
+}
+
+void maybe_pull(item it, int qty)
+{
+  int want = qty - i_a(it);
+  if (want <= 0) return;
+
+  want = min(want, pulls_remaining());
+  if (want <= 0) return;
+
+  want = min(want, storage_amount(it));
+  if (want <= 0) return;
+
+  // looks like we may actually be able to get a couple of these...?
+
+  log("Pulling " + want + " " + wrap(it, want) + " from storage.");
+  take_storage(want, it);
+  progress(20 - pulls_remaining(), 20, "pulls from storage used");
+}
+
+void maybe_pull(item it)
+{
+  maybe_pull(it, 1);
 }
 
 void stash(item it, int keep)
@@ -438,6 +461,11 @@ void stock_item(item it, int qty)
 
   int price = npc_price(it);
   int meat_buffer = 5;
+
+  if (price == 0 && can_interact())
+  {
+    price = historical_price(it);
+  }
 
   if (total <= 0 || price == 0)
     return;

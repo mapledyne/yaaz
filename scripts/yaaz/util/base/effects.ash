@@ -228,7 +228,8 @@ void cast_surplus_mp()
                          snarl of the timberwolf,
                          springy fusilli,
                          tenacity of the snapper,
-                         ur-kel's aria of annoyance]
+                         ur-kel's aria of annoyance,
+                         Drescher's Annoying Noise]
   {
     if (have_skill(effect_to_skill(ef)))
     {

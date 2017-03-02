@@ -30,6 +30,8 @@ int get_cheese()
   if (item_amount(cheese) >= 3)
     return item_amount(cheese);
 
+  maybe_pull(cheese, 3);
+
   add_attract($monster[dairy goat]);
   while(item_amount(cheese) < 3 && can_adventure())
   {
@@ -67,11 +69,16 @@ boolean peak_ninja()
   if (ninja_snowman_items() == 3)
     return jump_peak();
 
+  maybe_pull($item[ninja carabiner]);
+  maybe_pull($item[ninja crampons]);
+  maybe_pull($item[ninja rope]);
+
   if (to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[ninja snowman assassin])
   {
     log("The " + wrap($monster[ninja snowman assassin]) + " has been digitized, so going to wait for them to show before continuing the peak.");
     return false;
   }
+
 
   while (ninja_snowman_items() < 3
          && to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[ninja snowman assassin])
@@ -125,6 +132,8 @@ boolean trapper_items()
   item ore = to_item(get_property("trapperOre"));
   int goat_qty = get_cheese();
 
+  maybe_pull(ore, 3);
+  
   while (item_amount(ore) < 3)
   {
     if (can_deck("mine"))

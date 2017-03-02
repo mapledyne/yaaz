@@ -41,6 +41,7 @@ boolean stunt_nut_stew()
     return false;
 
   log("Off to get some ingredients to cook up some " + wrap($item[wet stunt nut stew]) + ".");
+  maybe_pull($item[wet stew]);
 
   while(can_adventure() && item_amount($item[wet stunt nut stew]) == 0)
   {

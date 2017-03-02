@@ -1,7 +1,7 @@
 
 import "util/base/util.ash";
 import "util/base/settings.ash";
-import "util/iotm/timespinner.ash";
+import "special/items/timespinner.ash";
 
 import <zlib.ash>;
 
@@ -20,7 +20,7 @@ boolean blacklisted(string player)
   switch(to_lower_case(player))
   {
     default:
-      if(setting("hearted_" + player) == "true")
+      if(setting("hearted_" + player, "") != "")
       {
         return true;
       }
@@ -83,7 +83,7 @@ string pick_player()
 void heart_msg(string player, string msg)
 {
   log(HEART + " Being heart-y to " + wrap(player, COLOR_MONSTER) + " by " + msg + ".");
-  save_daily_setting("hearted_" + player, "true");
+  save_daily_setting("hearted_" + player, msg);
 }
 
 
@@ -155,6 +155,12 @@ void do_heart_thing(string player)
     return;
   }
 
+/*
+
+  // removing this at least temporarily since we're getting better at using
+  // it to help our ascension...
+
+
   // only spin pranks once our stomach is full in case we want to re-eat
   // food from the past first (or if we already don't have the minutes to
   // re-eat, then don't sweat it and prank-away!)
@@ -167,6 +173,7 @@ void do_heart_thing(string player)
     time_prank(player, prank_msg);
     return;
   }
+*/
 
   if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else. :)")) return;
   if (mail_heart_item(player, $item[gift card])) return;

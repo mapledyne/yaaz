@@ -4,7 +4,7 @@ import "util/base/settings.ash";
 import "util/iotm/clanvip.ash";
 import "util/base/util.ash";
 import "util/base/quests.ash";
-import "util/iotm/timespinner.ash";
+import "special/items/timespinner.ash";
 import "util/base/inventory.ash";
 
 boolean is_spleen_item(item it);

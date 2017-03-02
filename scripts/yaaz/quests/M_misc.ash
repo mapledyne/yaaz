@@ -68,6 +68,8 @@ boolean dingy()
     buy(1, $item[dingy planks]);
   }
 
+  maybe_pull($item[Shore Inc. Ship Trip Scrip], 3);
+
   while (item_amount($item[Shore Inc. Ship Trip Scrip]) < 3 && !have($item[dinghy plans]))
   {
     log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");

@@ -6,13 +6,27 @@ void day_begin()
 
   if (!in_hardcore())
   {
-    warning("This script assumes you're in hardcore. If you're in softcore or aftercore, it'll do a lot of things the hard way.");
+    warning("This script is built with Hardcore in mind. It has rudimentary Softcore support, but it may still do some things the hard way.");
   }
 
   log("Current progress:");
   progress_sheet("all");
   wait(5);
 
+  maybe_pull($item[Infinite BACON Machine]);
+
+  switch (my_primestat())
+  {
+    case $stat[moxie]:
+      maybe_pull($item[green LavaCo Lamp&trade;]);
+      break;
+    case $stat[muscle]:
+      maybe_pull($item[red LavaCo Lamp&trade;]);
+      break;
+    case $stat[mysticality]:
+      maybe_pull($item[blue LavaCo Lamp&trade;]);
+      break;
+  }
   maximize();
 
   iotm();

@@ -54,6 +54,9 @@ boolean sidequest(string quest)
 
 void get_hippy_disguise()
 {
+  maybe_pull($item[filthy corduroys]);
+  maybe_pull($item[filthy knitted dread sack]);
+
   if (!have_outfit("filthy hippy disguise"))
   {
     log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + ".");
@@ -74,7 +77,11 @@ boolean start_the_war(string side)
   if (side == "fratboy")
     camp = $location[frat house];
 
-  maximize("", "filthy hippy disguise");
+  foreach key,doodad in outfit_pieces(outfit)
+  {
+    maybe_pull(doodad);
+  }
+
   if (!have_outfit(war_outfit()))
   {
     log("Off to get the " + wrap(outfit, COLOR_ITEM) + " from the " + wrap(camp) + ".");
@@ -146,6 +153,20 @@ boolean L12_Q_war(string side)
   if (quest_status("questL12War") == STARTED)
   {
     return start_the_war(side);
+  }
+
+  int stuffing_used = to_int(setting("stuffing_used"));
+
+  while(have($item[stuffing fluffer])
+        && war_defeated() < 64)
+  {
+    log("Throwing a " + wrap($item[stuffing fluffer]) + " into the war.");
+    boolean u = use(1, $item[stuffing fluffer]);
+    if (u)
+    {
+      stuffing_used += 1;
+      save_setting("stuffing_used", stuffing_used);
+    }
   }
 
 

@@ -48,6 +48,7 @@ void get_machete()
 
 boolean do_liana()
 {
+  maybe_pull($item[antique machete]);
   if (!have($item[antique machete]) || my_path() == "Way of the Surprising Fist")
   {
     return false;
@@ -101,7 +102,6 @@ boolean do_liana()
   while ($location[A Massive Ziggurat].turns_spent < 3)
   {
     yz_adventure($location[A Massive Ziggurat]);
-    run_combat();
   }
 
   return false;
@@ -204,6 +204,13 @@ boolean apartment()
     add_attract($monster[pygmy shaman]);
   }
 
+  if (to_int(get_property("hiddenTavernUnlock")) < my_ascensions()
+      && !have($item[book of matches]))
+  {
+    maybe_pull($item[book of matches]);
+  }
+
+
   while(to_int(get_property("hiddenApartmentProgress")) < 6)
   {
     if (have_effect($effect[twice-cursed]) > 0
@@ -227,7 +234,7 @@ boolean fight_spirit()
     return false;
   }
 
-  log("Fighting the " + $monster[Protector Spectre] + ".");
+  log("Fighting the " + wrap($monster[Protector Spectre]) + ".");
   yz_adventure($location[A Massive Ziggurat], "elemental damage");
   run_combat();
   return true;

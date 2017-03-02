@@ -176,6 +176,11 @@ void maximize(string target, familiar fam)
   maximize(target, "", fam);
 }
 
+void maximize(string target, item it, familiar fam)
+{
+  maximize(target, "", it, fam);
+}
+
 void maximize(string target, string outfit)
 {
   maximize(target, outfit, $familiar[none]);

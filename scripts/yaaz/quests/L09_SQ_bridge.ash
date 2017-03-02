@@ -15,11 +15,19 @@ void do_one_bridge_adv()
   }
 
   visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
+
   if(get_property("chasmBridgeProgress").to_int() >= 30)
   {
     log("Bridge built! Going to see the " + wrap("Highland Lord", COLOR_LOCATION) + ".");
     wait(3);
     visit_url("place.php?whichplace=highlands&action=highlands_dude");
+    return;
+  }
+
+  maybe_pull($item[smut orc keepsake box]);
+  if (have($item[smut orc keepsake box]))
+  {
+    use_all($item[smut orc keepsake box]);
     return;
   }
 

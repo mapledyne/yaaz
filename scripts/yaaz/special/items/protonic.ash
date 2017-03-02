@@ -1,7 +1,5 @@
-import "util/base/monsters.ash";
-import "util/base/locations.ash";
-import "util/base/quests.ash";
-import "util/adventure/adventure.ash";
+import "util/base/print.ash";
+import "util/base/maximize.ash";
 
 // Note: Crossing streams functions are in maximize.ash since they're only
 // used at this point to maximize stats.
@@ -11,7 +9,7 @@ boolean ghost_hunting()
   // need better logic here to decide if we're going to hunt a ghost.
   if (my_hp() < 200)
     return false;
-   if (get_property("questPAGhost") == STARTED || get_property("ghostLocation") != "")
+   if (get_property("questPAGhost") == "started" || get_property("ghostLocation") != "")
     return true;
   return false;
 }
@@ -34,6 +32,9 @@ location protonic_loc()
 
 boolean protonic()
 {
+  if (my_adventures() < 3) return false;
+  if (my_inebriety() > inebriety_limit()) return false;
+
   location prot = protonic_loc();
   if (prot != $location[none])
   {
@@ -41,8 +42,11 @@ boolean protonic()
     wait(3);
     set_property("ghostLocation", "");
 
+    cli_execute("checkpoint");
     maximize("", $item[protonic accelerator pack]);
-    return yz_adventure(prot);
+    adv1(prot, -1, "");
+    cli_execute("outfit checkpoint");
+    return true;
   }
   return false;
 }

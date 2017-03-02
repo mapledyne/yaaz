@@ -18,20 +18,28 @@ boolean M10_star_key()
 
   while(creatable_amount($item[richard's star key]) == 0)
   {
-    if (have($item[star chart]) && my_familiar() == $familiar[space jellyfish])
+    familiar fam = $familiar[none];
+    if (have_familiar($familiar[space jellyfish]))
+      fam = $familiar[space jellyfish];
+    maximize("items", fam);
+
+    if (!have($item[star chart]) && my_familiar() == $familiar[space jellyfish])
     {
       set_property("choiceAdventure1221", 2); // astronomer (/star chart)
     } else {
       set_property("choiceAdventure1221", 1); // skin flute (/stars + lines)
     }
 
-    familiar fam = $familiar[none];
-    if (have_familiar($familiar[space jellyfish]))
-      fam = $familiar[space jellyfish];
-    maximize("items", fam);
     boolean b = yz_adventure($location[the hole in the sky]);
     if (!b)
       return true;
+
+    if (!have($item[star chart])
+        && item_amount($item[star]) >= 8
+        && item_amount($item[line]) >= 7)
+    {
+      maybe_pull($item[star chart]);
+    }
   }
 
   log("Creating " + wrap($item[richard's star key]) + ".");

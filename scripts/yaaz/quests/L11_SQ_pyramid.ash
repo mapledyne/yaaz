@@ -18,7 +18,8 @@ void get_turner()
 
   while(turners() == 0)
   {
-    yz_adventure($location[The Middle Chamber], "items");
+    if (!yz_adventure($location[The Middle Chamber], "items"))
+      return;
   }
 }
 
@@ -28,6 +29,7 @@ void turn_wheel_until(int position)
   while (position != current)
   {
     get_turner();
+    if (turners() == 0) return;
     visit_url("place.php?whichplace=pyramid&action=pyramid_control");
     if(item_amount($item[crumbling wooden wheel]) > 0)
     {
@@ -69,7 +71,8 @@ boolean L11_SQ_pyramid()
   while (quest_status("questL11Pyramid") < 1)
   {
     maximize("-combat");
-    yz_adventure($location[The Upper Chamber]);
+    if (!yz_adventure($location[The Upper Chamber]))
+      return true;
   }
 
   if (quest_status("questL11Pyramid") < 3 || turners() < 10)
@@ -78,7 +81,8 @@ boolean L11_SQ_pyramid()
     while (quest_status("questL11Pyramid") < 3 || turners() < 10)
     {
       maximize("items");
-      yz_adventure($location[The Middle Chamber]);
+      if (!yz_adventure($location[The Middle Chamber]))
+        return true;
     }
     remove_attract($monster[tomb rat]);
   }

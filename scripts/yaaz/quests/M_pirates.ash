@@ -146,12 +146,17 @@ boolean get_talisman()
     return true;
   }
 
+	maybe_make_talisman();
+
   while(!have($item[Talisman o' Namsilat]))
   {
     maximize("items", $item[pirate fledges]);
-    boolean b = yz_adventure($location[belowdecks]);
+		if (!time_combat($monster[gaudy pirate], $location[belowdecks]))
+		{
+			boolean b = yz_adventure($location[belowdecks]);
+			if (!b) return true;
+		}
     maybe_make_talisman();
-		if (!b) return true;
   }
   return true;
 }
@@ -165,6 +170,10 @@ boolean get_getup()
     return false;
 
   log("Get the swashbuckling getup...");
+	maybe_pull($item[stuffed shoulder parrot]);
+	maybe_pull($item[eyepatch]);
+	maybe_pull($item[swashbuckling pants]);
+
   while(!have_outfit("swashbuckling getup"))
   {
     boolean b = yz_adventure($location[The Obligatory Pirate's Cove], "items, -combat");

@@ -10,38 +10,39 @@ boolean M_hidden_temple()
     log("Opening up the " + wrap($location[the spooky forest]) + " by starting the Larva quest.");
     council();
   }
+  maybe_pull($item[spooky-gro fertilizer]);
 
   int count = my_adventures();
 
   log("Unlocking " + wrap($location[the hidden temple]) +".");
-  if (item_amount($item[tree-holed coin]) < 1) {
+  if (!have($item[tree-holed coin])) {
      log("Getting the " + wrap($item[tree-holed coin]) + ".");
      set_property("choiceAdventure502", 2);
      set_property("choiceAdventure505", 2);
-     while (item_amount($item[tree-holed coin]) < 1)
+     while (!have($item[tree-holed coin]))
      {
         if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
      }
   }
 
-  if (item_amount($item[Spooky-Gro fertilizer]) < 1) {
+  if (!have($item[Spooky-Gro fertilizer])) {
      log("Next getting the " + wrap($item[Spooky-Gro fertilizer]) +".");
      set_property("choiceAdventure502", 2);
      set_property("choiceAdventure506", 2);
-     while (item_amount($item[Spooky-Gro fertilizer]) < 1)
+     while (!have($item[Spooky-Gro fertilizer]))
      {
         if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
      }
   }
 
-  if (item_amount($item[spooky sapling]) < 1) {
+  if (!have($item[spooky sapling])) {
      log("Next getting the " + wrap($item[spooky sapling]) +".");
      set_property("choiceAdventure502", 1);
      set_property("choiceAdventure503", 3);
      set_property("choiceAdventure504", 3);
-     while (item_amount($item[spooky sapling]) < 1)
+     while (!have($item[spooky sapling]))
      {
         if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;
@@ -49,12 +50,12 @@ boolean M_hidden_temple()
      set_property("choiceAdventure504", 4);
   }
 
-  if (item_amount($item[Spooky Temple map]) < 1) {
+  if (!have($item[Spooky Temple map])) {
       log("Next getting the " + wrap($item[Spooky Temple map]) + ".");
      set_property("choiceAdventure502", 2);
      set_property("choiceAdventure506", 3);
      set_property("choiceAdventure507", 1);
-     while (item_amount($item[Spooky Temple map]) < 1)
+     while (!have($item[Spooky Temple map]))
      {
         if (!yz_adventure($location[The Spooky Forest], "-combat"))
           return true;

@@ -106,9 +106,11 @@ boolean L07_Q_cyrpt()
 	if (quest_status("questL07Cyrptic") == FINISHED)
 	  return false;
 
+	maybe_pull($item[gravy boat]);
+
 	if (my_daycount() == 1
 			&& get_campground() contains $item[cornucopia]
-			&& i_a($item[gravy boat]) == 0)
+			&& !have($item[gravy boat]))
 	{
 		log("Skipping the Cyrpt quest for today. Tomorrow we'll have some " + wrap($item[cashew], 2) + " and can use them to our advantage.");
 		return false;

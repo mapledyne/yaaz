@@ -158,7 +158,8 @@ boolean L11_SQ_desert()
 
 	if (contains_text(html, "killing jar")) {
 		log("Gnasir wants a killing jar.");
-		if (i_a($item[killing jar]) > 0) {
+    maybe_pull($item[killing jar]);
+		if (have($item[killing jar])) {
 			log("Giving " + wrap($item[killing jar]) + " to Gnasir.");
 			html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -200,7 +201,8 @@ boolean L11_SQ_desert()
       continue;
     }
     else if (i_a($item[worm-riding hooks]) > 0) {
-      if (i_a($item[drum machine]) > 0) {
+      maybe_pull($item[drum machine]);
+      if (have($item[drum machine])) {
         use(1, $item[drum machine]);
       }
       else {

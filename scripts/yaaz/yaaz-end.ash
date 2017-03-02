@@ -31,6 +31,17 @@ void day_end()
     cli_execute("friars familiar");
   }
 
+  if (stills_available() > 0)
+  {
+    log("Using up your daily uses of " + wrap("Nash Crosby's Still", COLOR_LOCATION) + ".");
+    while (stills_available() > 0)
+    {
+      // some nuance to add, here?
+      create(1, $item[tonic water]);
+      progress(10 - stills_available(), 10, wrap("Nash Crosby's Still", COLOR_LOCATION) + " uses");
+    }
+  }
+
   prep();
 
   if (hippy_stone_broken())
@@ -68,7 +79,7 @@ void day_end()
   }
   progress_sheet("all");
   manuel_progress();
- 
+
 }
 
 void main()

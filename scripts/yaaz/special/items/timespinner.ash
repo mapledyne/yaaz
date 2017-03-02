@@ -52,6 +52,39 @@ boolean can_spin_time()
   return can_spin_time(1);
 }
 
+boolean can_time_fight(monster mob, location loc)
+{
+  return list_contains(loc.combat_queue, mob, '; ');
+}
+
+boolean time_combat(monster mob)
+{
+	if(is_unrestricted($item[Time-Spinner])
+     && (item_amount($item[Time-Spinner]) > 0)
+     && (time_minutes() >= 3))
+	{
+    buffer page = visit_url("inv_use.php?pwd=&whichitem=9104");
+    page = run_choice(1);
+    if (contains_text(page, 'option value="' + mob.id + '"')) {
+      log("Using the " + wrap($item[time-spinner]) + " to try to fight another " + wrap(mob) + ".");
+        page = visit_url("choice.php?pwd=&whichchoice=1196&option=1&monid=" + mob.id);
+        page = run_combat();
+        return true;
+    } else {
+      warning("Trying to use the " + wrap($item[time-spinner]) + " to fight another " + wrap(mob) + ", but it's not in the list of available fights.");
+      run_choice(2); // skip out.
+      return false;
+    }
+	}
+	return false;
+}
+
+boolean time_combat(monster mob, location loc)
+{
+  if (!can_time_fight(mob, loc))
+    return false;
+  return time_combat(mob);
+}
 
 boolean time_prank(string player, string msg)
 {
@@ -102,28 +135,26 @@ boolean time_prank(string player, string msg)
 
 boolean timespinner_future()
 {
+  if (item_amount($item[time-spinner]) == 0)
+    return false;
+
   if (time_minutes() < 2)
     return false;
 
   if (get_property("_timeSpinnerReplicatorUsed") == "true")
     return false;
 
-  string future = setting("far_future");
-  if (future == "")
+  if (!svn_exists("Ezandora-Far-Future-branches-Release"))
   {
-    if (setting("spinner_notice") != "true")
+    if (!to_boolean(setting("far_future_svn_warning", "false")))
     {
-      save_daily_setting("spinner_notice", "true");
-      warning("You have the " + wrap($item[time-spinner]) + " but I don't know how to visit the far future.");
-      warning("If you set the property 'yz_far_future', I'll try to visit the future for you and replciate things.");
-      warning("I recommend Ezandora's FarFuture script");
-      wait(3);
+      save_daily_setting("far_future_svn_warning", "true");
+      warning("You have a " + wrap($item[time-spinner]) + " but I don't know how to automate going into the far future.");
+      warning("If you install Ezandora's " + wrap("Far Future", COLOR_ITEM) + " script, I'll call it to automatically do this for you.");
+      wait(10);
     }
     return false;
   }
-
-  if (time_minutes() < 2)
-    return false;
 
   string replicate = "food";
 
@@ -131,7 +162,7 @@ boolean timespinner_future()
     replicate = "drink";
 
   log("Using the " + wrap($item[time-spinner]) + " to visit the far future. Going to try to replicate some " + replicate + ".");
-  return cli_execute(future + " " + replicate);
+  return cli_execute("FarFuture.ash " + replicate);
 }
 
 void timespinner()

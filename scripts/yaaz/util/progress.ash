@@ -183,6 +183,17 @@ void progress_sheet(string detail)
 
   level_progress();
 
+  int pulls = pulls_remaining();
+  if (pulls > 0)
+  {
+    progress(20 - pulls, 20, "pulls from storage used");
+  }
+
+  if (stills_available() > 0)
+  {
+    progress(10 - stills_available(), 10, wrap("Nash Crosby's Still", COLOR_LOCATION) + " uses");
+  }
+
   if (!have($item[bitchin' meatcar]))
   {
     task("Build a bitchin' meatcar");
@@ -459,6 +470,13 @@ void progress_sheet(string detail)
       int twin = twinpeak_progress();
       if (twin < 4)
         progress(twin, 4, "Twin peak progress");
+
+      int peak = get_property("twinPeakProgress").to_int();
+      if(!bit_flag(peak, 2)
+         && item_amount($item[jar of oil]) == 0)
+      {
+        progress(item_amount($item[bubblin' crude]), 12, wrap($item[bubblin' crude], 12) + " needed for a " + wrap($item[jar of oil]));
+      }
     }
 
   }
@@ -862,12 +880,6 @@ void progress_sheet(string detail)
                          invisible string]
   {
     smoke_if_got_it(puff);
-  }
-
-  int pulls = pulls_remaining();
-  if (pulls > 0)
-  {
-    progress(20 - pulls, 20, "pulls from storage used");
   }
 
   if (detail == "all")

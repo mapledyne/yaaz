@@ -16,6 +16,8 @@ import "util/iotm/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
 import "util/iotm/deck.ash";
+import "special/skills/numberology.ash";
+import "special/items/protonic.ash";
 
 import <zlib.ash>
 
@@ -179,7 +181,8 @@ void cast_things(location loc)
     }
   }
 
-  if (my_meat() > 10000)
+  if (my_meat() > 10000
+      && my_level() < 13)
   {
     // limiter on this so we don't cause MP restores to use up all of our meat.
 
@@ -278,6 +281,9 @@ void prep(location loc)
 
   heart();
 
+  numberology();
+  protonic();
+
   cast_things(loc);
 
   pulverize_things();
@@ -290,8 +296,19 @@ void prep(location loc)
   class_specific_prep(my_class(), loc);
   prep_fishing(loc);
 
+  if (have($item[screencapped monster])
+      && my_adventures() > 3
+      && my_inebriety() <= inebriety_limit())
+  {
+    cli_execute("checkpoint");
+    maximize();
+    use(1, $item[screencapped monster]);
+    cli_execute("outfit checkpoint");
+  }
+
   manuel();
 
+  maybe_pull($item[disassembled clover], 3);
 
   if (have_effect($effect[majorly poisoned]) > 0)
     uneffect($effect[majorly poisoned]);

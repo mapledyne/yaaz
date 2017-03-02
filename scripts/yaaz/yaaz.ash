@@ -26,8 +26,6 @@ import "quests/L11_Q_macguffin.ash";
 import "quests/L12_Q_war.ash";
 import "quests/L13_Q_sorceress.ash";
 
-import "util/iotm/protonic.ash";
-
 import "util/base/level_up.ash";
 
 int current_level;
@@ -50,9 +48,6 @@ boolean ascend_loop()
   // function over again.
   // If you do no work in one of these functions, you should
   // generally return false to let the next quest in line run.
-
-  // Check to see if we have a ghost to catch:
-  if (protonic()) return true;
 
   // misc things we should probably just do as soon as we can:
   if (M_misc()) return true; // These shouldn't consume turns, just visiting people to kick things off.

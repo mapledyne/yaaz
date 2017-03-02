@@ -15,7 +15,7 @@ void harvest_thanksgarden()
   }
 }
 
-void stuffing()
+void cashew()
 {
   if (to_int(setting("stuffing_ascension","0")) < my_ascensions())
   {
@@ -23,8 +23,13 @@ void stuffing()
     save_setting("stuffing_used", 0);
   }
 
+  if (quest_status("questL07Cyrptic") < FINISHED)
+  {
+    stock_item($item[gravy boat]);
+  }
+
   int stuffing_used = to_int(setting("stuffing_used"));
-  int stuffing_max = to_int(setting("stuffing_max", "2"));
+  int stuffing_max = to_int(setting("stuffing_max", "1"));
 
   if (stuffing_used >= stuffing_max)
     return;
@@ -35,22 +40,10 @@ void stuffing()
     stock_item($item[stuffing fluffer], stock);
   }
 
-  if (quest_status("questL12War") != 1)
-    return;
-
-  if (!have($item[stuffing fluffer]))
-    return;
-
-  while(have($item[stuffing fluffer])
-        && stuffing_used < stuffing_max)
+  while(item_amount($item[cashew]) >= 3)
   {
-    log("Throwing a " + wrap($item[stuffing fluffer]) + " into the war.");
-    boolean u = use(1, $item[stuffing fluffer]);
-    if (u)
-    {
-      stuffing_used += 1;
-      save_setting("stuffing_used", stuffing_used);
-    } else { break; }
+    log("Turning in " + wrap($item[cashew], 3) + " to get a " + wrap($item[turkey blaster]));
+    cli_execute("acquire turkey blaster");
   }
 
 }
@@ -62,12 +55,7 @@ void thanksgarden()
 
   harvest_thanksgarden();
 
-  if (quest_status("questL07Cyrptic") < FINISHED)
-  {
-    stock_item($item[gravy boat]);
-  }
-
-  stuffing();
+  cashew();
 }
 
 void main()
