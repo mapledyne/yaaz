@@ -4,10 +4,11 @@ import "util/base/settings.ash";
 import "util/base/maximize.ash";
 
 //  Numeric: ("Numeric", "numericSwagger", "back to")
+//  Bear:    ("Bear", "bearSwagger", "Barely Dressed")
 
-string PVP_SEASON = "Bear";
-string PVP_SWAGGER = "bearSwagger";
-string PVP_FIGHT = "Barely Dressed";
+string PVP_SEASON = "Ice";
+string PVP_SWAGGER = "iceSwagger";
+string PVP_FIGHT = "Ready to Melt";
 
 void pvp();
 void effects_for_pvp();
@@ -129,6 +130,9 @@ void dress_for_pvp()
     case "Bear":
       cli_execute("outfit birthday suit");
       return;
+    case "Ice":
+      maximize("cold res, 0.2 hot dmg, 0.2 hot spell dmg");
+      return;
   }
 }
 
@@ -155,6 +159,12 @@ void effects_for_pvp()
     case "Bear":
       max_effects("damage");
       max_effects("cold res");
+      break;
+    case "Ice":
+      max_effects("hot damage");
+      max_effects("hot spell damage");
+      max_effects("cold res");
+      max_effects("booze");
       break;
   }
 }

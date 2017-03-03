@@ -200,6 +200,12 @@ void max_effects(string target, boolean aggressive)
 {
   switch(target)
   {
+    case "booze":
+      if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
+      {
+        cli_execute("friars booze");
+      }
+      break;
     case "exp":
       effect_maintain($effect[proficient pressure]);
       if (!have_colored_tongue())
