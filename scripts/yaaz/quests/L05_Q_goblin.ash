@@ -91,12 +91,10 @@ boolean L05_Q_goblin()
     location harem = $location[Cobb's Knob Harem];
 
     log("Off to try to get the " + wrap("Knob Goblin Harem Girl Disguise", COLOR_ITEM) + " from the " + wrap(harem) + ".");
-    add_attract($monster[knob goblin harem girl]);
     while(!have_outfit("Knob Goblin Harem Girl Disguise") && can_adventure())
     {
       yz_adventure(harem, "items");
     }
-    remove_attract($monster[knob goblin harem girl]);
     return true;
   }
 

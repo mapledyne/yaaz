@@ -2,7 +2,7 @@ import "util/base/print.ash";
 import "util/base/consume.ash";
 import "util/base/quests.ash";
 import "util/base/util.ash";
-
+import "special/skills/rethinkcandy.ash";
 
 item effect_to_item(effect ef)
 {
@@ -140,6 +140,11 @@ void effect_maintain(effect ef)
 
   if (sk == $skill[none] && it == $item[none])
   {
+    if (is_synthesis_effect(ef))
+    {
+      if (do_synthesis(ef)) return;
+    }
+
     error("Trying to add an effect (" + wrap(ef) + ") and can't find an appropriate skill or item.");
     return;
   }

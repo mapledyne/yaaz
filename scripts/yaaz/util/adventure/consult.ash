@@ -139,11 +139,80 @@ string maybe_yellow_ray(monster foe)
   return "item " + yr;
 }
 
+string maybe_banish(monster foe)
+{
+// $skill[breath out]
+
+  string banish = "";
+  if (have_skill($skill[breathe out])) banish = "skill breathe out";
+
+  if (banish == "") return "";
+
+  switch (foe)
+  {
+    default:
+      return "";
+    case $monster[A.M.C. Gremlin]:
+      break;
+  }
+  log("Trying to banish the " + wrap(foe) + ".");
+  return banish;
+}
+
+string maybe_run(monster foe)
+{
+  // check for spooky jellied to see if we want to run so we defeat someone else?
+  return "";
+}
+
+string maybe_sniff(monster foe)
+{
+  if (!have_skill($skill[Transcendent Olfaction])) return "";
+  if (have_effect($effect[on the trail]) > 0) return "";
+
+  switch (foe)
+  {
+    default:
+      return "";
+    case $monster[blooper]:
+      if (have($item[digital key])) return "";
+      break;
+    case $monster[knob goblin harem girl]:
+      if (have_outfit("Knob Goblin Harem Girl Disguise")) return "";
+      break;
+    case $monster[dirty old lihc]:
+      break;
+    case $monster[dairy goat]:
+      if (item_amount($item[goat cheese]) > 2) return "";
+      break;
+    case $monster[racecar bob]:
+    case $monster[bob racecar]:
+    case $monster[drab bard]:
+      if (to_int(get_property("palindomeDudesDefeated")) >= 5) return "";
+      break;
+    case $monster[tomb rat]:
+      if (quest_status("questL11Pyramid") >= 3) return "";
+      if (turners() < 10) return "";
+      break;
+  }
+
+  return "skill Transcendent Olfaction";
+}
+
 string yz_consult(int round, string mob, string text)
 {
   monster foe = to_monster(mob);
 
-  string maybe = maybe_extract(foe);
+  string maybe = maybe_run(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_sniff(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_extract(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_banish(foe);
   if (maybe != "") return maybe;
 
   maybe = maybe_trap_ghost(foe);

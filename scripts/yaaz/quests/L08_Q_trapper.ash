@@ -32,12 +32,11 @@ int get_cheese()
 
   maybe_pull(cheese, 3);
 
-  add_attract($monster[dairy goat]);
   while(item_amount(cheese) < 3 && can_adventure())
   {
-    yz_adventure(goatlet, "items");
+    boolean b = yz_adventure(goatlet, "items");
+    if (!b) break;
   }
-  remove_attract($monster[dairy goat]);
   return item_amount(cheese);
 }
 
@@ -130,10 +129,10 @@ boolean trapper_items()
     return false;
 
   item ore = to_item(get_property("trapperOre"));
+  maybe_pull($item[goat cheese], 3);
   int goat_qty = get_cheese();
 
-  maybe_pull(ore, 3);
-  
+
   while (item_amount(ore) < 3)
   {
     if (can_deck("mine"))
@@ -141,6 +140,8 @@ boolean trapper_items()
       cheat_deck("mine", "get some ore for the trapper.");
       continue;
     }
+
+    maybe_pull(ore, 3);
 
     if (item_amount($item[disassembled clover]) > 0)
     {
@@ -157,7 +158,7 @@ boolean trapper_items()
   if (goat_qty < 3)
   {
     warning("You should have three " + wrap($item[goat cheese]) + " at this point, but you don't.");
-    abort();
+    return true;
   }
 
   log("Three " + wrap($item[goat cheese]) + " and three " + wrap(ore) + " found.");

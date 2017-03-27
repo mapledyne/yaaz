@@ -2,7 +2,7 @@ import "util/prep/prep.ash";
 import "util/adventure/counters.ash";
 import "util/adventure/consult.ash";
 import "util/base/inventory.ash";
-import "util/iotm/manuel.ash";
+import "special/items/manuel.ash";
 import "util/base/util.ash";
 import "util/progress.ash";
 import "util/base/locations.ash";
@@ -51,7 +51,7 @@ boolean yz_adventure_bypass(location loc)
     string v = visit_url("/campground.php");
     if (contains_text(v, "The Naughty Sorceress"))
     {
-      adv = adv1(loc, -1, "");
+      adv = adv1(loc, -1, "yz_consult");
     }
   }
 
@@ -143,7 +143,7 @@ boolean yz_clover(location loc)
 
   string protect = get_property("cloverProtectActive");
   set_property("cloverProtectActive", false);
-  boolean ret = adv1(loc, -1, "");
+  boolean ret = adv1(loc, -1, "yz_consult");
   set_property("cloverProtectActive", protect);
 
   return ret;

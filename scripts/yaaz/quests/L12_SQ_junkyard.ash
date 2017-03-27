@@ -4,6 +4,7 @@ import "util/base/war_support.ash";
 boolean get_junkyard_item()
 {
   location loc = to_location(get_property("currentJunkyardLocation"));
+  effect_maintain($effect[hot jellied]);
   return yz_adventure(loc, "");
 }
 

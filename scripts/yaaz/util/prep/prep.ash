@@ -14,8 +14,8 @@ import "util/prep/use.ash";
 import "util/prep/closet.ash";
 import "special/locations/floundry.ash";
 import "util/iotm/bookshelf.ash";
-import "util/iotm/manuel.ash";
 import "util/iotm/deck.ash";
+import "special/items/manuel.ash";
 import "special/skills/numberology.ash";
 import "special/items/protonic.ash";
 

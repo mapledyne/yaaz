@@ -211,13 +211,11 @@ void ascend()
     iotm();
     special();
     manuel_progress();
-    wait(5);
   }
 
   iotm();
   special();
   manuel_progress();
-  wait(5);
 
   if (my_adventures() < 10 && booze_full() && fullness_full())
   {

@@ -43,13 +43,11 @@ void clear_niche()
 		log("Undefiling " + wrap($location[The Defiled Niche]) + ".");
 		int adv_count = my_adventures();
 
-		add_attract($monster[dirty old lihc]);
 		while (get_property("cyrptNicheEvilness").to_int() > 0 && can_adventure())
 		{
 			maximize("items", $item[gravy boat]);
 			yz_adventure($location[The Defiled Niche]);
 		}
-		remove_attract($monster[dirty old lihc]);
 		int total_turns = adv_count - my_adventures();
 
 	}

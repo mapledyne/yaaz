@@ -102,7 +102,6 @@ boolean shadow()
 
 boolean sorceress()
 {
-
   maximize("");
   yz_adventure($location[the naughty sorceress' chamber]);
 
@@ -163,34 +162,46 @@ void max_contest(string max, int num)
       maximize("muscle");
       cheat_deck("strength", "get more muscle. Strongity strong");
       effect_maintain($effect[Phorcefullness]);
+      effect_maintain($effect[hot jellied]);
+      effect_maintain($effect[spooky jellied]);
       // consider oil of stability
       break;
     case "moxie":
       maximize("moxie");
       cheat_deck("fool", "get more moxie. Foolish agility");
       effect_maintain($effect[superhuman sarcasm]);
+      effect_maintain($effect[spooky jellied]);
+      effect_maintain($effect[sleazy jellied]);
       // consider oil of stability
       break;
     case "mysticality":
       maximize("mysticality");
       cheat_deck("magician", "get more mystically. Boosty boosty");
       effect_maintain($effect[perspicacious pressure]);
+      effect_maintain($effect[cold jellied]);
+      effect_maintain($effect[spooky jellied]);
+      effect_maintain($effect[stench jellied]);
       // consider oil of stability
       break;
     case "cold":
       maximize("cold damage, cold spell damage");
+      effect_maintain($effect[cold jellied]);
       break;
     case "sleaze":
       maximize("sleaze damage, sleaze spell damage");
+      effect_maintain($effect[sleazy jellied]);
       break;
     case "hot":
       maximize("hot damage, hot spell damage");
+      effect_maintain($effect[hot jellied]);
       break;
     case "stench":
       maximize("stench damage, stench spell damage");
+      effect_maintain($effect[stench jellied]);
       break;
     case "spooky":
       maximize("spooky damage, spooky spell damage");
+      effect_maintain($effect[spooky jellied]);
       break;
   }
   log("All dressed up and somewhere to go, the Registration Desk.");

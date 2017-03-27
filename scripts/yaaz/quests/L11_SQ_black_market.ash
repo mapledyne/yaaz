@@ -68,7 +68,7 @@ boolean market_loop()
         if (my_path() == "Way of the Surprising Fist")
         {
           visit_url("shop.php?action=fightbmguy&whichshop=blackmarket");
-          run_combat('');
+          run_combat('yz_consult');
         } else {
           buy(1, $item[forged identification documents]);
         }

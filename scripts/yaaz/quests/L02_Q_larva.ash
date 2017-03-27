@@ -1,6 +1,6 @@
 import "util/main.ash";
 
-boolean larva_loop()
+void larva_task()
 {
   int status = quest_status("questL02Larva");
 
@@ -14,19 +14,20 @@ boolean larva_loop()
       }
       log("Going to the council to pick up the quest.");
       council();
-      return true;
+      break;
     case 0:
       set_property("choiceAdventure502", 2);
       set_property("choiceAdventure505", 1);
       maximize("-combat");
       yz_adventure($location[The spooky forest]);
-      return true;
+      break;
     case 1:
       log("Returning the " + wrap($item[mosquito larva]) + " to the council.");
       council();
-      return true;
+      break;
     default:
-      return false;
+      warning("Unexpected status (" + status + ") in the Larva quest.");
+      break;
   }
 }
 
@@ -37,26 +38,8 @@ boolean L02_Q_larva()
   if (my_level() < 2)
     return false;
 
-  int turns = my_adventures();
+  larva_task();
 
-  int counter = 0;
-  while (larva_loop() && counter < 25)
-  {
-    counter += 1;
-  }
-
-  if (quest_status("questL02Larva") == FINISHED)
-  {
-    int total = turns - my_adventures();
-    log(wrap($item[mosquito larva]) + " collected and returned to the council. It took " + total + " turns.");
-  } else {
-    if (counter == 25)
-    {
-      abort("This quest took too long. Unsure what to do.");
-    } else {
-      abort(wrap($item[mosquito larva]) + " quest not complete, but I don't know why.");
-    }
-  }
   return true;
 }
 

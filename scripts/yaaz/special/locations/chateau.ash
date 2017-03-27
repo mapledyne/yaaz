@@ -66,11 +66,9 @@ void chateau()
           }
         }
       }
-      string macro = '';
-      if (educated('digitize.edu')) macro = "yz_consult";
       maximize();
       string temp = visit_url('place.php?whichplace=chateau&action=chateau_painting');
-      run_combat(macro);
+      run_combat('yz_consult');
     }
   }
 

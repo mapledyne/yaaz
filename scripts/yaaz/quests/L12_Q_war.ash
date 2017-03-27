@@ -252,7 +252,7 @@ boolean L12_Q_war(string side)
     visit_url("bigisland.php?place=camp&whichcamp=1");
   }
   visit_url("bigisland.php?action=bossfight&pwd");
-  run_combat('');
+  run_combat('yz_consult');
   if (quest_status("questL12War") > 10)
   {
     log("War quest complete!");

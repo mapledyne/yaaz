@@ -35,6 +35,9 @@ void day_begin()
 
   prep();
 
+  log("Checking out the Council to make sure our quests are up to date.");
+  council();
+
 }
 
 void main()

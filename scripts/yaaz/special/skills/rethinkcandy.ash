@@ -143,6 +143,11 @@ item[int] pick_candies(effect ef)
   return candies;
 }
 
+boolean is_synthesis_effect(effect ef)
+{
+  return (ef.candy_tier > 0);
+}
+
 boolean do_synthesis(effect ef)
 {
   if (!have_skill($skill[sweet synthesis])) return false;
@@ -154,7 +159,6 @@ boolean do_synthesis(effect ef)
 
   log("About to cast " + wrap($skill[sweet synthesis]) + " to gain " + wrap(ef) + ".");
   log("Choosing the candies " + wrap(candies[0]) + " and " + wrap(candies[1]) + ".");
-  wait(10);
   use_skill(1, $skill[sweet synthesis]);
   visit_url('choice.php?a=' + to_int(candies[0]) + '&b=' + to_int(candies[1]) + '&whichchoice=1217&option=1&pwd');
   return true;

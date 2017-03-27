@@ -77,14 +77,12 @@ boolean L11_SQ_pyramid()
 
   if (quest_status("questL11Pyramid") < 3 || turners() < 10)
   {
-    add_attract($monster[tomb rat]);
     while (quest_status("questL11Pyramid") < 3 || turners() < 10)
     {
       maximize("items");
       if (!yz_adventure($location[The Middle Chamber]))
         return true;
     }
-    remove_attract($monster[tomb rat]);
   }
 
   if (my_adventures() < 15) return false; // do this later.

@@ -236,7 +236,7 @@ boolean fight_spirit()
 
   log("Fighting the " + wrap($monster[Protector Spectre]) + ".");
   yz_adventure($location[A Massive Ziggurat], "elemental damage");
-  run_combat('');
+  run_combat('yz_consult');
   return true;
 }
 

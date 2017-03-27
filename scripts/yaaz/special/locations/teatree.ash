@@ -1,5 +1,3 @@
-// not an IotM, but follows similar rarity/logic...
-
 import "util/base/print.ash";
 
 void teatree()

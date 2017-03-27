@@ -12,12 +12,10 @@ boolean get_photographs()
   if (quest_status("questL11Palindome") >= 1)
     return false;
 
-  add_attract($monster[racecar bob]);
-  add_attract($monster[bob racecar]);
   while (can_adventure()
          && (palindome_items() < 5
              || to_int(get_property("palindomeDudesDefeated")) < 5
-             || item_amount($item[stunt nuts]) == 0))
+             || !have($item[stunt nuts])))
   {
     string max = "items, -combat";
     if (palindome_items() >= 4)
@@ -29,8 +27,6 @@ boolean get_photographs()
     if (!b)
       return true;
   }
-  remove_attract($monster[racecar bob]);
-  remove_attract($monster[bob racecar]);
 
   return true;
 }
@@ -118,7 +114,7 @@ boolean L11_SQ_palindome()
   		set_property("choiceAdventure131", 2);
   		visit_url("place.php?whichplace=palindome&action=pal_droffice");
   		visit_url("choice.php?pwd&whichchoice=131&option=2");
-      run_combat('');
+      run_combat('yz_consult');
       return true;
 
   }

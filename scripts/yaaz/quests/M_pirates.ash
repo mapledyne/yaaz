@@ -169,6 +169,9 @@ boolean get_getup()
   if (have_outfit("swashbuckling getup"))
     return false;
 
+	// wait until later when this isn't as risky.
+	if (expected_damage($monster[shifty pirate]) > my_hp() / 4) return false;
+
   log("Get the swashbuckling getup...");
 	maybe_pull($item[stuffed shoulder parrot]);
 	maybe_pull($item[eyepatch]);
@@ -240,7 +243,7 @@ boolean get_blueprints()
 
 boolean get_skirt()
 {
-  if (i_a($item[frilly skirt]) > 0) return false;
+  if (have($item[frilly skirt])) return false;
 
   if (knoll_available())
   {
@@ -298,7 +301,6 @@ boolean fcle()
     use(1, $item[mizzenmast mop]);
     outfit("swashbuckling getup");
     yz_adventure($location[The F\'c\'le]);
-    return true;
   }
 
   return true;
@@ -309,10 +311,12 @@ boolean M_pirates()
   if (to_int(get_property("lastIslandUnlock")) < my_ascensions())
     return false;
 
-  if (i_a($item[pirate fledges]) > 0)
+  if (have($item[pirate fledges]))
     return false;
 
   if (get_getup()) return true;
+	if (!have_outfit("swashbuckling getup")) return false;
+
   if (collect_insults()) return true;
 
   if (pirate_insults() < 6) return false;

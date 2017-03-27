@@ -3,8 +3,8 @@ import "util/main.ash";
 
 boolean laugh_loop()
 {
-  if (item_amount($item[Azazel\'s lollipop]) > 0 || i_a($item[observational glasses]) > 0)
-    if (item_amount($item[Azazel\'s Tutu]) > 0 || item_amount($item[Imp Air]) >= 5)
+  if (have($item[Azazel\'s lollipop]) || have($item[observational glasses]))
+    if (have($item[Azazel\'s Tutu]) || item_amount($item[Imp Air]) >= 5)
       return false;
 
   string max = "items, combat";
@@ -20,8 +20,8 @@ boolean laugh_loop()
 
 boolean backstage_loop()
 {
-  if (item_amount($item[Azazel\'s Unicorn]) > 0 || backstage_items() == 4)
-    if (item_amount($item[Azazel\'s Tutu]) > 0 || item_amount($item[Bus Pass]) >= 5)
+  if (have($item[Azazel\'s Unicorn]) || backstage_items() == 4)
+    if (have($item[Azazel\'s Tutu]) || item_amount($item[Bus Pass]) >= 5)
       return false;
 
   string max = "-combat, items";
@@ -38,25 +38,16 @@ boolean M06_pandemonium()
                           steel lasagna,
                           steel-scented air freshener]
   {
-    if (item_amount(steel) > 0)
+    if (have(steel))
       try_consume(steel);
   }
-  
-  if (have_skill($skill[liver of steel]))
-    return false;
-  if (have_skill($skill[stomach of steel]))
-    return false;
-  if (have_skill($skill[spleen of steel]))
-    return false;
-  if (quest_status("questL06Friar") != FINISHED)
-    return false;
-  if (my_path() == "Nuclear Autumn")
-    return false;
-  if (my_class() == $class[Ed])
-    return false;
 
-
-  int turns = my_adventures();
+  if (have_skill($skill[liver of steel])) return false;
+  if (have_skill($skill[stomach of steel])) return false;
+  if (have_skill($skill[spleen of steel])) return false;
+  if (quest_status("questL06Friar") != FINISHED) return false;
+  if (my_path() == "Nuclear Autumn") return false;
+  if (my_class() == $class[Ed]) return false;
 
   if(quest_status("questM10Azazel") == UNSTARTED)
 	{
@@ -69,18 +60,9 @@ boolean M06_pandemonium()
 		temp = visit_url("pandamonium.php?action=mourn");
 	}
 
+  if (laugh_loop()) return true;
 
-  int counter = 0;
-
-  while (laugh_loop())
-  {
-
-  }
-
-  while (backstage_loop())
-  {
-
-  }
+  if (backstage_loop()) return true;
 
   if((backstage_items() == 4) && (item_amount($item[Azazel\'s Unicorn]) == 0))
   {
@@ -101,7 +83,7 @@ boolean M06_pandemonium()
 
   foreach it in $items[Hilarious Comedy Prop, Victor\, the Insult Comic Hellhound Puppet, Observational Glasses]
   {
-    if (i_a(it) == 0)
+    if (!have(it))
       continue;
     if (!have_equipped(it))
     {
