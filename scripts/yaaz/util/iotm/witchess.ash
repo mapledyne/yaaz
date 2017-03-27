@@ -44,7 +44,7 @@ void witchess(item it)
     visit_url("campground.php?action=witchess");
     run_choice(1);
     visit_url("choice.php?option=1&pwd="+my_hash()+"&whichchoice=1182&piece=" + choice, false);
-    run_combat();
+    run_combat('');
     progress_sheet();
     progress_sheet("witchess");
   } else {

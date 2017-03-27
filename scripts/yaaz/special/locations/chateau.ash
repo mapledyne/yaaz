@@ -2,6 +2,9 @@ import "util/base/print.ash";
 import "util/base/util.ash";
 import "util/base/inventory.ash";
 import "util/base/monsters.ash";
+import "util/base/maximize.ash";
+
+import 'special/locations/terminal.ash';
 
 boolean can_chateau()
 {
@@ -22,7 +25,6 @@ monster chateau_monster()
 
 void chateau()
 {
-
   if (!can_chateau())
   {
     return;
@@ -54,9 +56,21 @@ void chateau()
     if (can_chateau_fight() && expected_damage($monster[writing desk]) < (my_hp() / 2))
     {
       log("Looks like we can fight a " + wrap($monster[writing desk]) +" now, so going to do that.");
+      if (can_terminal())
+      {
+        if (digitize_remaining() > 0)
+        {
+          if (!educated('digitize.edu'))
+          {
+            terminal_educate('digitize.edu');
+          }
+        }
+      }
+      string macro = '';
+      if (educated('digitize.edu')) macro = "yz_consult";
       maximize();
       string temp = visit_url('place.php?whichplace=chateau&action=chateau_painting');
-      run_combat();
+      run_combat(macro);
     }
   }
 

@@ -1,5 +1,6 @@
 import "util/prep/prep.ash";
 import "util/adventure/counters.ash";
+import "util/adventure/consult.ash";
 import "util/base/inventory.ash";
 import "util/iotm/manuel.ash";
 import "util/base/util.ash";
@@ -11,6 +12,7 @@ boolean overrides();
 boolean yz_clover(location loc);
 boolean yz_adventure(location loc, string maximize);
 boolean yz_adventure(location loc);
+
 
 
 boolean overrides()

@@ -118,7 +118,7 @@ boolean L11_SQ_palindome()
   		set_property("choiceAdventure131", 2);
   		visit_url("place.php?whichplace=palindome&action=pal_droffice");
   		visit_url("choice.php?pwd&whichchoice=131&option=2");
-      run_combat();
+      run_combat('');
       return true;
 
   }

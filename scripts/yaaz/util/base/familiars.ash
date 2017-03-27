@@ -123,12 +123,17 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[exotic parrot]);
       break;
     case "meat":
+      if (have_familiar($familiar[robortender]) && hippy_stone_broken())
+      {
+        newbie = $familiar[robortender];
+        break;
+      }
       if (have_familiar($familiar[trick-or-treating tot]) && have($item[li'l pirate costume]))
       {
         newbie = $familiar[trick-or-treating tot];
         break;
       }
-      newbie = choose_familiar_from_list($familiars[adventurous spelunker, angry jung man, grimstone golem, leprechaun, cheshire bat, nervous tick, hobo monkey, he-boulder, coffee pixie]);
+      newbie = choose_familiar_from_list($familiars[robortender, adventurous spelunker, angry jung man, grimstone golem, leprechaun, cheshire bat, nervous tick, hobo monkey, he-boulder, coffee pixie]);
       break;
     case "init":
       newbie = choose_familiar_from_list($familiars[Happy Medium, Xiblaxian Holo-Companion, Oily Woim]);
@@ -147,8 +152,8 @@ familiar choose_familiar(string fam)
     case "combat":
       newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
       break;
-    default: // everything that doesnt't have a set items. Should usually be stat familiars.
-      newbie = choose_familiar_from_list($familiars[gelatinous cubeling, space jellyfish, intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid]);
+    default: // everything that doesn't have a set items. Should usually be stat familiars but the exceptions to that seem to be piling up.
+      newbie = choose_familiar_from_list($familiars[gelatinous cubeling, robortender, space jellyfish, intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid]);
       add_familiar_weight = false;
       break;
   }

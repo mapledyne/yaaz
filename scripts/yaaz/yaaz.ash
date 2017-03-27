@@ -1,3 +1,6 @@
+script "yaaz.ash"
+notify "degrassi";
+
 import "util/main.ash";
 import "util/progress.ash";
 import "yaaz/yaaz-begin.ash";
@@ -50,7 +53,7 @@ boolean ascend_loop()
   // generally return false to let the next quest in line run.
 
   // misc things we should probably just do as soon as we can:
-  if (M_misc()) return true; // These shouldn't consume turns, just visiting people to kick things off.
+  if (M_misc()) return true;
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;

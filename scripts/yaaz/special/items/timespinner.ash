@@ -68,7 +68,7 @@ boolean time_combat(monster mob)
     if (contains_text(page, 'option value="' + mob.id + '"')) {
       log("Using the " + wrap($item[time-spinner]) + " to try to fight another " + wrap(mob) + ".");
         page = visit_url("choice.php?pwd=&whichchoice=1196&option=1&monid=" + mob.id);
-        page = run_combat();
+        page = run_combat('');
         return true;
     } else {
       warning("Trying to use the " + wrap($item[time-spinner]) + " to fight another " + wrap(mob) + ", but it's not in the list of available fights.");

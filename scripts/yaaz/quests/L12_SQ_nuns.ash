@@ -1,6 +1,6 @@
 import "util/main.ash";
 import "util/base/war_support.ash";
-import "util/iotm/terminal.ash";
+import "special/locations/terminal.ash";
 
 boolean do_nuns_quest(string side)
 {

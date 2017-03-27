@@ -1,16 +1,21 @@
 import "util/base/monsters.ash";
 import "util/base/inventory.ash";
 import "util/base/settings.ash";
-import "util/iotm/terminal.ash";
+import "special/locations/terminal.ash";
 
 import <zlib.ash>;
 
 void main(int round, monster foe, string page)
 {
+//  print('consult: ' + foe);
+
+
+  // something weird in this neighborhood. Would be nice to fix...
   if (foe == $monster[protector spectre])
   {
     print("Whoa - why can't we seem to be able to script this Spectre fight?");
     print("At least we know we got this far...");
+    wait(10);
   }
 
   if (have_skill($skill[extract jelly]))
@@ -30,7 +35,8 @@ void main(int round, monster foe, string page)
     }
   }
   monster digitized = to_monster(get_property("_sourceTerminalDigitizeMonster"));
-
+//  print(have_skill($skill[digitize]));
+//  print(digitize_remaining());
   if (have_skill($skill[digitize]) && digitize_remaining() > 0)
   {
     int copiesmade = to_int(get_property("_sourceTerminalDigitizeMonsterCount"));
@@ -55,14 +61,26 @@ void main(int round, monster foe, string page)
         {
           thingwanted = to_int(get_property("writingDesksDefeated"));
         }
+        print('consult: ' + foe);
+        boolean digizap = digitized != foe;
+        print(digizap);
+        if (digitized == foe && copiesmade > 2) digizap = true;
+        print(digizap);
 
-        if (digitized != foe || (thingwanted < 5 && copiesmade > 2))
+        // we want 5, but if we have 4 already then defeating one more will give us 5,
+        // so only looking for 3 or less of the things we want.
+        if (thingwanted >= 4) digizap = false;
+        print(digizap);
+
+        if (digizap)
         {
           use_skill(1, $skill[digitize]);
         }
         break;
     }
   }
+
+//  wait(10);
 
   string yellow_ray_list = setting("yellow_ray_list");
   if (list_contains(yellow_ray_list, foe) && have_yellow_ray() && have_effect($effect[everything looks yellow]) == 0)

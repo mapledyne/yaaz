@@ -149,7 +149,7 @@ void lovetunnel()
   if(fight_fight_fight)
   {
     tun = visit_url("choice.php?pwd=&whichchoice=1223&option=1");
-    run_combat();
+    run_combat('');
   }
   else
   {
@@ -161,7 +161,7 @@ void lovetunnel()
   if(fight_fight_fight)
 	{
 		tun = visit_url("choice.php?pwd=&whichchoice=1225&option=1");
-    run_combat();
+    run_combat('');
 	}
 	else
 	{
@@ -173,7 +173,7 @@ void lovetunnel()
   if(fight_fight_fight)
 	{
 		tun = visit_url("choice.php?pwd=&whichchoice=1227&option=1");
-    run_combat();
+    run_combat('');
 	}
 	else
 	{

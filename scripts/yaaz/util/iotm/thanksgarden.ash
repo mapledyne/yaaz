@@ -43,7 +43,7 @@ void cashew()
   while(item_amount($item[cashew]) >= 3)
   {
     log("Turning in " + wrap($item[cashew], 3) + " to get a " + wrap($item[turkey blaster]));
-    cli_execute("acquire turkey blaster");
+		buy($item[turkey blaster].seller, 1, $item[turkey blaster]);
   }
 
 }

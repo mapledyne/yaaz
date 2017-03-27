@@ -4,10 +4,8 @@ import <zlib.ash>
 void consider_chrome_item()
 {
   // bail if we don't have the chrome ore
-  if (item_amount($item[chrome ore]) == 0)
-  {
-    return;
-  }
+  if (!have($item[chrome ore])) return;
+
   item chrome_weapon;
 
   if (my_primestat() == $stat[mysticality])
@@ -20,14 +18,17 @@ void consider_chrome_item()
   // bail if we have any of them. This is to protect me since I have a habit
   // of making the wrong one when doing it manually, but that'll still
   // give us adventures:
-  if (i_a($item[chrome staff]) > 0 || i_a($item[chrome sword]) > 0 || i_a($item[chrome crossbow]) > 0)
-    return;
+  if (count_set($items[chrome staff,
+                       chrome sword,
+                       chrome crossbow,
+                       carob cannon]) > 0) return;
 
-
-  if (get_property("questL08Trapper") == "unstarted" || get_property("questL08Trapper") == "step1" || get_property("trapperOre") != "chrome ore")
+  if (get_property("questL08Trapper") == "unstarted"
+      || (get_property("questL08Trapper") == "step1"
+          && get_property("trapperOre") == "chrome ore"))
   {
     // bail if we don't have surplus ore: trapper wants (or may want) chrome ore and we haven't turned it in yet.
-    if (i_a($item[chrome ore]) < 4)
+    if (item_amount($item[chrome ore]) < 4)
     {
       return;
     }
@@ -39,7 +40,7 @@ void consider_chrome_item()
   if (my_meat() < 5000)
     return;
 
-  // we have lots of adventures... or we're drunk:
+  // only continue if we have lots of adventures... or we're drunk:
   if ((my_adventures() < 20) && (my_inebriety() <= inebriety_limit()))
     return;
 

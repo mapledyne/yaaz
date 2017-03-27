@@ -47,7 +47,7 @@ void sell_things()
   // keep three around for catburgling.
   sell_all($item[hot wing], 3);
 
-  if (item_amount($item[wand of nagamar]) > 0)
+  if (have($item[wand of nagamar]))
   {
     sell_all($item[ruby w]);
     sell_all($item[metallic a]);

@@ -236,7 +236,7 @@ boolean fight_spirit()
 
   log("Fighting the " + wrap($monster[Protector Spectre]) + ".");
   yz_adventure($location[A Massive Ziggurat], "elemental damage");
-  run_combat();
+  run_combat('');
   return true;
 }
 
@@ -245,12 +245,13 @@ boolean get_nose()
 	if(quest_status("questL11Worship") != 1)
 		return false;
 
-	if(item_amount($item[The Nostril of the Serpent]) > 0)
+	if(have($item[The Nostril of the Serpent]))
 		return false;
 
-  if((item_amount($item[Stone Wool]) == 0) && (have_effect($effect[stone-faced]) == 0))
+  if((!have($item[Stone Wool])) && (have_effect($effect[stone-faced]) == 0))
 	{
     cheat_deck("sheep", "get some " + wrap($item[Stone Wool]) + ".");
+    maybe_pull($item[stone wool]);
     if (item_amount($item[Stone Wool]) == 0)
     {
       warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");
@@ -297,6 +298,7 @@ boolean L11_SQ_hidden_city()
     if((item_amount($item[Stone Wool]) == 0) && (have_effect($effect[stone-faced]) == 0))
   	{
       cheat_deck("sheep", "get some " + wrap($item[Stone Wool]) + ".");
+      maybe_pull($item[stone wool]);
       if (item_amount($item[Stone Wool]) == 0)
       {
         warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");

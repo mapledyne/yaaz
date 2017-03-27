@@ -2,7 +2,7 @@ import "util/base/print.ash";
 import "util/base/inventory.ash";
 import "util/base/effects.ash";
 import "util/base/familiars.ash";
-import "util/iotm/terminal.ash";
+import "special/locations/terminal.ash";
 import "util/iotm/bookshelf.ash";
 
 void do_maximize(string target, string outfit, item it);
@@ -80,7 +80,7 @@ void do_maximize(string target, string outfit, item it)
 
 string default_maximize_string()
 {
-  string def = "mainstat, 0.4 hp, mp regen";
+  string def = "mainstat, 0.5 hp, mp regen";
   return def;
 }
 
@@ -103,7 +103,7 @@ void maximize(string target, string outfit, item it, familiar fam)
 */
 
   // if we're doing the flyers, let's boost ML as we go.
-  if (have_flyers() && get_property("sidequestNunsCompleted") == "none")
+  if (have_flyers() && get_property("sidequestArenaCompleted") == "none")
   {
     if (target != "") target = target + ", ";
     target += "ml";

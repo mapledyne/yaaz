@@ -12,7 +12,7 @@ import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
 import "util/prep/closet.ash";
-import "util/iotm/floundry.ash";
+import "special/locations/floundry.ash";
 import "util/iotm/bookshelf.ash";
 import "util/iotm/manuel.ash";
 import "util/iotm/deck.ash";
@@ -181,8 +181,10 @@ void cast_things(location loc)
     }
   }
 
+// currently disabled until smarter methodology can be used to decide when to do this:
   if (my_meat() > 10000
-      && my_level() < 13)
+      && my_level() < 13
+      && false)
   {
     // limiter on this so we don't cause MP restores to use up all of our meat.
 

@@ -171,12 +171,12 @@ void floundry_daily_check()
 void floundry()
 {
 
+  floundry_daily_check();
+
   if (!can_get_floundry_item())
     return;
 
-  floundry_daily_check();
-
-  if (quest_status("questL13Final") < FINISHED)
+  if (quest_status("questL13Final") == UNSTARTED)
 	  get_floundry_item();
 }
 

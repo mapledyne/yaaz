@@ -20,7 +20,7 @@ int count_set(boolean[item] things)
   int counter = 0;
   foreach it in things
   {
-    counter += item_amount(it);
+    counter += i_a(it);
   }
   return counter;
 }
@@ -48,6 +48,23 @@ int i_a(item i)
 		}
 	}
 	return a;
+}
+
+// check to see if we have an outfit, ignoring requirements
+// built-in have_outfit() will return false if we can't wear it.
+boolean have_outfit_simple(string outfit)
+{
+  if (count(outfit_pieces(outfit)) == 0)
+  {
+    warning("Trying to check parts for outfit " + wrap(outfit, COLOR_ITEM) + ", but that doesn't appear to be valid.");
+    wait(5);
+    return false;
+  }
+  foreach key, part in outfit_pieces(outfit)
+  {
+    if (!have(part)) return false;
+  }
+  return true;
 }
 
 void use_all(item it, int keep)
@@ -344,14 +361,12 @@ void make_if_needed(item it)
   make_if_needed(it, "");
 }
 
-
-boolean have_yellow_ray()
-{
-  return false;
-}
-
 item yellow_ray_item()
 {
+  foreach toy in $items[viral video]
+  {
+    if (have(toy)) return toy;
+  }
   return $item[none];
 }
 

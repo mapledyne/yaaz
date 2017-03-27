@@ -627,7 +627,12 @@ void progress_sheet(string detail)
     }
   }
 
-  if (quest_active("questL12War"))
+  if (quest_status("questL12War") == STARTED)
+  {
+    task("Start the Island War");
+  }
+
+  if (quest_active("warProgress"))
   {
       if (war_arena()
           && get_property("sidequestArenaCompleted") == "none"
@@ -697,19 +702,6 @@ void progress_sheet(string detail)
       int sq_completed = 0;
       int sq_active = 0;
       string sq_msg = "";
-      if (setting("war_nun", "false") == "true"
-          || get_property("sidequestLighthouseCompleted") != "none")
-      {
-        sq_active++;
-        if (length(sq_msg) > 0) sq_msg += " ";
-        if (get_property("sidequestLighthouseCompleted") != "none")
-        {
-          sq_completed++;
-          sq_msg += CHECKED + "Nuns";
-        } else {
-          sq_msg += UNCHECKED + "Nuns";
-        }
-      }
 
       if (setting("war_nuns", "false") == "true"
           || get_property("sidequestNunsCompleted") != "none")
@@ -877,7 +869,8 @@ void progress_sheet(string detail)
                          cuppa voraci tea,
                          mojo filter,
                          instant karma,
-                         invisible string]
+                         invisible string,
+                         resolution: be more adventurous]
   {
     smoke_if_got_it(puff);
   }
