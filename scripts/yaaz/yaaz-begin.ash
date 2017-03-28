@@ -29,8 +29,6 @@ void day_begin()
   }
   maximize();
 
-  iotm();
-
   special();
 
   prep();

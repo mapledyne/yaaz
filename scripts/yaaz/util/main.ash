@@ -4,7 +4,6 @@ import "util/base/print.ash";
 import "util/adventure/adventure.ash";
 import "util/base/familiars.ash";
 import "util/base/paths.ash";
-import "util/iotm/iotm.ash";
 import "special/special.ash";
 import "util/base/maximize.ash";
 import "util/pvp.ash";

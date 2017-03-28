@@ -84,7 +84,7 @@ void progress_sheet_detail(string detail)
   }
 
   if (do_detail("floundry", detail)
-      && !have($item[fishin' pole])
+      && have($item[fishin' pole])
       && !to_boolean(get_property("_floundryItemUsed")))
   {
     task("get item from the floundry");
@@ -447,6 +447,27 @@ void progress_sheet(string detail)
 
   }
 
+  if (quest_status("questL08Trapper") == 2)
+  {
+    int gear = 0;
+    foreach x in $items[ninja carabiner,
+                        ninja rope,
+                        ninja crampons]
+    {
+      if (have(x)) gear++;
+    }
+
+    string carabiner = UNCHECKED;
+    string rope = UNCHECKED;
+    string crampons = UNCHECKED;
+
+    if (have($item[ninja carabiner])) carabiner = CHECKED;
+    if (have($item[ninja rope])) rope = CHECKED;
+    if (have($item[ninja crampons])) crampons = CHECKED;
+
+    progress(gear, 3, "ninja gear (" + carabiner + "carabiner, " + rope + "rope, " + crampons + "crampons), or use eXtreme slope");
+  }
+
   if (quest_status("questL08Trapper") == 3
       || quest_status("questL08Trapper") == 4)
   {
@@ -603,29 +624,32 @@ void progress_sheet(string detail)
       }
     }
 
+    if (quest_active("questL11Manor"))
+    {
+      if (quest_status("questL11Manor") == 2)
+      {
+        if (!can_make_wine_bomb())
+        {
+          progress(scavenger_hunt_items(), 6, "manor scavenger hunt items");
+        } else {
+          if (!have($item[unstable fulminate]))
+          {
+            task("make unstable fulminate");
+          } else {
+            task("make wine bomb");
+          }
+        }
+      }
+    }
+
     if (quest_active("questL11Pyramid"))
     {
       progress(turners(), 10, "wheel turning things");
     }
+
+    task("Recover the " + wrap("Holy MacGuffin", COLOR_ITEM) + ".");
   }
 
-  if (quest_active("questL11Manor"))
-  {
-    if (quest_status("questL11Manor") == 2)
-    {
-      if (!can_make_wine_bomb())
-      {
-        progress(scavenger_hunt_items(), 6, "manor scavenger hunt items");
-      } else {
-        if (!have($item[unstable fulminate]))
-        {
-          task("make unstable fulminate");
-        } else {
-          task("make wine bomb");
-        }
-      }
-    }
-  }
 
   if (quest_status("questL12War") == STARTED)
   {

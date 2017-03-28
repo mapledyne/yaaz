@@ -23,6 +23,24 @@ void remove_yellow_ray(monster mon);
 void add_duplicate(monster mon);
 void remove_duplicate(monster mon);
 
+
+boolean dangerous(monster mon)
+{
+  return expected_damage(mon) > my_maxhp() / 3;
+}
+
+boolean dangerous(location loc)
+{
+  int counter = 0;
+  int threshold = 2;
+  foreach i, mon in get_monsters(loc)
+  {
+    if (dangerous(mon)) counter++;
+    if (counter >= threshold) return true;
+  }
+  return false; 
+}
+
 void add_attract(monster mon)
 {
   if (mon == $monster[none])

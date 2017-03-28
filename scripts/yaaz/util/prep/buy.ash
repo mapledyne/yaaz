@@ -10,7 +10,7 @@ void buy_things()
     stock_item($item[sneaky pete's key]);
   }
   // in order to catburgle the orcish blueprints
-  stock_item($item[frilly skirt]);
+  if (knoll_available()) stock_item($item[frilly skirt]);
 
   stock_item($item[anti-anti-antidote], 3);
 

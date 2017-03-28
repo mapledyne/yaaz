@@ -11,6 +11,12 @@ boolean M_8bit()
   if (!have($item[continuum transfunctioner]))
     return false;
 
+  if (dangerous($monster[blooper]))
+  {
+    log("Skipping the " + wrap($location[8-bit realm]) + " until it's safer.");
+    return false;
+  }
+
   while(!have($item[digital key]))
   {
     if (creatable_amount($item[digital key]) > 0)

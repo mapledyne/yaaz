@@ -168,8 +168,9 @@ void floundry_daily_check()
   }
 }
 
-void floundry()
+void vip_floundry()
 {
+	if (item_amount($item[fishin' pole]) == 0) return;
 
   floundry_daily_check();
 
@@ -197,5 +198,5 @@ boolean is_fishing_hole(location loc)
 
 void main()
 {
-  floundry();
+  vip_floundry();
 }

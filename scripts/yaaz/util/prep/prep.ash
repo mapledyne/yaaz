@@ -12,9 +12,9 @@ import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
 import "util/prep/closet.ash";
-import "special/locations/floundry.ash";
-import "util/iotm/bookshelf.ash";
-import "util/iotm/deck.ash";
+import "special/locations/vip_floundry.ash";
+import "special/locations/bookshelf.ash";
+import "special/items/deck.ash";
 import "special/items/manuel.ash";
 import "special/skills/numberology.ash";
 import "special/items/protonic.ash";
@@ -110,7 +110,7 @@ void cast_things(location loc)
   }
 
   // if it makes sense to cast another libram spell
-  while(libram())
+  while(bookshelf())
   {
 
   }

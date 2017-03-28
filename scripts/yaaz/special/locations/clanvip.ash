@@ -58,3 +58,8 @@ boolean is_vip_item(item it)
     return true;
   return false;
 }
+
+void main()
+{
+  // this file just has utility functions. There's no "always do this if you have VIP" at this point.
+}

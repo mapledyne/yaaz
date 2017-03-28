@@ -12,6 +12,7 @@ import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
 import "quests/M_pirates.ash";
 import "quests/M_spookyraven.ash";
+import "quests/M_untinker.ash";
 import "quests/M06_pandemonium.ash";
 import "quests/M09_leaflet.ash";
 import "quests/M10_star_key.ash";
@@ -29,7 +30,7 @@ import "quests/L11_Q_macguffin.ash";
 import "quests/L12_Q_war.ash";
 import "quests/L13_Q_sorceress.ash";
 
-import "util/base/level_up.ash";
+import "quests/M_level_up.ash";
 
 int current_level;
 
@@ -55,6 +56,7 @@ boolean ascend_loop()
   // misc things we should probably just do as soon as we can:
   if (M_misc()) return true;
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
+  if (M_untinker()) return true;
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
   if (M_pirates()) return true;
@@ -93,7 +95,9 @@ boolean ascend_loop()
 
   if (L13_Q_sorceress()) return true;
 
-  if (level_up()) return true;
+  warning("Ran out of quest things to do in this script. Adventuring (and leveling) until we can do something better.");
+  if (M_level_up()) return true;
+
   log("Ran out of things to do in this script. Either a quest is missing, or maybe we should level?");
   return false;
 }
@@ -102,15 +106,15 @@ void skill_warning()
 {
   if (!have_skill($skill[pulverize]))
   {
-    warning("This script is written assuming you have the " + wrap($skill[pulverize]) + "skill.");
-    warning("It'll work without it, but be inefficient in several ways. I really recommend getting");
-    warning(wrap($skill[pulverize]) + " before really getting into using this script.");
+    warning("This script is written assuming you have the " + wrap($skill[pulverize]) + " skill.");
+    warning("It'll work without it, but be inefficient in several ways. I recommend getting");
+    warning(wrap($skill[pulverize]) + " before relying on this script.");
     wait(10);
   }
 
   if (!have_skill($skill[Ambidextrous Funkslinging]))
   {
-    warning("This script is written assuming you have the " + wrap($skill[Ambidextrous Funkslinging]) + "skill.");
+    warning("This script is written assuming you have the " + wrap($skill[Ambidextrous Funkslinging]) + " skill.");
     warning("It'll work without it, but will fail fighting " + wrap($monster[your shadow]) + ".");
     warning("Get " + wrap($skill[Ambidextrous Funkslinging]) + " to really utilize this script.");
     warning("In the meantime, you'll also have to get supplies to fight " + wrap($monster[your shadow]) + " and plan to handle that fight yourself.");
@@ -150,21 +154,13 @@ void settings_warning()
 void intro()
 {
 
-  log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ".");
+  log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
 
   if (setting("no_intro") != "true")
   {
     log("This is an automated ascension script, but has some additional features.");
-    string help = "To get more information, run the " + SCRIPT + "-help.ash script. In the meantime,";
-    help += "make sure your HP/MP Usage is set to what you'd like and your Custom Combat is set.";
+    string help = "To get more information, run the " + SCRIPT + "-help.ash script.";
     log(help);
-    log("");
-    log("Custom combat should look something like:");
-    print("[default]");
-    print("consult yaaz-consult.ash");
-    print("consult WHAM.ash");
-    log("Essentially: you should consult yaaz-consult.ash first, then do whatever it is you want to in order to complete the combat.");
-    log("This script doesn't actively run the combats outside of some special cases in yaaz-consult.ash");
     log("To remove this messages: set " + SETTING_PREFIX + "_no_intro=true");
     wait(5);
   }
@@ -208,12 +204,10 @@ void ascend()
 
   while(ascend_loop())
   {
-    iotm();
     special();
     manuel_progress();
   }
 
-  iotm();
   special();
   manuel_progress();
 

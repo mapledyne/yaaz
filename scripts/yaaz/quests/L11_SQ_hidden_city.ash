@@ -1,5 +1,5 @@
 import "util/main.ash";
-import "util/iotm/deck.ash";
+import "special/items/deck.ash";
 
 void check_stones()
 {

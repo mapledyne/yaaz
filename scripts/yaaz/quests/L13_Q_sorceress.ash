@@ -1,5 +1,5 @@
 import "util/main.ash";
-import "util/iotm/deck.ash";
+import "special/items/deck.ash";
 
 boolean wall_of_skin()
 {
@@ -107,8 +107,8 @@ boolean sorceress()
 
   if (quest_status("questL13Final") == 11)
   {
-    warning("Something happened. We should be past " + wrap($monster[naughty sorceress]) + ", but aren't for some reason.");
-    return false;
+    // last stage of fight can be "won" by going anywhere, if you have the wand.
+    string v = visit_url("campground.php");
   }
   log(wrap($monster[naughty sorceress]) + " defeated.");
   return true;

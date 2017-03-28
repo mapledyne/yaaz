@@ -104,7 +104,7 @@ skill next_libram()
   return $skill[none];
 }
 
-boolean libram()
+boolean bookshelf()
 {
   float mp_limit = my_mp() * 0.2;
   skill book = next_libram();
@@ -122,9 +122,9 @@ boolean libram()
 
 void main()
 {
-  while(libram())
+  while(bookshelf())
   {
-    // work in libram();
+    // work in bookshelf();
   }
 
 }

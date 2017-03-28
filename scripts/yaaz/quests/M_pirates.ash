@@ -187,11 +187,14 @@ boolean get_getup()
 
 boolean collect_insults()
 {
-  if (item_amount($item[the big book of pirate insults]) == 0)
+  if (!have($item[the big book of pirate insults]))
     return false;
 
   if (pirate_insults() >= 6)
     return false;
+
+	// wait until later when this isn't as risky.
+	if (expected_damage($monster[toothy pirate]) > my_hp() / 4) return false;
 
   set_property("choiceAdventure187", "2");
 
@@ -207,6 +210,7 @@ boolean collect_insults()
     }
 
     maximize("combat", "swashbuckling getup");
+		if (expected_damage($monster[toothy pirate]) > my_hp() / 4) return true;
     boolean b = yz_adventure($location[Barrrney's barrr]);
     if (!b) return true;
   }

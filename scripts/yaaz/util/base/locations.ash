@@ -2,6 +2,7 @@ import "util/base/util.ash";
 import "util/base/quests.ash";
 import "util/base/print.ash";
 import "util/base/settings.ash";
+import "util/base/inventory.ash";
 
 boolean open_location(location loc);
 location pick_semi_rare_location();
@@ -63,6 +64,12 @@ boolean location_open(location l)
       } else {
         return open_location(l);
       }
+    case $location[cobb's knob harem]:
+    case $location[cobb's knob treasury]:
+    case $location[cobb's knob kitchens]:
+      return quest_status("questL05Goblin") >= 1;
+    case $location[8-bit realm]:
+      return have($item[continuum transfunctioner]);
     default:
       return true;
   }

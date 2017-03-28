@@ -3,7 +3,7 @@ import "util/base/inventory.ash";
 import "util/base/effects.ash";
 import "util/base/familiars.ash";
 import "special/locations/terminal.ash";
-import "util/iotm/bookshelf.ash";
+import "special/locations/bookshelf.ash";
 
 void do_maximize(string target, string outfit, item it);
 void maximize(string target, string outfit, item it, familiar fam);

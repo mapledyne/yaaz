@@ -126,6 +126,11 @@ boolean L04_Q_bats()
         yz_adventure(loc);
         break;
       case 3:
+        if (dangerous($monster[boss bat]))
+        {
+          log("Skipping the " + wrap($location[the boss bat's lair]) + " for now since it seems a bit dangerous until we level up.");
+          return false;
+        }
         string max = "";
         if ($location[the boss bat's lair].turns_spent < 4)
         {

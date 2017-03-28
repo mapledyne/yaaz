@@ -1,7 +1,7 @@
 import "util/base/print.ash";
 import "util/base/util.ash";
 import "util/base/settings.ash";
-import "util/iotm/clanvip.ash";
+import "special/locations/clanvip.ash";
 import "util/base/util.ash";
 import "util/base/quests.ash";
 import "special/items/timespinner.ash";

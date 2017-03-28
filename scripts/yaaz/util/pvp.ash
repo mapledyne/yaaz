@@ -1,5 +1,5 @@
 import "util/base/print.ash";
-import "util/iotm/deck.ash";
+import "special/items/deck.ash";
 import "util/base/settings.ash";
 import "util/base/maximize.ash";
 
