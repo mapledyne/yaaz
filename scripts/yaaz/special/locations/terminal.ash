@@ -98,15 +98,16 @@ int prioritize_educate(string edu)
       return 10;
     case 'extract.edu':
       if (item_amount($item[source essence]) < 40) return 1;
-      break;
+      return 900;
     case 'duplicate.edu':
       if (duplicates_remaining() > 0) return 25;
       return 999;
     case 'turbocharged.edu':
       if (have_effect($effect[overheated]) > 0) return 999;
-      return 100;
+      return 250;
     case 'portscan.edu':
-      if (portscans_remaining() > 0) return 250;
+      if (to_boolean(setting("aggressive_optimize", "false"))) return 999;
+      if (portscans_remaining() > 0) return 100;
       return 999;
     case 'compress.edu':
       return 500;

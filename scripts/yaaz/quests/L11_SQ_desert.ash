@@ -138,10 +138,10 @@ boolean L11_SQ_desert()
 	if (contains_text(html, "can of black paint") && my_path() != "Nuclear Autumn")
   {
 		log("Gnasir wants a can of black paint.");
-		if (i_a($item[can of black paint]) == 0 && my_meat() > 1000) {
+		if (!have($item[can of black paint]) && my_meat() > 1000) {
 			cli_execute("acquire can of black paint");
 		}
-		if (i_a($item[can of black paint]) > 0) {
+		if (have($item[can of black paint])) {
       log("Giving " + wrap($item[can of black paint]) + " to Gnasir.");
 			html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -209,14 +209,14 @@ boolean L11_SQ_desert()
         log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
         while (!have($item[drum machine]))
         {
-          yz_adventure($location[The Oasis], "combat, items");
+          if (!yz_adventure($location[The Oasis], "combat, items")) return true;
         }
       }
       continue;
     }
 
     if (have_effect($effect[Ultrahydrated]) == 0) {
-      yz_adventure($location[The Oasis]);
+      if (!yz_adventure($location[The Oasis])) return true;
       continue;
     }
 
@@ -227,11 +227,9 @@ boolean L11_SQ_desert()
       maximize("");
     }
 
-wait(5);
-    yz_adventure($location[The Arid\, Extra-Dry Desert]);
+    if (!yz_adventure($location[The Arid\, Extra-Dry Desert])) return true;
   }
 
-  int count = starting_adv_count - my_adventures();
   log("You've discovered the pyramid in the desert!");
   return true;
 }

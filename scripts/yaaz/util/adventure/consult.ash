@@ -218,6 +218,28 @@ string maybe_sniff(monster foe)
   return "skill Transcendent Olfaction";
 }
 
+string maybe_portscan(monster foe)
+{
+  if (!have_skill($skill[portscan])) return "";
+
+  // this skill isn't really optimal, so skip if we're trying to be hardcore:
+  if (to_boolean(setting("aggressive_optimize"))) return true;
+
+  // if we can't, the skill shouldn't show up, but an easy safeguard:
+  if (portscans_remaining() < 1) return "";
+
+  if (my_mp() < mp_cost($skill[portscan]) * 3) return "";
+
+  // skip if we won't easily kill the current monster - there'll be other opportunities:
+  if (expected_damage(foe) > my_hp() * 4) return "";
+
+  monster scanned = $monster[government agent];
+  if (my_path() == "The Source") scanned = $monster[source agent];
+  if (dangerous(scanned)) return "";
+
+  return "skill portscan";
+}
+
 string yz_consult(int round, string mob, string text)
 {
   monster foe = to_monster(mob);
@@ -247,6 +269,9 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_shadow(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_portscan(foe);
   if (maybe != "") return maybe;
 
   return "consult WHAM.ash";
