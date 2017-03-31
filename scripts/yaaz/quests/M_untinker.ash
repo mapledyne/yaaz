@@ -30,7 +30,6 @@ boolean M_untinker()
     case UNSTARTED:
       log("Visiting the " + wrap("Untinker", COLOR_LOCATION) + " to start his quest.");
       visit_url("place.php?whichplace=forestvillage&preaction=screwquest&action=fv_untinker_quest");
-      return true;
     case STARTED:
       return do_untinker();
     case 1:

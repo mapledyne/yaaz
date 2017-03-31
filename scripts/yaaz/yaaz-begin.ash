@@ -13,6 +13,9 @@ void day_begin()
   progress_sheet("all");
   wait(5);
 
+  if (get_property("cloverProtectActive") != "true")
+    set_property("cloverProtectActive", "true");
+
   maybe_pull($item[Infinite BACON Machine]);
 
   switch (my_primestat())

@@ -161,6 +161,13 @@ void progress_sheet_detail(string detail)
     }
   }
 
+  if (do_detail("gingerbread", detail)
+      && get_property("gingerbreadCityAvailable") == "true")
+  {
+    task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
+  }
+
+
 }
 
 void progress_sheet(string detail)
@@ -179,6 +186,12 @@ void progress_sheet(string detail)
   if (detail == "all")
   {
     log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ", over " + wrap(my_daycount(), COLOR_LOCATION) + " days.");
+  }
+
+  if (quest_status("questL13Final") >= 13)
+  {
+    log("You've defeated the " + wrap($monster[naughty sorceress]) + ". Hooray!");
+    task("Go do aftercore stuff.");
   }
 
   level_progress();
@@ -581,7 +594,7 @@ void progress_sheet(string detail)
         progress(s, 5, "surgeonosity (" + (s * 10) + "% to find protector spirit)");
       }
 
-      if (quest_active("questL11DSpare"))
+      if (quest_active("questL11Spare"))
       {
         progress(to_int(get_property("hiddenBowlingAlleyProgress")), 5, "bowling balls rolled");
       }
@@ -860,6 +873,11 @@ void progress_sheet(string detail)
       yz_print("Digitized monster (" + wrap(to_monster(get_property("_sourceTerminalDigitizeMonster"))) + ") coming up in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
     }
 
+    if (get_counters("Enamorang Monster", x, x) != "")
+    {
+      yz_print("Enamoranged Monster (" + wrap(to_monster(get_property("enamorangMonster"))) + ") coming up in " + wrap(x, COLOR_MONSTER) + " turns.", COLOR_TASK);
+    }
+
     string last_rare = "";
     if (to_location(get_property("semirareLocation")) != $location[none])
     {
@@ -907,10 +925,6 @@ void progress_sheet(string detail)
       {
         task("Consider using your " + wrap(toy) + ".");
       }
-    }
-    if (get_property("gingerbreadCityAvailable") == "true")
-    {
-      task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
     }
 
     if (to_boolean(get_property("loveTunnelAvailable"))

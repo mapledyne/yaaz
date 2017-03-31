@@ -243,7 +243,7 @@ boolean try_eat(item it)
 
   log("Eating a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
 
-  if (is_npc_item(it))
+  if (is_npc_item(it) && to_boolean(get_property("autoSatisfyWithNPCs")))
   {
     if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
     {
@@ -253,6 +253,7 @@ boolean try_eat(item it)
       return cli_execute("eat 1 " + it);
     }
   }
+
   if (have(it))
   {
     return eat(1, it);
@@ -419,14 +420,6 @@ void consume()
       {
         try_drink($item[lucky lindy]);
       }
-    }
-  }
-  if (my_path() != "Nuclear Autumn")
-  {
-    if (closet_amount($item[hacked gibson]) == 0 && item_amount($item[hacked gibson]) > 0)
-    {
-      log("Putting one " + wrap($item[hacked gibson]) + " in the closet for use at the end of the day.");
-      put_closet(1, $item[hacked gibson]);
     }
   }
 

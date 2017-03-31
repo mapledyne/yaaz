@@ -1,6 +1,7 @@
 import "util/main.ash";
 import "util/base/monsters.ash";
 import "util/base/war_support.ash";
+import "special/items/timespinner.ash";
 
 void return_gunpowder()
 {
@@ -56,9 +57,13 @@ boolean L12_SQ_lighthouse(string side)
         && item_amount($item[barrel of gunpowder]) < 5)
   {
     // we'll bail out if we digitize the lobsterfrogman but otherwise try to get all the barrels
-    boolean b = yz_adventure($location[sonofa beach], "combat");
-    if (!b)
-      return true;
+
+    if (!time_combat($monster[lobsterfrogman], $location[sonofa beach]))
+		{
+      boolean b = yz_adventure($location[sonofa beach], "combat");
+      if (!b) return true;
+		}
+
   }
   return true;
 }

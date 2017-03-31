@@ -3,15 +3,34 @@ import "util/base/monsters.ash";
 import "special/locations/terminal.ash";
 import "util/base/monsters.ash";
 import "util/base/war_support.ash";
+import "util/base/quests.ash";
 
-string maybe_digitize(monster foe)
+string maybe_copy(monster foe)
 {
-  if (!have_skill($skill[digitize])) return "";
-  if (digitize_remaining() < 1) return "";
-
   monster digitized = to_monster(get_property("_sourceTerminalDigitizeMonster"));
-
   int copiesmade = to_int(get_property("_sourceTerminalDigitizeMonsterCount"));
+
+  if (digitized == foe && copiesmade <= 2) return "";
+  if (to_monster(get_property("enamorangMonster")) == foe) return "";
+
+  boolean pref_digitize = false;
+  boolean can_digitize = false;
+  string action = "";
+
+  if (have_skill($skill[digitize])
+      && digitize_remaining() > 0)
+  {
+    can_digitize = true;
+    action = "skill digitize";
+  }
+
+  if (have($item[LOV Enamorang])
+      && get_property("enamorangMonster") == "")
+  {
+    action = "item LOV enamorang";
+  }
+
+  if (action == "") return "";
 
   switch (foe)
   {
@@ -24,6 +43,7 @@ string maybe_digitize(monster foe)
       }
       break;
     case $monster[ninja snowman assassin]:
+      pref_digitize = true;
       break;
     case $monster[writing desk]:
     case $monster[lobsterfrogman]:
@@ -32,18 +52,17 @@ string maybe_digitize(monster foe)
       {
         thingwanted = to_int(get_property("writingDesksDefeated"));
       }
-      boolean digizap = digitized != foe;
-      if (digitized == foe && copiesmade > 2) digizap = true;
 
       // we want 5, but if we have 4 already then defeating one more will give us 5,
       // so only looking for 3 or less of the things we want.
-      if (thingwanted >= 4) digizap = false;
-
-      if (!digizap) return "";
+      if (thingwanted >= 4) return "";
+      if (thingwanted < 3) pref_digitize = true;
       break;
   }
 
-  return "skill digitize";
+  if (pref_digitize && can_digitize) action = "skill digitize";
+
+  return action;
 }
 
 string maybe_duplicate(monster foe)
@@ -218,7 +237,7 @@ string yz_consult(int round, string mob, string text)
   maybe = maybe_trap_ghost(foe);
   if (maybe != "") return maybe;
 
-  maybe = maybe_digitize(foe);
+  maybe = maybe_copy(foe);
   if (maybe != "") return maybe;
 
   maybe = maybe_duplicate(foe);

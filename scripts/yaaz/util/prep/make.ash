@@ -15,6 +15,17 @@ void consider_chrome_item()
   if (my_primestat() == $stat[moxie])
     chrome_weapon = $item[chrome crossbow];
 
+  if (!can_equip(chrome_weapon))
+  {
+    // sad, but these items aren't that useful outside of rollover, so
+    // using the "wrong" one isn't that big a penalty. This will help us
+    // occasionally since the staff is Mus 40 requirement and the sword
+    // is Mus 35. (crossbow is Mox 45, but that's for Mox classes, so likely
+    // won't get hit as often since that's their prime stat).
+
+    if (can_equip($item[chrome sword]))
+      chrome_weapon = $item[chrome sword];
+  }
   // bail if we have any of them. This is to protect me since I have a habit
   // of making the wrong one when doing it manually, but that'll still
   // give us adventures:
@@ -186,7 +197,4 @@ void make_things()
     log("Turning " + wrap($item[shard of double-ice]) + " into a " + wrap($item[double-ice box]) + ".");
     create(1, $item[double-ice box]);
   }
-
-  // Chrome items:
-  consider_chrome_item();
 }

@@ -177,13 +177,13 @@ boolean L11_SQ_desert()
 
   while (get_property("desertExploration").to_int() < 100)
   {
-    if (i_a($item[desert sightseeing pamphlet]) > 0)
+    if (have($item[desert sightseeing pamphlet]))
     {
       use_all($item[desert sightseeing pamphlet]);
       continue;
     }
 
-    if (i_a($item[stone rose]) > 0) {
+    if (have($item[stone rose])) {
       log("Gnasir wants your stone rose.");
       html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
       html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -200,24 +200,16 @@ boolean L11_SQ_desert()
       html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
       continue;
     }
-    else if (i_a($item[worm-riding hooks]) > 0) {
+    else if (have($item[worm-riding hooks])) {
       maybe_pull($item[drum machine]);
       if (have($item[drum machine])) {
         use(1, $item[drum machine]);
       }
       else {
         log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
-        wait(1);
-        int count = 0;
         while (!have($item[drum machine]))
         {
-          count = count + 1;
-          yz_adventure($location[The Oasis], "combat,  0.5 items");
-          if (count > 10 && !have($item[drum machine]))
-          {
-            error ("Took too long finding the " + wrap($item[drum machine]) + ". Aborting so we can find out why.");
-            abort();
-          }
+          yz_adventure($location[The Oasis], "combat, items");
         }
       }
       continue;

@@ -14,6 +14,7 @@ string to_enhancement(effect ef);
 boolean have_enhancement(string enh);
 boolean can_enhance();
 int enhances_remaining();
+int digitize_remaining();
 boolean have_educate(string edu);
 void terminal_educate(string edu1, string edu2);
 void terminal_educate(string edu);
@@ -62,14 +63,71 @@ void terminal_educate(string edu1, string edu2)
   }
 }
 
+
+int duplicates_remaining()
+{
+  if (!have_educate('duplicate.edu')) return 0;
+
+  int used = to_int(get_property("_sourceTerminalDuplicateUses"));
+  int max = 1;
+  if (my_path() == "The Source") max = 5;
+
+  return max - used;
+}
+
+int portscans_remaining()
+{
+  if (!have_educate('portscan.edu')) return 0;
+  int used = to_int(get_property("_sourceTerminalPortscanUses"));
+  return 3 - used;
+}
+
 void terminal_educate(string edu)
 {
   terminal_educate(edu, "extract.edu");
 }
 
+int prioritize_educate(string edu)
+{
+  if (!have_educate(edu)) return 1000;
+
+  switch(edu)
+  {
+    case 'digitize.edu':
+      if (digitize_remaining() == 0) return 999;
+      return 10;
+    case 'extract.edu':
+      if (item_amount($item[source essence]) < 40) return 1;
+      break;
+    case 'duplicate.edu':
+      if (duplicates_remaining() > 0) return 25;
+      return 999;
+    case 'turbocharged.edu':
+      if (have_effect($effect[overheated]) > 0) return 999;
+      return 100;
+    case 'portscan.edu':
+      if (portscans_remaining() > 0) return 250;
+      return 999;
+    case 'compress.edu':
+      return 500;
+  }
+
+  return 100;
+}
+
 void terminal_educate()
 {
-  terminal_educate("extract.edu", "digitize.edu");
+  string [int] educate_options;
+  educate_options[0] = 'digitize.edu';
+  educate_options[1] = 'extract.edu';
+  educate_options[2] = 'compress.edu';
+  educate_options[3] = 'duplicate.edu';
+  educate_options[4] = 'portscan.edu';
+  educate_options[5] = 'turbo.edu';
+
+  sort educate_options by prioritize_educate(value);
+
+  terminal_educate(educate_options[0], educate_options[1]);
 }
 
 void terminal_enhance(effect ef, boolean force)

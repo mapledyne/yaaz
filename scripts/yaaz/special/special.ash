@@ -18,6 +18,7 @@ import 'special/skills/eldritchhorror.ash';
 import 'special/skills/numberology.ash';
 import 'special/skills/rethinkcandy.ash';
 
+
 void special()
 {
   teatree();
@@ -29,15 +30,6 @@ void special()
   terminal();
   deck();
   precinct();
-
-  while(bookshelf())
-  {
-    // cast a few of these
-  }
-
-  // better done in prep() since we want to check more often:
-  //numberology();
-  //protonic();
 
   // These may actually get us in a fight, so do them after the ones above:
 

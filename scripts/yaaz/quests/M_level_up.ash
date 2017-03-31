@@ -41,13 +41,27 @@ boolean do_leveling_thing()
     return yz_adventure($location[the haunted gallery], "exp, ml, -combat");
   }
 
-  maximize("ml, exp, effective");
+  maximize("ml, exp");
   location loc = get_leveling_location();
   if (loc == $location[none])
   {
     error("I don't know how to level you up in your current state.");
     error("Level up and try this script again.");
     abort();
+  }
+
+  // not optimal, but if we're leveling this early "optimal" isn't really
+  // a driving force yet.
+  if (to_boolean(get_property("_treasuryEliteMeatCollected"))
+      && is_wearing_outfit("Knob Goblin Elite Guard Uniform"))
+  {
+    equip($slot[pants], $item[none]);
+  }
+
+  if (to_boolean(get_property("_treasuryHaremMeatCollected"))
+      && is_wearing_outfit("Knob Goblin Harem Girl Disguise"))
+  {
+    equip($slot[hat], $item[none]);
   }
 
   return yz_adventure(loc);

@@ -4,7 +4,7 @@ import "util/base/quests.ash";
 import "util/base/maximize.ash";
 import "util/base/settings.ash";
 import "util/base/locations.ash";
-
+import "util/adventure/consult.ash";
 
 boolean semi_rare()
 {
@@ -20,7 +20,7 @@ boolean semi_rare()
   }
   log("Semi-rare is up! Adventuring in " + wrap(loc) + ".");
   wait(5);
-  adv1(loc, 0, "");
+  adv1(loc, 0, "yz_consult");
   return true;
 }
 
@@ -37,16 +37,24 @@ boolean dance_card()
   return true;
 }
 
+monster copied_monster_next()
+{
+  if (get_counters("digitize monster", 0, 0) != "")
+    return to_monster(get_property("_sourceTerminalDigitizeMonster"));
+  if (get_counters("Enamorang Monster", 0, 0) != "")
+    return to_monster(get_property("enamorangMonster"));
+
+  return $monster[none];
+}
+
 boolean digitized_monster_counter()
 {
   if (get_property("sidequestNunsCompleted") == "none"
       && to_int(get_property("currentNunneryMeat")) < 100000
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
-      && get_counters("digitize monster", 0, 0) != "")
+      && copied_monster_next() == $monster[dirty thieving brigand])
   {
-    log("We're about to see a digitized " + wrap($monster[dirty thieving brigand]) + ".");
     maximize("meat");
-    return adventure(1, $location[the haunted pantry]);
+    return adv1($location[the haunted pantry], -1, "yz_consult");
   }
   return false;
 }
@@ -60,6 +68,7 @@ boolean semi_rare_window()
 
   log("Semirare window is upon us but we don't know the exact number.");
   log("Not optimal, but can't think of a better way to do this...");
+  // should drink a lucky lindy if not under standard restriction...
   wait(5);
   log("Eating a " + wrap($item[fortune cookie]) + ".");
   eat(1, $item[fortune cookie]);
@@ -68,6 +77,12 @@ boolean semi_rare_window()
 
 boolean counters()
 {
+  if (copied_monster_next() != $monster[none])
+  {
+    log("We're about to see a copied " + wrap(copied_monster_next()) + ".");
+    wait(3);
+  }
+
   if (semi_rare_window()) return true;
   if (semi_rare()) return true;
   if (dance_card()) return true;

@@ -7,6 +7,8 @@ boolean M_dailydungeon()
     return false;
   }
 
+  if (dangerous($location[The Daily Dungeon])) return false;
+
   boolean do_dungeon = false;
 
   if (have_cubeling_items()
@@ -39,6 +41,46 @@ boolean M_dailydungeon()
   if (!do_dungeon)
   {
     return false;
+  }
+
+  if (have($item[eleven-foot pole]))
+  {
+    set_property("choiceAdventure693", 2);
+  } else {
+    set_property("choiceAdventure693", 1);
+  }
+  if (have($item[ring of detect boring doors]))
+  {
+    set_property("choiceAdventure690", 2);
+    set_property("choiceAdventure691", 2);
+  } else {
+    set_property("choiceAdventure690", 1);
+    set_property("choiceAdventure691", 1);
+  }
+
+  if (have($item[pick-o-matic lockpicks]))
+  {
+    set_property("choiceAdventure692", 3);
+  }
+  else if (item_amount($item[skeleton key]) > 1)
+  {
+    set_property("choiceAdventure692", 3);
+  } else if (my_buffedstat(my_primestat()) >= 30)
+  {
+    switch(my_primestat())
+    {
+      case $stat[muscle]:
+        set_property("choiceAdventure692", 4);
+        break;
+      case $stat[moxie]:
+        set_property("choiceAdventure692", 5);
+        break;
+      case $stat[mysticality]:
+        set_property("choiceAdventure692", 6);
+        break;
+    }
+  } else {
+    set_property("choiceAdventure692", 1);
   }
 
   while (!to_boolean(get_property("dailyDungeonDone")))

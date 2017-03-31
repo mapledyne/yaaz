@@ -234,8 +234,25 @@ boolean L12_Q_war(string side)
 
   while(war_defeated() < 1000)
   {
-    maximize("", war_outfit(), $item[hobo code binder], $familiar[none]);
+    int killed = war_defeated();
+    maximize("", war_outfit());
     boolean b = yz_adventure(battle);
+    if (!b
+        && can_adventure()
+        && killed == war_defeated())
+    {
+      // there are a few situations where mafia doesn't count the kills right,
+      // notably there's a strangeness with the stuffing fluffer that will
+      // cause us not to be able to reach 1000 killed, even when we actually have
+      // Hopefully we can pull this sort of hack out at some point.
+
+      string prop = "hippiesDefeated";
+      if (setting("war_side") == "hippy")
+        prop = "fratboysDefeated";
+      warning("Mafia seems out of sync with our kills on the battlefield.");
+      warning("Manually incrementing kills until we're caught up with reality.");
+      set_property(prop, war_defeated() + 1);
+    }
     if (!b)
       return true;
   }

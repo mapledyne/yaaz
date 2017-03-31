@@ -60,7 +60,7 @@ void buy_things()
   if (to_int(get_property("lastGoofballBuy")) < my_ascensions() && quest_status("questL03Rat") == FINISHED)
   {
     // once per ascension
-    log("Getting some " + wrap($item[bottle of goofballs]) + ". They're free!");
+    log("Getting a " + wrap($item[bottle of goofballs]) + ". They're free!");
     visit_url('tavern.php?action=buygoofballs');
   }
 }

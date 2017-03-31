@@ -12,7 +12,8 @@ void day_end()
 
   cross_streams();
 
-  if (!to_boolean(get_property("telescopeLookedHigh")))
+  if (!to_boolean(get_property("telescopeLookedHigh"))
+      && get_campground() contains $item[Discount Telescope Warehouse gift certificate])
   {
     log("Looking in the telescope to get " + wrap($effect[starry-eyed]));
     cli_execute("telescope look high");
@@ -68,6 +69,8 @@ void day_end()
     log("Spinning some meat from the " + wrap($item[spinning wheel]) + ".");
     visit_url("campground.php?action=spinningwheel");
   }
+
+  consider_chrome_item();
 
   log("Dressing for rollover.");
   maximize("rollover");

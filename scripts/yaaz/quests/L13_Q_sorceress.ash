@@ -51,7 +51,7 @@ boolean wall_of_meat()
   int counter = 0;
   while (quest_status("questL13Final") == 7 && counter < 10)
   {
-    maximize("meat, +effective");
+    maximize("meat");
     yz_adventure($location[tower level 2]);
     counter += 1;
   }
@@ -380,8 +380,9 @@ boolean loop_tower(int level)
     case 11:
       return sorceress();
     case 12:
-      log("Go and break the prism and free " + wrap("King Raplh", COLOR_MONSTER) + " or, you know, don't.");
-      return false;
+      log("Sorceress defeated - going off to tell the council.");
+      council();
+      return true;
     case FINISHED:
       return false;
     default:

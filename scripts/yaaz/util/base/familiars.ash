@@ -41,7 +41,7 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
       {
         return f;
       }
-      if (f == $familiar[intergnat] && item_amount($item[BACON]) < 200)
+      if (f == $familiar[intergnat] && item_amount($item[BACON]) < 20)
       {
         return f;
       }
@@ -151,6 +151,9 @@ familiar choose_familiar(string fam)
       break;
     case "combat":
       newbie = choose_familiar_from_list($familiars[jumpsuited hound dog]);
+      break;
+    case "sprinkles":
+      newbie = choose_familiar_from_list($familiars[chocolate lab]);
       break;
     default: // everything that doesn't have a set items. Should usually be stat familiars but the exceptions to that seem to be piling up.
       newbie = choose_familiar_from_list($familiars[gelatinous cubeling, robortender, space jellyfish, intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, smiling rat, happy medium, lil\' barrel mimic, hovering sombrero, llama lama, grinning turtle, artistic goth kid]);

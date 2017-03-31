@@ -26,7 +26,7 @@ void remove_duplicate(monster mon);
 
 boolean dangerous(monster mon)
 {
-  return expected_damage(mon) > my_maxhp() / 3;
+  return expected_damage(mon) > my_maxhp() / 4;
 }
 
 boolean dangerous(location loc)
@@ -38,7 +38,7 @@ boolean dangerous(location loc)
     if (dangerous(mon)) counter++;
     if (counter >= threshold) return true;
   }
-  return false; 
+  return false;
 }
 
 void add_attract(monster mon)

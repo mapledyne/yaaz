@@ -40,6 +40,7 @@ boolean ascend_loop()
   if (!can_adventure())
     return false;
 
+  if (quest_status("questL13Final") >= 13) return false;
 
   if (current_level != my_level())
   {
@@ -140,6 +141,20 @@ void settings_warning()
     abort('Rerun this script once this setting is changed.');
   }
 
+  if (!to_boolean(get_property("autoSatisfyWithNPCs")))
+  {
+    warning("In KoLMafia's preferences (General/Item Aquisition), you've set " + wrap("Buy items from NPC stores whenever needed", COLOR_ITEM) + " off.");
+    warning("I'll try to work with this, but it's highly advised you set this on so I can buy things from NPCs.");
+    wait(10);
+  }
+
+  if (!to_boolean(get_property("autoSatisfyWithNPCs")))
+  {
+    warning("In KoLMafia's preferences (General/Item Aquisition), you've set " + wrap("Buy items with tokens at coin masters whenever needed", COLOR_ITEM) + " off.");
+    warning("I'll try to work with this, but it's highly advised you set this on so I can buy things from NPCs.");
+    wait(10);
+  }
+
   if (!hippy_stone_broken() && setting("no_pvp") != "true")
   {
     warning("You haven't broken your Hippy Stone to enable PvP.");
@@ -192,9 +207,17 @@ void ascend()
   settings_warning();
 
   day_begin();
+
+  if (quest_status("questL13Final") >= 13)
+  {
+    log("You've defeated the " + wrap($monster[naughty sorceress]) + ". Hooray!");
+    log("This script doesn't have much for you to do beyond that. Go do aftercore stuff,");
+    log("or go and ascend and do it all over again!");
+    return;
+  }
+
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);
-
 
   if (!can_adventure())
   {
@@ -211,6 +234,14 @@ void ascend()
   special();
   manuel_progress();
 
+  if (quest_status("questL13Final") >= 13)
+  {
+    log("You've defeated the " + wrap($monster[naughty sorceress]) + ". Hooray!");
+    log("This script doesn't have much for you to do beyond this. Go do aftercore stuff,");
+    log("or go and ascend and do it all over again!");
+    return;
+  }
+
   if (my_adventures() < 10 && booze_full() && fullness_full())
   {
     log("It looks like you don't have much else you can do today. Consider a nightcap if you don't want to do anything else manually?");
@@ -220,7 +251,8 @@ void ascend()
   }
   else
   {
-    log("There may be other things you can do today, but this script can't handle them. Do those, or just try rerunning this script.");
+    log("There may be other things you can do today, but this script can't handle them.");
+    log("Do those, or just try rerunning this script - there are a few times that this scripts stops where it can be just reran to pick up where it left off.");
   }
 
   warning("Run " + wrap(SCRIPT + "-end", COLOR_ITEM) + " if you're done for the day to perform final cleanup.");

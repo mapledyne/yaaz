@@ -64,7 +64,7 @@ boolean L05_Q_goblin()
     log("Adventuring in " + wrap(outskirts) + " to get the " + wrap($item[Knob Goblin encryption key]) + ".");
     while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
     {
-      yz_adventure(outskirts, "");
+      if (!yz_adventure(outskirts, "")) return true;
     }
     return true;
   }
@@ -89,6 +89,7 @@ boolean L05_Q_goblin()
     // get a disguise:
 
     location harem = $location[Cobb's Knob Harem];
+    if (dangerous(harem)) return false;
 
     log("Off to try to get the " + wrap("Knob Goblin Harem Girl Disguise", COLOR_ITEM) + " from the " + wrap(harem) + ".");
     while(!have_outfit("Knob Goblin Harem Girl Disguise") && can_adventure())

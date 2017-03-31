@@ -22,7 +22,7 @@ void cross_streams();
 
 void cross_streams(string player)
 {
-  if (i_a($item[protonic accelerator pack]) == 0)
+  if (!have($item[protonic accelerator pack]))
     return;
 
   if (to_boolean(get_property("_streamsCrossed")))

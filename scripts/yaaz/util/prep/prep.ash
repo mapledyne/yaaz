@@ -12,12 +12,10 @@ import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
 import "util/prep/closet.ash";
+import "special/special_check_often.ash";
 import "special/locations/vip_floundry.ash";
-import "special/locations/bookshelf.ash";
 import "special/items/deck.ash";
 import "special/items/manuel.ash";
-import "special/skills/numberology.ash";
-import "special/items/protonic.ash";
 
 import <zlib.ash>
 
@@ -109,11 +107,6 @@ void cast_things(location loc)
     use_skill(1, $skill[ancestral recall]);
   }
 
-  // if it makes sense to cast another libram spell
-  while(bookshelf())
-  {
-
-  }
 
   // Way of the Surprising Fist
   effect_maintain($effect[Salamanderenity]);
@@ -283,8 +276,7 @@ void prep(location loc)
 
   heart();
 
-  numberology();
-  protonic();
+  special_check_often();
 
   cast_things(loc);
 

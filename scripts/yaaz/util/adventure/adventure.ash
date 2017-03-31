@@ -34,6 +34,9 @@ boolean yz_adventure_bypass(location loc)
 
   boolean adv;
 
+  if (get_property("cloverProtectActive") != "true")
+    set_property("cloverProtectActive", "true");
+
   manuel_add_location(loc);
   adv = adv1(loc, -1, "yz_consult");
 
