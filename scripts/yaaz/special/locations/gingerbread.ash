@@ -11,7 +11,7 @@ boolean gingerbread()
 {
   if (!can_gingerbread()) return false;
 
-  if (!svn_exists("gingerbread"))
+  if (!svn_exists("veracity0-gingerbread"))
   {
     error("This Gingerbread script relies on Veracity's Gingerbread City script.");
     error("Install that and try again if you'd like to automate the Gingerbread City.");
@@ -27,6 +27,7 @@ boolean gingerbread()
   }
 
   maximize("sprinkles");
+  visit_url("inv_equip.php?which=2&action=customoutfit&outfitname=Gingerbread City");
   cli_execute("call Gingerbread City.ash");
   return true;
 }

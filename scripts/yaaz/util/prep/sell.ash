@@ -26,7 +26,8 @@ void sell_things()
     sell_all($item[finger cymbals]);
   }
 
-  if (item_amount($item[digital key]) > 0)
+  if (item_amount($item[digital key]) > 0
+      && have_skill($skill[Ambidextrous Funkslinging]))
   {
     sell_all($item[Blue Pixel]);
     sell_all($item[Red Pixel]);

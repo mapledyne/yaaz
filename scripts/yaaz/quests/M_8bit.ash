@@ -28,9 +28,22 @@ boolean M_8bit()
     maximize("items", $item[continuum transfunctioner]);
     if (!time_combat($monster[blooper], $location[8-bit realm]))
     {
-      boolean b = yz_adventure($location[8-bit realm]);
-      if (!b)
-        break;
+      if (!yz_adventure($location[8-bit realm]) return true;
+    }
+  }
+
+  if (!have_skill($skill[Ambidextrous Funkslinging]))
+  {
+    if (item_amount($item[red pixel potion]) < 5)
+    {
+      log("Because you don't have " + wrap($skill[Ambidextrous Funkslinging]) + ", I'm going to collect some " + wrap($item[red pixel potion]) + ".");
+      log("Consider making this skill permanent as soon as you can.");
+      wait(5);
+      while(item_amount($item[red pixel potion]) < 5)
+      {
+        maximize("items", $item[continuum transfunctioner]);
+        if (!yz_adventure($location[8-bit realm]) return true;
+      }
     }
   }
   return true;

@@ -64,11 +64,4 @@ void main()
 {
   buy_skills();
 
-  foreach s in skills_wanted
-  {
-    if (skills_wanted[s] == -1)
-    {
-      print(s + ": " + to_int(s));
-    }
-  }
 }
