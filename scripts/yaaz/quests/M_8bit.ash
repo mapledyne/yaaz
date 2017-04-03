@@ -28,7 +28,7 @@ boolean M_8bit()
     maximize("items", $item[continuum transfunctioner]);
     if (!time_combat($monster[blooper], $location[8-bit realm]))
     {
-      if (!yz_adventure($location[8-bit realm]) return true;
+      if (!yz_adventure($location[8-bit realm])) return true;
     }
   }
 
@@ -42,7 +42,7 @@ boolean M_8bit()
       while(item_amount($item[red pixel potion]) < 5)
       {
         maximize("items", $item[continuum transfunctioner]);
-        if (!yz_adventure($location[8-bit realm]) return true;
+        if (!yz_adventure($location[8-bit realm])) return true;
       }
     }
   }
