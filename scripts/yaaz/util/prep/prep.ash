@@ -7,6 +7,7 @@ import "util/heart.ash";
 import "util/base/consume.ash";
 import "util/prep/sell.ash";
 import "util/prep/buy.ash";
+import "util/prep/buy_skills.ash";
 import "util/prep/clan.ash";
 import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
@@ -321,6 +322,7 @@ void prep(location loc)
       change_mcd(annoy);
   }
 
+  buy_skills();
 }
 
 void prep()

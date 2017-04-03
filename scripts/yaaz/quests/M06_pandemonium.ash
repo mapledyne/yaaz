@@ -49,6 +49,9 @@ boolean M06_pandemonium()
   if (my_path() == "Nuclear Autumn") return false;
   if (my_class() == $class[Ed]) return false;
 
+  if (dangerous($location[the laugh floor])) return false;
+  if (dangerous($location[infernal rackets backstage])) return false;
+
   if(quest_status("questM10Azazel") == UNSTARTED)
 	{
 		string temp = visit_url("pandamonium.php");

@@ -52,6 +52,7 @@ boolean L06_Q_friar()
   if (quest_status("questL06Friar") == FINISHED)
     return false;
 
+
   log("Trying to complete the " + wrap("Deep Fat Friars", COLOR_LOCATION) + " quest.");
   wait(3);
 
@@ -61,17 +62,23 @@ boolean L06_Q_friar()
     council();
   }
 
+  if (dangerous($location[the dark neck of the woods])) return false;
+
   log("Going to get the " + wrap($item[dodecagram]) + ".");
   while (do_neck() && can_adventure())
   {
     // actions in do_neck()
   }
 
+  if (dangerous($location[the dark heart of the woods])) return false;
+
   log("Going to get the " + wrap($item[box of birthday candles]) + ".");
   while (do_heart() && can_adventure())
   {
     // actions in do_heart();
   }
+
+  if (dangerous($location[the dark elbow of the woods])) return false;
 
   log("Going to get the " + wrap($item[eldritch butterknife]) + ".");
   while (do_elbow() && can_adventure())

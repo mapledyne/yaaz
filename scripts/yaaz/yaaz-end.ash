@@ -92,4 +92,6 @@ void main()
   warning("This script will prep you for rollover, but won't make you overdrink. Do that manually.");
 	wait(15);
 	day_end();
+  log("Yaaz complete. You should be at the end of your day with rollover clothes equipped.");
+  log("Do what you'd like, then overdrink when ready.");
 }

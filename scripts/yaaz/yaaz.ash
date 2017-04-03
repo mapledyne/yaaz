@@ -116,9 +116,10 @@ void skill_warning()
   if (!have_skill($skill[Ambidextrous Funkslinging]))
   {
     warning("This script is written assuming you have the " + wrap($skill[Ambidextrous Funkslinging]) + " skill.");
-    warning("It'll work without it, but will fail fighting " + wrap($monster[your shadow]) + ".");
+    warning("It'll work without it, but will be inefficient fighting " + wrap($monster[your shadow]) + ".");
     warning("Get " + wrap($skill[Ambidextrous Funkslinging]) + " to really utilize this script.");
-    warning("In the meantime, you'll also have to get supplies to fight " + wrap($monster[your shadow]) + " and plan to handle that fight yourself.");
+    if (my_class() == $class[disco bandit])
+      warning("Because you're a " + wrap(my_class()) + ", we'll try to pick up " + wrap($skill[Ambidextrous Funkslinging]) + " as we go.");
     wait(10);
   }
 
@@ -155,7 +156,9 @@ void settings_warning()
     wait(10);
   }
 
-  if (!hippy_stone_broken() && setting("no_pvp") != "true")
+  if (!hippy_stone_broken()
+      && setting("no_pvp") != "true"
+      && my_daycount() == 1)
   {
     warning("You haven't broken your Hippy Stone to enable PvP.");
     warning("This script can handle PvP for you if you break the stone.");

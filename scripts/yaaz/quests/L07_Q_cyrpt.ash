@@ -129,21 +129,28 @@ boolean L07_Q_cyrpt()
 		council();
 	}
 
+	if (dangerous($location[the defiled alcove])) return false;
 	if (get_property("cyrptAlcoveEvilness").to_int() > 0)
 	{
 		clear_alcove();
 		return true;
 	}
+
+	if (dangerous($location[the defiled nook])) return false;
 	if (get_property("cyrptNookEvilness").to_int() > 0)
 	{
 		clear_nook();
 		return true;
 	}
+
+	if (dangerous($location[the defiled niche])) return false;
 	if (get_property("cyrptNicheEvilness").to_int() > 0)
 	{
 		clear_niche();
 		return true;
 	}
+
+	if (dangerous($location[the defiled cranny])) return false;
 	if (get_property("cyrptCrannyEvilness").to_int() > 0)
 	{
 		clear_cranny();

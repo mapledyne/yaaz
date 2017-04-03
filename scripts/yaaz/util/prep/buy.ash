@@ -63,4 +63,6 @@ void buy_things()
     log("Getting a " + wrap($item[bottle of goofballs]) + ". They're free!");
     visit_url('tavern.php?action=buygoofballs');
   }
+
+
 }
