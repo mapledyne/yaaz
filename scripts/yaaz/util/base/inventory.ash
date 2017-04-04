@@ -97,6 +97,9 @@ boolean should_pulverize()
 
 void maybe_pull(item it, int qty)
 {
+
+  if (to_boolean(setting("no_pulls", "false"))) return;
+
   int want = qty - i_a(it);
   if (want <= 0) return;
 

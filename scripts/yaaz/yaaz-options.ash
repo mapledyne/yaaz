@@ -23,6 +23,7 @@ table += pref_line("do_collectors", "true", "Give things to certain well-known c
 table += pref_line("manuel_always_show_progress", "false", "If true, Monster Manuel progress will always be shown. Otherwise, once you have all location facts, that progress display is skipped.");
 table += pref_line("use_avatar_potions", "true", "Use avatar potions when you have them to stay constantly dressed up.");
 table += pref_line("aggressive_optimize", "false", "If true, skip all side actions that aren't solely about ascending (ex: Evoke Eldritch Horror, Portscan, etc).");
+table += pref_line("no_pulls", "false", "If true, don't make any pulls when in Softcore.");
 
 
 table += "</table>";
