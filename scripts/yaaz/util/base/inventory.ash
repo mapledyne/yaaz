@@ -123,15 +123,8 @@ void maybe_pull(item it)
 
 void stash(item it, int keep)
 {
-  string config = setting("use_stash", "z");
-  if (config == "z")
-  {
-    config = "false";
-    log("Please set the variable " + wrap(SETTING_PREFIX + "_use_stash", COLOR_ITEM) + " to 'true' or 'false'");
-    log("Setting to 'true' will add the items in clan.txt to the clan stash.");
-    wait(5);
-    save_daily_setting("use_stash", "false");
-  }
+  string config = setting("use_stash", "false");
+
   if (!to_boolean(config)) return;
 
   int num = item_amount(it) - keep;
