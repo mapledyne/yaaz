@@ -150,7 +150,7 @@ void settings_warning()
     if (m == 'yaaz') mood = m;
   }
 
-  if (get_setting("currentMood") != mood)
+  if (get_property("currentMood") != mood)
   {
     warning("This script doesn't use KoLMafia's mood system.");
     if (mood == 'default')
