@@ -170,7 +170,7 @@ boolean get_getup()
     return false;
 
 	// wait until later when this isn't as risky.
-	if (expected_damage($monster[shifty pirate]) > my_hp() / 4) return false;
+	if (dangerous($location[The Obligatory Pirate's Cove])) return false;
 
   log("Get the swashbuckling getup...");
 	maybe_pull($item[stuffed shoulder parrot]);

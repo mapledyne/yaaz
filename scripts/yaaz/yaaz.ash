@@ -34,6 +34,91 @@ import "quests/M_level_up.ash";
 
 int current_level;
 
+
+boolean[skill] perm_skills()
+{
+  boolean[skill] perms;
+  string b=visit_url("showplayer.php?who="+my_id());
+  if (contains_text ("class=\"pskill\">", b))
+  {
+    b=substring(b,b.index_of("class=\"pskill\">"),b.index_of("Clan: <b>"));
+    foreach sk in $skills[]
+    {
+      if (!have_skill(sk)) continue;
+
+  // do we want to include skills you've permed but only in softcore?
+//      if (b.index_of(">" + sk + " (P)") > 0) perms[sk] = true;
+//      if (b.index_of(">" + sk + "</a> (P)") > 0) perms[sk] = true;
+
+      if (b.index_of(">" + sk + " (<") > 0) perms[sk] = true;
+      if (b.index_of(">" + sk + "</a> (<") > 0) perms[sk] = true;
+
+    }
+  }
+  return perms;
+}
+
+
+void skill_recommendation()
+{
+  boolean[skill] permed = perm_skills();
+
+  // skills in "recommended to perm" order. Certainly a subjective list, but
+  // at least we can give a basic recommendation. List largely pulled from
+  // the wiki's hardcore skill analysis page.
+  boolean[skill] recs = $skills[pulverize,
+                                ambidextrous funkslinging,
+                                advanced saucecrafting,
+                                pastamastery,
+                                the ode to booze,
+                                cannelloni cocoon,
+                                tongue of the walrus,
+                                advanced cocktailcrafting,
+                                amphibian sympathy,
+                                saucemaven,
+                                smooth movement,
+                                the sonata of sneakiness,
+                                superhuman cocktailcrafting,
+                                torso awaregness,
+                                mad looting skillz,
+                                leash of linguini,
+                                fat leon's phat loot lyric,
+                                tao of the terrapin,
+                                hero of the half-shell,
+                                springy fusilli,
+                                nimble fingers,
+                                ur-kel's aria of annoyance,
+                                disco fever,
+                                rage of the reindeer,
+                                the power ballad of the arrowsmith,
+                                lunging thrust-smack,
+                                powers of observatiogn,
+                                musk of the moose,
+                                carlweather's cantata of confrontation,
+                                overdeveloped sense of self preservation,
+                                saucestorm,
+                                flavour of magic,
+                                wisdom of the elder tortoises,
+                                inner sauce,
+                                thief among the honorable,
+                                impetuous sauciness,
+                                the way of sauce,
+                                transcendental noodlecraft,
+                                the magical mojomuscular melody,
+                                armorcraftiness,
+                                adventurer of leisure,
+                                empathy of the newt,
+                                astral shell];
+
+  foreach sk in recs
+  {
+    if (permed contains sk) continue;
+    if (sk.class != my_class()) continue;
+    warning("When ascending, I'd recommend making " + wrap(sk) + " permanent.");
+    return;
+  }
+}
+
 boolean ascend_loop()
 {
 
@@ -90,7 +175,7 @@ boolean ascend_loop()
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
-  if (M_pirates()) return true;
+  if (M_pirates()) return true; // should we do pirates earlier?
   if (M_8bit()) return true;
   if (M10_star_key()) return true;
 
@@ -197,6 +282,7 @@ void intro()
 {
 
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
+  log("Comments, bugs, feature requests, please send to " + wrap("Degrassi (#1063113)", COLOR_MONSTER) + ".");
 
   if (!svn_exists("winterbay-mafia-wham"))
   {
@@ -209,9 +295,8 @@ void intro()
   if (setting("no_intro") != "true")
   {
     log("This is an automated ascension script, but has some additional features.");
-    string help = "To get more information, run the " + SCRIPT + "-help.ash script.";
-    log(help);
-    log("To remove this messages: set " + SETTING_PREFIX + "_no_intro=true");
+    log("To get more information, run the " + SCRIPT + "-help.ash script.");
+    log("To remove this message: set " + SETTING_PREFIX + "_no_intro=true");
     wait(5);
   }
 
@@ -248,6 +333,8 @@ void ascend()
     log("You've defeated the " + wrap($monster[naughty sorceress]) + ". Hooray!");
     log("This script doesn't have much for you to do beyond that. Go do aftercore stuff,");
     log("or go and ascend and do it all over again!");
+
+    skill_recommendation();
     return;
   }
 

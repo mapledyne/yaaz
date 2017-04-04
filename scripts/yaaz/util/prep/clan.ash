@@ -3,6 +3,8 @@ import "util/base/inventory.ash";
 
 void clan_things()
 {
+  if (get_clan_name() == "") return;
+  
   int[item] clan_items;
   file_to_map(DATA_DIR + "clan.txt", clan_items);
 

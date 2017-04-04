@@ -22,6 +22,7 @@ print_html("* <i>yaaz-end</i>: Run end-of-day things (like prepping for rollover
 print_html("* <i>yaaz-options</i>: List some options that can configure yaaz");
 print_html("* <i>yaaz-progress</i>: Progress towards various goals");
 print_html("* <i>yaaz-trophy</i>: Progress towards trophies (and other similar goals)");
+print_html("* <i>yaaz-roadmap</i>: Known issues and planned future features");
 print("");
 print("If you browse the script directory from the 'Scripts' menu, the majority of scripts there can each be run individually as well. Run 'prep' and it'll do it's bit of cleanup for you, for instance.");
 print("");

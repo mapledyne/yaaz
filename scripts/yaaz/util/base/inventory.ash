@@ -123,6 +123,8 @@ void maybe_pull(item it)
 
 void stash(item it, int keep)
 {
+  if (get_clan_name() == "") return;
+  
   string config = setting("use_stash", "false");
 
   if (!to_boolean(config)) return;
