@@ -177,7 +177,18 @@ void do_heart_thing(string player)
 
   if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else. :)")) return;
   if (mail_heart_item(player, $item[gift card])) return;
-  if (mail_heart_item(player, $item[holiday fun!], "Holiday chat messages! Happy Holiday, whatever one is coming up next.")) return;
+
+  // only do these if active in chat:
+  if (who_clan()[player])
+  {
+    if (mail_heart_item(player, $item[holiday fun!], "Holiday chat messages! Happy Holiday, whatever one is coming up next.")) return;
+
+    if (item_amount($item[aggressive carrot]) > 0)
+    {
+      heart_msg(player, "snapping an " + $item[aggressive carrot] + " and whispering their name...");
+      visit_url('choice.php?pwd&whichchoice=1043&option=1&who=' + player);
+    }
+  }
 
   if (item_amount($item[roll of toilet paper]) > 0)
   {

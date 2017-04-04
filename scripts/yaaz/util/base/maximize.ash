@@ -35,6 +35,15 @@ void cross_streams(string player)
 void cross_streams()
 {
   string p = get_property("streamCrossDefaultTarget");
+  if (p == 'ProtonicBot')
+  {
+    warning("Sure, we can cross streams with " + wrap(p, COLOR_MONSTER) + ", but you could");
+    warning("use more interesting as well. Find a friend with a " + wrap($item[protonic accelerator pack]));
+    warning("(or use " + wrap("Degrassi", COLOR_MONSTER) + "), she's friendly :)");
+    warning("To change your default stream crossing buddy:");
+    print("set streamCrossDefaultTarget=someone");
+    wait(5);
+  }
   cross_streams(p);
 }
 

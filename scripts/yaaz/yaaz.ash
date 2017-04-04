@@ -60,7 +60,6 @@ boolean ascend_loop()
   if (M_untinker()) return true;
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
-  if (M_pirates()) return true;
   if (M_dailydungeon()) return true;
 
   // do a bit earlier than other order to get the Knob opened earlier.
@@ -91,6 +90,7 @@ boolean ascend_loop()
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
+  if (M_pirates()) return true;
   if (M_8bit()) return true;
   if (M10_star_key()) return true;
 
@@ -130,17 +130,40 @@ void settings_warning()
   if (to_float(get_property("mpAutoRecovery")) < 0.1)
   {
     warning("Your auto restore MP settings seems to not be set.");
-    warning("Set it to what you think is right for you in the 'HP/MP Usage' tab.");
-    warning("(A reasonable default is to restore at 50%, recovering up to 60%)");
-    abort('Rerun this script once this setting is changed.');
+    warning("Setting this to something I think is reasonable, but you may want to skip out here and change yourself if desired.");
+    wait(10);
+    set_property("mpAutoRecoveryTarget", 0.6);
+    set_property("mpAutoRecovery", 0.5);
   }
   if (to_float(get_property("hpAutoRecovery")) < 0.1)
   {
     warning("Your auto restore HP settings seem to not be set.");
-    warning("Set it to what you think is right for you in the 'HP/MP Usage' tab.");
-    warning("(A reasonable default is to restore at 60%, recovering up to 90%)");
-    abort('Rerun this script once this setting is changed.');
+    warning("Setting this to something I think is reasonable, but you may want to skip out here and change yourself if desired.");
+    wait(10);
+    set_property("hpAutoRecoveryTarget", 0.9);
+    set_property("hpAutoRecovery", 0.6);
   }
+
+  string mood = 'default';
+  foreach x, m in get_moods()
+  {
+    if (m == 'yaaz') mood = m;
+  }
+
+  if (get_setting("currentMood") != mood)
+  {
+    warning("This script doesn't use KoLMafia's mood system.");
+    if (mood == 'default')
+    {
+      warning("If you want to add custom mood handling while running this script, create a 'yaaz'");
+      warning("mood and I'll try using that instead.");
+    } else {
+      warning("You've created a 'yaaz' mood to add your custom mood interested. Setting your mood to that.");
+    }
+    wait(10);
+    set_property("currentMood", mood);
+  }
+
 
   if (!to_boolean(get_property("autoSatisfyWithNPCs")))
   {
@@ -149,12 +172,13 @@ void settings_warning()
     wait(10);
   }
 
-  if (!to_boolean(get_property("autoSatisfyWithNPCs")))
+  if (!to_boolean(get_property("autoSatisfyWithCoinmasters")))
   {
     warning("In KoLMafia's preferences (General/Item Aquisition), you've set " + wrap("Buy items with tokens at coin masters whenever needed", COLOR_ITEM) + " off.");
     warning("I'll try to work with this, but it's highly advised you set this on so I can buy things from NPCs.");
     wait(10);
   }
+
 
   if (!hippy_stone_broken()
       && setting("no_pvp") != "true"
@@ -173,6 +197,14 @@ void intro()
 {
 
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
+
+  if (!svn_exists("winterbay-mafia-wham"))
+  {
+    warning("While this script tries to not require other scripts, and just skips functionality in those cases,");
+    warning("I can't currently function without Winterbay's excellent 'WHAM' script. Please go install that and");
+    warning("then rerun this script.");
+    abort();
+  }
 
   if (setting("no_intro") != "true")
   {

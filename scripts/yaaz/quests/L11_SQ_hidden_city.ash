@@ -54,10 +54,10 @@ boolean do_liana()
     return false;
   }
 
-  if (quest_status("questL11Business") > -1
-      && quest_status("questL11Curses") > -1
-      && quest_status("questL11Doctor") > -1
-      && quest_status("questL11Spare") > -1)
+  if (quest_status("questL11Business") > UNSTARTED
+      && quest_status("questL11Curses") > UNSTARTED
+      && quest_status("questL11Doctor") > UNSTARTED
+      && quest_status("questL11Spare") > UNSTARTED)
   {
     return false;
   }
@@ -73,35 +73,35 @@ boolean do_liana()
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northeast)]) + ".");
   while(quest_status("questL11Business") < 0)
   {
-    yz_adventure($location[An Overgrown Shrine (Northeast)]);
+    if (!yz_adventure($location[An Overgrown Shrine (Northeast)])) return true;
   }
 
   if (quest_status("questL11Curses") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northwest)]) + ".");
   while(quest_status("questL11Curses") < 0)
   {
-    yz_adventure($location[An Overgrown Shrine (Northwest)]);
+    if (!yz_adventure($location[An Overgrown Shrine (Northwest)])) return true;
   }
 
   if (quest_status("questL11Doctor") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southwest)]) + ".");
   while(quest_status("questL11Doctor") < 0)
   {
-    yz_adventure($location[An Overgrown Shrine (Southwest)]);
+    if (!yz_adventure($location[An Overgrown Shrine (Southwest)])) return true;
   }
 
   if (quest_status("questL11Spare") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southeast)]) + ".");
   while(quest_status("questL11Spare") < 0)
   {
-    yz_adventure($location[An Overgrown Shrine (Southeast)]);
+    if (!yz_adventure($location[An Overgrown Shrine (Southeast)])) return true;
   }
 
   if ($location[A Massive Ziggurat].turns_spent < 3)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
   while ($location[A Massive Ziggurat].turns_spent < 3)
   {
-    yz_adventure($location[A Massive Ziggurat]);
+    if (!yz_adventure($location[A Massive Ziggurat])) return true;
   }
 
   return false;
@@ -127,12 +127,12 @@ boolean bowling()
       log("Buying a " + wrap($item[Bowl Of Scorpions]) + " to get away from a " + wrap($monster[drunk pygmy]) + ".");
       buy(1, $item[Bowl Of Scorpions]);
     }
-    yz_adventure($location[the hidden bowling alley], "items");
+    if (!yz_adventure($location[the hidden bowling alley], "items")) return true;
   }
   remove_attract($monster[pygmy bowler]);
   while(item_amount($item[bowling ball]) == 0)
   {
-    yz_adventure($location[the hidden bowling alley], "items");
+    if (!yz_adventure($location[the hidden bowling alley], "items")) return true;
   }
 
   log("Off to defeat the " + wrap($monster[ancient protector spirit]) + ".");
@@ -154,7 +154,7 @@ boolean hospital()
   while(to_int(get_property("hiddenHospitalProgress")) < 6)
   {
     maximize("mainstat, +effective, elemental dmg, 50 surgeonosity");
-    yz_adventure($location[the hidden hospital]);
+    if (!yz_adventure($location[the hidden hospital])) return true;
   }
   remove_attract($monster[pygmy witch surgeon]);
   log(wrap($location[the hidden hospital]) + " cleared.");
@@ -182,7 +182,7 @@ boolean office()
       log("Trying to get the rest of the " + wrap("McClusky File", COLOR_ITEM) + " from the " + wrap($location[the hidden apartment building]));
       return false;
     }
-    yz_adventure($location[the hidden office building], "");
+    if (!yz_adventure($location[the hidden office building], "")) return true;
   }
   remove_attract($monster[pygmy witch accountant]);
   log(wrap($location[the hidden office building]) + " cleared.");
@@ -219,7 +219,7 @@ boolean apartment()
       log("Trying to drink a " + wrap($item[cursed punch]) + " for the extra curse.");
       try_consume($item[cursed punch]);
     }
-    yz_adventure($location[the hidden apartment building], "");
+    if (!yz_adventure($location[the hidden apartment building], "")) return true;
   }
   remove_attract($monster[pygmy shaman]);
   log(wrap($location[the hidden apartment building]) + " cleared.");

@@ -43,6 +43,14 @@ void day_begin()
 
 void main()
 {
+  if (!svn_exists("winterbay-mafia-wham"))
+  {
+    warning("While this script tries to not require other scripts, and just skips functionality in those cases,");
+    warning("I can't currently function without Winterbay's excellent 'WHAM' script. Please go install that and");
+    warning("then rerun this script.");
+    abort();
+  }
+
   log("Running day begin processes without attempting any quests.");
   wait(5);
   day_begin();

@@ -1,4 +1,6 @@
 import "util/base/inventory.ash";
+import "util/base/quests.ash";
+
 import <zlib.ash>
 
 void consider_chrome_item()
@@ -49,10 +51,6 @@ void consider_chrome_item()
     return;
 
   if (my_meat() < 5000)
-    return;
-
-  // only continue if we have lots of adventures... or we're drunk:
-  if ((my_adventures() < 20) && (my_inebriety() <= inebriety_limit()))
     return;
 
   log("Making a " + wrap(chrome_weapon) + " for more rollover adventures.");
