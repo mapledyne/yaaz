@@ -260,17 +260,3 @@ void cast_surplus_mp()
     use_skill(1, sk);
   }
 }
-
-boolean have_flavour_of_magic()
-{
-  foreach ef in $effects[spirit of cayenne,
-                     spirit of garlic,
-                     spirit of peppermint,
-                     spirit of wormwood,
-                     spirit of bacon grease]
-   {
-      if (have_effect(ef) > 0)
-        return true;
-   }
-   return false;
-}
