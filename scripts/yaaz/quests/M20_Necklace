@@ -9,7 +9,7 @@ boolean M20_necklace()
 {
   if (quest_status("questM20Necklace") == FINISHED) return true;
   
-  if (have($item[telegram from lady spookyraven]) use(1,$item[telegram from lady spookyraven]);
+  if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
   
   if (quest_status("questM20Necklace") > UNSTARTED)
   {
@@ -34,11 +34,7 @@ boolean kitchen()
     return true;
   }
   
-  if(dangerous(kitchen)
-  {
-    log(wrap(location) + " is too dangerous! Come back later.");
-    return false;
-  }
+  if(dangerous(kitchen)) return false;
   
   log("Rummaging around in the drawers...");
   while(!have(key) && can_adventure())
@@ -105,11 +101,7 @@ boolean library()
     return true;
   }
   
-  if(dangerous(library)
-  {
-    log(wrap(library) + " is too dangerous! Come back later.");
-    return false;
-  }
+  if(dangerous(library)) return false;
   
   while(!have(necklace) && can_adventure())
   {
