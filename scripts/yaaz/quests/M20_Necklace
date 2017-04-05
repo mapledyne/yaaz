@@ -91,7 +91,7 @@ boolean library()
   
   if (have(necklace)) 
   {
-    log("Found " + wrap(key) +". All done in " + wrap(kitchen) + "!");
+    log("Found " + wrap(necklace) +". All done in " + wrap(library) + "!");
     return true;
   }
   return false;  
