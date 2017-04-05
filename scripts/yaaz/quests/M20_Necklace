@@ -1,26 +1,15 @@
 import "util/main.ash";
 
-void main()
+int total_elemental_damage(int hotMult, int coldMult, int sleazeMult, int spookyMult, int stenchMult)
 {
-  M20_necklace();
-}
-
-boolean M20_necklace()
-{
-  if (quest_status("questM20Necklace") == FINISHED) return true;
+  int total = 0;
+  total += numeric_modifier("Hot Damage") * hotMult;
+  total += numeric_modifier("Cold Damage") * coldMult;
+  total += numeric_modifier("Sleaze Damage") * sleazeMult;
+  total += numeric_modifier("Spooky Damage") * spookyMult;
+  total += numeric_modifier("Stench Damage") * stenchMult;
   
-  if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
-  
-  if (quest_status("questM20Necklace") > UNSTARTED)
-  {
-    maximize("");
-    
-    if (!kitchen()) return false;
-    if (!billiard_room()) return false;
-    if (!library()) return false;
-  }
-  
-  return true;
+  return total;
 }
 
 boolean kitchen()
@@ -53,7 +42,7 @@ boolean kitchen()
 boolean billiard_room()
 {
   location pool_hall = $location[the haunted billiards room];
-  item key = $item[spookyraven library key];
+  item key = $item[[7302]spookyraven library key];
   item chalk = $item[handful of hand chalk];
   
   if(quest_status("questM20Necklace") >= 3)
@@ -62,11 +51,11 @@ boolean billiard_room()
     return true;
   }
   
-  if(dangerous(pool_hall) || my_inebrity() > 10) return false;
+  if(dangerous(pool_hall) || my_inebriety() > 10) return false;
   
   if((my_primestat() == $stat[muscle] || my_primestat() == $stat[moxie]) && total_elemental_damage(2,1,1,0,2) < 10)
   {
-    log(wrap($monster[chalkdust wraith] + " will be difficult with low bonus elemental damage.");
+    log(wrap($monster[chalkdust wraith]) + " will be difficult with low bonus elemental damage.");
   }
   
   set_property("choiceAdventure330", 1);
@@ -114,14 +103,26 @@ boolean library()
   return false;  
 }
 
-int total_elemental_damage(int hotMult, int coldMult, int sleazeMult, int spookyMult, int stenchMult)
+boolean M20_necklace()
 {
-  int total = 0;
-  total += numeric_modifier("Hot Damage") * hotMult;
-  total += numeric_modifier("Cold Damage") * coldMult;
-  total += numeric_modifier("Sleaze Damage") * sleazeMult;
-  total += numeric_modifier("Spooky Damage") * spookyMult;
-  total += numeric_modifier("Stench Damage") * stenchMult;
+  if (quest_status("questM20Necklace") == FINISHED) return true;
   
-  return total;
+  if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
+  
+  if (quest_status("questM20Necklace") > UNSTARTED)
+  {
+    maximize("");
+    
+    if (!kitchen()) return false;
+    if (!billiard_room()) return false;
+    if (!library()) return false;
+  }
+  
+  return true;
 }
+
+void main()
+{
+  M20_necklace();
+}
+
