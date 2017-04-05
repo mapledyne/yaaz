@@ -1,5 +1,4 @@
 import "util/main.ash";
-import <zlib.ash>;
 
 boolean M20_necklace()
 {
