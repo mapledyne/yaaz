@@ -147,7 +147,7 @@ boolean ascend_loop()
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
   if (M_dailydungeon()) return true;
-  if (M20_Necklace()) return true;
+  if (M20_necklace()) return true;
 
   // do a bit earlier than other order to get the Knob opened earlier.
   // earlier knob == earlier dispensary if we get a KGE outfit.
