@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void main()
+{
+  M20_necklace();
+}
+
 boolean M20_necklace()
 {
   if (quest_status("questM20Necklace") == FINISHED) return true;
@@ -8,12 +13,14 @@ boolean M20_necklace()
   
   if (quest_status("questM20Necklace") > UNSTARTED)
   {
+    maximize("");
     
     if (!kitchen()) return false;
     if (!billiard_room()) return false;
     if (!library()) return false;
   }
   
+  return true;
 }
 
 boolean kitchen()
@@ -36,7 +43,7 @@ boolean kitchen()
   log("Rummaging around in the drawers...");
   while(!have(key) && can_adventure())
   {
-    yz_adventure(kitchen);
+    if (!yz_adventure(kitchen)) return true;
   }
   
   if (have(key)) 
@@ -49,6 +56,8 @@ boolean kitchen()
 
 boolean billiard_room()
 {
+  maximize("-combat,hot damage,stench damage");
+  
   location pool_hall = $location[the haunted billiards room];
   item key = $item[spookyraven library key];
   item chalk = $item[handful of hand chalk];
@@ -59,17 +68,7 @@ boolean billiard_room()
     return true;
   }
   
-  if(dangerous(pool_hall)
-  {
-    log(wrap(pool_hall) + " is too dangerous! Come back later.");
-    return false;
-  }
-  
-  if(my_inebriety() > 10)
-  {
-    log("Too drunk to play pool efficiently.");
-    return false;
-  }
+  if(dangerous(pool_hall) || my_inebrity() > 10) return false;
   
   if((my_primestat() == $stat[muscle] || my_primestat() == $stat[moxie]) && total_elemental_damage(2,1,1,0,2) < 10)
   {
@@ -84,7 +83,7 @@ boolean billiard_room()
   {
     if (have_effect($effect[chalky hand]) == 0 && have(chalk)) use(1,chalk);
     
-    yz_adventure(pool_hall);
+    if (!yz_adventure(pool_hall)) return true;
   }
   
   if (have(key)) 
@@ -114,7 +113,7 @@ boolean library()
   
   while(!have(necklace) && can_adventure())
   {
-    yz_adventure(library);
+    if (!yz_adventure(library)) return true;
   }
   
   if (have(necklace)) 
