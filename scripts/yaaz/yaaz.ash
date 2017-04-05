@@ -11,6 +11,7 @@ import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
 import "quests/M_pirates.ash";
+import "quests/M20_Necklace.ash";
 import "quests/M_spookyraven.ash";
 import "quests/M_untinker.ash";
 import "quests/M06_pandemonium.ash";
