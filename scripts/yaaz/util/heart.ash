@@ -186,6 +186,7 @@ void do_heart_thing(string player)
     if (item_amount($item[aggressive carrot]) > 0)
     {
       heart_msg(player, "snapping an " + $item[aggressive carrot] + " and whispering their name...");
+      use(1, $item[aggressive carrot]);
       visit_url('choice.php?pwd&whichchoice=1043&option=1&who=' + player);
     }
   }

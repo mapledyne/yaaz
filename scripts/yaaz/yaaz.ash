@@ -39,7 +39,7 @@ boolean[skill] perm_skills()
 {
   boolean[skill] perms;
   string b=visit_url("showplayer.php?who="+my_id());
-  if (contains_text ("class=\"pskill\">", b))
+  if (contains_text(b, "class=\"pskill\">"))
   {
     b=substring(b,b.index_of("class=\"pskill\">"),b.index_of("Clan: <b>"));
     foreach sk in $skills[]
@@ -132,6 +132,7 @@ boolean ascend_loop()
     log("We've gained a level. Checking out the council to see what's new.");
     current_level = my_level();
     council();
+    cli_execute("refresh inv");
   }
 
   // returning true here ultimately just causes us to start this
