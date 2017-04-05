@@ -1,0 +1,71 @@
+import "util/main.ash";
+import <zlib.ash>;
+
+boolean M_spookyraven1stfloor()
+{
+  if (quest_status("questM20Necklace") == FINISHED) return true;
+  
+  if (have($item[telegram from lady spookyraven]) use(1,$item[telegram from lady spookyraven]);
+  
+  if (quest_status("questM20Necklace") > UNSTARTED)
+  {
+    
+    if (!kitchen()) return false;
+    if (!billiard_room()) return false;
+    if (!library()) return false;
+  }
+  
+}
+
+boolean kitchen()
+{
+  if(quest_status("questM20Necklace") >= 1)
+  {  
+    log("Already found the Billiards Room Key.");
+    return true;
+  }
+  
+  if(dangerous($location[the haunted kitchen])
+  {
+    log("The Haunted Kitchen is too dangerous! Come back later.");
+    return false;
+  }
+  
+  log("Rummaging around in the drawers...");
+  return false;
+}
+
+boolean billiard_room()
+{
+  if(quest_status("questM20Necklace") >= 3)
+  {  
+    log("You have already followed in the footsteps of Fast Eddie.");
+    return true;
+  }
+  
+  if(dangerous($location[the haunted billiards room])
+  {
+    log("The Haunted Billiards Room is too dangerous! Come back later.");
+    return false;
+  }
+  
+  log("Current pool skill is *shrug*");
+  return false;  
+}
+
+boolean library()
+{
+  if(quest_status("questM20Necklace") >= 4)
+  {  
+    log("Jewelry fixes everything.");
+    return true;
+  }
+  
+  if(dangerous($location[the haunted billiards room])
+  {
+    log("The Haunted Billiards Room is too dangerous! Come back later.");
+    return false;
+  }
+  
+  return false;  
+}
