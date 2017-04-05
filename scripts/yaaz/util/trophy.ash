@@ -304,6 +304,7 @@ void spirits()
 	boolean[item] missing_list = spirits_missing();
 
 	int drank = 66 - count(missing_list);
+	if (drank == 0) return;
 
 	if (drank < 66)
 	{
@@ -379,6 +380,7 @@ int familiar_weight_total()
 void basic_trophy(int have, int needed, int trophy)
 {
 	if (!(trophies contains trophy) && !DEBUG_TROPHY) return;
+	if (have == 0) return;
 
 	string msg = all_trophies[trophy].name;
 
@@ -520,6 +522,16 @@ void trophy()
 	basic_trophy(spel, 9, 140);
 
 	basic_consumption_trophy($item[gallon of milk], 7, 147);
+
+	if (my_path() == "Gelatinous Noob")
+	{
+		int count = 0;
+		for x from 23001 to 23125
+		{
+			if (have_skill(to_skill(x))) count++;
+		}
+		basic_trophy(count, 125, 151);
+	}
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 
 	nom_something();

@@ -186,7 +186,12 @@ void do_heart_thing(string player)
     if (item_amount($item[aggressive carrot]) > 0)
     {
       heart_msg(player, "snapping an " + $item[aggressive carrot] + " and whispering their name...");
-      visit_url('choice.php?pwd&whichchoice=1043&option=1&who=' + player);
+      string v = visit_url('inv_use.php?whichitem=7971');
+      if (contains_text(v, 'Whisper:'))
+      {
+        visit_url('choice.php?pwd&whichchoice=1043&option=1&who=' + player);
+        return;
+      }
     }
   }
 
@@ -234,16 +239,22 @@ void do_heart_thing(string player)
 
 void heart(boolean force)
 {
-  if (setting("do_heart") == "false")
+  string be_hearty = setting("do_heart");
+
+  if (be_hearty == 'false')
     return;
 
-  if (setting("do_heart") == "")
+  if (setting("heart_warning") == 'true'
+      && be_hearty == '') return;
+
+  if (be_hearty == '')
   {
     warning(HEART + " You haven't set if you want to do heart-y things during your run, like casting Smiles and such.");
     warning(HEART + " Set the variable " + SETTING_PREFIX + "_do_heart to 'true' or 'false' depending on which way you want to be.");
     warning(HEART + " Doing so will clear this message, for example:");
     log("set " + SETTING_PREFIX + "_do_heart=true");
     wait(10);
+    save_daily_setting("heart_warning", 'true');
     return;
   }
 

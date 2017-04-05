@@ -146,3 +146,6 @@
 146	this_town_needs_an_enema	Gotpork Connoisseur	Consume one of each of the nine Gotpork villain drops
 147	this_this_lemonade	A Gallon of Milk Keeps the Doctor Away	Drink 7 days worth of milk
 148	ilovewesley	Prime Directive Director	Solve all Far Future scenarios without bloodshed
+149	oh_the_horror	Tentacle Tickler	Defeat 666 Eldritch Tentacles
+150	all_you_need_is_it	LOVE, LOVE, LOVE	Solve the L.O.V. Exit puzzle
+151	i_had_to_drink_from_the_liquid_cup	Gelatinous Hubris	Learn all 125 Gelatinous Noob skills in a single ascension.

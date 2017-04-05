@@ -121,6 +121,7 @@ boolean L04_Q_bats()
           loc = $location[guano junction];
           get_stench_res();
         }
+        if (dangerous(loc)) return false;
         if (!yz_adventure(loc)) return true;
         break;
       case 3:
