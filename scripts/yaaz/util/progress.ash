@@ -167,6 +167,12 @@ void progress_sheet_detail(string detail)
     task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
   }
 
+  if (do_detail("lovetunnel", detail)
+      && to_boolean(get_property("loveTunnelAvailable"))
+      && !to_boolean(get_property("_loveTunnelUsed")))
+  {
+    task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is available and hasn't been used today.");
+  }
 
 }
 
@@ -343,8 +349,23 @@ void progress_sheet(string detail)
   {
     progress(item_amount($item[white pixel]), 30, "make a " + wrap($item[digital key]));
   }
+  if (item_amount($item[red pixel potion]) < 5
+      && have($item[continuum transfunctioner])
+      && quest_status("questL13Final") < 11
+      && !have_skill($skill[ambidextrous funkslinging]))
+  {
+    progress(item_amount($item[red pixel potion]), 5, wrap($item[red pixel potion], 5) + " for " + wrap($monster[your shadow]));
+  }
+
+
   int desks = to_int(get_property("writingDesksDefeated"));
 
+  if (desks < 5 && have($item[ghost of a necklace]))
+  {
+    // sometimes mafia loses track of a desk fight, which is sad.
+    desks = 5;
+    set_property("writingDesksDefeated", 5);
+  }
   if (desks > 0 && desks < 5)
   {
     progress(desks, 5, "defeated " + wrap($monster[writing desk]));
@@ -927,11 +948,6 @@ void progress_sheet(string detail)
       }
     }
 
-    if (to_boolean(get_property("loveTunnelAvailable"))
-        && !to_boolean(get_property("_loveTunnelUsed")))
-    {
-      task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is available and hasn't been used today.");
-    }
 
   }
 

@@ -242,6 +242,11 @@ string maybe_portscan(monster foe)
 
 string yz_consult(int round, string mob, string text)
 {
+  // do something like this if we want to consider stealing, but WHAM should take care of this for us generally.
+  // We *should* defer to WHAM when we can steal even when we want to do something else though
+  // (say, steal before digitize, when applicable). Maybe send to WHAM when we have the option to steal?
+//  if(contains_text(text, "value=\"steal"))  return "try to steal an item";
+
   monster foe = to_monster(mob);
 
   string maybe = maybe_run(foe);

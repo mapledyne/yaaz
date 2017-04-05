@@ -198,16 +198,6 @@ void skill_warning()
     wait(10);
   }
 
-  if (!have_skill($skill[Ambidextrous Funkslinging]))
-  {
-    warning("This script is written assuming you have the " + wrap($skill[Ambidextrous Funkslinging]) + " skill.");
-    warning("It'll work without it, but will be inefficient fighting " + wrap($monster[your shadow]) + ".");
-    warning("Get " + wrap($skill[Ambidextrous Funkslinging]) + " to really utilize this script.");
-    if (my_class() == $class[disco bandit])
-      warning("Because you're a " + wrap(my_class()) + ", we'll try to pick up " + wrap($skill[Ambidextrous Funkslinging]) + " as we go.");
-    wait(10);
-  }
-
 }
 
 void settings_warning()
@@ -284,6 +274,23 @@ void intro()
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Comments, bugs, feature requests, please send to " + wrap("Degrassi (#1063113)", COLOR_MONSTER) + ".");
 
+
+  boolean has_fam = false;
+  foreach f in $familiars[]
+  {
+    if (have_familiar(f))
+    {
+      has_fam = true;
+      break;
+    }
+  }
+
+  if (!has_fam)
+  {
+    error("You don't have any familiars yet. This script needs to have at least one familiar. Go get one manually and try re-running this script.");
+    abort();
+  }
+
   if (!svn_exists("winterbay-mafia-wham"))
   {
     warning("While this script tries to not require other scripts, and just skips functionality in those cases,");
@@ -298,6 +305,16 @@ void intro()
     log("To get more information, run the " + SCRIPT + "-help.ash script.");
     log("To remove this message: set " + SETTING_PREFIX + "_no_intro=true");
     wait(5);
+  }
+
+  if (my_ascensions() < 10
+      && !contains_text(get_property("hpAutoRecoveryItems"), "rest at your campground"))
+  {
+    warning("Your restore options (under HP/MP Usage) you don't have 'rest at your campground' selected.");
+    warning("That option takes a turn, which is sad, but I'm worried you don't have the skills and resources to be able to easily avoid it.");
+    warning("I will continue without resting, but there's a high chance the script will fail with 'Autorecovery failed' errors.");
+    warning("In those cases, you'll have to recover yourself and then rerun the script.");
+    wait(10);
   }
 
   if (my_turncount() == 0)

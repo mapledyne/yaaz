@@ -176,10 +176,22 @@ familiar choose_familiar(string fam)
 
   if (newbie == $familiar[none])
   {
-    newbie = choose_familiar("mosquito");
-    add_familiar_weight = false;
+    foreach f in $familiars[]
+    {
+      if (have_familiar(f))
+      {
+        newbie = choose_familiar(f);
+        add_familiar_weight = false;
+      }
+    }
   }
 
+  if (newbie == $familiar[none])
+  {
+    error("You don't seem to have any familiars.");
+    error("This script can't handle that situation. Go get at least one yourself.");
+    abort();
+  }
   equip_familiar(newbie);
   return newbie;
 }

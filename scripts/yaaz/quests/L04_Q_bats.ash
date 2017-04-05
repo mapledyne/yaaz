@@ -23,19 +23,19 @@ boolean get_stench_res()
     return true;
   }
 
-  if (item_amount($item[stench powder]) > 0)
+  if (have($item[stench powder]))
   {
     use(1, $item[stench powder]);
     return true;
   }
 
-  if (i_a($item[knob goblin harem veil]) > 0)
+  if (have($item[knob goblin harem veil]))
   {
     equip($item[knob goblin harem veil]);
     return true;
   }
 
-  if (i_a($item[asshat]) > 0)
+  if (have($item[asshat]))
   {
     equip($item[asshat]);
     return true;
@@ -87,30 +87,28 @@ boolean L04_Q_bats()
         break;
       case STARTED:
       case 1:
-        if (item_amount($item[sonar-in-a-biscuit]) > 0)
+        if (have($item[sonar-in-a-biscuit]))
         {
           use(1, $item[sonar-in-a-biscuit]);
           break;
         }
-        if (item_amount($item[disassembled clover]) > 0)
+        if (have($item[disassembled clover]))
         {
-          if (!get_stench_res())
-            return false;
+          if (!get_stench_res())  return false;
           log("Going to clover for some " + wrap($item[sonar-in-a-biscuit]) + ".");
           yz_clover($location[guano junction]);
           break;
         }
         log("We don't have a clover to get a " + wrap($item[sonar-in-a-biscuit]) + ", so doing it the hard way.");
-        maximize("");
-        while(i_a($item[sonar-in-a-biscuit]) == 0 && can_adventure())
+        while(!have($item[sonar-in-a-biscuit]) && can_adventure())
         {
           if (!get_stench_res())
             return false;
-          yz_adventure($location[guano junction]);
+          if (!yz_adventure($location[guano junction], "")) return true;
           break;
         }
       case 2:
-        if (item_amount($item[sonar-in-a-biscuit]) > 0)
+        if (have($item[sonar-in-a-biscuit]))
         {
           use(1, $item[sonar-in-a-biscuit]);
           break;
@@ -123,14 +121,11 @@ boolean L04_Q_bats()
           loc = $location[guano junction];
           get_stench_res();
         }
-        yz_adventure(loc);
+        if (!yz_adventure(loc)) return true;
         break;
       case 3:
-        if (dangerous($monster[boss bat]))
-        {
-          log("Skipping the " + wrap($location[the boss bat's lair]) + " for now since it seems a bit dangerous until we level up.");
-          return false;
-        }
+        if (dangerous($monster[boss bat])) return false;
+
         string max = "";
         if ($location[the boss bat's lair].turns_spent < 4)
         {
@@ -143,7 +138,7 @@ boolean L04_Q_bats()
             change_mcd(8);
           }
         }
-        yz_adventure($location[the boss bat's lair], max);
+        if (!yz_adventure($location[the boss bat's lair], max)) return true;
         break;
       case 4:
         log(wrap($monster[boss bat]) + " defeated. Going back to the council.");

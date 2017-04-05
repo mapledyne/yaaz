@@ -64,16 +64,19 @@ boolean M_dailydungeon()
   }
   else if (item_amount($item[skeleton key]) > 1)
   {
-    set_property("choiceAdventure692", 3);
+    set_property("choiceAdventure692", 2);
   } else if (my_buffedstat(my_primestat()) >= 30)
   {
+  //[20:14] Gaikotsu: [237] The Daily Dungeon (Room 2) Encounter: I Wanna Be a Door Requested choice (5) for choice #692 is not currently available. choice 1: Try the doorknob (suffer trap effects) choice 6: Sneak past it (bypass trap with moxie) choice 8: Leave the way ...
+  //[20:14] Gaikotsu: ... you came in. (leave, no turn spent) Click here to continue in the relay browser.
+
     switch(my_primestat())
     {
       case $stat[muscle]:
-        set_property("choiceAdventure692", 4);
+        set_property("choiceAdventure692", 5);
         break;
       case $stat[moxie]:
-        set_property("choiceAdventure692", 5);
+        set_property("choiceAdventure692", 4);
         break;
       case $stat[mysticality]:
         set_property("choiceAdventure692", 6);
