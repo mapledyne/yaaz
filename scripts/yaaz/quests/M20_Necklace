@@ -52,8 +52,6 @@ boolean kitchen()
 
 boolean billiard_room()
 {
-  maximize("-combat,hot damage,stench damage");
-  
   location pool_hall = $location[the haunted billiards room];
   item key = $item[spookyraven library key];
   item chalk = $item[handful of hand chalk];
@@ -71,12 +69,12 @@ boolean billiard_room()
     log(wrap($monster[chalkdust wraith] + " will be difficult with low bonus elemental damage.");
   }
   
-  log("Current pool skill is *shrug*");
-  set_property("choiceAdventure875", 1);
   set_property("choiceAdventure330", 1);
+  set_property("choiceAdventure875", 1);
 
   while(!have(key) && can_adventure())
   {
+    maximize("-combat,pool skill,hot damage,stench damage");
     if (have_effect($effect[chalky hand]) == 0 && have(chalk)) use(1,chalk);
     
     if (!yz_adventure(pool_hall)) return true;
