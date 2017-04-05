@@ -73,13 +73,13 @@ boolean M_dailydungeon()
     switch(my_primestat())
     {
       case $stat[muscle]:
-        set_property("choiceAdventure692", 5);
-        break;
-      case $stat[moxie]:
         set_property("choiceAdventure692", 4);
         break;
-      case $stat[mysticality]:
+      case $stat[moxie]:
         set_property("choiceAdventure692", 6);
+        break;
+      case $stat[mysticality]:
+        set_property("choiceAdventure692", 5);
         break;
     }
   } else {
