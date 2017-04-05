@@ -70,6 +70,8 @@ boolean location_open(location l)
       return quest_status("questL05Goblin") >= 1;
     case $location[8-bit realm]:
       return have($item[continuum transfunctioner]);
+    case $location[the haunted conservatory]:
+      return quest_status("questM20Necklace") != UNSTARTED;
     default:
       return true;
   }

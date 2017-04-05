@@ -9,6 +9,8 @@ boolean do_untinker()
     return true;
   }
 
+  if (dangerous($location[The Degrassi Knoll Garage])) return false;
+
   while(!have($item[rusty screwdriver]))
   {
     if (!yz_adventure($location[The Degrassi Knoll Garage])) return true;
@@ -30,6 +32,7 @@ boolean M_untinker()
     case UNSTARTED:
       log("Visiting the " + wrap("Untinker", COLOR_LOCATION) + " to start his quest.");
       visit_url("place.php?whichplace=forestvillage&preaction=screwquest&action=fv_untinker_quest");
+      set_property("questM01Untinker", 'started');
     case STARTED:
       return do_untinker();
     case 1:

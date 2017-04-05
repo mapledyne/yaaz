@@ -304,6 +304,7 @@ void spirits()
 	boolean[item] missing_list = spirits_missing();
 
 	int drank = 66 - count(missing_list);
+	if (drank == 0) return;
 
 	if (drank < 66)
 	{
@@ -379,6 +380,7 @@ int familiar_weight_total()
 void basic_trophy(int have, int needed, int trophy)
 {
 	if (!(trophies contains trophy) && !DEBUG_TROPHY) return;
+	if (have == 0) return;
 
 	string msg = all_trophies[trophy].name;
 

@@ -4,11 +4,6 @@ void day_begin()
 {
   log("Beginning start-of-day prep.");
 
-  if (!in_hardcore())
-  {
-    warning("This script is built with Hardcore in mind. It has rudimentary Softcore support, but it may still do some things the hard way.");
-  }
-
   log("Current progress:");
   progress_sheet("all");
   wait(5);

@@ -208,7 +208,7 @@ void settings_warning()
     warning("Setting this to something I think is reasonable, but you may want to skip out here and change yourself if desired.");
     wait(10);
     set_property("mpAutoRecoveryTarget", 0.6);
-    set_property("mpAutoRecovery", 0.5);
+    set_property("mpAutoRecovery", 0.45);
   }
   if (to_float(get_property("hpAutoRecovery")) < 0.1)
   {
@@ -307,12 +307,24 @@ void intro()
     wait(5);
   }
 
+  if (!in_hardcore())
+  {
+    warning("This script is built with Hardcore in mind. It has rudimentary Softcore support, but it may still do some things the hard way.");
+    if (to_boolean(setting("no_pulls", false)))
+    {
+      log("You've set " + SETTING_PREFIX + "_no_pulls to true, so I won't make any pulls from Hagnk's. Make these pulls manually if you want to.");
+    } else {
+      log("This script will make pulls from Hangk's as it thinks is appropriate. Set " + SETTING_PREFIX + "_no_pulls=true if you want the script to not make any pulls.");
+    }
+  }
+
   if (my_ascensions() < 10
-      && !contains_text(get_property("hpAutoRecoveryItems"), "rest at your campground"))
+      && (!contains_text(get_property("hpAutoRecoveryItems"), "rest at your campground")
+          || !contains_text(get_property("mpAutoRecoveryItems"), "rest at your campground")))
   {
     warning("Your restore options (under HP/MP Usage) you don't have 'rest at your campground' selected.");
     warning("That option takes a turn, which is sad, but I'm worried you don't have the skills and resources to be able to easily avoid it.");
-    warning("I will continue without resting, but there's a high chance the script will fail with 'Autorecovery failed' errors.");
+    warning("I will continue without resting, but there's a high chance the script will fail with '" + wrap("Autorecovery failed", COLOR_ERROR) + "' errors.");
     warning("In those cases, you'll have to recover yourself and then rerun the script.");
     wait(10);
   }
