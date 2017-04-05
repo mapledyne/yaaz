@@ -24,7 +24,7 @@ boolean kitchen()
   
   if(quest_status("questM20Necklace") >= 1)
   {  
-    log("Already found the Billiards Room Key.");
+    log("Already found the " + wrap(key) + ".");
     return true;
   }
   
@@ -56,7 +56,7 @@ boolean billiard_room()
   
   if(quest_status("questM20Necklace") >= 3)
   {  
-    log("Way to go Fast Eddie!");
+    log("Fast Eddie has got nothing on you!");
     return true;
   }
   
