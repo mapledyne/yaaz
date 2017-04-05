@@ -51,9 +51,12 @@ boolean kitchen()
 boolean billiard_room()
 {
   location pool_hall = $location[the haunted billiards room];
+  item key = $item[spookyraven library key];
+  item chalk = $item[handful of hand chalk];
+  
   if(quest_status("questM20Necklace") >= 3)
   {  
-    log("You have already followed in the footsteps of Fast Eddie.");
+    log("Way to go Fast Eddie!");
     return true;
   }
   
@@ -63,7 +66,33 @@ boolean billiard_room()
     return false;
   }
   
+  if(my_inebriety() > 10)
+  {
+    log("Too drunk to play pool efficiently.");
+    return false;
+  }
+  
+  if((my_primestat() == $stat[muscle] || my_primestat() == $stat[moxie]) && total_elemental_damage(2,1,1,0,2) < 10)
+  {
+    log(wrap($monster[chalkdust wraith] + " will be difficult with low bonus elemental damage.");
+  }
+  
   log("Current pool skill is *shrug*");
+  set_property("choiceAdventure875", 1);
+  set_property("choiceAdventure330", 1);
+
+  while(!have(key) && can_adventure())
+  {
+    if (have_effect($effect[chalky hand]) == 0 && have(chalk)) use(1,chalk);
+    
+    yz_adventure(pool_hall);
+  }
+  
+  if (have(key)) 
+  {
+    log("Found " + wrap(key) +". All done in " + wrap(pool_hall) + "!");
+    return true;
+  }
   return false;  
 }
 
@@ -95,4 +124,16 @@ boolean library()
     return true;
   }
   return false;  
+}
+
+int total_elemental_damage(int hotMult, int coldMult, int sleazeMult, int spookyMult, int stenchMult)
+{
+  int total = 0;
+  total += numeric_modifier("Hot Damage") * hotMult;
+  total += numeric_modifier("Cold Damage") * coldMult;
+  total += numeric_modifier("Sleaze Damage") * sleazeMult;
+  total += numeric_modifier("Spooky Damage") * spookyMult;
+  total += numeric_modifier("Stench Damage") * stenchMult;
+  
+  return total;
 }
