@@ -19,33 +19,47 @@ boolean M20_necklace()
 
 boolean kitchen()
 {
+  item key = $item[spookyraven billiards room key];
+  location kitchen = $location[the haunted kitchen];
+  
   if(quest_status("questM20Necklace") >= 1)
   {  
     log("Already found the Billiards Room Key.");
     return true;
   }
   
-  if(dangerous($location[the haunted kitchen])
+  if(dangerous(kitchen)
   {
-    log("The Haunted Kitchen is too dangerous! Come back later.");
+    log(wrap(location) + " is too dangerous! Come back later.");
     return false;
   }
   
   log("Rummaging around in the drawers...");
+  while(!have(key) && can_adventure())
+  {
+    yz_adventure(kitchen);
+  }
+  
+  if (have(key)) 
+  {
+    log("Found " + wrap(key) +". All done in " + wrap(kitchen) + "!");
+    return true;
+  }
   return false;
 }
 
 boolean billiard_room()
 {
+  location pool_hall = $location[the haunted billiards room];
   if(quest_status("questM20Necklace") >= 3)
   {  
     log("You have already followed in the footsteps of Fast Eddie.");
     return true;
   }
   
-  if(dangerous($location[the haunted billiards room])
+  if(dangerous(pool_hall)
   {
-    log("The Haunted Billiards Room is too dangerous! Come back later.");
+    log(wrap(pool_hall) + " is too dangerous! Come back later.");
     return false;
   }
   
@@ -55,17 +69,30 @@ boolean billiard_room()
 
 boolean library()
 {
+  item necklace = $item[lady spookyraven's necklace];
+  location library = $location[the haunted billiards room];
+
   if(quest_status("questM20Necklace") >= 4)
   {  
     log("Jewelry fixes everything.");
     return true;
   }
   
-  if(dangerous($location[the haunted billiards room])
+  if(dangerous(library)
   {
-    log("The Haunted Billiards Room is too dangerous! Come back later.");
+    log(wrap(library) + " is too dangerous! Come back later.");
     return false;
   }
   
+  while(!have(necklace) && can_adventure())
+  {
+    yz_adventure(library);
+  }
+  
+  if (have(necklace)) 
+  {
+    log("Found " + wrap(key) +". All done in " + wrap(kitchen) + "!");
+    return true;
+  }
   return false;  
 }
