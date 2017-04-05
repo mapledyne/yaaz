@@ -1,7 +1,7 @@
 import "util/main.ash";
 import <zlib.ash>;
 
-boolean M_spookyraven1stfloor()
+boolean M20_necklace()
 {
   if (quest_status("questM20Necklace") == FINISHED) return true;
   
