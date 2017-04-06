@@ -19,12 +19,32 @@ boolean is_song(effect ef);
 int songs_in_head();
 int max_songs();
 boolean can_cast_song();
-
+int approx_pool_skill();
 
 string SCRIPT = "yaaz";
 string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
+
+
+int approx_pool_skill()
+{
+  int pool = 0;
+  if (my_inebriety() <= 10)
+  {
+    pool += my_inebriety();
+  } else {
+    pool += 10 - (my_inebriety() - 10) * 2;
+  }
+
+  pool += to_int(get_property("poolSkill"));
+
+  pool += numeric_modifier("pool skill");
+
+  pool += max(10,floor(2.0 * square_root(to_float(get_property("poolSharkCount")))));
+
+  return pool;
+}
 
 int smiles_remaining()
 {

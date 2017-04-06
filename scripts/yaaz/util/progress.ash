@@ -376,12 +376,12 @@ void progress_sheet(string detail)
       switch (quest_status("questM20Necklace"))
       {
         case STARTED:
-          task("Get the " + wrap($item[Spookyraven billiards room key]));
+          progress(to_int(get_property("manorDrawerCount")), 21, "drawers searched in " + wrap($location[the haunted kitchen]));
           break;
         case 1:
-          // can't use $item[] here since it prints with its number as well
-          // (there are two in the database apparently).
-          task("Get the " + wrap("Spookyraven library key", COLOR_ITEM));
+          int pool = approx_pool_skill();
+          int max_pool = max(pool, 18);
+          progress(pool, max_pool, "approx. pool skill for the " + wrap($location[the haunted billiards room]));
           break;
         case 4:
           task("Return the "+ wrap($item[ghost of a necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER));
