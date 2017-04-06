@@ -357,7 +357,6 @@ void progress_sheet(string detail)
     progress(item_amount($item[red pixel potion]), 5, wrap($item[red pixel potion], 5) + " for " + wrap($monster[your shadow]));
   }
 
-
   if (quest_active("questM20Necklace"))
   {
     int desks = to_int(get_property("writingDesksDefeated"));
@@ -376,7 +375,10 @@ void progress_sheet(string detail)
       switch (quest_status("questM20Necklace"))
       {
         case STARTED:
-          progress(to_int(get_property("manorDrawerCount")), 21, "drawers searched in " + wrap($location[the haunted kitchen]));
+          int hot_drawers = max(4, 1 + floor(numeric_modifier("hot resistance")/3));
+          int stench_drawers = max(4, 1 + floor(numeric_modifier("stench resistance")/3));
+          string drawers = " (" + wrap(hot_drawers, "red") + " or " + wrap(stench_drawers, "green") + " drawers opened)";
+          progress(to_int(get_property("manorDrawerCount")), 21, "drawers searched in " + wrap($location[the haunted kitchen]) + drawers);
           break;
         case 1:
           int pool = approx_pool_skill();
