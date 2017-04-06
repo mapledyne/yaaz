@@ -72,6 +72,7 @@ boolean billiard_room()
   if (have(key)) 
   {
     log("Found " + wrap(key) +". All done in " + wrap(pool_hall) + "!");
+    sell_all(chalk);
     return true;
   }
   return false;  
