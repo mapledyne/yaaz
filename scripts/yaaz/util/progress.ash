@@ -377,7 +377,7 @@ void progress_sheet(string detail)
         case STARTED:
           int hot_drawers = max(4, 1 + floor(numeric_modifier("hot resistance")/3));
           int stench_drawers = max(4, 1 + floor(numeric_modifier("stench resistance")/3));
-          string drawers = " (" + wrap(hot_drawers, "red") + " or " + wrap(stench_drawers, "green") + " drawers opened)";
+          string drawers = " (" + wrap(hot_drawers, "red") + " or " + wrap(stench_drawers, "green") + " drawers/turn)";
           progress(to_int(get_property("manorDrawerCount")), 21, "drawers searched in " + wrap($location[the haunted kitchen]) + drawers);
           break;
         case 1:
