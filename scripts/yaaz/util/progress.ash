@@ -358,17 +358,42 @@ void progress_sheet(string detail)
   }
 
 
-  int desks = to_int(get_property("writingDesksDefeated"));
+  if (quest_active("questM20Necklace"))
+  {
+    int desks = to_int(get_property("writingDesksDefeated"));
 
-  if (desks < 5 && have($item[ghost of a necklace]))
-  {
-    // sometimes mafia loses track of a desk fight, which is sad.
-    desks = 5;
-    set_property("writingDesksDefeated", 5);
-  }
-  if (desks > 0 && desks < 5)
-  {
-    progress(desks, 5, "defeated " + wrap($monster[writing desk]));
+    if (desks < 5 && have($item[ghost of a necklace]))
+    {
+      // sometimes mafia loses track of a desk fight, which is sad.
+      desks = 5;
+      set_property("writingDesksDefeated", 5);
+    }
+
+    if (desks == 0)
+    {
+      // not sure if we're doing the writing desk trick at this point, so
+      // display as if we're not:
+      switch (quest_status("questM20Necklace"))
+      {
+        case STARTED:
+          task("Get the " + wrap($item[Spookyraven billiards room key]));
+          break;
+        case 1:
+          // can't use $item[] here since it prints with its number as well
+          // (there are two in the database apparently).
+          task("Get the " + wrap("Spookyraven library key", COLOR_ITEM));
+          break;
+        case 4:
+          task("Return the "+ wrap($item[ghost of a necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER));
+          break;
+      }
+    }
+
+    if (desks > 0 && desks < 5)
+    {
+      progress(desks, 5, "defeated " + wrap($monster[writing desk]));
+    }
+
   }
 
   if (quest_status("questM21Dance") > UNSTARTED && quest_status("questM21Dance") < 3)
@@ -851,6 +876,7 @@ void progress_sheet(string detail)
 
       // TODO: Find a way to track wall of meat progress...
   }
+
 
   if (quest_status("questL06Friar") > UNSTARTED && !have($item[wand of nagamar]))
   {

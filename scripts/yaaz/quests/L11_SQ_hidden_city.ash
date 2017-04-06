@@ -54,6 +54,18 @@ boolean do_liana()
     return false;
   }
 
+  if ($location[A Massive Ziggurat].turns_spent < 3)
+    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
+  while ($location[A Massive Ziggurat].turns_spent < 3)
+  {
+    maximize("");
+    if (my_path() != "Way of the Surprising Fist")
+    {
+      equip($slot[weapon], $item[antique machete]);
+    }
+    if (!yz_adventure($location[A Massive Ziggurat])) return true;
+  }
+
   if (quest_status("questL11Business") > UNSTARTED
       && quest_status("questL11Curses") > UNSTARTED
       && quest_status("questL11Doctor") > UNSTARTED
@@ -63,11 +75,11 @@ boolean do_liana()
   }
 
   maximize("");
-
   if (my_path() != "Way of the Surprising Fist")
   {
     equip($slot[weapon], $item[antique machete]);
   }
+
 
   if(quest_status("questL11Business") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northeast)]) + ".");
@@ -95,13 +107,6 @@ boolean do_liana()
   while(quest_status("questL11Spare") < 0)
   {
     if (!yz_adventure($location[An Overgrown Shrine (Southeast)])) return true;
-  }
-
-  if ($location[A Massive Ziggurat].turns_spent < 3)
-    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
-  while ($location[A Massive Ziggurat].turns_spent < 3)
-  {
-    if (!yz_adventure($location[A Massive Ziggurat])) return true;
   }
 
   return false;
