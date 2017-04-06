@@ -98,6 +98,7 @@ boolean library()
   if (have(necklace)) 
   {
     log("Found " + wrap(necklace) +". All done in " + wrap(library) + "!");
+    visit_url("place.php?whichplace=manor1&action=manor1_ladys");
     return true;
   }
   return false;  
