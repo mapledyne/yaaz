@@ -1,0 +1,128 @@
+import "util/main.ash";
+
+int total_elemental_damage(int hotMult, int coldMult, int sleazeMult, int spookyMult, int stenchMult)
+{
+  int total = 0;
+  total += numeric_modifier("Hot Damage") * hotMult;
+  total += numeric_modifier("Cold Damage") * coldMult;
+  total += numeric_modifier("Sleaze Damage") * sleazeMult;
+  total += numeric_modifier("Spooky Damage") * spookyMult;
+  total += numeric_modifier("Stench Damage") * stenchMult;
+  
+  return total;
+}
+
+boolean kitchen()
+{
+  item key = $item[spookyraven billiards room key];
+  location kitchen = $location[the haunted kitchen];
+  
+  if(quest_status("questM20Necklace") >= 1)
+  {  
+    log("Already found the " + wrap(key) + ".");
+    return true;
+  }
+  
+  if(dangerous(kitchen)) return false;
+  
+  log("Rummaging around in the drawers...");
+  while(!have(key) && can_adventure())
+  {
+    if (!yz_adventure(kitchen)) return true;
+  }
+  
+  if (have(key)) 
+  {
+    log("Found " + wrap(key) +". All done in " + wrap(kitchen) + "!");
+    return true;
+  }
+  return false;
+}
+
+boolean billiard_room()
+{
+  location pool_hall = $location[the haunted billiards room];
+  item key = $item[[7302]spookyraven library key];
+  item chalk = $item[handful of hand chalk];
+  
+  if(quest_status("questM20Necklace") >= 3)
+  {  
+    log("Fast Eddie has got nothing on you!");
+    return true;
+  }
+  
+  if(dangerous(pool_hall) || my_inebriety() > 10) return false;
+  
+  if((my_primestat() == $stat[muscle] || my_primestat() == $stat[moxie]) && total_elemental_damage(2,1,1,0,2) < 10)
+  {
+    log(wrap($monster[chalkdust wraith]) + " will be difficult with low bonus elemental damage.");
+  }
+  
+  set_property("choiceAdventure330", 1);
+  set_property("choiceAdventure875", 1);
+
+  while(!have(key) && can_adventure())
+  {
+    maximize("-combat,pool skill,hot damage,stench damage");
+    if (have_effect($effect[chalky hand]) == 0 && have(chalk)) use(1,chalk);
+    
+    if (!yz_adventure(pool_hall)) return true;
+  }
+  
+  if (have(key)) 
+  {
+    log("Found " + wrap(key) +". All done in " + wrap(pool_hall) + "!");
+    return true;
+  }
+  return false;  
+}
+
+boolean library()
+{
+  item necklace = $item[lady spookyraven's necklace];
+  location library = $location[the haunted billiards room];
+
+  if(quest_status("questM20Necklace") >= 4)
+  {  
+    log("Jewelry fixes everything.");
+    return true;
+  }
+  
+  if(dangerous(library)) return false;
+  
+  while(!have(necklace) && can_adventure())
+  {
+    if (!yz_adventure(library)) return true;
+  }
+  
+  if (have(necklace)) 
+  {
+    log("Found " + wrap(necklace) +". All done in " + wrap(library) + "!");
+    return true;
+  }
+  return false;  
+}
+
+boolean M20_necklace()
+{
+  if (quest_status("questM20Necklace") == FINISHED) return true;
+  
+  if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
+  
+  if (quest_status("questM20Necklace") > UNSTARTED)
+  {
+    maximize("");
+    
+    if (!kitchen()) return false;
+    if (!billiard_room()) return false;
+    if (!library()) return false;
+  }
+  
+  return true;
+}
+
+void main()
+{
+  M20_necklace();
+}
+
