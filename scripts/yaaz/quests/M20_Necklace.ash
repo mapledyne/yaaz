@@ -106,7 +106,7 @@ boolean library()
 
 boolean M20_necklace()
 {
-  if (quest_status("questM20Necklace") == FINISHED) return true;
+  if (quest_status("questM20Necklace") == FINISHED) return false;
   
   if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
   
