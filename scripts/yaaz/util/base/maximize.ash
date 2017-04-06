@@ -104,6 +104,19 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target != "") target = target + ", ";
   target += "effective";
 
+  // force a weapon in our hands. This compensates for some of the unarmed skills (Master of Surprising Fist)
+  // which we should possibly evaluate, but for now just use an actual weapon.
+  if (my_path() != "Way of the Surprising Fist"
+      && have_skill($skill[Master of the Surprising Fist]))
+  {
+    if (my_buffedstat($stat[muscle]) >= my_buffedstat($stat[moxie]))
+    {
+      target += ", melee";
+    } else {
+      target += ", ranged";
+    }
+  }
+
 /*  if (my_primestat() == $stat[muscle]
       && to_slot(it) != $slot[off-hand]
       && outfit == "")
