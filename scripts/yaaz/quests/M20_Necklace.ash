@@ -80,7 +80,7 @@ boolean billiard_room()
 boolean library()
 {
   item necklace = $item[lady spookyraven's necklace];
-  location library = $location[the haunted billiards room];
+  location library = $location[the haunted library];
 
   if(quest_status("questM20Necklace") >= 4)
   {  
