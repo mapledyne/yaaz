@@ -32,7 +32,7 @@ boolean dangerous(monster mon)
 boolean dangerous(location loc)
 {
   int counter = 0;
-  aggregate monsters = get_monsters(loc);
+  monster[] monsters = get_monsters(loc);
   int threshold = count(monsters) / 2;
   foreach i, mon in monsters
   {
