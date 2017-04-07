@@ -9,7 +9,6 @@ import 'special/locations/lovetunnel.ash';
 import 'special/locations/ltt.ash';
 import 'special/locations/precinct.ash';
 import 'special/locations/snojo.ash';
-import 'special/locations/spacegate.ash';
 import 'special/locations/teatree.ash';
 import 'special/locations/terminal.ash';
 import 'special/locations/thanksgarden.ash';

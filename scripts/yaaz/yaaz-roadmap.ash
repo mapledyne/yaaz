@@ -8,6 +8,7 @@ task("[war] No current support for " + wrap($location[McMillicancuddy's Farm]) +
 task("[war] Nun support presumes you're fighting as a fratboy.");
 task("[war] War support generally assumes you're a fratboy and makes some poor assumptions when not.");
 task("Low skill, low level can be hard on the script (< level 5).");
+task("The initial Spookyraven quest line assumes you're doing the writing desk trick which isn't helpful to lower level chars.");
 task("The Hedge Maze generally assumes you can take the faster path. If you can't, it may hurt.");
 log("");
 

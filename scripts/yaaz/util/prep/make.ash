@@ -65,14 +65,8 @@ void make_things()
 
   if (quest_status("questL13Final") < 5)
   {
-    while (item_amount($item[digital key]) == 0 && creatable_amount($item[digital key]) == 0 && creatable_amount($item[white pixel]) > 0)
-    {
-      log("Making a " + wrap($item[white pixel]) + " to help us make a " + $item[digital key] + ".");
-      create(1, $item[white pixel]);
-    }
     string msg = "for the perplexing door.";
     make_if_needed($item[skeleton key], msg);
-    make_if_needed($item[digital key], msg);
     make_if_needed($item[richard's star key], msg);
   }
 

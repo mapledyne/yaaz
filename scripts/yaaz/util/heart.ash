@@ -190,6 +190,7 @@ void do_heart_thing(string player)
       if (contains_text(v, 'Whisper:'))
       {
         visit_url('choice.php?pwd&whichchoice=1043&option=1&who=' + player);
+        cli_execute('refresh inv');
         return;
       }
     }
