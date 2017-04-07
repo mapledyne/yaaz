@@ -113,7 +113,7 @@ void maximize(string target, string outfit, item it, familiar fam)
     {
       target += ", melee";
     } else {
-      target += ", ranged";
+      target += ", -melee";
     }
   }
 
