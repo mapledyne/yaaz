@@ -72,6 +72,7 @@ boolean billiard_room()
   if (have(key)) 
   {
     log("Found " + wrap(key) +". All done in " + wrap(pool_hall) + "!");
+    sell_all(chalk);
     return true;
   }
   return false;  
@@ -80,7 +81,7 @@ boolean billiard_room()
 boolean library()
 {
   item necklace = $item[lady spookyraven's necklace];
-  location library = $location[the haunted billiards room];
+  location library = $location[the haunted library];
 
   if(quest_status("questM20Necklace") >= 4)
   {  
@@ -98,6 +99,7 @@ boolean library()
   if (have(necklace)) 
   {
     log("Found " + wrap(necklace) +". All done in " + wrap(library) + "!");
+    visit_url("place.php?whichplace=manor1&action=manor1_ladys");
     return true;
   }
   return false;  
@@ -105,7 +107,7 @@ boolean library()
 
 boolean M20_necklace()
 {
-  if (quest_status("questM20Necklace") == FINISHED) return true;
+  if (quest_status("questM20Necklace") == FINISHED) return false;
   
   if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
   
