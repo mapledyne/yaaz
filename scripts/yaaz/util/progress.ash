@@ -976,6 +976,11 @@ void progress_sheet(string detail)
       }
     }
 
+    if (have($item[burned government manual fragment]))
+    {
+      task("Consider using your " + wrap($item[burned government manual fragment]) + " (they'll disappear after ascension)");
+    }
+
 
   }
 
