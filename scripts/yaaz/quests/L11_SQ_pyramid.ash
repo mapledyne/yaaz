@@ -86,6 +86,10 @@ boolean L11_SQ_pyramid()
   }
 
   if (my_adventures() < 15) return false; // do this later.
+  if (get_counters('Digitize Monster', 0, 15) != "") return false;
+  if (get_counters('Enamorang Monster', 0, 15) != "") return false;
+  if (get_counters('Fortune Cookie', 0, 15) != "") return false;
+
   // Should try consuming something at this point instead of just skipping
 
 
@@ -105,7 +109,7 @@ boolean L11_SQ_pyramid()
   maximize("");
   while (item_amount($item[[2334]Holy MacGuffin]) == 0)
   {
-    yz_adventure_bypass($location[the lower chambers]);
+    if (!yz_adventure_bypass($location[the lower chambers])) return true;
   }
   log("Visiting the council to turn in the " + wrap($item[[2334]Holy MacGuffin]) + ".");
   council();

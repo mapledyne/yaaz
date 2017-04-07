@@ -308,7 +308,13 @@ void intro()
     wait(5);
   }
 
-  if (!in_hardcore())
+  if (my_ascensions() == 0)
+  {
+    warning("This script is meant to help auto-ascend. You're on your first ascension. This script will do some things inefficiently.");
+    warning("For instance, it won't take advantage of the mall when otherwise possible.");
+  }
+
+  if (!in_hardcore() && my_ascensions() > 0)
   {
     warning("This script is built with Hardcore in mind. It has rudimentary Softcore support, but it may still do some things the hard way.");
     if (to_boolean(setting("no_pulls", false)))

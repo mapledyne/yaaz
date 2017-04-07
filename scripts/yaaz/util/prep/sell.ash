@@ -1,6 +1,11 @@
 import "util/base/inventory.ash";
 import "util/base/quests.ash";
 
+
+// Note: items to sell that are quest-dependent should move to the appropriate
+// quest file and handled there. If you can sell items after a quest, let that
+// quest function handle it instead of all of the condition checking here.
+
 void sell_things()
 {
   int[item] sell_items;
@@ -17,23 +22,12 @@ void sell_things()
   while (my_meat() < 5000 && have($item[commemorative war stein]))
     sell_one($item[commemorative war stein]);
 
-
-
   if (my_primestat() == $stat[moxie])
   {
     sell_all($item[finger cymbals], 1);
   } else {
     sell_all($item[finger cymbals]);
   }
-
-  if (item_amount($item[digital key]) > 0
-      && have_skill($skill[Ambidextrous Funkslinging]))
-  {
-    sell_all($item[Blue Pixel]);
-    sell_all($item[Red Pixel]);
-    sell_all($item[Green Pixel]);
-  }
-
 
   if (have_familiar($familiar[misshapen animal skeleton]))
   {

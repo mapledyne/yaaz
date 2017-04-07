@@ -38,6 +38,7 @@ boolean do_leveling_thing()
 
   if (quest_status("questM20Necklace") == FINISHED)
   {
+    set_property("louvreDesiredGoal", 10); // prime stat
     return yz_adventure($location[the haunted gallery], "exp, ml, -combat");
   }
 
@@ -64,6 +65,7 @@ boolean do_leveling_thing()
     equip($slot[hat], $item[none]);
   }
 
+  warning("The kingdom is a dangerous place. Going to try to level up a bit in the " + wrap(loc) + ". Everywhere else still seems dangerous.");
   return yz_adventure(loc);
 }
 

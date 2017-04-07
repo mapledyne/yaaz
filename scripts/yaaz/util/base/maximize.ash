@@ -606,6 +606,10 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[notably lovely]);
       effect_maintain($effect[twen tea]);
       break;
+    case "pool skill":
+      effect_maintain($effect[chalky hand]);
+      effect_maintain($effect[chalked weapon]);
+      break;
     default:
       if (!have_colored_tongue())
         effect_maintain($effect[orange tongue]);
