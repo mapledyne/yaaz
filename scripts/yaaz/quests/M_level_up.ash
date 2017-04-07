@@ -38,6 +38,7 @@ boolean do_leveling_thing()
 
   if (quest_status("questM20Necklace") == FINISHED)
   {
+    set_property("louvreDesiredGoal", 10); // prime stat
     return yz_adventure($location[the haunted gallery], "exp, ml, -combat");
   }
 
