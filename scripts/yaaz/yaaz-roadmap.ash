@@ -10,6 +10,7 @@ task("[war] War support generally assumes you're a fratboy and makes some poor a
 task("Low skill, low level can be hard on the script (< level 5).");
 task("The initial Spookyraven quest line assumes you're doing the writing desk trick which isn't helpful to lower level chars.");
 task("The Hedge Maze generally assumes you can take the faster path. If you can't, it may hurt.");
+task("Some multi stage fights aren't recognized properly yet (OCRS especially susceptible to this)");
 log("");
 
 log("Planned features:");
