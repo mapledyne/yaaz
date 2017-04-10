@@ -14,12 +14,15 @@ import 'special/locations/terminal.ash';
 import 'special/locations/thanksgarden.ash';
 import 'special/locations/witchess.ash';
 import 'special/locations/vip_floundry.ash';
+import 'special/skills/communism.ash';
 import 'special/skills/eldritchhorror.ash';
 import 'special/skills/numberology.ash';
 import 'special/skills/rethinkcandy.ash';
+import 'special/skills/summon_annoyance.ash';
 
 void special()
 {
+  communism();
   teatree();
   vip_floundry();
   ltt();
@@ -29,6 +32,7 @@ void special()
   terminal();
   deck();
   precinct();
+  summon_annoyance();
 
   // These may actually get us in a fight, so do them after the ones above:
 
