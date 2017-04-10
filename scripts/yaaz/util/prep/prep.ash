@@ -13,6 +13,12 @@ import "util/prep/make.ash";
 import "util/prep/pulverize.ash";
 import "util/prep/use.ash";
 import "util/prep/closet.ash";
+import "util/prep/classes/prep_accordionthief.ash";
+import "util/prep/classes/prep_discobandit.ash";
+import "util/prep/classes/prep_pastamancer.ash";
+import "util/prep/classes/prep_sauceror.ash";
+import "util/prep/classes/prep_sealclubber.ash";
+import "util/prep/classes/prep_turtletamer.ash";
 import "special/special_check_often.ash";
 import "special/locations/vip_floundry.ash";
 import "special/items/deck.ash";
@@ -22,67 +28,6 @@ import "special/skills/flavour_of_magic.ash";
 import <zlib.ash>
 
 
-void prep_turtle_tamer()
-{
-  effect_maintain($effect[Eau de Tortue]);
-}
-
-boolean valid_thrall(thrall slave)
-{
-  skill sk = thrall_to_skill(slave);
-  if (!have_skill(sk)) return false;
-  if (my_maxmp() < mp_cost(sk)) return false;
-  return true;
-}
-
-void bind_thrall(thrall slave)
-{
-  if (my_thrall() == slave)
-    return;
-  skill sk = thrall_to_skill(slave);
-  if (sk != $skill[none])
-  {
-    log("Binding a " + wrap(slave) + " to our will.");
-    use_skill(1, sk);
-  }
-}
-
-void prep_pastamancer(location loc)
-{
-
-  if (valid_thrall($thrall[lasagmbie])
-      && (loc == $location[the themthar hills]
-          || loc == $location[tower level 2]))
-  {
-    bind_thrall($thrall[lasagmbie]);
-    return;
-  }
-
-  foreach slave in $thralls[spice ghost, angel hair wisp, vermincelli, spaghetti elemental, vampieroghi, lasagmbie, penne dreadful, elbow macaroni]
-  {
-    if (valid_thrall(slave))
-    {
-      bind_thrall(slave);
-      return;
-    }
-  }
-  log("You're a " + wrap(my_class()) + ", but you don't have any thrall skills. Go learn one!");
-
-}
-
-void class_specific_prep(class cl, location loc)
-{
-  switch(cl)
-  {
-    case $class[turtle tamer]:
-      prep_turtle_tamer();
-      break;
-    case $class[pastamancer]:
-      prep_pastamancer(loc);
-      break;
-  }
-
-}
 
 void prep_fishing(location loc)
 {
@@ -228,7 +173,14 @@ void prep(location loc)
   use_things();
   closet_things();
   clan_things();
-  class_specific_prep(my_class(), loc);
+
+  prep_accordionthief(loc);
+  prep_discobandit(loc);
+  prep_pastamancer(loc);
+  prep_sauceror(loc);
+  prep_sealclubber(loc);
+  prep_turtletamer(loc);
+
   prep_fishing(loc);
 
   if (have($item[screencapped monster])
