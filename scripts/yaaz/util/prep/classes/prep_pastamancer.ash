@@ -14,7 +14,7 @@ void bind_thrall(thrall slave)
 {
   if (my_thrall() == slave)
     return;
-  skill sk = thrall_to_skill(slave);
+  skill sk = to_skill(slave);
   if (sk != $skill[none])
   {
     log("Binding a " + wrap(slave) + " to our will.");
@@ -25,6 +25,8 @@ void bind_thrall(thrall slave)
 void prep_pastamancer(location loc)
 {
   if (my_class() != $class[pastamancer]) return;
+
+  // ... class specific stuff ...
 
   if (valid_thrall($thrall[lasagmbie])
       && (loc == $location[the themthar hills]

@@ -555,32 +555,6 @@ void get_one(item it)
 }
 
 
-
-void get_totem()
-{
-  if (npc_price($item[chewing gum on a string]) == 0)
-    return;
-	while(!have($item[turtle totem]) && my_meat() > 300)
-	{
-    log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[turtle totem]) + ".");
-		get_one($item[chewing gum on a string]);
-		use(1, $item[chewing gum on a string]);
-	}
-}
-
-void get_saucepan()
-{
-  if (npc_price($item[chewing gum on a string]) == 0)
-    return;
-	while(!have($item[saucepan]) && my_meat() > 300)
-	{
-    log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[saucepan]) + ".");
-		get_one($item[chewing gum on a string]);
-		use(1, $item[chewing gum on a string]);
-	}
-
-}
-
 int palindome_items()
 {
   int count = 0;

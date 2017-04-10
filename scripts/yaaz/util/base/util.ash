@@ -14,8 +14,6 @@ boolean can_adventure();
 // Need to sort this sort of problem out sometime...
 void uneffect(effect ef);
 void uneffect_song();
-boolean is_song(skill sk);
-boolean is_song(effect ef);
 int songs_in_head();
 int max_songs();
 boolean can_cast_song();
@@ -139,31 +137,9 @@ boolean is_guild_class()
 	return ($classes[Seal Clubber, Turtle Tamer, Sauceror, Pastamancer, Disco Bandit, Accordion Thief] contains my_class());
 }
 
-skill thrall_to_skill(thrall slave)
+skill to_skill(thrall slave)
 {
-  skill sk = $skill[none];
-  switch(slave)
-  {
-    case $thrall[lasagmbie]:
-      return $skill[bind lasagmbie];
-    case $thrall[Spice Ghost]:
-      return $skill[bind Spice Ghost];
-    case $thrall[Angel Hair Wisp]:
-      return $skill[bind Angel Hair Wisp];
-    case $thrall[Vermincelli]:
-      return $skill[bind Vermincelli];
-    case $thrall[Spaghetti Elemental]:
-      return $skill[bind Spaghetti Elemental];
-    case $thrall[Vampieroghi]:
-      return $skill[bind Vampieroghi];
-    case $thrall[Penne Dreadful]:
-      return $skill[bind Penne Dreadful];
-    case $thrall[Elbow Macaroni]:
-      return $skill[bind undead Elbow Macaroni];
-
-    default:
-      return $skill[none];
-  }
+  return slave.skill;
 }
 
 boolean is_turtle_buff(skill sk)
@@ -199,23 +175,12 @@ boolean is_thief_buff(effect ef)
   return is_thief_buff(sk);
 }
 
-boolean is_song(skill sk)
-{
-  return (sk.class == $class[accordion thief] && sk.buff);
-}
-
-boolean is_song(effect ef)
-{
-  skill sk = to_skill(ef);
-  return is_song(sk);
-}
-
 int songs_in_head()
 {
   int count = 0;
   foreach buff in my_effects()
   {
-    if (is_song(buff))
+    if (is_thief_buff(buff))
       count++;
   }
   return count;
@@ -238,7 +203,7 @@ void uneffect_song()
   effect song = $effect[none];
   foreach ef in my_effects()
   {
-    if (!is_song(ef)) continue;
+    if (!is_thief_buff(ef)) continue;
     if (have_effect(ef) < have_effect(song) || song == $effect[none])
     {
       song = ef;

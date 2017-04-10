@@ -7,7 +7,7 @@ boolean knows_song()
   foreach s in $skills[]
   {
     if (!have_skill(s)) continue;
-    if (!is_song(s)) continue;
+    if (!is_thief_buff(s)) continue;
 
     // we have a skill that's a song, so ...:
     return true;

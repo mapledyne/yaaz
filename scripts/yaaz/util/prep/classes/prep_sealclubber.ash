@@ -7,6 +7,9 @@ void prep_sealclubber(location loc)
 void prep_sealclubber()
 {
   prep_sealclubber($location[none]);
+
+  // ... class specific stuff ...
+
 }
 
 void main()

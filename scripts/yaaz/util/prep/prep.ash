@@ -135,9 +135,6 @@ void prep(location loc)
       save_daily_setting("hermit_complete", "true");
     }
   }
-  get_totem();
-  get_saucepan();
-  get_accordion();
 
   cast_one_time_things();
   cast_surplus_mp();
