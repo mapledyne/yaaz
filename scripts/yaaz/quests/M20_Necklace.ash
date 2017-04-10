@@ -1,130 +1,150 @@
 import "util/main.ash";
 
-int total_elemental_damage(int hotMult, int coldMult, int sleazeMult, int spookyMult, int stenchMult)
+
+boolean writing_desk_trick()
 {
-  int total = 0;
-  total += numeric_modifier("Hot Damage") * hotMult;
-  total += numeric_modifier("Cold Damage") * coldMult;
-  total += numeric_modifier("Sleaze Damage") * sleazeMult;
-  total += numeric_modifier("Spooky Damage") * spookyMult;
-  total += numeric_modifier("Stench Damage") * stenchMult;
-  
-  return total;
+  if (!to_boolean(get_property("chateauAvailable"))) return false;
+  if (!(to_monster(get_property("chateauMonster")) == $monster[writing desk])) return false;
+  if (!(get_campground() contains $item[source terminal])) return false;
+
+  return true;
 }
 
-boolean kitchen()
+boolean get_billiards_key()
 {
-  item key = $item[spookyraven billiards room key];
-  location kitchen = $location[the haunted kitchen];
-  
-  if(quest_status("questM20Necklace") >= 1)
-  {  
-    log("Already found the " + wrap(key) + ".");
-    return true;
-  }
-  
-  if(dangerous(kitchen)) return false;
-  
-  log("Rummaging around in the drawers...");
-  while(!have(key) && can_adventure())
-  {
-    if (!yz_adventure(kitchen)) return true;
-  }
-  
-  if (have(key)) 
-  {
-    log("Found " + wrap(key) +". All done in " + wrap(kitchen) + "!");
-    return true;
-  }
-  return false;
+  if (have($item[Spookyraven billiards room key])) return false;
+
+  yz_adventure($location[The Haunted Kitchen], "hot resistance, stench resistance");
+  return true;
 }
 
-boolean billiard_room()
+boolean get_library_key()
 {
-  location pool_hall = $location[the haunted billiards room];
-  item key = $item[[7302]spookyraven library key];
-  item chalk = $item[handful of hand chalk];
-  
-  if(quest_status("questM20Necklace") >= 3)
-  {  
-    log("Fast Eddie has got nothing on you!");
-    return true;
-  }
-  
-  if(dangerous(pool_hall) || my_inebriety() > 10) return false;
-  
-  if((my_primestat() == $stat[muscle] || my_primestat() == $stat[moxie]) && total_elemental_damage(2,1,1,0,2) < 10)
-  {
-    log(wrap($monster[chalkdust wraith]) + " will be difficult with low bonus elemental damage.");
-  }
-  
-  set_property("choiceAdventure330", 1);
-  set_property("choiceAdventure875", 1);
+  if (have($item[[7302]Spookyraven library key])) return false;
 
-  while(!have(key) && can_adventure())
+  if (my_inebriety() > 10
+      && approx_pool_skill() < 14)
   {
-    maximize("-combat,pool skill,hot damage,stench damage");
-    if (have_effect($effect[chalky hand]) == 0 && have(chalk)) use(1,chalk);
-    
-    if (!yz_adventure(pool_hall)) return true;
+    log("Skipping " + wrap($location[The Haunted Billiards Room]) + " since we're too drunk to play effectively.");
+    return false;
   }
-  
-  if (have(key)) 
+  if (my_inebriety() < 8
+      && approx_pool_skill() < 14)
   {
-    log("Found " + wrap(key) +". All done in " + wrap(pool_hall) + "!");
-    sell_all(chalk);
-    return true;
+    log("Skipping " + wrap($location[The Haunted Billiards Room]) + " until we are a little more tipsy.");
+    return false;
   }
-  return false;  
+
+  if (dangerous($location[The Haunted Billiards Room]))
+  {
+    log(wrap($location[The Haunted Billiards Room]) + " seems dangerous. Will try it later.");
+    return false;
+  }
+
+  maximize("items, -combat, pool skill, hot damage, stench damage");
+
+  if (my_primestat() == $stat[mysticality]
+      && element_damage_bonus($element[spooky]) < 10)
+  {
+    warning(wrap($monster[chalkdust wraith]) + " will be difficult with low bonus elemental damage.");
+  }
+
+  if (approx_pool_skill() < 14)
+  {
+    set_property("choiceAdventure875", 2);
+  } else {
+    set_property("choiceAdventure875", 1);
+  }
+  yz_adventure($location[The Haunted Billiards Room]);
+
+  return true;
+
 }
 
-boolean library()
+void set_manor_skill_option()
 {
-  item necklace = $item[lady spookyraven's necklace];
-  location library = $location[the haunted library];
+  if (!have($item[english to a. f. u. e. dictionary]))
+  {
+    set_property("choiceAdventure888", 4); // skip
+    return;
+  }
 
-  if(quest_status("questM20Necklace") >= 4)
-  {  
-    log("Jewelry fixes everything.");
-    return true;
-  }
-  
-  if(dangerous(library)) return false;
-  
-  while(!have(necklace) && can_adventure())
+  if (my_class() == $class[pastamancer] && !have_skill($skill[fearful fettucini]))
   {
-    if (!yz_adventure(library)) return true;
+    set_property("choiceAdventure888", 3); // complete manor skill quest
+    return;
   }
-  
-  if (have(necklace)) 
+
+  if (my_class() == $class[sauceror] && !have_skill($skill[scarysauce]))
   {
-    log("Found " + wrap(necklace) +". All done in " + wrap(library) + "!");
-    visit_url("place.php?whichplace=manor1&action=manor1_ladys");
-    return true;
+    set_property("choiceAdventure888", 3); // complete manor skill quest
+    return;
   }
-  return false;  
+
+  set_property("choiceAdventure888", 4); // skip
+  return;
+}
+
+boolean get_necklace()
+{
+  if (have($item[Lady Spookyraven's necklace])) return false;
+  if (!have($item[[7302]Spookyraven library key])) return false;
+  if (dangerous($location[the haunted library]))
+  {
+    log(wrap($location[the haunted library]) + " seems dangerous. Will try it later.");
+    return false;
+  }
+
+
+  set_manor_skill_option();
+
+  set_property("choiceAdventure889", 4);
+
+  yz_adventure($location[the haunted library], "");
+  return true;
 }
 
 boolean M20_necklace()
 {
-  if (quest_status("questM20Necklace") == FINISHED) return false;
-  
-  if (have($item[telegram from lady spookyraven])) use(1,$item[telegram from lady spookyraven]);
-  
-  if (quest_status("questM20Necklace") > UNSTARTED)
+
+  if (quest_status("questM20Necklace") == FINISHED && quest_status("questM21Dance") < 1)
   {
-    maximize("");
-    
-    if (!kitchen()) return false;
-    if (!billiard_room()) return false;
-    if (!library()) return false;
+    log("Talking to " + wrap("Lady Spookyraven", COLOR_MONSTER) + " to see about dancing.");
+    visit_url("place.php?whichplace=manor2&action=manor2_ladys");
+    return true;
   }
-  
+
+  if (!quest_active("questM20Necklace")) return false;
+
+  if (quest_status("questM20Necklace") < 4
+      && writing_desk_trick())
+  {
+    return false;
+  }
+
+  switch (quest_status("questM20Necklace"))
+  {
+    case STARTED:
+      // get key from kitchen
+      return get_billiards_key();
+    case 1:
+    case 2:
+      // get key from billiards
+      return get_library_key();
+    case 3:
+      // get necklace from writing desk
+      return get_necklace();
+    case 4:
+      log("Returning " + wrap($item[lady spookyraven's necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER) + ".");
+      visit_url("place.php?whichplace=manor1&action=manor1_ladys");
+      return true;
+  }
+  warning("Quest status for the necklace quest that I don't understand: " + quest_status("questM20Necklace") + ".");
   return true;
 }
+
 
 void main()
 {
   M20_necklace();
 }
-

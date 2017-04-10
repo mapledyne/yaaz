@@ -11,7 +11,6 @@ import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
 import "quests/M_pirates.ash";
-import "quests/M20_Necklace.ash";
 import "quests/M_spookyraven.ash";
 import "quests/M_untinker.ash";
 import "quests/M06_pandemonium.ash";
@@ -165,7 +164,6 @@ boolean ascend_loop()
   if (L08_Q_trapper()) return true;
 
   // Misc quests. More efficient for these to go later?
-  if (M20_necklace()) return true;
   if (M_hidden_temple()) return true;
   if (M_spookyraven()) return true;
 
