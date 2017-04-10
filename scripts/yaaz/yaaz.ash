@@ -11,6 +11,7 @@ import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
 import "quests/M_pirates.ash";
+import "quests/M20_Necklace.ash";
 import "quests/M_spookyraven.ash";
 import "quests/M_untinker.ash";
 import "quests/M06_pandemonium.ash";
@@ -148,6 +149,7 @@ boolean ascend_loop()
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
   if (M_dailydungeon()) return true;
+  if (M20_necklace()) return true;
 
   // do a bit earlier than other order to get the Knob opened earlier.
   // earlier knob == earlier dispensary if we get a KGE outfit.

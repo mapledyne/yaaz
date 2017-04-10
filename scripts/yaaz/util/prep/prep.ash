@@ -28,7 +28,6 @@ import "special/skills/flavour_of_magic.ash";
 import <zlib.ash>
 
 
-
 void prep_fishing(location loc)
 {
   if (is_fishing_hole(loc))
