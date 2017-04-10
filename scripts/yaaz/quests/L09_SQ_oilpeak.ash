@@ -33,6 +33,13 @@ boolean L09_SQ_oilpeak()
     return false;
   }
 
+
+  if (dangerous($location[oil peak]))
+  {
+    log("Skipping the " + wrap($location[oil peak]) + " for now because it's dangerous.");
+    return false;
+  }
+
   boolean b;
   repeat
   {

@@ -124,7 +124,7 @@ void maybe_pull(item it)
 void stash(item it, int keep)
 {
   if (get_clan_name() == "") return;
-  
+
   string config = setting("use_stash", "false");
 
   if (!to_boolean(config)) return;
@@ -554,41 +554,6 @@ void get_one(item it)
 	buy(1, it);
 }
 
-void get_accordion()
-{
-  if (npc_price($item[toy accordion]) == 0)
-    return;
-	if((!have($item[Antique Accordion])) && (!have($item[toy accordion])) && my_meat() > 300 && !($classes[Accordion Thief, Avatar of Boris, Avatar of Jarlsberg, Avatar of Sneaky Pete, Ed] contains my_class()))
-	{
-    log("Getting an accordion.");
-		get_one($item[toy accordion]);
-	}
-}
-
-void get_totem()
-{
-  if (npc_price($item[chewing gum on a string]) == 0)
-    return;
-	while(!have($item[turtle totem]) && my_meat() > 300)
-	{
-    log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[turtle totem]) + ".");
-		get_one($item[chewing gum on a string]);
-		use(1, $item[chewing gum on a string]);
-	}
-}
-
-void get_saucepan()
-{
-  if (npc_price($item[chewing gum on a string]) == 0)
-    return;
-	while(!have($item[saucepan]) && my_meat() > 300)
-	{
-    log("Using a " + wrap($item[chewing gum on a string]) + " in hopes to find a " + wrap($item[saucepan]) + ".");
-		get_one($item[chewing gum on a string]);
-		use(1, $item[chewing gum on a string]);
-	}
-
-}
 
 int palindome_items()
 {

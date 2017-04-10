@@ -163,10 +163,20 @@ boolean L09_SQ_twin()
 		return false;
 	}
 
+  // force oil peak to go first. Maybe better to just check for jar of oil and
+  // allow twin to go whenever after that?
+
 	if(to_int(get_property("oilPeakProgress")) > 0)
 	{
 		return false;
 	}
+
+  if (dangerous($location[Twin Peak]))
+  {
+    log("Skipping the " + wrap($location[Twin Peak]) + " for now because it's dangerous.");
+    return false;
+  }
+
 
   set_property("choiceAdventure618", "2"); // in case we take too long, burn it down.
 

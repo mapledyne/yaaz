@@ -14,8 +14,6 @@ boolean can_adventure();
 // Need to sort this sort of problem out sometime...
 void uneffect(effect ef);
 void uneffect_song();
-boolean is_song(skill sk);
-boolean is_song(effect ef);
 int songs_in_head();
 int max_songs();
 boolean can_cast_song();
@@ -26,6 +24,30 @@ string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 
+int element_damage_bonus(element el)
+{
+  // return the total (elemental) damage bonus against an element.
+  float hot = numeric_modifier("hot damage");
+  float cold = numeric_modifier("cold damage");
+  float stench = numeric_modifier("stench damage");
+  float sleaze = numeric_modifier("sleaze damage");
+  float spooky = numeric_modifier("spooky damage");
+
+  switch (el)
+  {
+    case $element[hot]:
+      return min(1, hot) + cold + spooky + 2 * stench + 2 * sleaze;
+    case $element[cold]:
+      return min(1, cold) + sleaze + stench + 2 * hot + 2 * spooky;
+    case $element[stench]:
+      return min(1, stench) + hot + spooky + 2 * cold + 2 * sleaze;
+    case $element[sleaze]:
+      return min(1, sleaze) + hot + stench + 2 * spooky + 2 * cold;
+    case $element[spooky]:
+      return min(1, spooky) + cold + sleaze + 2 * hot + 2 * stench;
+  }
+  return 0;
+}
 
 int approx_pool_skill()
 {
@@ -41,7 +63,7 @@ int approx_pool_skill()
 
   pool += numeric_modifier("pool skill");
 
-  pool += max(10,floor(2.0 * square_root(to_float(get_property("poolSharkCount")))));
+  pool += min(10,floor(2.0 * square_root(to_float(get_property("poolSharkCount")))));
 
   return pool;
 }
@@ -139,31 +161,9 @@ boolean is_guild_class()
 	return ($classes[Seal Clubber, Turtle Tamer, Sauceror, Pastamancer, Disco Bandit, Accordion Thief] contains my_class());
 }
 
-skill thrall_to_skill(thrall slave)
+skill to_skill(thrall slave)
 {
-  skill sk = $skill[none];
-  switch(slave)
-  {
-    case $thrall[lasagmbie]:
-      return $skill[bind lasagmbie];
-    case $thrall[Spice Ghost]:
-      return $skill[bind Spice Ghost];
-    case $thrall[Angel Hair Wisp]:
-      return $skill[bind Angel Hair Wisp];
-    case $thrall[Vermincelli]:
-      return $skill[bind Vermincelli];
-    case $thrall[Spaghetti Elemental]:
-      return $skill[bind Spaghetti Elemental];
-    case $thrall[Vampieroghi]:
-      return $skill[bind Vampieroghi];
-    case $thrall[Penne Dreadful]:
-      return $skill[bind Penne Dreadful];
-    case $thrall[Elbow Macaroni]:
-      return $skill[bind undead Elbow Macaroni];
-
-    default:
-      return $skill[none];
-  }
+  return slave.skill;
 }
 
 boolean is_turtle_buff(skill sk)
@@ -199,23 +199,12 @@ boolean is_thief_buff(effect ef)
   return is_thief_buff(sk);
 }
 
-boolean is_song(skill sk)
-{
-  return (sk.class == $class[accordion thief] && sk.buff);
-}
-
-boolean is_song(effect ef)
-{
-  skill sk = to_skill(ef);
-  return is_song(sk);
-}
-
 int songs_in_head()
 {
   int count = 0;
   foreach buff in my_effects()
   {
-    if (is_song(buff))
+    if (is_thief_buff(buff))
       count++;
   }
   return count;
@@ -238,7 +227,7 @@ void uneffect_song()
   effect song = $effect[none];
   foreach ef in my_effects()
   {
-    if (!is_song(ef)) continue;
+    if (!is_thief_buff(ef)) continue;
     if (have_effect(ef) < have_effect(song) || song == $effect[none])
     {
       song = ef;

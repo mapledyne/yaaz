@@ -29,6 +29,13 @@ boolean L09_SQ_aboo()
   {
     yz_clover($location[a-boo peak]);
   }
+
+  if (dangerous($location[a-boo peak]))
+  {
+    log("Skipping the " + wrap($location[a-boo peak]) + " for now because it's dangerous.");
+    return false;
+  }
+
   while (to_int(get_property("booPeakProgress")) > 0
          && can_adventure())
   {

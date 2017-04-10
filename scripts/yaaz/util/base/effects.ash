@@ -155,7 +155,7 @@ void effect_maintain(effect ef)
     {
       if (is_turtle_buff(sk) && i_a($item[turtle totem]) == 0) return;
       log("Adding effect " + wrap(ef) + " by casting " + wrap(sk) + ".");
-      if (is_song(ef))
+      if (is_thief_buff(ef))
       {
         if (!can_cast_song())
         {

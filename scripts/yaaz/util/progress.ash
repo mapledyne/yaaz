@@ -381,6 +381,7 @@ void progress_sheet(string detail)
           progress(to_int(get_property("manorDrawerCount")), 21, "drawers searched in " + wrap($location[the haunted kitchen]) + drawers);
           break;
         case 1:
+        case 2:
           int pool = approx_pool_skill();
           int max_pool = max(pool, 18);
           progress(pool, max_pool, "approx. pool skill for the " + wrap($location[the haunted billiards room]));
@@ -973,6 +974,24 @@ void progress_sheet(string detail)
       if (have(toy))
       {
         task("Consider using your " + wrap(toy) + ".");
+      }
+    }
+
+    foreach freepull in $items[special edition batfellow comic,
+                               holiday fun!,
+                               aggressive carrot,
+                               roll of toilet paper,
+                               glass of warm water,
+                               arrowgram]
+    {
+      int so_many = get_free_pulls()[freepull];
+      if (so_many > 0)
+      {
+        if (!have(freepull))
+        {
+          // don't mention if we already have some to reduce progress() clutter
+          task("Hangk is storing " + so_many + " "  + wrap(freepull, so_many) + ". They're free pulls, so consider taking them out.");
+        }
       }
     }
 

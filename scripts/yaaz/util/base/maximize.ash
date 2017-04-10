@@ -109,12 +109,7 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (my_path() != "Way of the Surprising Fist"
       && have_skill($skill[Master of the Surprising Fist]))
   {
-    if (my_buffedstat($stat[muscle]) >= my_buffedstat($stat[moxie]))
-    {
-      target += ", melee";
-    } else {
-      target += ", ranged";
-    }
+    target += ", -unarmed";
   }
 
 /*  if (my_primestat() == $stat[muscle]
