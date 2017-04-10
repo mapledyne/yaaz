@@ -58,7 +58,7 @@ void prep_pastamancer(location loc)
     return;
   }
 
-  foreach slave in $thralls[spice ghost, angel hair wisp, vermincelli, spaghetti elemental, vampieroghi, lasagmbie, penne dreadful, elbow macaroni]
+  foreach slave in $thralls[spice ghost, penne dreadful, elbow macaroni, angel hair wisp, vermincelli, spaghetti elemental, vampieroghi, lasagmbie]
   {
     if (valid_thrall(slave))
     {
