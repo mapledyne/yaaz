@@ -16,6 +16,7 @@ import "quests/M_untinker.ash";
 import "quests/M06_pandemonium.ash";
 import "quests/M09_leaflet.ash";
 import "quests/M10_star_key.ash";
+import "quests/M20_necklace.ash";
 
 import "quests/L02_Q_larva.ash";
 import "quests/L03_Q_rats.ash";
@@ -162,6 +163,7 @@ boolean ascend_loop()
   if (L08_Q_trapper()) return true;
 
   // Misc quests. More efficient for these to go later?
+  if (M20_necklace()) return true;
   if (M_hidden_temple()) return true;
   if (M_spookyraven()) return true;
 
@@ -310,8 +312,7 @@ void intro()
 
   if (my_ascensions() == 0)
   {
-    warning("This script is meant to help auto-ascend. You're on your first ascension. This script will do some things inefficiently.");
-    warning("For instance, it won't take advantage of the mall when otherwise possible.");
+    warning("This script is meant to help auto-ascend. You're on your first ascension. This script will do some things inefficiently. For instance, it won't take advantage of the mall when otherwise possible.");
   }
 
   if (!in_hardcore() && my_ascensions() > 0)

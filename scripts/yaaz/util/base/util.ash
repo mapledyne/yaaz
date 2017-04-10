@@ -41,7 +41,7 @@ int approx_pool_skill()
 
   pool += numeric_modifier("pool skill");
 
-  pool += max(10,floor(2.0 * square_root(to_float(get_property("poolSharkCount")))));
+  pool += min(10,floor(2.0 * square_root(to_float(get_property("poolSharkCount")))));
 
   return pool;
 }

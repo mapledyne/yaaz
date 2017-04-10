@@ -194,6 +194,15 @@ void do_heart_thing(string player)
         return;
       }
     }
+
+    if (item_amount($item[glass of warm water]) > 0
+        && random(4) == 0)
+    {
+      heart_msg(player, "sticking their hand in a " + wrap($item[glass of warm water]) + ". Jerk");
+      cli_execute("throw glass of warm water at " + player);
+      return;
+    }
+
   }
 
   if (item_amount($item[roll of toilet paper]) > 0)
@@ -209,6 +218,7 @@ void do_heart_thing(string player)
     cli_execute("throw &quot;KICK ME&quot; sign at " + player);
     return;
   }
+
   // throw personalized coffee mug at abulafia || abcd | efgh | ijkl
   // visit_url("curse.php?action=use&pwd&whichitem=7697&targetplayer=abulafia&message=test");
   foreach toy in $items[yellow snowcone,
