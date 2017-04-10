@@ -24,6 +24,30 @@ string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 
+int element_damage_bonus(element el)
+{
+  // return the total (elemental) damage bonus against an element.
+  float hot = numeric_modifier("hot damage");
+  float cold = numeric_modifier("cold damage");
+  float stench = numeric_modifier("stench damage");
+  float sleaze = numeric_modifier("sleaze damage");
+  float spooky = numeric_modifier("spooky damage");
+
+  switch (el)
+  {
+    case $element[hot]:
+      return min(1, hot) + cold + spooky + 2 * stench + 2 * sleaze;
+    case $element[cold]:
+      return min(1, cold) + sleaze + stench + 2 * hot + 2 * spooky;
+    case $element[stench]:
+      return min(1, stench) + hot + spooky + 2 * cold + 2 * sleaze;
+    case $element[sleaze]:
+      return min(1, sleaze) + hot + stench + 2 * spooky + 2 * cold;
+    case $element[spooky]:
+      return min(1, spooky) + cold + sleaze + 2 * hot + 2 * stench;
+  }
+  return 0;
+}
 
 int approx_pool_skill()
 {
