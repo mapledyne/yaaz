@@ -84,11 +84,6 @@ void make_things()
     wait(5);
   }
 
-  if (my_meat() > 2500)
-  {
-    make_if_needed($item[bitchin' meatcar], "to reach the desert.");
-  }
-
   if (get_property("questL11Palindome") != "finished")
   {
     make_if_needed($item[wet stunt nut stew], "for Mr. Alarm");

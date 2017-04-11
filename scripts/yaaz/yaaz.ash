@@ -10,6 +10,7 @@ import "quests/M_dailydungeon.ash";
 import "quests/M_guild.ash";
 import "quests/M_hidden_temple.ash";
 import "quests/M_8bit.ash";
+import "quests/M_desert_beach.ash";
 import "quests/M_pirates.ash";
 import "quests/M_spookyraven.ash";
 import "quests/M_untinker.ash";
@@ -145,6 +146,7 @@ boolean ascend_loop()
   if (M_misc()) return true;
   if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
   if (M_untinker()) return true;
+  if (M_desert_beach()) return true; // build meatcar or buy pass.
   if (M06_pandemonium()) return true; // steel items
   if (M09_leaflet()) return true;
   if (M_dailydungeon()) return true;
@@ -276,7 +278,7 @@ void intro()
 
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Comments, bugs, feature requests, please send to " + wrap("Degrassi (#1063113)", COLOR_MONSTER) + ".");
-
+  log("Additional wonderful contributors: " + wrap("Gaikotsu (#2866791)", COLOR_MONSTER) + ".");
 
   boolean has_fam = false;
   foreach f in $familiars[]

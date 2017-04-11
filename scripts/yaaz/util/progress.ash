@@ -213,13 +213,18 @@ void progress_sheet(string detail)
     progress(10 - stills_available(), 10, wrap("Nash Crosby's Still", COLOR_LOCATION) + " uses");
   }
 
-  if (!have($item[bitchin' meatcar]))
+  if (to_int(get_property("lastDesertUnlock")) < my_ascensions())
   {
-    task("Build a bitchin' meatcar");
+    if (knoll_available())
+    {
+      task("Build a " + wrap($item[bitchin' meatcar]));
+    } else {
+      task("Buy a " + wrap($item[desert bus pass]));
+    }
   }
 
   if (!have($item[dingy dinghy])
-      && have($item[bitchin' meatcar]))
+      && to_int(get_property("lastDesertUnlock")) >= my_ascensions())
   {
     if (!have($item[dinghy plans]))
     {
@@ -545,7 +550,7 @@ void progress_sheet(string detail)
     } else {
       float oil = to_float(get_property("oilPeakProgress"));
       if (oil > 0)
-        progress(310.66 - oil, 310.66, "Oil Peak pressure");
+        progress(310.66 - oil, 310.66, wrap($location[oil peak]) + " pressure");
 
       int boo = to_int(get_property("booPeakProgress"));
       if (boo > 0)

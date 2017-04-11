@@ -31,10 +31,9 @@ boolean continuum()
 
 boolean dingy()
 {
-  if (have($item[Dingy dinghy]))
-    return false;
-  if (!have($item[bitchin' meatcar]))
-    return false;
+  if (have($item[Dingy dinghy])) return false;
+  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return false;
+
   if (my_adventures() < 30)
     return false;
 
