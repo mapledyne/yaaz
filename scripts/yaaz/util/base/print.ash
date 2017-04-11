@@ -1,3 +1,5 @@
+import "util/base/settings.ash";
+
 string COLOR_ITEM = "green";
 string COLOR_LOCATION = "blue";
 string COLOR_EFFECT = "blue";
@@ -12,7 +14,8 @@ string COLOR_WARNING = "purple";
 string COLOR_LOG = "#CD853F";
 string COLOR_ADVICE = "purple";
 string COLOR_TASK = "black";
-
+string COLOR_INFO = COLOR_LOG;
+string COLOR_DEBUG = COLOR_LOG;
 
 string CLUB = "♣";
 string HEART = "♥";
@@ -116,11 +119,6 @@ void warning(string msg)
   yz_print(msg, COLOR_WARNING);
 }
 
-void warning_no_estimate()
-{
-  warning("No estimated turns available for this step yet.");
-}
-
 void advice(string msg)
 {
   yz_print(msg, COLOR_ADVICE);
@@ -129,6 +127,20 @@ void advice(string msg)
 void task(string msg)
 {
   yz_print(UNCHECKED + " " + msg, COLOR_TASK);
+}
+
+void info(string msg)
+{
+  string level = setting("log_level", "");
+  if (level == 'info' || level == 'debug')
+    yz_print(msg, COLOR_INFO);
+}
+
+void debug(string msg)
+{
+  string level = setting("log_level", "");
+  if (level == 'debug')
+    yz_print('DEBUG: ' + msg, COLOR_DEBUG);
 }
 
 void progress(int percent);

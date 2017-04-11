@@ -25,6 +25,7 @@ table += pref_line("use_avatar_potions", "true", "Use avatar potions when you ha
 table += pref_line("aggressive_optimize", "false", "If true, skip all side actions that aren't solely about ascending<br>(ex: Evoke Eldritch Horror, Portscan, etc).");
 table += pref_line("no_pulls", "false", "If true, don't make any pulls when in Softcore.");
 table += pref_line("use_stash", "false", "If true, will put some items in the clan stash when it seems appropriate.<br>Items moved are in the clan.txt data file.");
+table += pref_line("log_level", "", "Set to 'info' or 'debug' to have more detailed messaging.");
 
 table += "</table>";
 print_html(table);
