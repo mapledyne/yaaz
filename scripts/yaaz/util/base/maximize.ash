@@ -91,7 +91,9 @@ void do_maximize(string target, string outfit, item it)
 
 string default_maximize_string()
 {
-  string def = "mainstat, 0.5 hp, mp regen";
+  string def = "mainstat, mp regen";
+
+  if (my_primestat() != $stat[mysticality]) def += ", 0.5 hp";
   return def;
 }
 
@@ -101,14 +103,18 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target == '')
     target = default_maximize_string();
 
-  if (target != "") target = target + ", ";
-  target += "effective";
+  if (my_primestat() != $stat[mysticality])
+  {
+    if (target != "") target = target + ", ";
+    target += "effective";
+  }
 
   // force a weapon in our hands. This compensates for some of the unarmed skills (Master of Surprising Fist)
   // which we should possibly evaluate, but for now just use an actual weapon.
   if (my_path() != "Way of the Surprising Fist"
       && have_skill($skill[Master of the Surprising Fist]))
   {
+    if (target != "") target = target + ", ";
     target += ", -unarmed";
   }
 

@@ -73,11 +73,6 @@ void sell_things()
     sell_all($item[rat whisker]);
   }
 
-  // bridge built
-  if (quest_status("questL09Topping") > 1)
-  {
-    sell_all($item[orc wrist]);
-  }
 
   if (!have_familiar($familiar[gluttonous green ghost]))
   {

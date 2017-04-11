@@ -112,7 +112,7 @@ void progress_sheet_detail(string detail)
       && have($item[protonic accelerator pack])
       && to_location(get_property("ghostLocation")) != $location[none])
   {
-    task("defeat ghost (" + get_property("ghostLocation")+ ")");
+    task("defeat ghost (" + wrap(to_location(get_property("ghostLocation")))+ ")");
   }
 
   if (do_detail("precinct", detail)
@@ -552,7 +552,7 @@ void progress_sheet(string detail)
         progress(100 - boo, 100, wrap($location[a-boo peak]) + " hauntedness cleared");
       int twin = twinpeak_progress();
       if (twin < 4)
-        progress(twin, 4, "Twin peak progress");
+        progress(twin, 4, wrap($location[twin peak]) + " progress");
 
       int peak = get_property("twinPeakProgress").to_int();
       if(!bit_flag(peak, 2)
@@ -998,6 +998,15 @@ void progress_sheet(string detail)
     if (have($item[burned government manual fragment]))
     {
       task("Consider using your " + wrap($item[burned government manual fragment]) + " (they'll disappear after ascension)");
+    }
+
+    // get new familiars as you find them:
+    foreach f in $familiars[]
+    {
+      if (!have_familiar(f) && have(f.hatchling))
+      {
+        task("You have a " + wrap(f.hatchling) + " which can hatch into a " + wrap(f) + ", which you don't have.");
+      }
     }
 
 

@@ -152,15 +152,6 @@ void use_things()
     use(1, $item[dr. hobo's map]);
   }
 
-  // get new familiars as you find them:
-  foreach f in $familiars[]
-  {
-    if (!have_familiar(f) && have(f.hatchling))
-    {
-      log("Putting a " + wrap(f.hatchling) + " in your terrarium so you can have a " + wrap(f) + " familiar.");
-      use(1, f.hatchling);
-    }
-  }
 }
 
 void main()

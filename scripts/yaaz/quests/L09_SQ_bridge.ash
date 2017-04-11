@@ -1,18 +1,38 @@
 import "util/main.ash";
 
-void do_one_bridge_adv()
+void L09_SQ_bridge_cleanup()
 {
-  use_all($item[smut orc keepsake box]);
-
-  if (item_amount($item[abridged dictionary]) + item_amount($item[dictionary]) == 0)
+  if (!have($item[abridged dictionary]) && !have($item[dictionary]))
   {
     buy(1, $item[abridged dictionary]);
   }
 
-  if (item_amount($item[abridged dictionary]) == 1)
+  if (have($item[abridged dictionary]))
   {
     cli_execute("untinker abridged dictionary");
   }
+
+  if (get_property("chasmBridgeProgress").to_int() < 20)
+  {
+    maybe_pull($item[smut orc keepsake box]);
+  }
+  
+  if (get_property("chasmBridgeProgress").to_int() < 30
+      && quest_status("questL09Topping") == STARTED)
+  {
+    use_all($item[smut orc keepsake box]);
+    visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
+  }
+
+  // bridge built
+  if (quest_status("questL09Topping") > 1)
+  {
+    sell_all($item[orc wrist]);
+  }
+}
+
+void do_one_bridge_adv()
+{
 
   visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
 
@@ -21,13 +41,6 @@ void do_one_bridge_adv()
     log("Bridge built! Going to see the " + wrap("Highland Lord", COLOR_LOCATION) + ".");
     wait(3);
     visit_url("place.php?whichplace=highlands&action=highlands_dude");
-    return;
-  }
-
-  maybe_pull($item[smut orc keepsake box]);
-  if (have($item[smut orc keepsake box]))
-  {
-    use_all($item[smut orc keepsake box]);
     return;
   }
 
@@ -40,8 +53,14 @@ void do_one_bridge_adv()
   yz_adventure($location[the smut orc logging camp], "items");
 }
 
-boolean bridge_loop()
+boolean L09_SQ_bridge()
 {
+
+  L09_SQ_bridge_cleanup();
+
+  if (my_level() < 9) return false;
+
+  if (quest_status("questL09Topping") > 1) return false;
 
   if (!can_adventure())
     return false;
@@ -50,15 +69,15 @@ boolean bridge_loop()
 
   switch (status)
   {
-    case -1:
+    case UNSTARTED:
       log("Going to the council to pick up the quest.");
       council();
       return true;
-    case 0:
+    case STARTED:
       do_one_bridge_adv();
       return true;
     case 1:
-      log("Bridge built!.");
+      log("Bridge built!. Visiting the Highland Lord");
       visit_url("place.php?whichplace=highlands&action=highlands_dude");
       return true;
     case 2:
@@ -67,34 +86,7 @@ boolean bridge_loop()
     default:
       return false;
   }
-}
-
-boolean L09_SQ_bridge()
-{
-  if (my_level() < 9)
-    return false;
-
-  if (quest_status("questL09Topping") > 1)
-    return false;
-
-  int turns = my_adventures();
-
-  while (bridge_loop())
-  {
-    // work in bridge_loop()
-  }
-
-  if (quest_status("questL09Topping") > 1)
-  {
-    int total = turns - my_adventures();
-    log("Bridge built. It took " + total + " adventures.");
-    wait(5);
-  }
-  else
-  {
-    log("Bridge not yet complete.");
-  }
-  return true;
+  return false;
 }
 
 void main()

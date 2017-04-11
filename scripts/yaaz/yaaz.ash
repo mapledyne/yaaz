@@ -166,6 +166,7 @@ boolean ascend_loop()
   // Misc quests. More efficient for these to go later?
   if (M_hidden_temple()) return true;
   if (M_spookyraven()) return true;
+  if (M_pirates()) return true;
 
   // whatever is left can be done in order:
   if (L02_Q_larva()) return true;
@@ -178,7 +179,6 @@ boolean ascend_loop()
 
   // towards the end since the timing really doesn't matter much on this one.
   // keeping it here may help us level when there's no other quest to do?
-  if (M_pirates()) return true; // should we do pirates earlier?
   if (M_8bit()) return true;
   if (M10_star_key()) return true;
 
