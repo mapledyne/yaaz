@@ -95,11 +95,6 @@ void make_things()
     make_if_needed($item[knob cake], "to get to the " + wrap($monster[knob goblin king]) + ".");
   }
 
-  if (!bit_flag(get_property("twinPeakProgress").to_int(), 2))
-  {
-    make_if_needed($item[jar of oil], "for the " + wrap($location[twin peak]) + ".");
-  }
-
 
   // *** Less requirements, but still sometimes useful or fun:
 

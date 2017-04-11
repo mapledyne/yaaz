@@ -1,5 +1,15 @@
 import "util/main.ash";
 
+void L09_SQ_twin_cleanup()
+{
+  if (!bit_flag(get_property("twinPeakProgress").to_int(), 2))
+  {
+    make_if_needed($item[jar of oil], "for the " + wrap($location[twin peak]) + ".");
+  }
+}
+
+
+
 boolean twin_adventure(string max)
 {
   max += ", -combat";
@@ -158,33 +168,9 @@ boolean do_twin_food()
 
 boolean L09_SQ_twin()
 {
-	if(to_int(get_property("twinPeakProgress")) >= 15)
-	{
-		return false;
-	}
+  L09_SQ_twin();
 
-  // force oil peak to go first. Maybe better to just check for jar of oil and
-  // allow twin to go whenever after that?
-
-	if(to_int(get_property("oilPeakProgress")) > 0)
-	{
-		return false;
-	}
-
-  if (dangerous($location[Twin Peak]))
-  {
-    log("Skipping the " + wrap($location[Twin Peak]) + " for now because it's dangerous.");
-    return false;
-  }
-
-
-  set_property("choiceAdventure618", "2"); // in case we take too long, burn it down.
-
-	if($location[twin peak].turns_spent == 0)
-	{
-		set_property("choiceAdventure605", "1");
-		yz_adventure($location[Twin Peak]);
-	}
+	if(to_int(get_property("twinPeakProgress")) >= 15) return false;
 
   int peak = to_int(get_property("twinPeakProgress"));
 
@@ -192,6 +178,26 @@ boolean L09_SQ_twin()
 	boolean need_food = !bit_flag(peak, 1);
 	boolean need_jar = !bit_flag(peak, 2);
 	boolean need_init = !bit_flag(peak, 3) && !need_stench && !need_food && !need_jar;
+
+  // should we do a calculation to see if there's no good way to get the wedding ring,
+  // and just forge ahead without the jar since we'll just burn it down anyway?
+  if (need_jar && !have($item[jar of oil])) return false;
+
+  if (dangerous($location[Twin Peak]))
+  {
+    log("Skipping the " + wrap($location[Twin Peak]) + " for now because it's dangerous.");
+    return false;
+  }
+
+  set_property("choiceAdventure618", "2"); // in case we take too long, burn it down.
+
+	if($location[twin peak].turns_spent == 0)
+	{
+		set_property("choiceAdventure605", "1");
+		yz_adventure($location[Twin Peak]);
+    return true;
+	}
+
 
 	int attemptNum = 0;
 	boolean attempt = false;
@@ -201,25 +207,22 @@ boolean L09_SQ_twin()
     set_property("choiceAdventure610", "1");
     set_property("choiceAdventure1056", "1");
 
-    if (do_twin_init())
-      return true;
+    return do_twin_init();
 	}
 
-	if(need_jar && (item_amount($item[Jar of Oil]) == 1))
+	if(need_jar && (have($item[Jar of Oil])))
 	{
     set_property("choiceAdventure606", "3");
     set_property("choiceAdventure609", "1");
     set_property("choiceAdventure616", "1");
-    if (do_twin_jar())
-      return true;
+    return do_twin_jar();
 	}
 
 	if(need_food)
 	{
     set_property("choiceAdventure606", "2");
     set_property("choiceAdventure608", "1");
-    if (do_twin_food())
-      return true;
+    return do_twin_food();
 	}
 
 	if(need_stench)
@@ -227,8 +230,7 @@ boolean L09_SQ_twin()
     set_property("choiceAdventure606", "1");
     set_property("choiceAdventure607", "1");
 
-    if (do_twin_stench())
-      return true;
+    return do_twin_stench();
 	}
 
   if (my_level() < 12)
@@ -238,13 +240,7 @@ boolean L09_SQ_twin()
 
   log("Doing the " + wrap($location[twin peak]) + " the hard way.");
 
-  int status = to_int(get_property("twinPeakProgress"));
-  repeat
-  {
-    boolean b = yz_adventure($location[twin peak], "");
-    if (!b)
-      return true;
-  } until (status != to_int(get_property("twinPeakProgress")));
+  yz_adventure($location[twin peak], "");
   return true;
 }
 
