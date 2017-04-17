@@ -1,10 +1,21 @@
 import "util/main.ash";
 
+
+void L07_Q_cyrpt_cleanup()
+{
+	while (have($item[evil eye])
+		     && get_property("cyrptNookEvilness").to_int() > 25)
+	{
+		use(1, $item[evil eye]);
+	}
+}
+
 float modern_zmobie_pct()
 {
 	return min(100.0, 15.0 + initiative_modifier() / 10.0);
 }
 
+/*
 int estimated_alcove_turns()
 {
 	float pct = modern_zmobie_pct();
@@ -12,103 +23,61 @@ int estimated_alcove_turns()
 	float turns = (max(0, get_property("cyrptAlcoveEvilness").to_int() - 25) / average);
 	return turns;
 }
+*/
 
 void clear_alcove()
 {
 
-	if(get_property("cyrptAlcoveEvilness").to_int() > 0)
-	{
+	if(get_property("cyrptAlcoveEvilness").to_int() > 0) return;
+	maximize("-combat");
+	choose_familiar("init");
+	max_effects("init");
 
-		maximize("-combat");
-		choose_familiar("init");
-		max_effects("init");
+	log("Undefiling " + wrap($location[The Defiled Alcove]) + ". " + wrap($monster[Modern Zmobie]) + " appearance " + modern_zmobie_pct() + "% at +" + initiative_modifier() + " init.");
 
-		log("Undefiling " + wrap($location[The Defiled Alcove]) + ". " + wrap($monster[Modern Zmobie]) + " appearance " + modern_zmobie_pct() + "% at +" + initiative_modifier() + " init.");
-		int est = estimated_alcove_turns();
-		int adv_count = my_adventures();
+	maximize("init, -combat", $item[gravy boat]);
+	yz_adventure($location[The Defiled Alcove]);
 
-		while (get_property("cyrptAlcoveEvilness").to_int() > 0 && can_adventure())
-		{
-			maximize("init, -combat", $item[gravy boat]);
-			if (!yz_adventure($location[The Defiled Alcove])) return;
-			// bail on boss and force us to come back here through the loop.
-			// this will force another check on dangerous() in case we should skip for now.
-			if (get_property("cyrptAlcoveEvilness").to_int() <= 25) return;
-		}
-		int total_turns = adv_count - my_adventures();
-	}
 }
 
 void clear_niche()
 {
-	if(get_property("cyrptNicheEvilness").to_int() > 0)
-	{
+	if(get_property("cyrptNicheEvilness").to_int() <= 0) return;
 
 		log("Undefiling " + wrap($location[The Defiled Niche]) + ".");
-		int adv_count = my_adventures();
 
-		while (get_property("cyrptNicheEvilness").to_int() > 0 && can_adventure())
-		{
-			maximize("items", $item[gravy boat]);
-			if (!yz_adventure($location[The Defiled Niche])) return;
-			// bail on boss and force us to come back here through the loop.
-			// this will force another check on dangerous() in case we should skip for now.
-			if (get_property("cyrptNicheEvilness").to_int() <= 25) return;
-		}
-		int total_turns = adv_count - my_adventures();
-
-	}
+		maximize("items", $item[gravy boat]);
+		yz_adventure($location[The Defiled Niche]);
 }
 
 void clear_nook()
 {
-	if(get_property("cyrptNookEvilness").to_int() > 0)
-	{
-		log("Undefiling " + wrap($location[The Defiled Nook]) + ".");
+	if(get_property("cyrptNookEvilness").to_int() <= 0) return;
 
-		while (get_property("cyrptNookEvilness").to_int() > 0 && can_adventure())
-		{
-			maximize("items", $item[gravy boat]);
-			if (!yz_adventure($location[The Defiled Nook])) return;
-			if(item_amount($item[evil eye]) > 0)
-			{
-				use(item_amount($item[evil eye]), $item[evil eye]);
-			}
-			// bail on boss and force us to come back here through the loop.
-			// this will force another check on dangerous() in case we should skip for now.
-			if (get_property("cyrptNookEvilness").to_int() <= 25) return;
+	log("Undefiling " + wrap($location[The Defiled Nook]) + ".");
 
-		}
-
-	}
+	maximize("items", $item[gravy boat]);
+	yz_adventure($location[The Defiled Nook]);
 
 }
 
 void clear_cranny()
 {
-	if(get_property("cyrptCrannyEvilness").to_int() > 0)
-	{
-		log("Undefiling " + wrap($location[The Defiled Cranny]) + ".");
-		int adv_count = my_adventures();
+	if(get_property("cyrptCrannyEvilness").to_int() <= 0) return;
 
-		set_property("choiceAdventure523", "4");
+	log("Undefiling " + wrap($location[The Defiled Cranny]) + ".");
 
-		while (get_property("cyrptCrannyEvilness").to_int() > 0 && can_adventure())
-		{
-			maximize("ml, -combat", $item[gravy boat]);
-			if (!yz_adventure($location[The Defiled Cranny])) return;
-			// bail on boss and force us to come back here through the loop.
-			// this will force another check on dangerous() in case we should skip for now.
-			if (get_property("cyrptCrannyEvilness").to_int() <= 25) return;
-		}
+	set_property("choiceAdventure523", "4");
 
-		int total_turns = adv_count - my_adventures();
-
-	}
+	maximize("ml, -combat", $item[gravy boat]);
+	yz_adventure($location[The Defiled Cranny]);
 }
 
 boolean L07_Q_cyrpt()
 {
+
+	L07_Q_cyrpt_cleanup();
+
 	if(my_level() < 7)
     return false;
 

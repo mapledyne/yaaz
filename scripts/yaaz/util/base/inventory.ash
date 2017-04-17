@@ -95,30 +95,31 @@ boolean should_pulverize()
   return false;
 }
 
-void maybe_pull(item it, int qty)
+int maybe_pull(item it, int qty)
 {
 
-  if (to_boolean(setting("no_pulls", "false"))) return;
+  if (to_boolean(setting("no_pulls", "false"))) return 0;
 
   int want = qty - i_a(it);
-  if (want <= 0) return;
+  if (want <= 0) return 0;
 
   want = min(want, pulls_remaining());
-  if (want <= 0) return;
+  if (want <= 0) return 0;
 
   want = min(want, storage_amount(it));
-  if (want <= 0) return;
+  if (want <= 0) return 0;
 
   // looks like we may actually be able to get a couple of these...?
 
   log("Pulling " + want + " " + wrap(it, want) + " from storage.");
   take_storage(want, it);
   progress(20 - pulls_remaining(), 20, "pulls from storage used");
+  return want;
 }
 
-void maybe_pull(item it)
+int maybe_pull(item it)
 {
-  maybe_pull(it, 1);
+  return maybe_pull(it, 1);
 }
 
 void stash(item it, int keep)

@@ -32,18 +32,6 @@ boolean do_elbow()
   return do_friar_area($location[the dark elbow of the woods], $item[eldritch butterknife]);
 }
 
-boolean do_stones()
-{
-  if (i_a($item[eldritch butterknife]) == 0 || i_a($item[box of birthday candles]) == 0 || i_a($item[dodecagram]) == 0)
-  {
-
-  } else {
-    log("Performing the ritual for the Friars.");
-    visit_url("friars.php?action=ritual&pwd=");
-    log("Ritual complete!");
-  }
-  return false;
-}
 
 boolean L06_Q_friar()
 {
@@ -64,32 +52,34 @@ boolean L06_Q_friar()
 
   if (dangerous($location[the dark neck of the woods])) return false;
 
-  log("Going to get the " + wrap($item[dodecagram]) + ".");
-  while (do_neck() && can_adventure())
+  if (!have($item[dodecagram]))
   {
-    // actions in do_neck()
+    log("Going to get the " + wrap($item[dodecagram]) + ".");
+    do_neck();
+    return true;
   }
 
   if (dangerous($location[the dark heart of the woods])) return false;
 
-  log("Going to get the " + wrap($item[box of birthday candles]) + ".");
-  while (do_heart() && can_adventure())
+  if (!have($item[box of birthday candles]))
   {
-    // actions in do_heart();
+    log("Going to get the " + wrap($item[box of birthday candles]) + ".");
+    do_heart();
+    return true;
   }
 
   if (dangerous($location[the dark elbow of the woods])) return false;
 
-  log("Going to get the " + wrap($item[eldritch butterknife]) + ".");
-  while (do_elbow() && can_adventure())
+  if (!have($item[eldritch butterknife]))
   {
-    // actions in do_elbow()
+    log("Going to get the " + wrap($item[eldritch butterknife]) + ".");
+    do_elbow();
+    return true;
   }
 
-  while (do_stones() && can_adventure())
-  {
-    // actions in do_stones()
-  }
+  log("Performing the ritual for the Friars.");
+  visit_url("friars.php?action=ritual&pwd=");
+  log("Ritual complete!");  
   return true;
 }
 

@@ -22,22 +22,17 @@ boolean kill_yetis()
   return true;
 }
 
-int get_cheese()
+boolean get_cheese()
 {
   item cheese = $item[goat cheese];
   location goatlet = $location[the goatlet];
 
-  if (item_amount(cheese) >= 3)
-    return item_amount(cheese);
+  if (item_amount(cheese) >= 3) return false;
 
-  maybe_pull(cheese, 3);
+  if (maybe_pull(cheese, 3) > 0) return true;
 
-  while(item_amount(cheese) < 3 && can_adventure())
-  {
-    boolean b = yz_adventure(goatlet, "items");
-    if (!b) break;
-  }
-  return item_amount(cheese);
+  yz_adventure(goatlet, "items");
+  return true;
 }
 
 boolean jump_peak()
@@ -65,12 +60,11 @@ boolean peak_extreme()
 
 boolean peak_ninja()
 {
-  if (ninja_snowman_items() == 3)
-    return jump_peak();
-
   maybe_pull($item[ninja carabiner]);
   maybe_pull($item[ninja crampons]);
   maybe_pull($item[ninja rope]);
+
+  if (ninja_snowman_items() == 3) return jump_peak();
 
   if (to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[ninja snowman assassin])
   {
@@ -78,22 +72,15 @@ boolean peak_ninja()
     return false;
   }
 
-
-  while (ninja_snowman_items() < 3
-         && to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[ninja snowman assassin])
+  maximize("combat");
+  if (numeric_modifier("combat rate") <= 0)
   {
-    maximize("combat");
-    if (numeric_modifier("combat rate") <= 0)
-    {
-      warning("By my guess, you should have a positive combat modifier right now, but you don't seem to.");
-      warning("We won't find any Ninja Snowman Assassins at this rate, so I'm bailing out.");
-      warning("If you can modify your rate you may be able to just rerun this script, otherwise this may be a bug.");
-      abort();
-    }
-    boolean b = yz_adventure($location[lair of the ninja snowmen]);
-    if (!b)
-      return true;
+    warning("By my guess, you should have a positive combat modifier right now, but you don't seem to.");
+    warning("We won't find any Ninja Snowman Assassins at this rate, so I'm bailing out.");
+    warning("If you can modify your rate you may be able to just rerun this script, otherwise this may be a bug.");
+    abort();
   }
+  yz_adventure($location[lair of the ninja snowmen]);
   return true;
 }
 
@@ -111,10 +98,10 @@ boolean get_to_peak()
 
   boolean combat = (have_skill($skill[Musk of the Moose])
                     || have_skill($skill[Carlweather's Cantata of Confrontation])
-                    || item_amount($item[musk turtle]) > 0
-                    || item_amount($item[reodorant]) > 0
+                    || have($item[musk turtle])
+                    || have($item[reodorant])
                     || have_familiar($familiar[jumpsuited hound dog])
-                    || item_amount($item[portable cassette player]) > 0);
+                    || have($item[portable cassette player]));
 
   if (cold >= 5 && combat)
     return peak_ninja();
@@ -130,35 +117,37 @@ boolean trapper_items()
 
   item ore = to_item(get_property("trapperOre"));
   maybe_pull($item[goat cheese], 3);
-  int goat_qty = get_cheese();
 
+  if (get_cheese()) return true;
 
-  while (item_amount(ore) < 3)
+  int goat_qty = item_amount($item[goat cheese]);
+
+  if (item_amount(ore) < 3)
   {
     if (can_deck("mine"))
     {
       cheat_deck("mine", "get some ore for the trapper.");
-      continue;
+      return true;
     }
 
     maybe_pull(ore, 3);
 
     if (item_amount($item[disassembled clover]) > 0)
     {
-      yz_clover($location[Itznotyerzitz Mine]);
-      continue;
+      if (yz_clover($location[Itznotyerzitz Mine])) return true;
     }
 
     warning("No good ways remain to get the " + wrap(ore) + " without mining.");
     warning("I don't want to do that, so waiting until tomorrow for some clover.");
     warning("Mine manually if you want to go about this a different way.");
+    wait(5);
     return false;
   }
 
   if (goat_qty < 3)
   {
     warning("You should have three " + wrap($item[goat cheese]) + " at this point, but you don't.");
-    return true;
+    return false;
   }
 
   log("Three " + wrap($item[goat cheese]) + " and three " + wrap(ore) + " found.");
