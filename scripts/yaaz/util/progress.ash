@@ -982,11 +982,28 @@ void progress_sheet(string detail)
       }
     }
 
+    if (to_boolean(setting("do_jerk", "true")
+        && to_boolean(setting("do_heart", "true")))
+    {
+      foreach freepull in $items[holiday fun!,
+                                 aggressive carrot,
+                                 roll of toilet paper,
+                                 glass of warm water]
+      {
+        int so_many = get_free_pulls()[freepull];
+        if (so_many > 0)
+        {
+          if (!have(freepull))
+          {
+            // don't mention if we already have some to reduce progress() clutter
+            task("Hangk is storing " + so_many + " "  + wrap(freepull, so_many) + ". They're free pulls, so consider taking them out.");
+          }
+        }
+      }
+
+    }
+
     foreach freepull in $items[special edition batfellow comic,
-                               holiday fun!,
-                               aggressive carrot,
-                               roll of toilet paper,
-                               glass of warm water,
                                arrowgram]
     {
       int so_many = get_free_pulls()[freepull];
