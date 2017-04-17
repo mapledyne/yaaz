@@ -73,5 +73,5 @@ boolean L12_SQ_orchard()
 
 void main()
 {
-  L12_SQ_orchard();
+  while (L12_SQ_orchard());
 }

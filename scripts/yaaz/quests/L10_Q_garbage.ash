@@ -237,5 +237,5 @@ boolean L10_Q_garbage()
 
 void main()
 {
-  L10_Q_garbage();
+  while (L10_Q_garbage());
 }

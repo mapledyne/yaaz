@@ -1,6 +1,7 @@
 import "util/base/print.ash";
 
-boolean [skill] skills_wanted = $skills[Fortitude of the Muskox,
+boolean [skill] skills_wanted = $skills[Torso Awaregness,
+                                        Fortitude of the Muskox,
                                         Audacity of the Otter,
                                         cold shoulder,
                                         Wrath of the Wolverine,
@@ -39,9 +40,12 @@ boolean check_buy_skill(skill sk)
 
   if (!guild_store_available()) return false;
 
-  if (sk.class != my_class()) return false;
+  if (sk.class != my_class() && sk.class != $class[none]) return false;
   if (sk.level > my_level()) return false;
   if (sk.traincost * 2 > my_meat()) return false;
+
+  // in case it's not buyable:
+  if (sk.traincost == 0) return false;
 
   int skillid = trainer_skillid(sk);
   if (skillid < 1) return false;

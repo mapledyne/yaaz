@@ -37,5 +37,5 @@ boolean L11_Q_macguffin()
 
 void main()
 {
-  L11_Q_macguffin();
+  while (L11_Q_macguffin());
 }

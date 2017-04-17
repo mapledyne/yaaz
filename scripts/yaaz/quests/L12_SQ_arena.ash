@@ -47,5 +47,5 @@ boolean L12_SQ_arena()
 
 void main()
 {
-  L12_SQ_arena();
+  while (L12_SQ_arena());
 }

@@ -52,5 +52,5 @@ boolean L09_SQ_oilpeak()
 
 void main()
 {
-  L09_SQ_oilpeak();
+  while (L09_SQ_oilpeak());
 }

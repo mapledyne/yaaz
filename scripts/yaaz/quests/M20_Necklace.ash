@@ -146,5 +146,5 @@ boolean M20_necklace()
 
 void main()
 {
-  M20_necklace();
+  while(M20_necklace());
 }

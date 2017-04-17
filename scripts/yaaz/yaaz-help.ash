@@ -22,11 +22,11 @@ print_html("* <i>yaaz-end</i>: Run end-of-day things (like prepping for rollover
 print_html("* <i>yaaz-options</i>: List some options that can configure yaaz");
 print_html("* <i>yaaz-progress</i>: Progress towards various goals");
 print_html("* <i>yaaz-trophy</i>: Progress towards trophies (and other similar goals)");
-print_html("* <i>yaaz-roadmap</i>: Known issues and planned future features");
 print("");
 print("If you browse the script directory from the 'Scripts' menu, the majority of scripts there can each be run individually as well. Run 'prep' and it'll do it's bit of cleanup for you, for instance.");
 print("");
-print("This is most useful in the 'quests' directory where you can, instead of using yaaz to attempt the whole ascension, have yaaz automate individual quests. Run L06_Q_friar.ash and the Friar's quest will be done but nothing else.");
+print("This is most useful in the 'quests' directory where you can, instead of using yaaz to attempt the whole ascension, have yaaz automate individual quests. Run L06_Q_friar.ash and the Friar's quest will be done but nothing else. Quest files have some breakpoints in them, so manually running a quest file may have to be done multiple times to get it to complete a quest.");
 print("");
-print("Note that these scripts are meant to break out regularly when sub-goals are met, so running a quest script may have to be done multiple times (the friar script will end each time one of the required items are found. Rerun it to find all of them). Also, some scripts will wait based on internal logic. If it thinks it should wait and not do a quest now, running it may not work. This should be (generally) rare (imagine a case where you've digitized a lobsterfrogman - rerunning the lighthouse sidequest will cause it to skip since it's waiting for the monsters to show up in other ways).");
+print("See issues being worked, known bugs, and features being considered at: https://github.com/mapledyne/yaaz");
+print("Please add any bugs or feature requests there as well.");
 }

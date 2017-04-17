@@ -117,5 +117,5 @@ boolean L11_SQ_black_market()
 
 void main()
 {
-  L11_SQ_black_market();
+  while (L11_SQ_black_market());
 }

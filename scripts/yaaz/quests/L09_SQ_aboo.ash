@@ -57,5 +57,5 @@ boolean L09_SQ_aboo()
 
 void main()
 {
-  L09_SQ_aboo();
+  while (L09_SQ_aboo());
 }

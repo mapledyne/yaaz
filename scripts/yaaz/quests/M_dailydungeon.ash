@@ -99,5 +99,5 @@ boolean M_dailydungeon()
 
 void main()
 {
-  M_dailydungeon();
+  while(M_dailydungeon());
 }

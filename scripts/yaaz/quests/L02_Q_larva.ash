@@ -32,5 +32,5 @@ boolean L02_Q_larva()
 
 void main()
 {
-  L02_Q_larva();
+  while (L02_Q_larva());
 }

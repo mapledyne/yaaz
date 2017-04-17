@@ -117,5 +117,5 @@ boolean M06_pandemonium()
 
 void main()
 {
-  M06_pandemonium();
+  while(M06_pandemonium());
 }

@@ -225,5 +225,5 @@ boolean L07_Q_cyrpt()
 
 void main()
 {
-  L07_Q_cyrpt();
+  while (L07_Q_cyrpt());
 }

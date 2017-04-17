@@ -75,5 +75,5 @@ boolean L12_SQ_lighthouse()
 
 void main()
 {
-  L12_SQ_lighthouse();
+  while (L12_SQ_lighthouse());
 }

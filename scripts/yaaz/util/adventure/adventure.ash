@@ -111,7 +111,10 @@ boolean yz_clover(location loc)
   item tenleaf = $item[ten-leaf clover];
 
   if (setting("no_clovers") == "true")
+  {
+    info("Considering using a clover at " + wrap(loc) + ", but you've asked me not to use clovers, so I won't.");
     return false;
+  }
 
   if (!can_adventure())
   {

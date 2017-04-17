@@ -277,8 +277,8 @@ void intro()
 {
 
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
-  log("Comments, bugs, feature requests, please send to " + wrap("Degrassi (#1063113)", COLOR_MONSTER) + ".");
-  log("Additional wonderful contributors: " + wrap("Gaikotsu (#2866791)", COLOR_MONSTER) + ".");
+  log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
+  log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>.");
 
   boolean has_fam = false;
   foreach f in $familiars[]
@@ -304,17 +304,15 @@ void intro()
     abort();
   }
 
-  if (setting("no_intro") != "true")
-  {
-    log("This is an automated ascension script, but has some additional features.");
-    log("To get more information, run the " + SCRIPT + "-help.ash script.");
-    log("To remove this message: set " + SETTING_PREFIX + "_no_intro=true");
-    wait(5);
-  }
+  log("This is an automated ascension script, but has some additional features.");
+  log("To get more information, run the " + SCRIPT + "-help script.");
+  log("Go to " + wrap("<a href='https://github.com/mapledyne/yaaz'>https://github.com/mapledyne/yaaz</a>", "blue") + " to see known issues, submit bugs, request features, etc.");
+  wait(5);
 
   if (my_ascensions() == 0)
   {
     warning("This script is meant to help auto-ascend. You're on your first ascension. This script will do some things inefficiently. For instance, it won't take advantage of the mall when otherwise possible.");
+    wait(5);
   }
 
   if (!in_hardcore() && my_ascensions() > 0)

@@ -137,5 +137,5 @@ boolean L04_Q_bats()
 
 void main()
 {
-  L04_Q_bats();
+  while (L04_Q_bats());
 }

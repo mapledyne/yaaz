@@ -16,7 +16,7 @@ void L09_SQ_bridge_cleanup()
   {
     maybe_pull($item[smut orc keepsake box]);
   }
-  
+
   if (get_property("chasmBridgeProgress").to_int() < 30
       && quest_status("questL09Topping") == STARTED)
   {
@@ -91,5 +91,5 @@ boolean L09_SQ_bridge()
 
 void main()
 {
-  L09_SQ_bridge();
+  while (L09_SQ_bridge());
 }

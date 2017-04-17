@@ -119,5 +119,5 @@ boolean L11_SQ_pyramid()
 
 void main()
 {
-  L11_SQ_pyramid();
+  while (L11_SQ_pyramid());
 }

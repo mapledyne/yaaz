@@ -88,7 +88,6 @@ void cast_one_time_things()
   cast_if($skill[Advanced Saucecrafting], to_int(get_property("reagentSummons")) == 0);
   cast_if($skill[Pastamastery], to_int(get_property("noodleSummons")) == 0);
   cast_if($skill[summon crimbo candy], to_int(get_property("_candySummons")) == 0);
-  cast_if($skill[Perfect Freeze], !to_boolean(get_property("perfectFreezeUsed")));
   cast_if($skill[Summon Holiday Fun!], !to_boolean(get_property("_holidayFunUsed")));
 }
 

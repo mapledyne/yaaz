@@ -286,5 +286,5 @@ boolean L12_Q_war()
 
 void main()
 {
-  L12_Q_war();
+  while (L12_Q_war());
 }

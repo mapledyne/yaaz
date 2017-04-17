@@ -247,5 +247,5 @@ boolean L09_SQ_twin()
 
 void main()
 {
-  L09_SQ_twin();
+  while (L09_SQ_twin());
 }

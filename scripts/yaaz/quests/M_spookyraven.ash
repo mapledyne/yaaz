@@ -148,5 +148,5 @@ boolean M_spookyraven()
 
 void main()
 {
-  M_spookyraven();
+  while(M_spookyraven());
 }

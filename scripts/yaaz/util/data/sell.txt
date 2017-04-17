@@ -28,8 +28,8 @@ Half of a Gold Tooth	0
 handful of moss	0
 huge gold coin	0
 Imp Ale	0
+leather mask	0
 Keel-Haulin\' Knife	0
-Kokomo Resort Pass	0
 Mad Train Wine	0
 magicalness-in-a-can	0
 Margarita	0
@@ -43,6 +43,8 @@ Photoprotoneutron Torpedo	0
 pirate pelvis	0
 Procrastination Potion	0
 Ratgut	0
+ridiculously overelaborate ninja weapon	0
+sabre teeth	0
 Smelted Roe	0
 Spicy Jumping Bean Burrito	0
 Spicy Bean Burrito	0
@@ -71,14 +73,19 @@ ancient machete	1
 bone abacus	1
 broken sword	1
 chopsticks	1
+clown shoes	1
 cold ninja mask	1
 cold water bottle	1
 dead guy's watch	1
+dirty hobo gloves	1
 extreme mittens	1
 extreme scarf	1
 eyepatch	1
+filthy corduroys	1
 fleshy lump	1
+foolscap fool's cap	1
 freshwater pearl necklace	1
+frilly skirt	1
 goatskin umbrella	1
 knob goblin elite helm	1
 knob goblin elite pants	1
@@ -92,8 +99,12 @@ misty cape	1
 misty cloak	1
 misty robe	1
 Mr. Screege's spectacles	1
+Orcish baseball cap	1
+Orcish cargo shorts	1
 sabre teeth	1
 snowboarder pants	1
+spooky stick	1
+stuffed shoulder parrot	1
 vampire collar	1
 
 # Keep ... 2?

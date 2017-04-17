@@ -16,24 +16,26 @@ boolean blacklisted(string player)
   if (player ≈ my_name())
     return true;
 
-  // this should check an aggregate, but I'm sick and can't think straight.
-  switch(to_lower_case(player))
-  {
-    default:
-      if(setting("hearted_" + player, "") != "")
-      {
-        return true;
-      }
-      return false;
-    case "ertest1":
-    case "lord enzo":
-    case "major meat":
-    case "ultibot":
-    case "searchingchat":
-    case "s t u p i d":
-    case "abulafia":
-      return true;
-  }
+  string target = to_lower_case(player);
+
+  if(setting("hearted_" + target, "") != "")  return true;
+
+  if (list_contains(setting("no_heart"), target)) return true;
+
+  return false;
+}
+
+boolean random_heart_picker()
+{
+  // splay == odds that a given heart attempt is actually tried.
+  int splay = to_int(setting("heart_splay", "4"));
+
+  return random(splay) == 0;
+}
+
+boolean do_jerk_things()
+{
+  return to_boolean(setting("do_jerk","true"));
 }
 
 string pick_player()
@@ -147,7 +149,7 @@ void do_heart_thing(string player)
     return;
   }
 
-  if (smiles_remaining() > 0)
+  if (smiles_remaining() > 0 && random_heart_picker())
   {
     heart_msg(player, "casting " + wrap($skill[The Smile of Mr. A.]));
     use_skill(1, $skill[The Smile of Mr. A.], player);
@@ -174,16 +176,17 @@ void do_heart_thing(string player)
     return;
   }
 */
-
-  if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else. :)")) return;
-  if (mail_heart_item(player, $item[gift card])) return;
+  if (random_heart_picker()) if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else. :)")) return;
+  if (random_heart_picker()) if (mail_heart_item(player, $item[gift card], "I wonder what it'll be... :)")) return;
 
   // only do these if active in chat:
   if (who_clan()[player])
   {
-    if (mail_heart_item(player, $item[holiday fun!], "Holiday chat messages! Happy Holiday, whatever one is coming up next.")) return;
+    if (random_heart_picker()) if (mail_heart_item(player, $item[holiday fun!], "Holiday chat messages! Happy Holiday, whatever one is coming up next.")) return;
 
-    if (item_amount($item[aggressive carrot]) > 0)
+    if (item_amount($item[aggressive carrot]) > 0
+        && random_heart_picker()
+        && do_jerk_things())
     {
       heart_msg(player, "snapping an " + $item[aggressive carrot] + " and whispering their name...");
       string v = visit_url('inv_use.php?whichitem=7971');
@@ -196,7 +199,8 @@ void do_heart_thing(string player)
     }
 
     if (item_amount($item[glass of warm water]) > 0
-        && random(4) == 0)
+        && random_heart_picker()
+        && do_jerk_things())
     {
       heart_msg(player, "sticking their hand in a " + wrap($item[glass of warm water]) + ". Jerk");
       cli_execute("throw glass of warm water at " + player);
@@ -205,14 +209,18 @@ void do_heart_thing(string player)
 
   }
 
-  if (item_amount($item[roll of toilet paper]) > 0)
+  if (item_amount($item[roll of toilet paper]) > 0
+      && random_heart_picker()
+      && do_jerk_things())
   {
     heart_msg(player, "throwing a " + wrap($item[roll of toilet paper]) + " at them. Jerk");
     cli_execute("throw roll of toilet paper at " + player);
     return;
   }
 
-  if (item_amount($item[&quot;KICK ME&quot; sign]) > 0)
+  if (item_amount($item[&quot;KICK ME&quot; sign]) > 0
+      && random_heart_picker()
+      && do_jerk_things())
   {
     heart_msg(player, "placing a " + wrap($item[&quot;KICK ME&quot; sign]) + " on them. Jerk");
     cli_execute("throw &quot;KICK ME&quot; sign at " + player);
@@ -221,22 +229,25 @@ void do_heart_thing(string player)
 
   // throw personalized coffee mug at abulafia || abcd | efgh | ijkl
   // visit_url("curse.php?action=use&pwd&whichitem=7697&targetplayer=abulafia&message=test");
-  foreach toy in $items[yellow snowcone,
-                        black candy heart,
-                        mood ring,
-                        encoder ring,
-                        defective skull,
-                        jazz soap,
-                        joybuzzer,
-                        whoopie cushion,
-                        fake hand,
-                        explosion-flavored chewing gum,
-                        fake fake vomit]
+  if (do_jerk_things())
   {
-    if (mail_heart_item(player, toy, "Random 'heart'-y ness.")) return;
+    foreach toy in $items[yellow snowcone,
+                          black candy heart,
+                          mood ring,
+                          encoder ring,
+                          defective skull,
+                          jazz soap,
+                          joybuzzer,
+                          whoopie cushion,
+                          fake hand,
+                          explosion-flavored chewing gum,
+                          fake fake vomit]
+    {
+       if (random_heart_picker()) if (mail_heart_item(player, toy, "Random 'heart'-y ness.")) return;
+    }
   }
 
-  if (item_amount($item[arrowgram]) > 0)
+  if (item_amount($item[arrowgram]) > 0 && random_heart_picker())
   {
     int num = random(count(arrow_msgs));
     string arrow_msg = prank_msgs[num];

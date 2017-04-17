@@ -1,5 +1,17 @@
 import "util/main.ash";
 
+void L05_Q_goblin_cleanup()
+{
+  if (have($item[knob goblin elite pants])) sell_all($item[knob goblin pants]);
+  if (quest_status("questL05Goblin") == FINISHED)
+  {
+    sell_all($item[knob goblin harem pants]);
+    if (quest_status("questL04Bat") == FINISHED)
+    {
+      sell_all($item[knob goblin harem veil]);
+    }
+  }
+}
 
 string prep_for_king()
 {
@@ -38,6 +50,7 @@ string prep_for_king()
 
 boolean L05_Q_goblin()
 {
+  L05_Q_goblin_cleanup();
 
   if (to_int(get_property("lastDispensaryOpen")) < my_ascensions() && have_outfit("knob goblin elite guard uniform"))
   {
@@ -58,50 +71,48 @@ boolean L05_Q_goblin()
   }
 
 
-  if (quest_status("questL05Goblin") < 1 && item_amount($item[Knob Goblin encryption key]) == 0)
+  if (quest_status("questL05Goblin") < 1 && !have($item[Knob Goblin encryption key]))
   {
     location outskirts = $location[the outskirts of cobb's knob];
     log("Adventuring in " + wrap(outskirts) + " to get the " + wrap($item[Knob Goblin encryption key]) + ".");
-    while (item_amount($item[Knob Goblin encryption key]) == 0 && can_adventure())
-    {
-      if (!yz_adventure(outskirts, "")) return true;
-    }
+    yz_adventure(outskirts, "");
     return true;
   }
 
-  if (quest_status("questL05Goblin") == FINISHED)
-    return false;
+  if (quest_status("questL05Goblin") == FINISHED) return false;
 
-  if (my_level() < 5)
-    return false;
+  if (my_level() < 5) return false;
 
   if (quest_status("questL05Goblin") == UNSTARTED)
   {
     log("Going to the council to pick up the Goblin King quest.");
     council();
-    // would not normally skip out here, but starting this over will catch the
-    // code above to use the map if needed.
     return true;
   }
 
-  if (!have_outfit("Knob Goblin Harem Girl Disguise") && !have_outfit("Knob Goblin Elite Guard Uniform"))
+  if (!have_outfit("Knob Goblin Harem Girl Disguise")
+      && !have_outfit("Knob Goblin Elite Guard Uniform"))
   {
     // get a disguise:
 
     location harem = $location[Cobb's Knob Harem];
-    if (dangerous(harem)) return false;
+    if (dangerous(harem))
+    {
+      info("Skipping the " + wrap(harem) + " for now because it's dangerous.");
+      return false;
+    }
 
     log("Off to try to get the " + wrap("Knob Goblin Harem Girl Disguise", COLOR_ITEM) + " from the " + wrap(harem) + ".");
-    while(!have_outfit("Knob Goblin Harem Girl Disguise") && can_adventure())
-    {
-      yz_adventure(harem, "items");
-    }
+    yz_adventure(harem, "items");
     return true;
   }
 
   // bail if the king is still too tough for us...
-  if (expected_damage($monster[knob goblin king]) > my_maxhp() / 10)
+  if (dangerous($monster[knob goblin king]))
+  {
+    info("Skipping our assault on the " + wrap($monster[knob goblin king]) + " for now since he's dangerous.");
     return false;
+  }
 
   string disguise = prep_for_king();
 
@@ -133,5 +144,5 @@ boolean L05_Q_goblin()
 
 void main()
 {
-  L05_Q_goblin();
+  while (L05_Q_goblin());
 }

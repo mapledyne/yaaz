@@ -231,5 +231,5 @@ boolean L11_SQ_summoning()
 
 void main()
 {
-  L11_SQ_summoning();
+  while (L11_SQ_summoning());
 }

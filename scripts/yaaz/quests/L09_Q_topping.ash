@@ -33,5 +33,5 @@ boolean L09_Q_topping()
 
 void main()
 {
-  L09_Q_topping();
+  while (L09_Q_topping());
 }

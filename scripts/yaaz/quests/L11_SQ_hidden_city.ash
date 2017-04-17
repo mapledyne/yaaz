@@ -363,5 +363,5 @@ boolean L11_SQ_hidden_city()
 
 void main()
 {
-  L11_SQ_hidden_city();
+  while (L11_SQ_hidden_city());
 }

@@ -46,5 +46,5 @@ boolean M_untinker()
 
 void main()
 {
-  M_untinker();
+  while(M_untinker());
 }

@@ -25,5 +25,5 @@ boolean M09_leaflet()
 
 void main()
 {
-  M09_leaflet();
+  while(M09_leaflet());
 }

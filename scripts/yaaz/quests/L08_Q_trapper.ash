@@ -211,5 +211,5 @@ boolean L08_Q_trapper()
 
 void main()
 {
-  L08_Q_trapper();
+  while (L08_Q_trapper());
 }

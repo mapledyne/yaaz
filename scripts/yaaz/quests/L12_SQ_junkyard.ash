@@ -77,5 +77,5 @@ boolean L12_SQ_junkyard()
 
 void main()
 {
-  L12_SQ_junkyard();
+  while (L12_SQ_junkyard());
 }

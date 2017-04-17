@@ -84,5 +84,5 @@ boolean M_level_up()
 
 void main()
 {
-  M_level_up();
+  while(M_level_up());
 }

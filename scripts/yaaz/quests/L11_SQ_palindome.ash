@@ -122,5 +122,5 @@ boolean L11_SQ_palindome()
 
 void main()
 {
-  L11_SQ_palindome();
+  while (L11_SQ_palindome());
 }

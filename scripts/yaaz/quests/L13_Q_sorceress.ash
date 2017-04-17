@@ -415,5 +415,5 @@ boolean L13_Q_sorceress()
 
 void main()
 {
-  L13_Q_sorceress();
+  while (L13_Q_sorceress());
 }

@@ -69,5 +69,5 @@ boolean L12_SQ_nuns()
 
 void main()
 {
-  L12_SQ_nuns();
+  while (L12_SQ_nuns());
 }

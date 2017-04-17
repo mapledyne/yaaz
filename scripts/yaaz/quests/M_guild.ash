@@ -72,5 +72,5 @@ boolean M_guild()
 
 void main()
 {
-  M_guild();
+  while(M_guild());
 }

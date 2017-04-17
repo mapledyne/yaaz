@@ -25,5 +25,5 @@ boolean M_desert_beach()
 
 void main()
 {
-  M_desert_beach();
+  while(M_desert_beach());
 }

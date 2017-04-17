@@ -42,5 +42,5 @@ boolean L03_Q_rats()
 
 void main()
 {
-  L03_Q_rats();
+  while (L03_Q_rats());
 }

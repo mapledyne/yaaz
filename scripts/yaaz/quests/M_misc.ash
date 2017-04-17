@@ -98,5 +98,5 @@ boolean M_misc()
 
 void main()
 {
-  M_misc();
+  while(M_misc());
 }

@@ -97,5 +97,5 @@ boolean M_8bit()
 
 void main()
 {
-  M_8bit();
+  while(M_8bit());
 }

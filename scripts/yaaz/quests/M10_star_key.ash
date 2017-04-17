@@ -49,5 +49,5 @@ boolean M10_star_key()
 
 void main()
 {
-  M10_star_key();
+  while(M10_star_key());
 }

@@ -77,5 +77,5 @@ boolean M_hidden_temple()
 
 void main()
 {
-  M_hidden_temple();
+  while(M_hidden_temple());
 }

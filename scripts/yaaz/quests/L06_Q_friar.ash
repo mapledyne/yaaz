@@ -95,5 +95,5 @@ boolean L06_Q_friar()
 
 void main()
 {
-  L06_Q_friar();
+  while (L06_Q_friar());
 }

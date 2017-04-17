@@ -363,5 +363,5 @@ boolean M_pirates()
 
 void main()
 {
-  M_pirates();
+  while(M_pirates());
 }

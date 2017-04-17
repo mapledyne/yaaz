@@ -237,5 +237,5 @@ boolean L11_SQ_desert()
 
 void main()
 {
-  L11_SQ_desert();
+  while (L11_SQ_desert());
 }
