@@ -85,7 +85,7 @@ void do_maximize(string target, string outfit, item it)
     }
   }
 
-  log("Maximizing equipment based on: " + max);
+  info("Maximizing equipment based on: " + max);
   maximize(max, false);
 }
 
@@ -115,7 +115,7 @@ void maximize(string target, string outfit, item it, familiar fam)
       && have_skill($skill[Master of the Surprising Fist]))
   {
     if (target != "") target = target + ", ";
-    target += ", -unarmed";
+    target += "-unarmed";
   }
 
 /*  if (my_primestat() == $stat[muscle]

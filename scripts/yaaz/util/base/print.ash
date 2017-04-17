@@ -133,14 +133,14 @@ void info(string msg)
 {
   string level = setting("log_level", "");
   if (level == 'info' || level == 'debug')
-    yz_print(msg, COLOR_INFO);
+    yz_print("[INFO] " + msg, COLOR_INFO);
 }
 
 void debug(string msg)
 {
   string level = setting("log_level", "");
   if (level == 'debug')
-    yz_print('DEBUG: ' + msg, COLOR_DEBUG);
+    yz_print('[DEBUG] ' + msg, COLOR_DEBUG);
 }
 
 void progress(int percent);

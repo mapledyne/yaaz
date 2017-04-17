@@ -116,10 +116,20 @@ void try_summon_demon(effect ef)
     use_familiar($familiar[intergnat]);
   }
   log("Summoning a demon to get us " + wrap(ef) + ".");
-  cli_execute("summon " + summon);
+  boolean b = cli_execute("summon " + summon);
   if (summon == 12)
   {
     use_familiar(current_fam);
+  }
+  if (!b)
+  {
+    debug("Tried to summon but failed. This happens (rarely) with demon12 for some reason where mafia thinks we have the name, but we actually don't.");
+    if (summon != 12)
+    {
+      debug("We were summoning demon " + summon + ", so I don't know what the problem was.");
+    } else {
+      set_property("demonName12", "");
+    }
   }
 }
 

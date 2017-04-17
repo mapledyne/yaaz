@@ -26,7 +26,10 @@ void remove_duplicate(monster mon);
 
 boolean dangerous(monster mon)
 {
-  return expected_damage(mon) > my_maxhp() / 4;
+  boolean awooga = expected_damage(mon) > my_maxhp() / 4;
+
+  if (awooga) debug("Checking if " + wrap(mon) + " is dangerous. It is.");
+  return awooga;
 }
 
 boolean dangerous(location loc)
@@ -38,7 +41,11 @@ boolean dangerous(location loc)
   foreach i, mon in monsters
   {
     if (dangerous(mon)) counter++;
-    if (counter >= threshold) return true;
+    if (counter >= threshold)
+    {
+      debug("Checking " + wrap(loc) + " to see if it's dangerous. It is.");
+      return true;
+    }
   }
   return false;
 }

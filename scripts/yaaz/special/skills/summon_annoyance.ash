@@ -10,6 +10,18 @@ boolean[item] annoyances = $items[brick,
                                   unmotivator: crashed orca,
                                   unmotivator: success warrior];
 
+
+int total_annoyances()
+{
+  int so_many_annoyances = 0;
+  foreach annoy in annoyances
+  {
+    so_many_annoyances += item_amount(annoy);
+    so_many_annoyances += get_free_pulls()[annoy];
+  }
+  return so_many_annoyances;
+}
+
 void summon_annoyance()
 {
   if (!have_skill($skill[summon annoyance])) return;
@@ -21,15 +33,9 @@ void summon_annoyance()
   // make sure we have plenty of surplus swagger.
   if (to_int(get_property("availableSwagger")) < annoy_cost * 100) return;
 
-  int so_many_annoyances = 0;
-  foreach annoy in annoyances
-  {
-    so_many_annoyances += item_amount(annoy);
-    so_many_annoyances += get_free_pulls()[annoy];
-  }
 
   // if we have plenty of annoyances, let's skip for now.
-  if (so_many_annoyances > 20) return;
+  if (total_annoyances() > 20) return;
 
   log("Going to " + wrap($skill[summon annoyance]) + " to do stuff to people in the future.");
   use_skill(1, $skill[summon annoyance]);

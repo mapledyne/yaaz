@@ -135,9 +135,6 @@ void prep(location loc)
     }
   }
 
-  cast_one_time_things();
-  cast_surplus_mp();
-
   consume();
 
   if (to_int(setting("adventure_floor", "10")) > my_adventures())
@@ -176,6 +173,9 @@ void prep(location loc)
   prep_sauceror(loc);
   prep_sealclubber(loc);
   prep_turtletamer(loc);
+
+  cast_one_time_things();
+  cast_surplus_mp();
 
   prep_fishing(loc);
 

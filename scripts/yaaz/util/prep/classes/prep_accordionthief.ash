@@ -21,10 +21,18 @@ void get_accordion()
     return;
 
   foreach a in $items[Antique Accordion,
-                      toy accordion,
-                      stolen accordion]
+                      toy accordion]
   {
     if (have(a)) return;
+  }
+
+  // need to make a  better list here.
+  if (my_class() == $class[accordion thief])
+  {
+    foreach a in $items[stolen accordion]
+    {
+      if (have(a)) return;
+    }
   }
 
   if ($classes[Avatar of Boris,

@@ -168,7 +168,7 @@ boolean do_twin_food()
 
 boolean L09_SQ_twin()
 {
-  L09_SQ_twin();
+  L09_SQ_twin_cleanup();
 
 	if(to_int(get_property("twinPeakProgress")) >= 15) return false;
 

@@ -354,6 +354,12 @@ void intro()
     }
     wait(10);
   }
+
+  if (my_path() == "One Crazy Random Summer")
+  {
+    warning("This script doesn't handle well some of the monster modifiers in this path. When this happens, you can finish the fight and re-run the script to pick back up.");
+    wait(5);
+  }
 }
 
 void ascend()
