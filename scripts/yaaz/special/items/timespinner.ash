@@ -152,6 +152,7 @@ boolean timespinner_future()
       save_daily_setting("far_future_svn_warning", "true");
       warning("You have a " + wrap($item[time-spinner]) + " but I don't know how to automate going into the far future.");
       warning("If you install Ezandora's " + wrap("Far Future", COLOR_ITEM) + " script, I'll call it to automatically do this for you.");
+      warning("In the meantime, you'll have to do this yourself, if interested.");
       wait(10);
     }
     return false;

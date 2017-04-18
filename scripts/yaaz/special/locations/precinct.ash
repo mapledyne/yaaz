@@ -11,16 +11,21 @@ void precinct()
   if (!can_precinct())
     return;
 
-    string script = setting("detective_script");
-    if (script == "")
-    {
-      warning("You have detective cases you can complete at the precinct.");
-      warning("This isn't automated by this script.");
-      warning("Set the variable '" + SETTING_PREFIX + "_detective_script' to a script to run, and we can call it automatically.");
-    } else {
-      cli_execute("call " + script);
-      log("Detective cases hopefully solved.");
-    }
+  if (!svn_exists("Ezandora-Detective-Solver-branches-Release"))
+  {
+      if (!to_boolean(setting("precinct_svn_warning", "false")))
+      {
+        save_daily_setting("precinct_svn_warning", "true");
+        warning("You have the " + wrap("Detective Precinct", COLOR_LOCATION) + " but I don't know how to automate these cases.");
+        warning("If you install Ezandora's " + wrap("Detective Solver", COLOR_ITEM) + " script, I'll call it to automatically do this for you.");
+        warning("In the meantime, you'll have to do this yourself, if interested.");
+        wait(10);
+      }
+      return;
+  }
+
+  cli_execute("call Detective Solver.ash");
+  log("Detective cases hopefully solved.");
 }
 
 void main()

@@ -150,7 +150,31 @@ boolean L09_SQ_twin()
 
 	int attemptNum = 0;
 	boolean attempt = false;
-	if(need_init)
+
+	if (need_jar && (have($item[Jar of Oil])))
+	{
+    set_property("choiceAdventure606", "3");
+    set_property("choiceAdventure609", "1");
+    set_property("choiceAdventure616", "1");
+    return do_twin_jar();
+	}
+
+	if (need_food)
+	{
+    set_property("choiceAdventure606", "2");
+    set_property("choiceAdventure608", "1");
+    return do_twin_food();
+	}
+
+	if (need_stench)
+	{
+    set_property("choiceAdventure606", "1");
+    set_property("choiceAdventure607", "1");
+
+    return do_twin_stench();
+	}
+
+  if (need_init)
 	{
     set_property("choiceAdventure606", "4");
     set_property("choiceAdventure610", "1");
@@ -159,33 +183,9 @@ boolean L09_SQ_twin()
     return do_twin_init();
 	}
 
-	if(need_jar && (have($item[Jar of Oil])))
-	{
-    set_property("choiceAdventure606", "3");
-    set_property("choiceAdventure609", "1");
-    set_property("choiceAdventure616", "1");
-    return do_twin_jar();
-	}
-
-	if(need_food)
-	{
-    set_property("choiceAdventure606", "2");
-    set_property("choiceAdventure608", "1");
-    return do_twin_food();
-	}
-
-	if(need_stench)
-	{
-    set_property("choiceAdventure606", "1");
-    set_property("choiceAdventure607", "1");
-
-    return do_twin_stench();
-	}
-
-  if (my_level() < 12)
-  {
-    return false;
-  }
+  // Wait until later, to up our odds of one of the above working,
+  // and/or to use for flyers.
+  if (my_level() < 12) return false;
 
   log("Doing the " + wrap($location[twin peak]) + " the hard way.");
 

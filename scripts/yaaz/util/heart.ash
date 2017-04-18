@@ -18,7 +18,7 @@ boolean blacklisted(string player)
 
   string target = to_lower_case(player);
 
-  if(setting("hearted_" + target, "") != "")  return true;
+  if (setting("hearted_" + target, "") != "")  return true;
 
   if (list_contains(setting("no_heart"), target)) return true;
 
@@ -85,7 +85,7 @@ string pick_player()
 void heart_msg(string player, string msg)
 {
   log(HEART + " Being heart-y to " + wrap(player, COLOR_MONSTER) + " by " + msg + ".");
-  save_daily_setting("hearted_" + player, msg);
+  save_daily_setting("hearted_" + to_lower_case(player), msg);
 }
 
 

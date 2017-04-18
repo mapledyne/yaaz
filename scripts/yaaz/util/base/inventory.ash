@@ -511,10 +511,15 @@ void sell_all(item it, int keep)
     return;
 
   int qty = item_amount(it) - keep;
-  if (qty <= 0)
-    return;
+  if (qty <= 0) return;
   log("Selling " + qty + " " + wrap(pluralize(item_amount(it), it), COLOR_ITEM));
+  int old_qty = item_amount(it);
   autosell(qty, it);
+
+  if (item_amount(it) != old_qty - qty)
+  {
+    warning("I was unable to sell the " + wrap(it) + ". This could be because you have the item marked as a 'keep one' in the Mafia settings?");
+  }
 }
 
 void sell_all(item it)

@@ -28,10 +28,7 @@ int estimated_alcove_turns()
 void clear_alcove()
 {
 
-	if(get_property("cyrptAlcoveEvilness").to_int() > 0) return;
-	maximize("-combat");
-	choose_familiar("init");
-	max_effects("init");
+	if (get_property("cyrptAlcoveEvilness").to_int() <= 0) return;
 
 	log("Undefiling " + wrap($location[The Defiled Alcove]) + ". " + wrap($monster[Modern Zmobie]) + " appearance " + modern_zmobie_pct() + "% at +" + initiative_modifier() + " init.");
 
@@ -42,7 +39,7 @@ void clear_alcove()
 
 void clear_niche()
 {
-	if(get_property("cyrptNicheEvilness").to_int() <= 0) return;
+	if (get_property("cyrptNicheEvilness").to_int() <= 0) return;
 
 		log("Undefiling " + wrap($location[The Defiled Niche]) + ".");
 
@@ -52,7 +49,7 @@ void clear_niche()
 
 void clear_nook()
 {
-	if(get_property("cyrptNookEvilness").to_int() <= 0) return;
+	if (get_property("cyrptNookEvilness").to_int() <= 0) return;
 
 	log("Undefiling " + wrap($location[The Defiled Nook]) + ".");
 
@@ -63,7 +60,7 @@ void clear_nook()
 
 void clear_cranny()
 {
-	if(get_property("cyrptCrannyEvilness").to_int() <= 0) return;
+	if (get_property("cyrptCrannyEvilness").to_int() <= 0) return;
 
 	log("Undefiling " + wrap($location[The Defiled Cranny]) + ".");
 
@@ -78,11 +75,9 @@ boolean L07_Q_cyrpt()
 
 	L07_Q_cyrpt_cleanup();
 
-	if(my_level() < 7)
-    return false;
+	if(my_level() < 7) return false;
 
-	if (quest_status("questL07Cyrptic") == FINISHED)
-	  return false;
+	if (quest_status("questL07Cyrptic") == FINISHED) return false;
 
 	maybe_pull($item[gravy boat]);
 
@@ -94,22 +89,20 @@ boolean L07_Q_cyrpt()
 		return false;
 	}
 
-	if(item_amount($item[chest of the bonerdagon]) == 1)
+	if (have($item[chest of the bonerdagon]))
 	{
     log("Looks like we've completed the quest but not opened the chest yet.");
 		use(1, $item[chest of the bonerdagon]);
 		return true;
 	}
 
-	int timer = my_adventures();
-
-	if (item_amount($item[evilometer]) == 0)
+	if (!have($item[evilometer]))
 	{
 		log("We don't have an " + wrap($item[evilometer]) + ". Maybe we haven't started the quest yet?");
 		council();
 	}
-
 	if (dangerous($location[the defiled alcove])) return false;
+
 	if (get_property("cyrptAlcoveEvilness").to_int() > 0)
 	{
 		if (get_property("cyrptAlcoveEvilness").to_int() > 25
@@ -173,8 +166,7 @@ boolean L07_Q_cyrpt()
 		boolean boner = yz_adventure($location[Haert of the Cyrpt], "");
 		if(item_amount($item[chest of the bonerdagon]) == 1)
 		{
-			int total_adv = timer - my_adventures();
-			log("Bonerdagon defeated! It took " + total_adv + " adventures.");
+			log("Bonerdagon defeated!");
 			use(1, $item[chest of the bonerdagon]);
 			log("Going to the " + wrap("council", COLOR_LOCATION) + " to report our victory.");
 			council();

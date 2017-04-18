@@ -51,8 +51,7 @@ boolean M_8bit()
 {
   M_8bit_cleanup();
 
-  if (!have($item[continuum transfunctioner]))
-    return false;
+  if (!have($item[continuum transfunctioner])) return false;
 
   if (dangerous($location[8-bit realm]))
   {
@@ -80,7 +79,7 @@ boolean M_8bit()
   if (quest_status("questL13Final") > 5) return false;
 
   maximize("items", $item[continuum transfunctioner]);
-  if (!time_combat($monster[blooper], $location[8-bit realm])) return true;
+  if (time_combat($monster[blooper], $location[8-bit realm])) return true;
 
   yz_adventure($location[8-bit realm]);
 

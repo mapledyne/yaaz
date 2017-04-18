@@ -124,8 +124,7 @@ void skill_recommendation()
 boolean ascend_loop()
 {
 
-  if (!can_adventure())
-    return false;
+  if (!can_adventure()) return false;
 
   if (quest_status("questL13Final") >= 13) return false;
 
@@ -154,6 +153,7 @@ boolean ascend_loop()
 
   // do a bit earlier than other order to get the Knob opened earlier.
   // earlier knob == earlier dispensary if we get a KGE outfit.
+
   if (L05_Q_goblin()) return true;
 
   // do this one earlier since it opens the pandemonium.
