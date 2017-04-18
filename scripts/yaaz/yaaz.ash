@@ -153,6 +153,7 @@ boolean ascend_loop()
 
   // do a bit earlier than other order to get the Knob opened earlier.
   // earlier knob == earlier dispensary if we get a KGE outfit.
+  // Note: do we even care about the dispensary?
 
   if (L05_Q_goblin()) return true;
 
