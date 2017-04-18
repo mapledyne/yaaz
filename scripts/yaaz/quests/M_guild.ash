@@ -2,15 +2,12 @@ import "util/main.ash";
 
 boolean M_guild()
 {
-  if (guild_store_open())
-    return false;
+  if (guild_store_open()) return false;
 
-  if (!is_guild_class())
-    return false;
+  if (!is_guild_class()) return false;
 
   // no guild on this path:
-  if (my_path() == "Nuclear Autumn")
-      return false;
+  if (my_path() == "Nuclear Autumn") return false;
 
   log("Visiting the guild to see what they want us to do.");
   visit_url("guild.php?place=challenge");
@@ -41,7 +38,8 @@ boolean M_guild()
   }
 
   log("Retreiving the " + wrap(it) + " from " + wrap(loc) + ".");
-  while(!have(it) || my_primestat() == $stat[moxie])
+  if (!have(it)
+      || my_primestat() == $stat[moxie])
   {
     if (my_primestat() == $stat[moxie])
     {
@@ -49,22 +47,24 @@ boolean M_guild()
     } else {
       maximize("");
     }
-    boolean b = yz_adventure(loc);
+
+    yz_adventure(loc);
     if (equipped_item($slot[pants]) == $item[none]
         && my_primestat() == $stat[moxie])
-      break;
-    if (!b)
-      return true;
+    {
+      log("Returning the " + wrap(it) + " to your guild leader.");
+      visit_url("guild.php?place=challenge");
+    }
+
+    return true;
   }
 
   log("Returning the " + wrap(it) + " to your guild leader.");
   visit_url("guild.php?place=challenge");
 
   if (!guild_store_open())
-  {
-    error("Your guild isn't open yet for some reason. Unsure how to handle this.");
-    abort();
-  }
+    abort("Your guild isn't open yet for some reason. Unsure how to handle this.");
+
   log("Guild is now open.");
   return true;
 }

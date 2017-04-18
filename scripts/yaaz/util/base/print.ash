@@ -27,7 +27,7 @@ string UNCHECKED = "[ ]";
 string pluralize(int count, item it)
 {
   if (count == 1)
-    return it;
+    return it.name;
   return to_plural(it);
 }
 
@@ -38,7 +38,7 @@ string wrap(string i, string color)
 
 string wrap(item i)
 {
-	return wrap(i, COLOR_ITEM);
+	return wrap(i.name, COLOR_ITEM);
 }
 
 string wrap(item i, int qty)

@@ -1,5 +1,18 @@
 import "util/main.ash";
 
+void L09_SQ_oilpeak_cleanup()
+{
+
+  int peak = get_property("twinPeakProgress").to_int();
+  if(!bit_flag(peak, 2) && !have($item[jar of oil]))
+  {
+    if (creatable_amount($item[jar of oil]) > 0)
+    create(1, $item[jar of oil]);
+  }
+
+  // should do keen stuff with surplus crudes...
+}
+
 boolean have_crudes()
 {
   if (creatable_amount($item[jar of oil]) > 0) return true;
@@ -13,6 +26,8 @@ boolean have_crudes()
 
 boolean L09_SQ_oilpeak()
 {
+  L09_SQ_oilpeak_cleanup();
+
   if (quest_status("questL09Topping") != 2)
     return false;
 
@@ -33,20 +48,13 @@ boolean L09_SQ_oilpeak()
     return false;
   }
 
-
   if (dangerous($location[oil peak]))
   {
     log("Skipping the " + wrap($location[oil peak]) + " for now because it's dangerous.");
     return false;
   }
 
-  boolean b;
-  repeat
-  {
-    b = yz_adventure($location[oil peak], "items, ml");
-    progress = to_int(get_property("oilPeakProgress"));
-  } until ((progress == 0 && have_crudes()) || !b);
-
+  yz_adventure($location[oil peak], "items, ml");
   return true;
 }
 

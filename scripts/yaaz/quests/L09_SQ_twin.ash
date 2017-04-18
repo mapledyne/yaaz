@@ -8,40 +8,19 @@ void L09_SQ_twin_cleanup()
   }
 }
 
-
-
 boolean twin_adventure(string max)
 {
   max += ", -combat";
   if (!contains_text(max, "items"))
     max += ", items";
 
-  foreach m in $monsters[bearpig topiary animal,
-                        elephant (meatcar?) topiary animal,
-                        spider (duck?) topiary animal]
-  {
-    add_attract(m);
-  }
-
   maximize(max);
   maybe_pull($item[rusty hedge trimmers]);
   if (have($item[rusty hedge trimmers]))
   {
     use(1, $item[rusty hedge trimmers]);
-  } else {
-    return yz_adventure($location[twin peak]);
   }
-  if ($monsters[bearpig topiary animal,
-                elephant (meatcar?) topiary animal,
-                spider (duck?) topiary animal] contains to_monster(get_property("olfactedMonster")))
-  {
-    foreach m in $monsters[bearpig topiary animal,
-                          elephant (meatcar?) topiary animal,
-                          spider (duck?) topiary animal]
-    {
-      remove_attract(m);
-    }
-  }
+  return yz_adventure($location[twin peak]);
   return true;
 }
 
@@ -54,29 +33,13 @@ boolean do_twin_init()
     return false;
   }
 
-  int status = to_int(get_property("twinPeakProgress"));
-
-  repeat
-  {
-    boolean b = (twin_adventure("init"));
-    if (!b)
-      return true;
-  } until (status != to_int(get_property("twinPeakProgress")));
-
+  twin_adventure("init");
   return true;
 }
 
 boolean do_twin_jar()
 {
-  int status = to_int(get_property("twinPeakProgress"));
-
-  repeat
-  {
-    boolean b = (twin_adventure("items"));
-    if (!b)
-      return true;
-  } until (status != to_int(get_property("twinPeakProgress")));
-
+  twin_adventure("items");
   return true;
 }
 
@@ -97,7 +60,6 @@ boolean do_twin_stench()
     possibleGain += 1;
   }
 
-
   if((elemental_resistance($element[stench]) + possibleGain) < 4)
   {
     log("We can't find enough stench resistance. Will come back to the " + wrap($location[twin peak]) + " later.");
@@ -106,26 +68,20 @@ boolean do_twin_stench()
 
   int status = to_int(get_property("twinPeakProgress"));
 
-  repeat
+  if(elemental_resistance($element[stench]) < 4)
   {
-    if(elemental_resistance($element[stench]) < 4)
-    {
-      effect_maintain($effect[Neutered Nostrils]);
-    }
-    if(elemental_resistance($element[stench]) < 4)
-    {
-      effect_maintain($effect[Oiled-Up]);
-    }
-    if(elemental_resistance($element[stench]) < 4)
-    {
-      effect_maintain($effect[Well-Oiled]);
-    }
+    effect_maintain($effect[Neutered Nostrils]);
+  }
+  if(elemental_resistance($element[stench]) < 4)
+  {
+    effect_maintain($effect[Oiled-Up]);
+  }
+  if(elemental_resistance($element[stench]) < 4)
+  {
+    effect_maintain($effect[Well-Oiled]);
+  }
 
-    boolean b = (twin_adventure("stench res"));
-    if (!b)
-      return true;
-  } until (status != to_int(get_property("twinPeakProgress")));
-
+  twin_adventure("stench res");
   return true;
 }
 
@@ -155,15 +111,8 @@ boolean do_twin_food()
   }
   int status = to_int(get_property("twinPeakProgress"));
 
-  repeat
-  {
-    boolean b = (twin_adventure("items"));
-    if (!b)
-      return true;
-  } until (status != to_int(get_property("twinPeakProgress")));
-
+  twin_adventure("items");
   return true;
-
 }
 
 boolean L09_SQ_twin()

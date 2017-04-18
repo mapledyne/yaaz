@@ -3,14 +3,12 @@ import "special/items/deck.ash";
 
 boolean wall_of_skin()
 {
-  if (item_amount($item[beehive]) == 0)
+  if (!have($item[beehive]))
   {
-    warning("You're at the wall of skin without a beehive. Sad. I can't help you.");
-    return false;
+    abort("You're at the wall of skin without a beehive. Sad. I can't help you. Defeat it manually and rerun this script.");
   }
 
-  maximize("");
-  yz_adventure($location[tower level 1]);
+  yz_adventure($location[tower level 1], "");
   if (quest_status("questL13Final") == 6)
   {
     warning("Something happened. We should be past the Wall of Skin, but aren't for some reason.");
@@ -24,23 +22,21 @@ boolean wall_of_skin()
 boolean wall_of_bones()
 {
   set_property("choiceAdventure1026",2);
-  if (item_amount($item[electric boning knife]) == 0)
+
+  if (!have($item[electric boning knife]))
   {
-    log("First, going to get an " + wrap($item[electric boning knife]) + ".");
-  }
-  while (item_amount($item[electric boning knife]) == 0)
-  {
+    log("Going to get an " + wrap($item[electric boning knife]) + " before fighting the " + wrap($monster[wall of bones]) + ".");
     location ground = $location[the castle in the clouds in the sky (ground floor)];
-    maximize("-combat");
-    yz_adventure(ground);
+    yz_adventure(ground, "-combat");
+    return true;
   }
 
-  maximize("");
-  yz_adventure($location[tower level 3]);
+  yz_adventure($location[tower level 3], "");
   if (quest_status("questL13Final") == 8)
   {
     warning("Something happened. We should be past the " + wrap($monster[wall of bones]) + ", but aren't for some reason.");
-    return false;
+    wait(10);
+    return true;
   }
   log(wrap($monster[wall of bones]) + " defeated.");
   return true;
@@ -48,33 +44,38 @@ boolean wall_of_bones()
 
 boolean wall_of_meat()
 {
-  int counter = 0;
-  while (quest_status("questL13Final") == 7 && counter < 10)
-  {
-    maximize("meat");
-    yz_adventure($location[tower level 2]);
-    counter += 1;
-  }
+  yz_adventure($location[tower level 2], "meat");
 
-  if (quest_status("questL13Final") == 7)
-  {
-    warning("Something went wrong. We're not clear of the " + wrap($monster[wall of meat]) + ", but should be.");
-    return false;
-  }
+  if (quest_status("questL13Final") != 7)
+    log(wrap($monster[wall of meat]) + " defeated.");
 
-  log(wrap($monster[wall of meat]) + " defeated.");
   return true;
+}
+
+boolean look_in_sorceress_mirror()
+{
+  debug("Todo: Find a good mechanic for deciding if we should look in the mirror");
+  return !to_boolean(setting("aggressive_optimize", "false"));
 }
 
 boolean mirror()
 {
-  set_property("choiceAdventure1015", 1);
+  if (look_in_sorceress_mirror())
+  {
+    log("Looking in the Sorceress's mirror.");
+    set_property("choiceAdventure1015", 1);
+  } else {
+    log("Avoiding the Sorceress's mirror.");
+    set_property("choiceAdventure1015", 2);
+  }
+
   yz_adventure($location[tower level 4]);
 
   if (quest_status("questL13Final") == 9)
   {
     warning("Something went wrong. We're should have moved past the mirror, but aren't.");
-    return false;
+    wait(10);
+    return true;
   }
 
   log("Mirror level passed.");
@@ -88,13 +89,13 @@ boolean shadow()
     warning("I don't know how to check if we can pass the shadow. I'm expecting a bunch of healing items I can't find.");
     return false;
   }
-  maximize("");
-  yz_adventure($location[tower level 5]);
+  yz_adventure($location[tower level 5], "");
 
   if (quest_status("questL13Final") == 10)
   {
     warning("Something happened. We should be past " + wrap($monster[your shadow]) + ", but aren't for some reason.");
-    return false;
+    wait(10);
+    return true;
   }
   log(wrap($monster[your shadow]) + " defeated.");
   return true;
@@ -204,7 +205,7 @@ void max_contest(string max, int num)
       effect_maintain($effect[spooky jellied]);
       break;
   }
-  log("All dressed up and somewhere to go, the Registration Desk.");
+  log("All dressed up and somewhere to go, the " + wrap("Registration Desk", COLOR_LOCATION) + ".");
   visit_url("place.php?whichplace=nstower&action=ns_01_contestbooth");
   visit_url("choice.php?pwd=&whichchoice=1003&option=" + num, true);
   visit_url("main.php");

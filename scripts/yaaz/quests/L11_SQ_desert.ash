@@ -10,7 +10,6 @@ boolean can_equip_compass() {
   return (my_path() != "Way of the Surprising Fist" && my_path() != "Avatar of Boris");
 }
 
-
 boolean pyramid_found()
 {
   if (!contains_text(visit_url("questlog.php?which=1"),"Just Deserts") || contains_text(visit_url("questlog.php?which=1"),"found the little pyramid") || contains_text(visit_url("questlog.php?which=1"),"found the hidden buried pyramid"))
@@ -47,20 +46,18 @@ boolean is_oasis_open()
 
 boolean open_oasis()
 {
-  int max_adv = 10;
-  int adv_spent = 0;
-  while ( adv_spent < max_adv && !is_oasis_open() )
+  if (is_oasis_open()) return false;
+
+  log(wrap(oasis) + " hasn't been found yet. Adventuring in " + wrap(desert) + " to open it.");
+
+  if (can_equip_compass())
   {
-    if (can_equip_compass())
-    {
-      maximize("", compass);
-    } else {
-      maximize("");
-    }
-    boolean b = yz_adventure(desert);
-    if (!b) return true;
-    adv_spent += 1;
+    maximize("", compass);
+  } else {
+    maximize("");
   }
+
+  yz_adventure(desert);
   return true;
 }
 
@@ -71,37 +68,28 @@ boolean is_gnasir_open()
   return false;
 }
 
-int open_gnasir()
+boolean open_gnasir()
 {
-  int max_adv = 15;
-  int adv_spent = 0;
+  if (is_gnasir_open()) return false;
+
+  log("Gnasir hasn't been found yet. Adventuring in " + wrap(desert) + " to open it.");
 
   set_property("choiceAdventure805", 1);
 
-    while ( adv_spent < max_adv && !is_gnasir_open() )
-    {
-      if (can_equip_compass())
-      {
-        maximize("", compass);
-      } else {
-        maximize("");
-      }
+  if (can_equip_compass())
+  {
+    maximize("", compass);
+  } else {
+    maximize("");
+  }
 
-      if (have_effect(ultrahydrated) == 0)
-      {
-        yz_adventure(oasis);
-        adv_spent += 1;
-      }
-      yz_adventure(desert);
-      adv_spent += 1;
-    }
-    if (!is_gnasir_open())
-    {
-      log("Could not open Gnasir for some reason. Try adventuring in " + wrap(desert) + " (while " + wrap(ultrahydrated) + ") manually to open it.");
-      abort();
-    }
-    log_adv(adv_spent, "to open " + wrap(oasis) + ".");
-    return adv_spent;
+  if (have_effect(ultrahydrated) == 0)
+  {
+    log("Going to " + wrap($location[The Oasis]) + " to get " + wrap($effect[Ultrahydrated]) + ".");
+    yz_adventure(oasis);
+  }
+  yz_adventure(desert);
+  return true;
 }
 
 boolean L11_SQ_desert()
@@ -118,18 +106,10 @@ boolean L11_SQ_desert()
   get_compass();
 
   // Oasis
-  if (!is_oasis_open())
-  {
-    log(wrap(oasis) + " hasn't been found yet. Adventuring in " + wrap(desert) + " to open it.");
-    if (open_oasis()) return true;
-  }
+  if (open_oasis()) return true;
 
   // Gnasir
-  if (!is_gnasir_open())
-  {
-    log("Gnasir hasn't been found yet. Adventuring in " + wrap(desert) + " to open it.");
-    turns += open_gnasir();
-  }
+  if (open_gnasir()) return true;
 
   string html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
   html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -175,62 +155,60 @@ boolean L11_SQ_desert()
 		log("Gnasir wants a worm-riding manual.");
 	}
 
-  while (get_property("desertExploration").to_int() < 100)
+  if (have($item[desert sightseeing pamphlet]))
   {
-    if (have($item[desert sightseeing pamphlet]))
-    {
-      use_all($item[desert sightseeing pamphlet]);
-      continue;
-    }
-
-    if (have($item[stone rose])) {
-      log("Gnasir wants your stone rose.");
-      html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
-      html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
-      html = visit_url("choice.php?whichchoice=805&option=2&pwd=");
-      html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
-      continue;
-    }
-
-    if (i_a($item[worm-riding manual page]) > 14) {
-      log("Gnasir wants to help you ride the majestic worms.");
-      html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
-      html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
-      html = visit_url("choice.php?whichchoice=805&option=2&pwd=");
-      html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
-      continue;
-    }
-    else if (have($item[worm-riding hooks])) {
-      maybe_pull($item[drum machine]);
-      if (have($item[drum machine])) {
-        use(1, $item[drum machine]);
-      }
-      else {
-        log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
-        while (!have($item[drum machine]))
-        {
-          if (!yz_adventure($location[The Oasis], "combat, items")) return true;
-        }
-      }
-      continue;
-    }
-
-    if (have_effect($effect[Ultrahydrated]) == 0) {
-      if (!yz_adventure($location[The Oasis])) return true;
-      continue;
-    }
-
-    if (can_equip_compass())
-    {
-      maximize("", compass);
-    } else {
-      maximize("");
-    }
-
-    if (!yz_adventure($location[The Arid\, Extra-Dry Desert])) return true;
+    use_all($item[desert sightseeing pamphlet]);
+    return true;
   }
 
-  log("You've discovered the pyramid in the desert!");
+  if (have($item[stone rose])) {
+    log("Gnasir wants your stone rose.");
+    html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
+    html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
+    html = visit_url("choice.php?whichchoice=805&option=2&pwd=");
+    html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
+    return true;
+  }
+
+  if (i_a($item[worm-riding manual page]) > 14) {
+    log("Gnasir wants to help you ride the majestic worms.");
+    html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
+    html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
+    html = visit_url("choice.php?whichchoice=805&option=2&pwd=");
+    html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
+    return true;
+  }
+
+  if (have($item[worm-riding hooks]))
+  {
+    maybe_pull($item[drum machine]);
+    if (have($item[drum machine]))
+    {
+      use(1, $item[drum machine]);
+      return true;
+    }
+
+    log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
+    yz_adventure($location[The Oasis], "combat, items");
+    return true;
+  }
+
+  if (have_effect($effect[Ultrahydrated]) == 0)
+  {
+    log("Going to " + wrap($location[The Oasis]) + " to get " + wrap($effect[Ultrahydrated]) + ".");
+    yz_adventure($location[The Oasis]);
+  }
+
+  if (can_equip_compass())
+  {
+    maximize("", compass);
+  } else {
+    maximize("");
+  }
+
+  yz_adventure($location[The Arid\, Extra-Dry Desert]);
+  if (get_property("desertExploration").to_int() >= 100)
+    log("You've discovered the pyramid in the desert!");
   return true;
 }
 

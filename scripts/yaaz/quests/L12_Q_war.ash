@@ -14,6 +14,13 @@ boolean sidequest(string quest);
 void do_war(string side);
 void do_war();
 
+
+
+void L12_Q_war_cleanup()
+{
+  // todo: move war specific stuff from prep() to here.
+}
+
 int sidequests(string side)
 {
   int count = 0;
@@ -52,21 +59,15 @@ boolean sidequest(string quest)
     return sidequest(quest, war_side());
 }
 
-void get_hippy_disguise()
+boolean get_hippy_disguise()
 {
   maybe_pull($item[filthy corduroys]);
   maybe_pull($item[filthy knitted dread sack]);
+  if (have_outfit("filthy hippy disguise")) return false;
 
-  if (!have_outfit("filthy hippy disguise"))
-  {
-    log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + ".");
-    while (!have_outfit("filthy hippy disguise"))
-    {
-      boolean b = yz_adventure($location[hippy camp]);
-      if (!b)
-        return;
-    }
-  }
+  log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + ".");
+  yz_adventure($location[hippy camp], "items");
+    return true;
 }
 
 boolean start_the_war(string side)
@@ -91,13 +92,9 @@ boolean start_the_war(string side)
     set_property("choiceAdventure145", 2); // random food
     set_property("choiceAdventure146", 2); // random food
 
-  }
-  while (!have_outfit(war_outfit()))
-  {
     maximize("", "filthy hippy disguise");
-    boolean b = yz_adventure(camp);
-    if (!b)
-      return true;
+    yz_adventure(camp);
+    return true;
   }
 
   // we have the outfit. Now to start the war...
@@ -117,32 +114,27 @@ boolean start_the_war(string side)
   set_property("choiceAdventure145", 3); // start the war
   set_property("choiceAdventure146", 3); // start the war
 
-  while (quest_status("warProgress") == UNSTARTED)
-  {
-    maximize("items, -combat", war_outfit());
-    boolean b = yz_adventure(camp);
-    if (!b)
-      return true;
-  }
+  maximize("items, -combat", war_outfit());
+  yz_adventure(camp);
   return true;
 }
 
 boolean L12_Q_war(string side)
 {
-  if (to_int(get_property("lastIslandUnlock")) >= my_ascensions())
-    get_hippy_disguise();
+  L12_Q_war_cleanup();
 
-  if (i_a($item[Talisman o' Namsilat]) == 0)
+  if (to_int(get_property("lastIslandUnlock")) >= my_ascensions())
+    if (get_hippy_disguise()) return true;
+
+  if (!have($item[Talisman o' Namsilat]))
   {
     // we want to get this (from the Gaudy Pirates) before the war starts
     return false;
   }
 
-  if (my_level() < 12)
-    return false;
+  if (my_level() < 12) return false;
 
-  if (quest_status("questL12War") == FINISHED)
-    return false;
+  if (quest_status("questL12War") == FINISHED) return false;
 
   if (quest_status("questL12War") == UNSTARTED)
   {
@@ -172,32 +164,27 @@ boolean L12_Q_war(string side)
 
   if (war_arena())
   {
-    if (L12_SQ_arena())
-      return true;
+    if (L12_SQ_arena()) return true;
   }
 
   if (war_lighthouse())
   {
-    if (L12_SQ_lighthouse())
-      return true;
+    if (L12_SQ_lighthouse()) return true;
   }
 
   if (war_junkyard())
   {
-    if (L12_SQ_junkyard())
-      return true;
+    if (L12_SQ_junkyard()) return true;
   }
 
   if (war_nuns())
   {
-    if (L12_SQ_nuns())
-      return true;
+    if (L12_SQ_nuns()) return true;
   }
 
   if (war_orchard())
   {
-    if (L12_SQ_orchard())
-      return true;
+    if (L12_SQ_orchard()) return true;
   }
 
   // handle case where the arena sidequest is paused while we wait for flyers to be delivered.
@@ -222,17 +209,12 @@ boolean L12_Q_war(string side)
   // TODO: should do this for all the sidequests...
   if (war_orchard() && !war_orchard_accessible())
   {
-    while(!war_orchard_accessible())
-    {
-      maximize("", war_outfit());
-      boolean b = yz_adventure(battle);
-      if (!b)
-        return true;
-    }
+    maximize("", war_outfit());
+    yz_adventure(battle);
     return true;
   }
 
-  while(war_defeated() < 1000)
+  if (war_defeated() < 1000)
   {
     int killed = war_defeated();
     maximize("", war_outfit());
@@ -253,12 +235,13 @@ boolean L12_Q_war(string side)
       warning("Manually incrementing kills until we're caught up with reality.");
       set_property(prop, war_defeated() + 1);
     }
-    if (!b)
-      return true;
+    return true;
   }
 
   // turn in any last items...
   prep($location[none]);
+  L12_Q_war_cleanup();
+
   log("Warriors defeated. Now on to the final boss.");
   maximize("", war_outfit());
 

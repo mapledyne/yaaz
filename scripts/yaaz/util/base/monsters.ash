@@ -54,7 +54,8 @@ void add_attract(monster mon)
 {
   if (mon == $monster[none])
     return;
-
+  debug("add_attract(" + wrap(mon) + ") is deprecated. This functionality should be moved to yz_consult.");
+  
   if (have_effect($effect[on the trail]) > 0)
   {
     if (to_monster(get_property("olfactedMonster")) != mon && item_amount($item[soft green echo eyedrop antidote]) > 0)

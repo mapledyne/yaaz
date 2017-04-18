@@ -71,14 +71,7 @@ boolean do_leveling_thing()
 
 boolean M_level_up()
 {
-
-  int lvl = my_level();
-  while(lvl == my_level())
-  {
-    if (!do_leveling_thing()) return true;
-  }
-  log("Level Up! Now let's see what else we can do.");
-  council();
+  do_leveling_thing();
   return true;
 }
 

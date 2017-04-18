@@ -3,14 +3,11 @@ import "util/base/war_support.ash";
 
 boolean L12_SQ_arena(string side)
 {
-  if (get_property("sidequestArenaCompleted") != "none")
-    return false;
+  if (get_property("sidequestArenaCompleted") != "none") return false;
 
-  if (quest_status("questL12War") < 1)
-    return false;
+  if (quest_status("questL12War") < 1) return false;
 
-  if (quest_status("questL12War") > 1)
-    return false;
+  if (quest_status("questL12War") > 1) return false;
 
   if (!have_flyers())
   {
@@ -22,7 +19,7 @@ boolean L12_SQ_arena(string side)
 
   if (get_property("flyeredML").to_int() < 10000)
   {
-    log("We're still working on the war, but the " + wrap ("arena flyers", COLOR_ITEM) + " aren't all delivered yet, so going off to do other things.");
+    info("We're still working on the war, but the " + wrap ("arena flyers", COLOR_ITEM) + " aren't all delivered yet, so going off to do other things.");
     return false;
   }
 

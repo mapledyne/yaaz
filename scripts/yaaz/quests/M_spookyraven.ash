@@ -4,21 +4,14 @@ boolean consume_ballroom_delay()
 {
   if ($location[the haunted ballroom].turns_spent >= 5) return false;
 
-  while ($location[the haunted ballroom].turns_spent < 5)
-  {
-    boolean b = yz_adventure($location[the haunted ballroom], "");
-    if (!b) return true;
-  }
+  yz_adventure($location[the haunted ballroom], "");
   return true;
 }
 
 boolean M_spookyraven()
 {
 
-  if (quest_status("questM21Dance") < 0)
-  {
-    return false;
-  }
+  if (quest_status("questM21Dance") < 0) return false;
 
   if (quest_status("questM21Dance") == FINISHED)
   {
@@ -26,14 +19,12 @@ boolean M_spookyraven()
   }
 
   // bail if we're unlikely to kill things easily enough (using a representative monster):
-  if (expected_damage($monster[malevolent hair clog]) > my_maxhp() / 10)
-    return false;
+  if (dangerous($location[the haunted bathroom])) return false;
 
-  if (item_amount($item[lady spookyraven's powder puff]) == 0)
+  if (!have($item[lady spookyraven's powder puff]))
+  {
     log("Going to get " + wrap($item[lady spookyraven's powder puff]) + ".");
 
-  while (item_amount($item[lady spookyraven's powder puff]) == 0)
-  {
     location bath = $location[the haunted bathroom];
 
     if (bath.turns_spent < 5)
@@ -43,16 +34,16 @@ boolean M_spookyraven()
       maximize("-combat");
     }
 
-    boolean b = yz_adventure(bath);
-    if (!b)
-      return true;
+    yz_adventure(bath);
+    return true;
   }
 
-  if (item_amount($item[lady spookyraven's finest gown]) == 0)
-    log("Going to get " + wrap($item[lady spookyraven's finest gown]) + " and other things from " + wrap($location[the haunted bedroom]) + ".");
 
-  while (item_amount($item[lady spookyraven's finest gown]) == 0 || i_a($item[lord spookyraven's spectacles]) == 0 || item_amount($item[disposable instant camera]) == 0)
+  if (!have($item[lady spookyraven's finest gown])
+      || !have($item[lord spookyraven's spectacles])
+      || !have($item[disposable instant camera]))
   {
+    log("Going to get " + wrap($item[lady spookyraven's finest gown]) + " and other things from " + wrap($location[the haunted bedroom]) + ".");
 
     location bed = $location[the haunted bedroom];
 
@@ -70,50 +61,44 @@ boolean M_spookyraven()
       set_property("choiceAdventure879", 6); // ignore it
     }
 
-    if (item_amount($item[lady spookyraven's finest gown]) == 0)
+    if (!have($item[lady spookyraven's finest gown]))
     {
       set_property("choiceAdventure880", 1);  //gown
     } else {
       set_property("choiceAdventure880", 6);  // skip
     }
 
-    if (item_amount($item[lord spookyraven's spectacles]) == 0 || item_amount(spooky_quest_item()) > 0 || spooky_quest_item() == $item[none])
+    if (!have($item[lord spookyraven's spectacles])
+        || have(spooky_quest_item())
+        || spooky_quest_item() == $item[none])
     {
       set_property("choiceAdventure877", 1); // coin purse
     } else {
       set_property("choiceAdventure877", 3); // quest item
     }
 
-    if (i_a($item[lord spookyraven's spectacles]) == 0)
+    if (!have($item[lord spookyraven's spectacles]))
     {
       set_property("choiceAdventure878", 3); // spectacles
-    } else if (item_amount($item[disposable instant camera]) == 0)
+    } else if (!have($item[disposable instant camera]))
     {
       set_property("choiceAdventure878", 4); // camera
     } else {
       set_property("choiceAdventure878", 2); // mysticality
     }
 
-    if (i_a($item[lord spookyraven's spectacles]) > 0)
-    {
-      maximize("equip lord spookyraven's spectacles");
-    } else {
-      maximize();
-    }
+    maximize("", $item[lord spookyraven's spectacles]);
 
-    boolean b = yz_adventure(bed);
+    yz_adventure(bed);
     cli_execute("choice-goal");
     cli_execute("choice-goal");
 
-    if (!b)
-      return true;
+    return true;
   }
 
-  if (item_amount($item[lady spookyraven's dancing shoes]) == 0)
-    log("Going to get " + wrap($item[lady spookyraven's dancing shoes]) + ".");
-
-  while (item_amount($item[lady spookyraven's dancing shoes]) == 0)
+  if (!have($item[lady spookyraven's dancing shoes]))
   {
+    log("Going to get " + wrap($item[lady spookyraven's dancing shoes]) + ".");
     location gallery = $location[the haunted gallery];
     set_property("louvreDesiredGoal", 7); // dancing shoes
 
@@ -124,16 +109,16 @@ boolean M_spookyraven()
       maximize("-combat");
     }
 
-    boolean b = yz_adventure(gallery);
-    if (!b)
-      return true;
+    yz_adventure(gallery);
+    return true;
   }
 
   set_property("louvreDesiredGoal", 10); // prime stat
 
   if (dancing_items() != 3)
   {
-    warning("Unsure what happened - we don't have all of Lady Spookyraven's dancing things.");
+    error("Unsure what happened - we don't have all of Lady Spookyraven's dancing things.");
+    wait(10);
     return true;
   }
 

@@ -1,5 +1,21 @@
 import "util/main.ash";
 
+
+void M_pirates_cleanup()
+{
+  while (!have($item[Talisman o' Namsilat]) && have($item[gaudy key]))
+  {
+    cli_execute("checkpoint");
+    if (!have_equipped($item[pirate fledges]))
+    {
+      equip($item[pirate fledges]);
+    }
+    use(1, $item[gaudy key]);
+    cli_execute("outfit checkpoint");
+  }
+}
+
+
 // stolen from cc_ascend, which has other great work in it, too.
 boolean beer_pong(string page)
 {
@@ -89,18 +105,18 @@ boolean try_beer_pong()
 	return won;
 }
 
-void open_belowdecks()
+boolean open_belowdecks()
 {
   if (quest_status("questM12Pirate") != 6)
   {
     warning("Wrong status to try to open " + wrap($location[belowdecks]) + ".");
-    return;
+    return false;
   }
 
   if (quest_status("questL11MacGuffin") < 2)
   {
     warning("Go read " + wrap($item[your father's macguffin diary]) + ".");
-    return;
+    return false;
   }
 
   log("Opening up " + wrap($location[belowdecks]) + ".");
@@ -109,36 +125,21 @@ void open_belowdecks()
 	set_property("oceanAction", "continue");
 	set_property("oceanDestination", to_lower_case(my_primestat()));
 
-  while (quest_status("questM12Pirate") != FINISHED)
-  {
-    maximize("-combat", $item[pirate fledges]);
-    boolean b = yz_adventure($location[the poop deck]);
-		if (!b) return;
-  }
-  log(wrap($location[belowdecks]) + " opened.");
+  maximize("-combat", $item[pirate fledges]);
+  yz_adventure($location[the poop deck]);
+
+	if (quest_status("questM12Pirate") == FINISHED)
+  	log(wrap($location[belowdecks]) + " opened.");
+	return true;
 }
 
-void maybe_make_talisman()
-{
-  while (!have($item[Talisman o' Namsilat]) && have($item[gaudy key]))
-  {
-    cli_execute("checkpoint");
-    if (!have_equipped($item[pirate fledges]))
-    {
-      equip($item[pirate fledges]);
-    }
-    use(1, $item[gaudy key]);
-    cli_execute("outfit checkpoint");
-  }
-}
+
 
 boolean get_talisman()
 {
-  if (!have($item[pirate fledges]))
-    return false;
+  if (!have($item[pirate fledges])) return false;
 
-  if (have($item[Talisman o' Namsilat]))
-    return false;
+  if (have($item[Talisman o' Namsilat])) return false;
 
   if (quest_status("questM12Pirate") != FINISHED)
   {
@@ -146,18 +147,10 @@ boolean get_talisman()
     return true;
   }
 
-	maybe_make_talisman();
+  maximize("items", $item[pirate fledges]);
+	if (time_combat($monster[gaudy pirate], $location[belowdecks])) return true;
 
-  while(!have($item[Talisman o' Namsilat]))
-  {
-    maximize("items", $item[pirate fledges]);
-		if (!time_combat($monster[gaudy pirate], $location[belowdecks]))
-		{
-			boolean b = yz_adventure($location[belowdecks]);
-			if (!b) return true;
-		}
-    maybe_make_talisman();
-  }
+	yz_adventure($location[belowdecks]);
   return true;
 }
 
@@ -280,45 +273,35 @@ boolean fcle()
     max = "combat, items";
   }
 
-  log("Off to get our " + wrap($item[pirate fledges]) + ".");
-
-  while ((item_amount($item[rigging shampoo]) == 0
-         || item_amount($item[ball polish]) == 0
-         || item_amount($item[mizzenmast mop]) == 0)
-				 && !have($item[pirate fledges]))
-  {
-    maximize(max, "swashbuckling getup");
-    boolean b = yz_adventure($location[The F\'c\'le]);
-    if (!b) return true;
-  }
-
-	if (have($item[pirate fledges])) return true;
-
-
-  if((item_amount($item[rigging shampoo]) == 1)
-     && (item_amount($item[ball polish]) == 1)
-     && (item_amount($item[mizzenmast mop]) == 1))
+	if(have($item[rigging shampoo])
+     && have($item[ball polish])
+     && have($item[mizzenmast mop]))
   {
     log("Returning the items to get us some " + wrap($item[pirate fledges]) + ".");
     use(1, $item[rigging shampoo]);
     use(1, $item[ball polish]);
     use(1, $item[mizzenmast mop]);
-    outfit("swashbuckling getup");
-    yz_adventure($location[The F\'c\'le]);
-  }
+		max = ""; // to prevent our 'max' above from using any items and such to keep up effects.
+	} else {
+		log("Off to get our " + wrap($item[pirate fledges]) + ".");
+	}
 
+  maximize(max, "swashbuckling getup");
+  yz_adventure($location[The F\'c\'le]);
   return true;
 }
 
 boolean M_pirates()
 {
-  if (to_int(get_property("lastIslandUnlock")) < my_ascensions())
-    return false;
 
-  if (have($item[pirate fledges]))
-    return false;
+	M_pirates_cleanup();
+
+  if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return false;
+
+  if (have($item[pirate fledges])) return false;
 
   if (get_getup()) return true;
+
 	if (!have_outfit("swashbuckling getup")) return false;
 
   if (collect_insults()) return true;

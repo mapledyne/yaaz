@@ -3,7 +3,7 @@ import "util/base/war_support.ash";
 
 boolean one_orchard_effect(effect ef, item it)
 {
-  if (have_effect(ef) == 0 && item_amount(it) > 0)
+  if (have_effect(ef) == 0 && have(it))
   {
     use(1, it);
   }
@@ -40,8 +40,7 @@ boolean L12_SQ_orchard()
 {
   string side = war_side();
 
-  if (!war_orchard())
-    return false;
+  if (!war_orchard()) return false;
 
   if (get_property("sidequestOrchardCompleted") != "none")
     return false;
@@ -50,17 +49,21 @@ boolean L12_SQ_orchard()
 
   outfit(war_outfit());
 
-  log("Visiting the grocer to start the quest.");
-  visit_url("bigisland.php?place=orchard&action=stand&pwd=");
+  if (pick_orchard_location() == $location[the hatching chamber])
+  {
+    info("Visiting the grocer to start the quest.");
+    debug("Todo: store that we've already started this a better way.");
+    visit_url("bigisland.php?place=orchard&action=stand&pwd=");
+  }
 
   log("Completing the orchard quest.");
-  while (item_amount($item[heart of the filthworm queen]) == 0)
+  if (!have($item[heart of the filthworm queen]))
   {
     check_orchard_effects();
-    boolean b = yz_adventure(pick_orchard_location(), "items");
-    if (!b)
-      return true;
+    yz_adventure(pick_orchard_location(), "items");
+    return true;
   }
+
   outfit(war_outfit());
   log("Visiting the grocer to complete the quest.");
   visit_url("bigisland.php?place=orchard&action=stand&pwd=");

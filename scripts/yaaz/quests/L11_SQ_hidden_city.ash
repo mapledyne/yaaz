@@ -8,42 +8,36 @@ void check_stones()
   set_property("choiceAdventure785", 1);
   set_property("choiceAdventure787", 1);
 
-  if (item_amount($item[scorched stone sphere]) > 0)
+  if (have($item[scorched stone sphere]))
   {
     yz_adventure($location[An Overgrown Shrine (Southeast)]);
   }
 
-  if (item_amount($item[crackling stone sphere]) > 0)
+  if (have($item[crackling stone sphere]))
   {
     yz_adventure($location[An Overgrown Shrine (Northeast)]);
   }
 
-  if (item_amount($item[dripping stone sphere]) > 0)
+  if (have($item[dripping stone sphere]))
   {
     yz_adventure($location[An Overgrown Shrine (Southwest)]);
   }
 
-  if (item_amount($item[moss-covered stone sphere]) > 0)
+  if (have($item[moss-covered stone sphere]))
   {
     yz_adventure($location[An Overgrown Shrine (Northwest)]);
   }
 }
 
 
-void get_machete()
+boolean get_machete()
 {
-  if (have($item[antique machete]))
-  {
-    return;
-  }
+  if (have($item[antique machete])) return false;
+  if (my_path() == "Way of the Surprising Fist") return false;
 
   maximize("");
-  while (!have($item[antique machete]))
-  {
-    boolean b = yz_adventure($location[the hidden park]);
-    if (!b)
-      return;
-  }
+  yz_adventure($location[the hidden park]);
+  return true;
 }
 
 boolean do_liana()
@@ -55,15 +49,11 @@ boolean do_liana()
   }
 
   if ($location[A Massive Ziggurat].turns_spent < 3)
-    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
-  while ($location[A Massive Ziggurat].turns_spent < 3)
   {
-    maximize("");
-    if (my_path() != "Way of the Surprising Fist")
-    {
-      equip($slot[weapon], $item[antique machete]);
-    }
-    if (!yz_adventure($location[A Massive Ziggurat])) return true;
+    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
+    maximize("", $item[antique machete]);
+    yz_adventure($location[A Massive Ziggurat]);
+    return true;
   }
 
   if (quest_status("questL11Business") > UNSTARTED
@@ -74,39 +64,34 @@ boolean do_liana()
     return false;
   }
 
-  maximize("");
-  if (my_path() != "Way of the Surprising Fist")
+  maximize("", $item[antique machete]);
+
+  if (quest_status("questL11Business") < 0)
   {
-    equip($slot[weapon], $item[antique machete]);
-  }
-
-
-  if(quest_status("questL11Business") < 0)
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northeast)]) + ".");
-  while(quest_status("questL11Business") < 0)
-  {
-    if (!yz_adventure($location[An Overgrown Shrine (Northeast)])) return true;
+    yz_adventure($location[An Overgrown Shrine (Northeast)]);
+    return true;
   }
 
   if (quest_status("questL11Curses") < 0)
-    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northwest)]) + ".");
-  while(quest_status("questL11Curses") < 0)
   {
-    if (!yz_adventure($location[An Overgrown Shrine (Northwest)])) return true;
+    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Northwest)]) + ".");
+    yz_adventure($location[An Overgrown Shrine (Northwest)]);
+    return true;
   }
 
   if (quest_status("questL11Doctor") < 0)
-    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southwest)]) + ".");
-  while(quest_status("questL11Doctor") < 0)
   {
-    if (!yz_adventure($location[An Overgrown Shrine (Southwest)])) return true;
+    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southwest)]) + ".");
+    yz_adventure($location[An Overgrown Shrine (Southwest)]);
+    return true;
   }
 
   if (quest_status("questL11Spare") < 0)
-    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southeast)]) + ".");
-  while(quest_status("questL11Spare") < 0)
   {
-    if (!yz_adventure($location[An Overgrown Shrine (Southeast)])) return true;
+    log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[An Overgrown Shrine (Southeast)]) + ".");
+    yz_adventure($location[An Overgrown Shrine (Southeast)]);
+    return true;
   }
 
   return false;
@@ -114,30 +99,31 @@ boolean do_liana()
 
 boolean bowling()
 {
-  if (to_int(get_property("hiddenBowlingAlleyProgress")) < 1)
-  {
-    return false;
-  }
-  if (to_int(get_property("hiddenBowlingAlleyProgress")) > 6)
-  {
-    return false;
-  }
+  if (to_int(get_property("hiddenBowlingAlleyProgress")) < 1) return false;
+
+  if (to_int(get_property("hiddenBowlingAlleyProgress")) > 6) return false;
 
   log("Defeating " + wrap($location[the hidden bowling alley]) + ".");
-  add_attract($monster[pygmy bowler]);
-  while(to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
+
+  if (!have($item[Bowl Of Scorpions])
+     && my_ascensions() <= to_int(get_property("hiddenTavernUnlock")))
   {
-    if(item_amount($item[Bowl Of Scorpions]) == 0 && my_ascensions() <= to_int(get_property("hiddenTavernUnlock")))
-    {
-      log("Buying a " + wrap($item[Bowl Of Scorpions]) + " to get away from a " + wrap($monster[drunk pygmy]) + ".");
-      buy(1, $item[Bowl Of Scorpions]);
-    }
-    if (!yz_adventure($location[the hidden bowling alley], "items")) return true;
+    log("Buying a " + wrap($item[Bowl Of Scorpions]) + " to get away from a " + wrap($monster[drunk pygmy]) + ".");
+    buy(1, $item[Bowl Of Scorpions]);
   }
-  remove_attract($monster[pygmy bowler]);
-  while(item_amount($item[bowling ball]) == 0)
+
+  if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
   {
-    if (!yz_adventure($location[the hidden bowling alley], "items")) return true;
+    add_attract($monster[pygmy bowler]);
+    yz_adventure($location[the hidden bowling alley], "items");
+    return true;
+  }
+
+  remove_attract($monster[pygmy bowler]);
+  if (!have($item[bowling ball]))
+  {
+    yz_adventure($location[the hidden bowling alley], "items");
+    return true;
   }
 
   log("Off to defeat the " + wrap($monster[ancient protector spirit]) + ".");
@@ -148,59 +134,64 @@ boolean bowling()
 
 boolean hospital()
 {
-  if (to_int(get_property("hiddenHospitalProgress")) < 1)
-    return false;
+  if (to_int(get_property("hiddenHospitalProgress")) < 1) return false;
 
-  if (to_int(get_property("hiddenHospitalProgress")) > 6)
-    return false;
+  if (to_int(get_property("hiddenHospitalProgress")) > 6) return false;
 
   log("Defeating " + wrap($location[the hidden hospital]) + ".");
   add_attract($monster[pygmy witch surgeon]);
-  while(to_int(get_property("hiddenHospitalProgress")) < 6)
+
+  maximize("mainstat, +effective, elemental dmg, 50 surgeonosity");
+  yz_adventure($location[the hidden hospital]);
+
+  if (to_int(get_property("hiddenHospitalProgress")) > 6)
   {
-    maximize("mainstat, +effective, elemental dmg, 50 surgeonosity");
-    if (!yz_adventure($location[the hidden hospital])) return true;
+    remove_attract($monster[pygmy witch surgeon]);
+    log(wrap($location[the hidden hospital]) + " cleared.");
   }
-  remove_attract($monster[pygmy witch surgeon]);
-  log(wrap($location[the hidden hospital]) + " cleared.");
   return true;
 }
 
 boolean office()
 {
-  if (to_int(get_property("hiddenOfficeProgress")) < 1)
-    return false;
+  if (to_int(get_property("hiddenOfficeProgress")) < 1) return false;
 
-  if (to_int(get_property("hiddenOfficeProgress")) > 6)
-    return false;
+  if (to_int(get_property("hiddenOfficeProgress")) > 6) return false;
 
   log("Defeating " + wrap($location[the hidden office building]) + ".");
   add_attract($monster[pygmy witch accountant]);
-  while(to_int(get_property("hiddenOfficeProgress")) < 6)
+
+  int turns = $location[the hidden office building].turns_spent % 5;
+  if (item_amount($item[boring binder clip]) > 0
+      && item_amount($item[McClusky file (complete)]) == 0
+      && turns == 0
+      && quest_status("questL11Curses") != FINISHED)
   {
-    int turns = $location[the hidden office building].turns_spent % 5;
-    if (item_amount($item[boring binder clip]) > 0
-        && item_amount($item[McClusky file (complete)]) == 0
-        && turns == 0
-        && quest_status("questL11Curses") != FINISHED)
-    {
-      log("Trying to get the rest of the " + wrap("McClusky File", COLOR_ITEM) + " from the " + wrap($location[the hidden apartment building]));
-      return false;
-    }
-    if (!yz_adventure($location[the hidden office building], "")) return true;
+    log("Trying to get the rest of the " + wrap("McClusky File", COLOR_ITEM) + " from the " + wrap($location[the hidden apartment building]));
+    return false;
   }
-  remove_attract($monster[pygmy witch accountant]);
-  log(wrap($location[the hidden office building]) + " cleared.");
+
+  yz_adventure($location[the hidden office building], "");
+
+  if (to_int(get_property("hiddenOfficeProgress")) > 6)
+  {
+    remove_attract($monster[pygmy witch accountant]);
+    log(wrap($location[the hidden office building]) + " cleared.");
+  }
+
   return true;
 }
 
 boolean apartment()
 {
-  if (to_int(get_property("hiddenApartmentProgress")) < 1)
-    return false;
+  if (to_int(get_property("hiddenApartmentProgress")) < 1) return false;
 
   if (to_int(get_property("hiddenApartmentProgress")) > 6)
+  {
+    // we have the sphere, so remove the curse if hottub available
+    if (have_effect($effect[thrice-cursed]) > 0) vip_hottub();
     return false;
+  }
 
   log("Defeating " + wrap($location[the hidden apartment building]) + ".");
   if (get_property("olfactedMonster") != $monster[pygmy witch accountant]
@@ -209,35 +200,32 @@ boolean apartment()
     add_attract($monster[pygmy shaman]);
   }
 
-  if (to_int(get_property("hiddenTavernUnlock")) < my_ascensions()
-      && !have($item[book of matches]))
+  if (to_int(get_property("hiddenTavernUnlock")) < my_ascensions())
   {
     maybe_pull($item[book of matches]);
   }
 
-
-  while(to_int(get_property("hiddenApartmentProgress")) < 6)
+  if (have_effect($effect[twice-cursed]) > 0
+      && to_int(get_property("hiddenTavernUnlock")) == my_ascensions())
   {
-    if (have_effect($effect[twice-cursed]) > 0
-        && to_int(get_property("hiddenTavernUnlock")) == my_ascensions())
-    {
-      log("Trying to drink a " + wrap($item[cursed punch]) + " for the extra curse.");
-      try_consume($item[cursed punch]);
-    }
-    if (!yz_adventure($location[the hidden apartment building], "")) return true;
+    log("Trying to drink a " + wrap($item[cursed punch]) + " for the extra curse.");
+    try_consume($item[cursed punch]);
   }
-  remove_attract($monster[pygmy shaman]);
-  log(wrap($location[the hidden apartment building]) + " cleared.");
-  vip_hottub(); // remove curses if hottub available
+
+  yz_adventure($location[the hidden apartment building], "");
+
+  if (to_int(get_property("hiddenApartmentProgress")) > 6)
+  {
+    remove_attract($monster[pygmy shaman]);
+    log(wrap($location[the hidden apartment building]) + " cleared.");
+  }
+
   return true;
 }
 
 boolean fight_spirit()
 {
-  if (quest_status("questL11Worship") != 4)
-  {
-    return false;
-  }
+  if (quest_status("questL11Worship") != 4) return false;
 
   log("Fighting the " + wrap($monster[Protector Spectre]) + ".");
   yz_adventure($location[A Massive Ziggurat], "elemental damage");
@@ -247,27 +235,22 @@ boolean fight_spirit()
 
 boolean get_nose()
 {
-	if(quest_status("questL11Worship") != 1)
-		return false;
+	if (quest_status("questL11Worship") != 1) return false;
 
-	if(have($item[The Nostril of the Serpent]))
-		return false;
+	if (have($item[The Nostril of the Serpent])) return false;
 
-  if((!have($item[Stone Wool])) && (have_effect($effect[stone-faced]) == 0))
+  if (!have($item[Stone Wool]) && (have_effect($effect[stone-faced]) == 0))
 	{
     cheat_deck("sheep", "get some " + wrap($item[Stone Wool]) + ".");
     maybe_pull($item[stone wool]);
-    if (item_amount($item[Stone Wool]) == 0)
+    if (!have($item[Stone Wool]))
     {
-      warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");
-      while(can_adventure() && item_amount($item[stone wool]) == 0)
-      {
-        boolean b = yz_adventure($location[the hidden temple], "items");
-        if (!b)
-          return true;
-      }
+      log("Going adventuring to get some " + wrap($item[stone wool]) + ".");
+      yz_adventure($location[the hidden temple], "items");
+      return true;
     }
 	}
+
 	set_property("choiceAdventure582", "1");
 	set_property("choiceAdventure579", "2");
 
@@ -277,8 +260,7 @@ boolean get_nose()
     use(1, $item[stone wool]);
   }
 
-  if (have_effect($effect[stone-faced]) == 0)
-    return false;
+  if (have_effect($effect[stone-faced]) == 0) return false;
 
 	log("Going to get a " + wrap($item[The Nostril of the Serpent]) + ".");
 
@@ -289,30 +271,24 @@ boolean get_nose()
 
 boolean L11_SQ_hidden_city()
 {
-  if (my_level() < 11)
-    return false;
+  if (my_level() < 11) return false;
 
-  if (quest_status("questL11Worship") == UNSTARTED)
-    return false;
+  if (quest_status("questL11Worship") == UNSTARTED) return false;
 
   if (get_nose()) return true;
 
   if (quest_status("questL11Worship") < 3)
   {
 
-    if((item_amount($item[Stone Wool]) == 0) && (have_effect($effect[stone-faced]) == 0))
+    if (!have($item[Stone Wool]) && (have_effect($effect[stone-faced]) == 0))
   	{
       cheat_deck("sheep", "get some " + wrap($item[Stone Wool]) + ".");
       maybe_pull($item[stone wool]);
-      if (item_amount($item[Stone Wool]) == 0)
+      if (!have($item[Stone Wool]))
       {
-        warning("Going adventuring to get some " + wrap($item[stone wool]) + ". We should have gotten this in advance.");
-        while(can_adventure() && item_amount($item[stone wool]) == 0)
-        {
-          boolean b = yz_adventure($location[the hidden temple], "items");
-          if (!b)
-            return true;
-        }
+        log("Going adventuring to get some " + wrap($item[stone wool]) + ".");
+        yz_adventure($location[the hidden temple], "items");
+        return true;
       }
   	}
 
@@ -322,8 +298,7 @@ boolean L11_SQ_hidden_city()
       use(1, $item[stone wool]);
     }
 
-    if (have_effect($effect[stone-faced]) == 0)
-      return false;
+    if (have_effect($effect[stone-faced]) == 0) return false;
 
     log("Trying to open the " + wrap("Hidden City", COLOR_LOCATION) + ".");
 
@@ -340,11 +315,9 @@ boolean L11_SQ_hidden_city()
     return true;
   }
 
-  if (quest_status("questL11Worship") == FINISHED)
-    return false;
+  if (quest_status("questL11Worship") == FINISHED) return false;
 
-  if (my_path() != "Way of the Surprising Fist")
-    get_machete();
+  if (get_machete()) return true;
 
   check_stones();
 
@@ -353,9 +326,6 @@ boolean L11_SQ_hidden_city()
   if (hospital()) return true;
   if (office()) return true;
   if (apartment()) return true;
-
-  check_stones();
-
   if (fight_spirit()) return true;
 
   return false;

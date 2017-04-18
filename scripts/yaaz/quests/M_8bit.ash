@@ -67,13 +67,10 @@ boolean M_8bit()
     {
       log("Because you don't have " + wrap($skill[Ambidextrous Funkslinging]) + ", I'm going to collect some " + wrap($item[red pixel potion], 2) + ".");
       log("Consider making this skill permanent as soon as you can to improve your experience with " + wrap($monster[your shadow]) + ".");
-      wait(5);
-      while(item_amount($item[red pixel potion]) < 5)
-      {
-        maximize("items", $item[continuum transfunctioner]);
-        if (!yz_adventure($location[8-bit realm])) return true;
-        M_8bit_cleanup();
-      }
+      debug("Todo: check to see if a scented massage oil would be better than these potions.");
+      maximize("items", $item[continuum transfunctioner]);
+      yz_adventure($location[8-bit realm]);
+      return true;
     }
   }
 
@@ -82,15 +79,10 @@ boolean M_8bit()
   // ... or if we've used the key already ...
   if (quest_status("questL13Final") > 5) return false;
 
-  while(!have($item[digital key]))
-  {
-    maximize("items", $item[continuum transfunctioner]);
-    if (!time_combat($monster[blooper], $location[8-bit realm]))
-    {
-      if (!yz_adventure($location[8-bit realm])) return true;
-    }
-    M_8bit_cleanup();
-  }
+  maximize("items", $item[continuum transfunctioner]);
+  if (!time_combat($monster[blooper], $location[8-bit realm])) return true;
+
+  yz_adventure($location[8-bit realm]);
 
   return true;
 }

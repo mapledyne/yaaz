@@ -1,14 +1,16 @@
 import "util/main.ash";
 
+void L11_SQ_summoning_cleanup()
+{
+  if (creatable_amount($item[unstable fulminate]) > 0)
+    create(1, $item[unstable fulminate]);
+}
+
 boolean get_wine_bomb()
 {
   if (have($item[wine bomb]))
   {
     return false;
-  }
-  if (creatable_amount($item[unstable fulminate]) > 0)
-  {
-    create(1, $item[unstable fulminate]);
   }
 
   if (!have($item[unstable fulminate]))
@@ -21,13 +23,11 @@ boolean get_wine_bomb()
 
   log("Going after the " + wrap($monster[monstrous boiler]) + " to make the " + wrap($item[wine bomb]));
 
-  while (!have($item[wine bomb]))
-  {
-    maximize("ml", $item[unstable fulminate]);
-    yz_adventure($location[the haunted boiler room]);
-  }
+  maximize("ml", $item[unstable fulminate]);
+  yz_adventure($location[the haunted boiler room]);
 
-  remove_attract($monster[monstrous boiler]);
+  if (have($item[wine bomb]))
+    remove_attract($monster[monstrous boiler]);
   return true;
 }
 
@@ -42,7 +42,9 @@ boolean get_blasting()
   {
     return false;
   }
-  if (item_amount($item[blasting soda]) > 0 || item_amount($item[unstable fulminate]) > 0 || item_amount($item[wine bomb]) > 0)
+  if (have($item[blasting soda])
+      || have($item[unstable fulminate])
+      || have($item[wine bomb]))
   {
     return false;
   }
@@ -50,13 +52,9 @@ boolean get_blasting()
   log("Trying to find the " + wrap($item[blasting soda]) + " in the " + wrap($location[the haunted laundry room]) + ".");
 
   add_attract($monster[cabinet of dr. limpieza]);
-  while (item_amount($item[blasting soda]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
-  {
-    yz_adventure($location[the haunted laundry room], "items");
-    if (creatable_amount($item[unstable fulminate]) > 0)
-      create(1, $item[unstable fulminate]);
-  }
-  remove_attract($monster[cabinet of dr. limpieza]);
+  yz_adventure($location[the haunted laundry room], "items");
+  if (have($item[blasting soda]))
+    remove_attract($monster[cabinet of dr. limpieza]);
   return true;
 }
 
@@ -72,7 +70,9 @@ boolean get_vinegar()
     return false;
   }
 
-  if (item_amount($item[bottle of Chateau de Vinegar]) > 0 || item_amount($item[unstable fulminate]) > 0 || item_amount($item[wine bomb]) > 0)
+  if (have($item[bottle of Chateau de Vinegar])
+      || have($item[unstable fulminate])
+      || have($item[wine bomb]))
   {
     return false;
   }
@@ -80,35 +80,25 @@ boolean get_vinegar()
   log("Trying to find the " + wrap($item[bottle of Chateau de Vinegar]) + " in the " + wrap($location[the haunted wine cellar]) + ".");
 
   add_attract($monster[possessed wine rack]);
-  while (item_amount($item[bottle of Chateau de Vinegar]) == 0 && item_amount($item[unstable fulminate]) == 0 && item_amount($item[wine bomb]) == 0)
-  {
-    yz_adventure($location[the haunted wine cellar], "items");
-    if (creatable_amount($item[unstable fulminate]) > 0)
-      create(1, $item[unstable fulminate]);
 
-  }
-  remove_attract($monster[possessed wine rack]);
+  yz_adventure($location[the haunted wine cellar], "items");
+  if (have($item[bottle of Chateau de Vinegar]))
+    remove_attract($monster[possessed wine rack]);
   return true;
 }
 
 void open_cellar()
 {
-  while (quest_status("questL11Manor") == STARTED)
+  string max = "";
+  if ($location[the haunted ballroom].turns_spent >= 5)
   {
-    string max = "";
-    if ($location[the haunted ballroom].turns_spent >= 5)
-    {
-      max = "-combat";
-    }
-    yz_adventure($location[the haunted ballroom]);
+    max = "-combat";
   }
-
-  if (quest_status("questL11Manor") <= STARTED)
+  yz_adventure($location[the haunted ballroom], max);
+  if (quest_status("questL11Manor") > STARTED)
   {
-    warning("Something happened and the cellar doesn't appear to be open.");
-    abort();
+    log(wrap("The Haunted Cellar", COLOR_LOCATION) + " is open.");
   }
-  log(wrap("The Haunted Cellar", COLOR_LOCATION) + " is open.");
 }
 
 boolean open_summoning_scavenge()
@@ -124,14 +114,10 @@ boolean open_summoning_scavenge()
 
   foreach i, l in parts
   {
-    if (item_amount(i) == 0)
+    if (!have(i))
     {
       log("Off to get the " + wrap(i) + " from " + wrap(l) + ".");
-      while (item_amount(i) == 0)
-      {
-        boolean b = yz_adventure(l, "-combat");
-        if (!b) return true;
-      }
+      yz_adventure(l, "-combat");
       return true;
     }
   }
@@ -141,9 +127,9 @@ boolean open_summoning_scavenge()
   {
     // mafia doesn't always catch that the masonry is gone.
     set_property("questL11Manor", "step3");
-    return false;
+    return true;
   } else {
-    log("Trying to disolve the masonry.");
+    log("Trying to dissolve the masonry.");
     visit_url('place.php?whichplace=manor4&action=manor4_chamberwall_label');
     return true;
   }
@@ -179,12 +165,12 @@ boolean do_spookyraven()
       open_cellar();
       return true;
     case 1:
-      if (i_a($item[lord spookyraven's spectacles]) == 0)
+      if (!have($item[lord spookyraven's spectacles]))
       {
         warning("This script requires that you have " + wrap($item[lord spookyraven's spectacles]) + ". Go get them before continuing.");
         return false;
       }
-      if (item_amount($item[recipe: mortar-dissolving solution]) == 0)
+      if (!have($item[recipe: mortar-dissolving solution]))
       {
         log("Getting the " + wrap($item[recipe: mortar-dissolving solution]) + ".");
         visit_url('place.php?whichplace=manor4&action=manor4_chamberwall_label');
@@ -195,6 +181,7 @@ boolean do_spookyraven()
         log("Wearing " + wrap($item[lord spookyraven's spectacles]));
         equip($slot[acc1], $item[lord spookyraven's spectacles]);
       }
+
       log("Reading " + wrap($item[recipe: mortar-dissolving solution]));
       use(1, $item[recipe: mortar-dissolving solution]);
       return true;
@@ -209,24 +196,11 @@ boolean do_spookyraven()
 
 boolean L11_SQ_summoning()
 {
+  L11_SQ_summoning_cleanup();
+  if (quest_status("questL11Manor") == FINISHED) return false;
+  if (quest_status("questL11MacGuffin") == UNSTARTED) return false;
 
-  if (quest_status("questL11Manor") == FINISHED)
-    return false;
-  if (quest_status("questL11MacGuffin") == UNSTARTED)
-    return false;
-
-  while(do_spookyraven())
-  {
-
-  }
-  if (quest_status("questL11Manor") != FINISHED)
-  {
-    warning("Could not defeat " + wrap($monster[lord spookyraven]) +" for some reason.");
-    return true;
-  } else {
-    log(wrap($monster[lord spookyraven]) + " has been defeated.");
-    return true;
-  }
+  return do_spookyraven();
 }
 
 void main()

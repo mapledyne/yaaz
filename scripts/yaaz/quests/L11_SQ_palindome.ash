@@ -7,55 +7,48 @@ import "quests/M_pirates.ash";
 
 boolean get_photographs()
 {
-  if (palindome_items() == 5 && to_int(get_property("palindomeDudesDefeated")) <= 5)
-    return false;
-  if (quest_status("questL11Palindome") >= 1)
+  if (palindome_items() == 5
+      && to_int(get_property("palindomeDudesDefeated")) <= 5
+      && have($item[stunt nuts]))
     return false;
 
-  while (can_adventure()
-         && (palindome_items() < 5
-             || to_int(get_property("palindomeDudesDefeated")) < 5
-             || !have($item[stunt nuts])))
+  if (quest_status("questL11Palindome") >= 1) return false;
+
+  string max = "items, -combat";
+  if (palindome_items() >= 4)
   {
-    string max = "items, -combat";
-    if (palindome_items() >= 4)
-    {
-      max = "items";
-    }
-    maximize(max, $item[talisman o' namsilat]);
-    boolean b = yz_adventure($location[inside the palindome]);
-    if (!b)
-      return true;
+    max = "items";
   }
+  maximize(max, $item[talisman o' namsilat]);
 
+  yz_adventure($location[inside the palindome]);
   return true;
 }
 
 boolean stunt_nut_stew()
 {
-  if (quest_status("questL11Palindome") >= 4)
-    return false;
+  if (quest_status("questL11Palindome") >= 4) return false;
 
   log("Off to get some ingredients to cook up some " + wrap($item[wet stunt nut stew]) + ".");
   maybe_pull($item[wet stew]);
 
-  while(can_adventure() && item_amount($item[wet stunt nut stew]) == 0)
+  if (!have($item[wet stunt nut stew]))
   {
     if (creatable_amount($item[wet stunt nut stew]) > 0)
     {
       log("Cooking one " + wrap($item[wet stunt nut stew]) + " just like Mr. Alarm's grandmother used to make.");
       create(1, $item[wet stunt nut stew]);
-      continue;
+      return true;
     }
     if (!to_boolean(get_property("friarsBlessingReceived")))
     {
       log("Going to get a blessing from the Friars.");
       visit_url("friars.php?pwd&action=buffs&bro=1&button='Blessed Be'");
     }
-    boolean b = yz_adventure($location[whitey's grove], "combat, items");
-    if (!b)
-      return true;
+    yz_adventure($location[whitey's grove], "combat, items");
+    return true;
   }
+
   log("Giving the " + wrap($item[wet stunt nut stew]) + " to " + wrap("Mr. Alarm", COLOR_MONSTER) + ".");
   visit_url("place.php?whichplace=palindome&action=pal_mrlabel");
   cli_execute("refresh inv");
@@ -66,8 +59,7 @@ boolean L11_SQ_palindome()
 {
   if (get_talisman()) return true;
 
-  if (i_a($item[Talisman o' Namsilat]) == 0)
-    return false;
+  if (!have($item[Talisman o' Namsilat])) return false;
 
   switch(quest_status("questL11Palindome"))
   {
@@ -81,8 +73,7 @@ boolean L11_SQ_palindome()
     case UNSTARTED:
       log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
       get_photographs();
-      if(item_amount($item[[7262]&quot;I Love Me\, Vol. I&quot;]) == 0)
-        return false;
+      if (!have($item[[7262]&quot;I Love Me\, Vol. I&quot;])) return false;
 
       equip($item[Talisman o' Namsilat]);
       log("Using the " + wrap($item[[7262]&quot;I Love Me\, Vol. I&quot;]) + ".");

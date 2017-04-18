@@ -22,14 +22,9 @@ void return_gunpowder()
 
 boolean L12_SQ_lighthouse(string side)
 {
-  if (get_property("sidequestLighthouseCompleted") != "none")
-    return false;
+  if (get_property("sidequestLighthouseCompleted") != "none") return false;
 
-  if (quest_status("questL12War") < 1)
-    return false;
-
-  if (quest_status("questL12War") > 1)
-    return false;
+  if (quest_status("questL12War") != 1) return false;
 
   if (get_property("sidequestNunsCompleted") == "none"
       && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
@@ -52,19 +47,9 @@ boolean L12_SQ_lighthouse(string side)
     return false;
   }
 
-  while(to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[lobsterfrogman]
-        && can_adventure()
-        && item_amount($item[barrel of gunpowder]) < 5)
-  {
-    // we'll bail out if we digitize the lobsterfrogman but otherwise try to get all the barrels
+  if (time_combat($monster[lobsterfrogman], $location[sonofa beach])) return true;
 
-    if (!time_combat($monster[lobsterfrogman], $location[sonofa beach]))
-		{
-      boolean b = yz_adventure($location[sonofa beach], "combat");
-      if (!b) return true;
-		}
-
-  }
+  yz_adventure($location[sonofa beach], "combat");
   return true;
 }
 

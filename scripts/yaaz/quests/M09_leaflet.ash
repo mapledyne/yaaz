@@ -2,13 +2,13 @@ import "util/main.ash";
 
 boolean M09_leaflet()
 {
-	if((my_level() < 9) || have($item[Giant Pinky Ring]))
+	if (my_level() < 9
+	    || have($item[Giant Pinky Ring]))
 		return false;
 
-	if(my_class() == $class[Ed])
-		return false;
+	if (my_class() == $class[Ed]) return false;
 
-	if(get_campground() contains $item[Frobozz Real-Estate Company Instant House (TM)])
+	if (get_campground() contains $item[Frobozz Real-Estate Company Instant House (TM)])
 		return false;
 
   if (!have($item[strange leaflet]))
@@ -18,7 +18,6 @@ boolean M09_leaflet()
   }
 
   log("Heading off to do the " + wrap($item[strange leaflet]) + " quest.");
-  wait(3);
 	cli_execute("leaflet");
 	return true;
 }

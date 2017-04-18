@@ -29,7 +29,7 @@ boolean do_one_market_adv()
     max = "combat, 0.2 items";
   }
 
-  if (item_amount(bird.hatchling) == 0 && have_familiar(bird))
+  if (!have(bird.hatchling) && have_familiar(bird))
   {
     maximize(max, $item[blackberry galoshes], bird);
   } else {
@@ -50,7 +50,7 @@ boolean market_loop()
 
   switch (status)
   {
-    case -1:
+    case UNSTARTED:
       if (my_level() < 11)
       {
         error("You can't attempt this quest until you're level 11. Level up!");
@@ -59,7 +59,7 @@ boolean market_loop()
       log("Going to the council to pick up the quest.");
       council();
       return true;
-    case 0:
+    case STARTED:
     case 1:
       return do_one_market_adv();
     case 2:
@@ -90,29 +90,7 @@ boolean L11_SQ_black_market()
   if (my_level() < 11)
     return false;
 
-  int turns = my_adventures();
-
-  int counter = 0;
-  while (market_loop() && counter < 30)
-  {
-    counter += 1;
-  }
-
-  if (quest_status("questL11Black") == FINISHED)
-  {
-    int total = turns - my_adventures();
-    log(wrap($item[your father's macguffin diary]) + " found.");
-    return true;
-  } else {
-    if (counter == 30)
-    {
-      error("This quest took too long. Aborting.");
-    } else {
-      error("Black market area not complete, but I don't know why.");
-    }
-    abort("I got stuck trying to solve the Black Market subquest, sorry.");
-  }
-  return true;
+  return market_loop();
 }
 
 void main()

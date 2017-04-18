@@ -11,17 +11,13 @@ boolean do_untinker()
 
   if (dangerous($location[The Degrassi Knoll Garage])) return false;
 
-  while(!have($item[rusty screwdriver]))
-  {
-    if (!yz_adventure($location[The Degrassi Knoll Garage])) return true;
-  }
+  yz_adventure($location[The Degrassi Knoll Garage]);
   return true;
 }
 
 boolean M_untinker()
 {
-  if (quest_status("questM01Untinker") == FINISHED)
-    return false;
+  if (quest_status("questM01Untinker") == FINISHED) return false;
 
   switch (quest_status("questM01Untinker"))
   {

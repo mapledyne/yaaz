@@ -1,5 +1,14 @@
 import "util/main.ash";
 
+void M06_pandemonium_cleanup()
+{
+  foreach steel in $items[steel margarita,
+                        steel lasagna,
+                        steel-scented air freshener]
+  {
+    if (have(steel)) try_consume(steel);
+  }
+}
 
 boolean laugh_loop()
 {
@@ -34,17 +43,12 @@ boolean backstage_loop()
 
 boolean M06_pandemonium()
 {
-  foreach steel in $items[steel margarita,
-                          steel lasagna,
-                          steel-scented air freshener]
-  {
-    if (have(steel))
-      try_consume(steel);
-  }
+  M06_pandemonium_cleanup();
 
   if (have_skill($skill[liver of steel])) return false;
   if (have_skill($skill[stomach of steel])) return false;
   if (have_skill($skill[spleen of steel])) return false;
+
   if (quest_status("questL06Friar") != FINISHED) return false;
   if (my_path() == "Nuclear Autumn") return false;
   if (my_class() == $class[Ed]) return false;
@@ -67,7 +71,7 @@ boolean M06_pandemonium()
 
   if (backstage_loop()) return true;
 
-  if((backstage_items() == 4) && (item_amount($item[Azazel\'s Unicorn]) == 0))
+  if((backstage_items() == 4) && (!have($item[Azazel\'s Unicorn])))
   {
     log("Talking to " + wrap("Sven", COLOR_LOCATION) + " and attempting to get " + wrap($item[Azazel\'s Unicorn]) + ".");
     string temp = visit_url("pandamonium.php?action=sven");
@@ -86,26 +90,31 @@ boolean M06_pandemonium()
 
   foreach it in $items[Hilarious Comedy Prop, Victor\, the Insult Comic Hellhound Puppet, Observational Glasses]
   {
-    if (!have(it))
-      continue;
+    if (!have(it)) continue;
+
     if (!have_equipped(it))
     {
       log("Equipping the " + wrap(it) + " because it's funny.");
       equip(it);
     }
+
     log("Heading to " + wrap("Mourn's", COLOR_LOCATION) + " to show him our " + wrap(it) + ".");
     wait(3);
     string temp = visit_url("pandamonium.php?action=mourn&whichitem=" + to_int(it) + "&pwd=");
   }
 
-  if((item_amount($item[Azazel\'s Tutu]) == 0) && (item_amount($item[Bus Pass]) >= 5) && (item_amount($item[Imp Air]) >= 5))
+  if (!have($item[Azazel\'s Tutu])
+     && item_amount($item[Bus Pass]) >= 5
+     && item_amount($item[Imp Air]) >= 5)
   {
     log("Heading to " + wrap("Moaning Panda Square", COLOR_LOCATION) + " to get " + wrap($item[Azazel\'s Tutu]) + ".");
     wait(3);
     string temp = visit_url("pandamonium.php?action=moan");
   }
 
-  if((item_amount($item[Azazel\'s Tutu]) > 0) && (item_amount($item[Azazel\'s Lollipop]) > 0) && (item_amount($item[Azazel\'s Unicorn]) > 0))
+  if (have($item[Azazel\'s Tutu])
+      && have($item[Azazel\'s Lollipop])
+      && have($item[Azazel\'s Unicorn]))
   {
     log("Off to " + wrap("Azazel's", COLOR_LOCATION) + " to turn in all of his stuff.");
     wait(3);

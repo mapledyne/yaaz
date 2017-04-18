@@ -213,6 +213,11 @@ string maybe_sniff(monster foe)
       if (quest_status("questL11Pyramid") >= 3) return "";
       if (turners() < 10) return "";
       break;
+    case $monster[bearpig topiary animal]:
+    case $monster[elephant (meatcar?) topiary animal]:
+    case $monster[spider (duck?) topiary animal]:
+      if (to_int(get_property("twinPeakProgress")) == 15) return "";
+        break;
   }
 
   return "skill Transcendent Olfaction";

@@ -982,7 +982,7 @@ void progress_sheet(string detail)
       }
     }
 
-    if (to_boolean(setting("do_jerk", "true")
+    if (to_boolean(setting("do_jerk", "true"))
         && to_boolean(setting("do_heart", "true")))
     {
       foreach freepull in $items[holiday fun!,

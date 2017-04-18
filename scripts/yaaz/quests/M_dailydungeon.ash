@@ -86,13 +86,8 @@ boolean M_dailydungeon()
     set_property("choiceAdventure692", 1);
   }
 
-  while (!to_boolean(get_property("dailyDungeonDone")))
-  {
-    maximize("", $item[ring of detect boring doors]);
-    boolean b = yz_adventure($location[the daily dungeon]);
-    if (!b)
-      return true;
-  }
+  maximize("", $item[ring of detect boring doors]);
+  yz_adventure($location[the daily dungeon]);
   return true;
 }
 

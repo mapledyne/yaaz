@@ -68,21 +68,16 @@ boolean L11_SQ_pyramid()
     return false;
   }
 
-  while (quest_status("questL11Pyramid") < 1)
+  if (quest_status("questL11Pyramid") < 1)
   {
-    maximize("-combat");
-    if (!yz_adventure($location[The Upper Chamber]))
-      return true;
+    yz_adventure($location[The Upper Chamber], "-combat");
+    return true;
   }
 
   if (quest_status("questL11Pyramid") < 3 || turners() < 10)
   {
-    while (quest_status("questL11Pyramid") < 3 || turners() < 10)
-    {
-      maximize("items");
-      if (!yz_adventure($location[The Middle Chamber]))
-        return true;
-    }
+    yz_adventure($location[The Middle Chamber], "items");
+    return true;
   }
 
   if (my_adventures() < 15) return false; // do this later.
@@ -107,7 +102,7 @@ boolean L11_SQ_pyramid()
 
   log("Off to fight " + wrap($monster[ed the undying]) + ".");
   maximize("");
-  while (item_amount($item[[2334]Holy MacGuffin]) == 0)
+  while (!have($item[[2334]Holy MacGuffin]))
   {
     if (!yz_adventure_bypass($location[the lower chambers])) return true;
   }
