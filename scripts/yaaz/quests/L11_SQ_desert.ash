@@ -89,6 +89,12 @@ boolean open_gnasir()
     yz_adventure(oasis);
   }
   yz_adventure(desert);
+
+  debug("This second visit to Gnasir may be unneeded now. Test and remove if so.");
+  string html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
+  html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
+  run_choice(1); // visit_url("choice.php?whichchoice=805&option=1&pwd=");
+
   return true;
 }
 
@@ -111,17 +117,18 @@ boolean L11_SQ_desert()
   // Gnasir
   if (open_gnasir()) return true;
 
-  string html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
-  html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
-  run_choice(1); // visit_url("choice.php?whichchoice=805&option=1&pwd=");
+  string html;
 
-	if (contains_text(html, "can of black paint") && my_path() != "Nuclear Autumn")
+  int progress = to_int(get_property("gnasirProgress"));
+	if (!bit_flag(progress, 1)
+      && my_path() != "Nuclear Autumn")
   {
-		log("Gnasir wants a can of black paint.");
-		if (!have($item[can of black paint]) && my_meat() > 1000) {
+		if (!have($item[can of black paint]) && my_meat() > 1000)
 			cli_execute("acquire can of black paint");
-		}
-		if (have($item[can of black paint])) {
+
+		if (have($item[can of black paint]))
+    {
+      log("Gnasir wants a can of black paint.");
       log("Giving " + wrap($item[can of black paint]) + " to Gnasir.");
 			html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -129,17 +136,17 @@ boolean L11_SQ_desert()
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
 		} else {
       string reason = "the Black Market may not be opened yet";
-      if (my_meat() < 1000)
-        reason = "you don't have enough meat to buy it";
+      if (my_meat() < 1000) reason = "you don't have enough meat to buy it";
       log("Gnasir wants a " + wrap($item[can of black paint]) + ", but I couldn't get one, " + reason + ". Skipping for now, but this will probably cost more turns.");
     }
 	} // can of black paint
 
 
-	if (contains_text(html, "killing jar")) {
-		log("Gnasir wants a killing jar.");
+	if (!bit_flag(progress, 2)) {
     maybe_pull($item[killing jar]);
-		if (have($item[killing jar])) {
+		if (have($item[killing jar]))
+    {
+      log("Gnasir wants a killing jar.");
 			log("Giving " + wrap($item[killing jar]) + " to Gnasir.");
 			html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
 			html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -148,20 +155,15 @@ boolean L11_SQ_desert()
 		}
 	} // killing jar
 
-	if (contains_text(html, "stone rose")) {
-		log("Gnasir wants a stone rose.");
-	}
-	if (contains_text(html, "worm-riding manual")) {
-		log("Gnasir wants a worm-riding manual.");
-	}
-
   if (have($item[desert sightseeing pamphlet]))
   {
     use_all($item[desert sightseeing pamphlet]);
     return true;
   }
 
-  if (have($item[stone rose])) {
+  if (!bit_flag(progress, 0)
+      && have($item[stone rose]))
+  {
     log("Gnasir wants your stone rose.");
     html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
     html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -170,7 +172,9 @@ boolean L11_SQ_desert()
     return true;
   }
 
-  if (i_a($item[worm-riding manual page]) > 14) {
+  if (!bit_flag(progress, 3)
+      && item_amount($item[worm-riding manual page]) > 14)
+  {
     log("Gnasir wants to help you ride the majestic worms.");
     html = visit_url("place.php?whichplace=desertbeach&action=db_gnasir");
     html = visit_url("choice.php?whichchoice=805&option=1&pwd=");
@@ -189,7 +193,7 @@ boolean L11_SQ_desert()
     }
 
     log("We have the " + wrap($item[worm-riding hooks]) + " but don't have a " + wrap($item[drum machine]) + ". Looking for one in the " + wrap($location[The Oasis]));
-    yz_adventure($location[The Oasis], "combat, items");
+    yz_adventure($location[The Oasis], "items");
     return true;
   }
 

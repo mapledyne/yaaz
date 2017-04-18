@@ -103,7 +103,9 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target == '')
     target = default_maximize_string();
 
-  if (my_primestat() != $stat[mysticality])
+// check slot on item since 'effective' can sometimes override explicit "equip" demands of the maximizer.
+  if (my_primestat() != $stat[mysticality]
+      && to_slot(it) != $slot[weapon])
   {
     if (target != "") target = target + ", ";
     target += "effective";
