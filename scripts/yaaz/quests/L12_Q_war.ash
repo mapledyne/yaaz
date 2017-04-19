@@ -67,7 +67,7 @@ boolean get_hippy_disguise()
 
   log("Getting a " + wrap("filthy hippy disguise", COLOR_ITEM) + ".");
   yz_adventure($location[hippy camp], "items");
-    return true;
+  return true;
 }
 
 boolean start_the_war(string side)

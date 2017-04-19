@@ -2,6 +2,7 @@
 airblaster gun	0
 amulet of yendor	0
 giant designer sunglasses	0
+actual reality googles	0
 
 # Haggis stuff:
 haggis socks	0

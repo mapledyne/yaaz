@@ -44,16 +44,32 @@ boolean dingy()
 
   maybe_pull($item[Shore Inc. Ship Trip Scrip], 3);
 
-  while (item_amount($item[Shore Inc. Ship Trip Scrip]) < 3 && !have($item[dinghy plans]))
+  if (item_amount($item[Shore Inc. Ship Trip Scrip]) < 3)
   {
+
+    switch (my_primestat())
+    {
+      case $stat[muscle]:
+        set_property("choiceAdventure793", 1);
+        break;
+      case $stat[mysticality]:
+        set_property("choiceAdventure793", 2);
+        break;
+      case $stat[moxie]:
+        set_property("choiceAdventure793", 3);
+        break;
+    }
     log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
     adventure(1, $location[The Shore\, Inc. Travel Agency]);
     progress_sheet();
+    return true;
   }
+
   if (!have($item[dinghy plans]))
   {
     log("Buying " + wrap($item[dinghy plans]) + ".");
     cli_execute("acquire dinghy plans");
+    return true;
   }
 
   if (have($item[dinghy plans])

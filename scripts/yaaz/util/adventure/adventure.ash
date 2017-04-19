@@ -58,6 +58,13 @@ boolean yz_adventure_bypass(location loc)
     }
   }
 
+  if (last_monster().random_modifiers["clingy"])
+  {
+    info("Previous monster was clingy. Fighting the followup monster now.");
+    run_combat("yz_consult");
+  }
+
+
   progress_sheet();
 
   return adv;

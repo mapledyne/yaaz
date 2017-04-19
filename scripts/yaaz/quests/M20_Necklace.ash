@@ -25,13 +25,13 @@ boolean get_library_key()
   if (my_inebriety() > 10
       && approx_pool_skill() < 14)
   {
-    log("Skipping " + wrap($location[The Haunted Billiards Room]) + " since we're too drunk to play effectively.");
+    info("Skipping " + wrap($location[The Haunted Billiards Room]) + " since we're too drunk to play effectively.");
     return false;
   }
   if (my_inebriety() < 8
       && approx_pool_skill() < 14)
   {
-    log("Skipping " + wrap($location[The Haunted Billiards Room]) + " until we are a little more tipsy.");
+    info("Skipping " + wrap($location[The Haunted Billiards Room]) + " until we are a little more tipsy.");
     return false;
   }
 

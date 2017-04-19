@@ -161,17 +161,21 @@ void progress_sheet_detail(string detail)
     }
   }
 
-  if (do_detail("gingerbread", detail)
-      && get_property("gingerbreadCityAvailable") == "true")
-  {
-    task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
-  }
-
   if (do_detail("lovetunnel", detail)
       && to_boolean(get_property("loveTunnelAvailable"))
       && !to_boolean(get_property("_loveTunnelUsed")))
   {
     task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is available and hasn't been used today.");
+  }
+  if (do_detail("gingerbread", detail)
+      && get_property("gingerbreadCityAvailable") == "true")
+  {
+    task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
+  }
+  if (do_detail("space_gate", detail)
+      && to_int(get_property("_spacegateTurnsLeft")) > 0)
+  {
+    progress(20 - to_int(get_property("_spacegateTurnsLeft")), 20, wrap("Spacegate", COLOR_LOCATION) + " energy. This is not automated. Do this yourself if interested during the run.");
   }
 
 }

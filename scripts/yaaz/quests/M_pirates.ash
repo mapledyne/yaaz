@@ -180,33 +180,27 @@ boolean get_getup()
 
 boolean collect_insults()
 {
-  if (!have($item[the big book of pirate insults]))
-    return false;
+  if (!have($item[the big book of pirate insults])) return false;
 
-  if (pirate_insults() >= 6)
-    return false;
+  if (pirate_insults() >= 6) return false;
 
 	// wait until later when this isn't as risky.
-	if (expected_damage($monster[toothy pirate]) > my_hp() / 4) return false;
+	if (dangerous($location[Barrrney's barrr])) return false;
 
   set_property("choiceAdventure187", "2");
 
-  while (pirate_insults() < 6)
+  if (item_amount($item[Cap'm Caronch's Map]) > 0
+      && item_amount($item[Cap'm Caronch's nasty booty]) == 0)
   {
-    if (item_amount($item[Cap'm Caronch's Map]) > 0
-        && item_amount($item[Cap'm Caronch's nasty booty]) == 0)
-    {
-      log("Off to fight the " + wrap($monster[booty crab]) + ".");
-      maximize("");
-      use(1, $item[Cap'm Caronch's Map]);
-      return true;
-    }
-
-    maximize("combat", "swashbuckling getup");
-		if (expected_damage($monster[toothy pirate]) > my_hp() / 4) return true;
-    boolean b = yz_adventure($location[Barrrney's barrr]);
-    if (!b) return true;
+    if (dangerous($monster[booty crab])) return false;
+    log("Off to fight the " + wrap($monster[booty crab]) + ".");
+    maximize("");
+    use(1, $item[Cap'm Caronch's Map]);
+    return true;
   }
+
+  maximize("combat", "swashbuckling getup");
+  yz_adventure($location[Barrrney's barrr]);
   return true;
 }
 
