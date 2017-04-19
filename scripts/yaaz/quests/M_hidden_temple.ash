@@ -15,7 +15,8 @@ boolean M_hidden_temple()
   int count = my_adventures();
 
   log("Unlocking " + wrap($location[the hidden temple]) +".");
-  if (!have($item[tree-holed coin]))
+  if (!have($item[tree-holed coin])
+      && !have($item[spooky temple map]))
   {
      log("Getting the " + wrap($item[tree-holed coin]) + ".");
      set_property("choiceAdventure502", 2);

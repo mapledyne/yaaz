@@ -13,7 +13,7 @@ boolean L02_Q_larva()
       log("Going to the council to pick up the quest.");
       council();
       break;
-    case 0:
+    case STARTED:
       set_property("choiceAdventure502", 2);
       set_property("choiceAdventure505", 1);
       yz_adventure($location[The spooky forest], "-combat");
