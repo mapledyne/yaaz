@@ -1,5 +1,5 @@
 import "util/base/print.ash";
-
+import "util/base/settings.ash";
 
 int space_gate_turns_remaining()
 {
@@ -8,6 +8,24 @@ int space_gate_turns_remaining()
 
 boolean can_space_gate()
 {
+  string check = setting("space_gate_check", "unk");
+
+  if (check == "unk")
+  {
+    if (!visit_url("place.php?whichplace=spacegate").contains_text("Secret Underground Spacegate Facility"))
+    {
+      check == "false";
+    } else {
+      check == "true";
+    }
+    save_daily_setting("space_gate_check", check);
+  }
+
+  boolean has_gate = to_boolean(check);
+
+  if (!has_gate) return false;
+
+  debug("Todo: Check Space Gate status. Are we out of energy or just haven't dialed a planet today?");
   if (space_gate_turns_remaining() > 0) return true;
   return false;
 }
