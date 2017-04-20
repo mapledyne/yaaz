@@ -19,6 +19,11 @@ boolean[location] leveling_targets = $locations[the haunted pantry,
                                                 cobb's knob treasury];
 
 
+void M_level_up_cleanup()
+{
+
+}
+
 location get_leveling_location()
 {
   location target = $location[none];
@@ -71,6 +76,7 @@ boolean do_leveling_thing()
 
 boolean M_level_up()
 {
+  warning("Ran out of quest things to do in this script. Adventuring (and leveling) until we can do something better.");
   do_leveling_thing();
   return true;
 }

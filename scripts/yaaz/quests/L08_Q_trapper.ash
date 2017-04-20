@@ -1,6 +1,12 @@
 import "util/main.ash";
 string TRAPPER_URL="place.php?whichplace=mclargehuge&action=trappercabin";
 
+
+void L08_Q_trapper_cleanup()
+{
+
+}
+
 void visit_trapper()
 {
   log("Visiting the Trapper.");

@@ -6,6 +6,7 @@ int FINISHED = 100;
 int UNSTARTED = -1;
 int STARTED = 0;
 
+string current_quest = "";
 
 boolean quest_active(string quest)
 {

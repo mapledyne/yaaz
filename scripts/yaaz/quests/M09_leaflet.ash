@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M09_leaflet_cleanup()
+{
+
+}
+
 boolean M09_leaflet()
 {
 	if (my_level() < 9

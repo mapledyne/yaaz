@@ -3,6 +3,11 @@ import "util/main.ash";
 boolean L06_Q_friar();
 boolean do_friar_area(location loc, item it);
 
+void L06_Q_friar_cleanup()
+{
+
+}
+
 boolean do_friar_area(location loc, item it)
 {
   if (i_a(it) > 0)
@@ -79,7 +84,7 @@ boolean L06_Q_friar()
 
   log("Performing the ritual for the Friars.");
   visit_url("friars.php?action=ritual&pwd=");
-  log("Ritual complete!");  
+  log("Ritual complete!");
   return true;
 }
 

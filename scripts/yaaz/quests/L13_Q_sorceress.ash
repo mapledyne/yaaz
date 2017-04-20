@@ -1,6 +1,11 @@
 import "util/main.ash";
 import "special/items/deck.ash";
 
+void L13_Q_sorceress_cleanup()
+{
+
+}
+
 boolean wall_of_skin()
 {
   if (!have($item[beehive]))

@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_desert_beach_cleanup()
+{
+
+}
+
 boolean M_desert_beach()
 {
   if (to_int(get_property("lastDesertUnlock")) >= my_ascensions()) return false;
@@ -14,7 +19,7 @@ boolean M_desert_beach()
     return false;
   }
 
-  if (my_meat() > 10000)
+  if (my_meat() > 7000)
   {
     log("Buying a " + wrap($item[desert bus pass]) + " to access the beach.");
     buy(1, $item[desert bus pass]);

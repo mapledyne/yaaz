@@ -184,6 +184,13 @@ void effect_maintain(effect ef)
     if (!can_consume(it))
       return;
 
+    if (it == $item[The Inquisitor's unidentifiable object]
+        && to_boolean(setting("inquisitor_chewed", "false")))
+    {
+      return;
+    }
+
+
     // buy one if we need it and can afford it:
     if (item_amount(it) == 0)
     {

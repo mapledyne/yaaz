@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_untinker_cleanup()
+{
+
+}
+
 boolean do_untinker()
 {
   if (knoll_available())

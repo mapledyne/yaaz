@@ -5,124 +5,16 @@ import "util/main.ash";
 import "util/progress.ash";
 import "yaaz/yaaz-begin.ash";
 
-import "quests/M_misc.ash";
-import "quests/M_dailydungeon.ash";
-import "quests/M_guild.ash";
-import "quests/M_hidden_temple.ash";
-import "quests/M_8bit.ash";
-import "quests/M_desert_beach.ash";
-import "quests/M_pirates.ash";
-import "quests/M_spookyraven.ash";
-import "quests/M_untinker.ash";
-import "quests/M06_pandemonium.ash";
-import "quests/M09_leaflet.ash";
-import "quests/M10_star_key.ash";
-import "quests/M20_necklace.ash";
+import "util/quests_main.ash";
 
-import "quests/L02_Q_larva.ash";
-import "quests/L03_Q_rats.ash";
-import "quests/L04_Q_bats.ash";
-import "quests/L05_Q_goblin.ash";
-import "quests/L06_Q_friar.ash";
-import "quests/L07_Q_cyrpt.ash";
-import "quests/L08_Q_trapper.ash";
-import "quests/L09_Q_topping.ash";
-import "quests/L10_Q_Garbage.ash";
-import "quests/L11_Q_macguffin.ash";
-import "quests/L12_Q_war.ash";
-import "quests/L13_Q_sorceress.ash";
-
-import "quests/M_level_up.ash";
+// Note: If you want to change the order quests are run in, see quests.ash
+// and edit the QUEST_LIST there.
 
 int current_level;
 
-
-boolean[skill] perm_skills()
-{
-  boolean[skill] perms;
-  string b=visit_url("showplayer.php?who="+my_id());
-  if (contains_text(b, "class=\"pskill\">"))
-  {
-    b=substring(b,b.index_of("class=\"pskill\">"),b.index_of("Clan: <b>"));
-    foreach sk in $skills[]
-    {
-      if (!have_skill(sk)) continue;
-
-  // do we want to include skills you've permed but only in softcore?
-//      if (b.index_of(">" + sk + " (P)") > 0) perms[sk] = true;
-//      if (b.index_of(">" + sk + "</a> (P)") > 0) perms[sk] = true;
-
-      if (b.index_of(">" + sk + " (<") > 0) perms[sk] = true;
-      if (b.index_of(">" + sk + "</a> (<") > 0) perms[sk] = true;
-
-    }
-  }
-  return perms;
-}
-
-
-void skill_recommendation()
-{
-  boolean[skill] permed = perm_skills();
-
-  // skills in "recommended to perm" order. Certainly a subjective list, but
-  // at least we can give a basic recommendation. List largely pulled from
-  // the wiki's hardcore skill analysis page.
-  boolean[skill] recs = $skills[pulverize,
-                                ambidextrous funkslinging,
-                                advanced saucecrafting,
-                                pastamastery,
-                                the ode to booze,
-                                cannelloni cocoon,
-                                tongue of the walrus,
-                                advanced cocktailcrafting,
-                                amphibian sympathy,
-                                saucemaven,
-                                smooth movement,
-                                the sonata of sneakiness,
-                                superhuman cocktailcrafting,
-                                torso awaregness,
-                                mad looting skillz,
-                                leash of linguini,
-                                fat leon's phat loot lyric,
-                                tao of the terrapin,
-                                hero of the half-shell,
-                                springy fusilli,
-                                nimble fingers,
-                                ur-kel's aria of annoyance,
-                                disco fever,
-                                rage of the reindeer,
-                                the power ballad of the arrowsmith,
-                                lunging thrust-smack,
-                                powers of observatiogn,
-                                musk of the moose,
-                                carlweather's cantata of confrontation,
-                                overdeveloped sense of self preservation,
-                                saucestorm,
-                                flavour of magic,
-                                wisdom of the elder tortoises,
-                                inner sauce,
-                                thief among the honorable,
-                                impetuous sauciness,
-                                the way of sauce,
-                                transcendental noodlecraft,
-                                the magical mojomuscular melody,
-                                armorcraftiness,
-                                adventurer of leisure,
-                                empathy of the newt,
-                                astral shell];
-
-  foreach sk in recs
-  {
-    if (permed contains sk) continue;
-    if (sk.class != my_class()) continue;
-    warning("When ascending, I'd recommend making " + wrap(sk) + " permanent.");
-    return;
-  }
-}
-
 boolean ascend_loop()
 {
+  current_quest = "";
 
   if (!can_adventure()) return false;
 
@@ -134,63 +26,26 @@ boolean ascend_loop()
     current_level = my_level();
     council();
     cli_execute("refresh inv");
+    return true;
   }
 
-  // returning true here ultimately just causes us to start this
-  // function over again.
-  // If you do no work in one of these functions, you should
-  // generally return false to let the next quest in line run.
+  // Quests that have been converted to the new format.
+  // Only move quests into this loop when they original code is adjacent to this
+  // so it can preserve the quest loop ordering:
 
-  // misc things we should probably just do as soon as we can:
-  if (M_misc()) return true;
-  if (M_guild()) return true; // only opens the guild - doesn't do the full guild quest.
-  if (M_untinker()) return true;
-  if (M_desert_beach()) return true; // build meatcar or buy pass.
-  if (M06_pandemonium()) return true; // steel items
-  if (M09_leaflet()) return true;
-  if (M_dailydungeon()) return true;
-  if (M20_necklace()) return true;
+  foreach quest in QUEST_LIST
+  {
+    string clean = quest + "_cleanup";
+    call clean();
+  }
+  foreach quest in QUEST_LIST
+  {
+    current_quest = quest;
+    boolean b = call boolean quest();
+    if (b) return true;
+  }
 
-  // do a bit earlier than other order to get the Knob opened earlier.
-  // earlier knob == earlier dispensary if we get a KGE outfit.
-  // Note: do we even care about the dispensary?
-
-  if (L05_Q_goblin()) return true;
-
-  // do this one earlier since it opens the pandemonium.
-  if (L06_Q_friar()) return true;
-
-  // do this as soon as it's available - earlier start to the war == earlier arena fliers
-  if (L12_Q_war()) return true;
-
-  // do this one earlier if only to talk to the trapper sooner.
-  if (L08_Q_trapper()) return true;
-
-  // Misc quests. More efficient for these to go later?
-  if (M_hidden_temple()) return true;
-  if (M_spookyraven()) return true;
-  if (M_pirates()) return true;
-
-  // whatever is left can be done in order:
-  if (L02_Q_larva()) return true;
-  if (L03_Q_rats()) return true;
-  if (L04_Q_bats()) return true;
-  if (L07_Q_cyrpt()) return true;
-  if (L09_Q_topping()) return true;
-  if (L10_Q_garbage()) return true;
-  if (L11_Q_macguffin()) return true;
-
-  // towards the end since the timing really doesn't matter much on this one.
-  // keeping it here may help us level when there's no other quest to do?
-  if (M_8bit()) return true;
-  if (M10_star_key()) return true;
-
-  if (L13_Q_sorceress()) return true;
-
-  warning("Ran out of quest things to do in this script. Adventuring (and leveling) until we can do something better.");
-  if (M_level_up()) return true;
-
-  log("Ran out of things to do in this script. Either a quest is missing, or maybe we should level?");
+  log("Ran out of things to do in this script. Maybe a quest is missing, or we're possibly in a state this script can't figure out.");
   return false;
 }
 
@@ -280,7 +135,7 @@ void intro()
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>.");
-
+  log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2866791'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
   boolean has_fam = false;
   foreach f in $familiars[]
   {
@@ -356,7 +211,7 @@ void intro()
 
   if (my_path() == "One Crazy Random Summer")
   {
-    warning("This script doesn't handle well some of the monster modifiers in this path. When this happens, you can finish the fight and re-run the script to pick back up.");
+    warning("This script doesn't handle well some of the monster modifiers in this path (" + wrap(my_path(), COLOR_LOCATION) + "). When this happens, you can finish the fight and re-run the script to pick back up.");
     wait(5);
   }
 }

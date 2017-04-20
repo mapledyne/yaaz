@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void L10_Q_garbage_cleanup()
+{
+
+}
+
 void plant_beanstalk()
 {
   while(item_amount($item[enchanted bean]) == 0 && quest_status("questL10Garbage") < 2)

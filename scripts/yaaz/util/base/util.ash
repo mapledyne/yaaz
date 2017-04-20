@@ -9,6 +9,8 @@ float cost_per_mp();
 boolean guild_store_open();
 float average_range(string avg);
 boolean can_adventure();
+boolean[skill] perm_skills();
+void skill_recommendation();
 
 // these really should be in effects.ash, but are here to avoid an import loop.
 // Need to sort this sort of problem out sometime...
@@ -23,6 +25,91 @@ string SCRIPT = "yaaz";
 string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
+
+
+void skill_recommendation()
+{
+  boolean[skill] permed = perm_skills();
+
+  // skills in "recommended to perm" order. Certainly a subjective list, but
+  // at least we can give a basic recommendation. List largely pulled from
+  // the wiki's hardcore skill analysis page.
+  boolean[skill] recs = $skills[pulverize,
+                                ambidextrous funkslinging,
+                                advanced saucecrafting,
+                                pastamastery,
+                                the ode to booze,
+                                cannelloni cocoon,
+                                tongue of the walrus,
+                                advanced cocktailcrafting,
+                                amphibian sympathy,
+                                saucemaven,
+                                smooth movement,
+                                the sonata of sneakiness,
+                                superhuman cocktailcrafting,
+                                torso awaregness,
+                                mad looting skillz,
+                                leash of linguini,
+                                fat leon's phat loot lyric,
+                                tao of the terrapin,
+                                hero of the half-shell,
+                                springy fusilli,
+                                nimble fingers,
+                                ur-kel's aria of annoyance,
+                                disco fever,
+                                rage of the reindeer,
+                                the power ballad of the arrowsmith,
+                                lunging thrust-smack,
+                                powers of observatiogn,
+                                musk of the moose,
+                                carlweather's cantata of confrontation,
+                                overdeveloped sense of self preservation,
+                                saucestorm,
+                                flavour of magic,
+                                wisdom of the elder tortoises,
+                                inner sauce,
+                                thief among the honorable,
+                                impetuous sauciness,
+                                the way of sauce,
+                                transcendental noodlecraft,
+                                the magical mojomuscular melody,
+                                armorcraftiness,
+                                adventurer of leisure,
+                                empathy of the newt,
+                                astral shell];
+
+  foreach sk in recs
+  {
+    if (permed contains sk) continue;
+    if (sk.class != my_class()) continue;
+    warning("When ascending, I'd recommend making " + wrap(sk) + " permanent.");
+    return;
+  }
+}
+
+
+boolean[skill] perm_skills()
+{
+  boolean[skill] perms;
+  string b=visit_url("showplayer.php?who="+my_id());
+  if (contains_text(b, "class=\"pskill\">"))
+  {
+    b=substring(b,b.index_of("class=\"pskill\">"),b.index_of("Clan: <b>"));
+    foreach sk in $skills[]
+    {
+      if (!have_skill(sk)) continue;
+
+  // do we want to include skills you've permed but only in softcore?
+//      if (b.index_of(">" + sk + " (P)") > 0) perms[sk] = true;
+//      if (b.index_of(">" + sk + "</a> (P)") > 0) perms[sk] = true;
+
+      if (b.index_of(">" + sk + " (<") > 0) perms[sk] = true;
+      if (b.index_of(">" + sk + "</a> (<") > 0) perms[sk] = true;
+
+    }
+  }
+  return perms;
+}
 
 int element_damage_bonus(element el)
 {

@@ -1,3 +1,4 @@
+import 'special/items/batfellow_comic.ash';
 import 'special/items/deck.ash';
 import 'special/items/protonic.ash';
 import 'special/items/timespinner.ash';
@@ -33,6 +34,7 @@ void special()
   deck();
   precinct();
   summon_annoyance();
+  batfellow_comic();
 
   // These may actually get us in a fight, so do them after the ones above:
 

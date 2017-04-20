@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void L03_Q_rats_cleanup()
+{
+
+}
+
 boolean L03_Q_rats()
 {
   if (my_level() < 3)

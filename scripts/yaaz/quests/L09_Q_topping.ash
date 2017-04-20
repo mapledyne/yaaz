@@ -3,6 +3,11 @@ import "quests/L09_SQ_oilpeak.ash";
 import "quests/L09_SQ_aboo.ash";
 import "quests/L09_SQ_twin.ash";
 
+void L09_Q_topping_cleanup()
+{
+
+}
+
 boolean L09_Q_topping()
 {
 

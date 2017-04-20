@@ -1,5 +1,9 @@
 import "util/main.ash";
 
+void M20_necklace_cleanup()
+{
+
+}
 
 boolean writing_desk_trick()
 {

@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void L02_Q_larva_cleanup()
+{
+
+}
+
 boolean L02_Q_larva()
 {
   int status = quest_status("questL02Larva");

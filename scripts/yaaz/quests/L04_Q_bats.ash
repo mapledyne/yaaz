@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void L04_Q_bats_cleanup()
+{
+
+}
+
 boolean has_stench_res()
 {
   return (elemental_resistance($element[stench]) > 0);

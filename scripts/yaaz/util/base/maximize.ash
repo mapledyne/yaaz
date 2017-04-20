@@ -31,7 +31,7 @@ void cross_streams(string player)
   if (player == 'ProtonicBot')
   {
     warning("Sure, we can cross streams with " + wrap(player, COLOR_MONSTER) + ", but you could");
-    warning("use more interesting as well. Find a friend with a " + wrap($item[protonic accelerator pack]));
+    warning("use someone more interesting as well. Find a friend with a " + wrap($item[protonic accelerator pack]));
     warning("(or use " + wrap("Degrassi", COLOR_MONSTER) + "), she's friendly :)");
     warning("To change your default stream crossing buddy:");
     print("set streamCrossDefaultTarget=someone");
@@ -359,6 +359,11 @@ void max_effects(string target, boolean aggressive)
         cli_execute("concert winklered");
       }
 
+      if (aggressive)
+      {
+        effect_maintain($effect[The Inquisitor's Unknown Effect]);
+      }
+
       break;
     case "items":
       effect_maintain($effect[ermine eyes]);
@@ -372,6 +377,8 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[2091]); // [Sacré Mental]
       effect_maintain($effect[serendipi tea]);
       effect_maintain($effect[singer's faithful ocelot]);
+      effect_maintain($effect[The Inquisitor's Unknown Effect]);
+
       // Not really ascension relevant:
 //      effect_maintain($effect[The Ballad of Richie Thingfinder]);
       effect_maintain($effect[thanksgetting]);
@@ -406,6 +413,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[the glistening]);
       effect_maintain($effect[Walberg\'s Dim Bulb]);
       effect_maintain($effect[well-swabbed ear]);
+      effect_maintain($effect[The Inquisitor's Unknown Effect]);
 
       terminal_enhance($effect[init.enh]);
       if (!to_boolean(get_property("concertVisited"))
@@ -487,6 +495,7 @@ void max_effects(string target, boolean aggressive)
       if (aggressive)
       {
         effect_maintain($effect[thanksgetting]);
+        effect_maintain($effect[The Inquisitor's Unknown Effect]);
       }
 
       break;

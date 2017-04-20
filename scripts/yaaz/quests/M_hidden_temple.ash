@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_hidden_temple_cleanup()
+{
+
+}
+
 boolean M_hidden_temple()
 {
   if (hidden_temple_unlocked())

@@ -22,7 +22,6 @@ table += pref_line("do_heart", "true", "Do heart-y thing like using up your Smil
 table += pref_line("no_heart", "", "A comma-separated list of people to never do heart-things to.<br>Good for ignoring bots and such.");
 table += pref_line("do_jerk", "true", "If false things like warm milk, bricks, and toilet paper<br>won't be used at people when doing 'heart' things.");
 table += pref_line("do_collectors", "true", "Give things to certain well-known collectors, particularly devs of KoLMafia.<br>Set to false to not give to these collectors.");
-table += pref_line("manuel_always_show_progress", "false", "If true, Monster Manuel progress will always be shown.<br>Otherwise, once you have all location facts, that progress display is skipped.");
 table += pref_line("use_avatar_potions", "true", "Use avatar potions when you have them to stay constantly dressed up.");
 table += pref_line("aggressive_optimize", "false", "If true, skip all side actions that aren't solely about ascending<br>(ex: Evoke Eldritch Horror, Portscan, etc).");
 table += pref_line("no_pulls", "false", "If true, don't make any pulls when in Softcore.");

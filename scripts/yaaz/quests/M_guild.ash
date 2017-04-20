@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_guild_cleanup()
+{
+
+}
+
 boolean M_guild()
 {
   if (guild_store_open()) return false;

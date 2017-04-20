@@ -23,8 +23,6 @@ void M10_star_key_cleanup()
 boolean M10_star_key()
 {
 
-  M10_star_key_cleanup();
-
   if (quest_status("questL10Garbage") != FINISHED) return false;
 
   if (have($item[richard's star key])) return false;

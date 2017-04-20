@@ -1,6 +1,10 @@
 import "util/main.ash";
 import "util/progress.ash";
 
+void M_misc_cleanup()
+{
+
+}
 
 boolean toot()
 {

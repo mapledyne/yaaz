@@ -5,6 +5,11 @@ import "quests/L11_SQ_palindome.ash";
 import "quests/L11_SQ_summoning.ash";
 import "quests/L11_SQ_pyramid.ash";
 
+void L11_Q_macguffin_cleanup()
+{
+
+}
+
 boolean L11_Q_macguffin()
 {
 

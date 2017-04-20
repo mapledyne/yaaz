@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_dailydungeon_cleanup()
+{
+
+}
+
 boolean M_dailydungeon()
 {
   if (to_boolean(get_property("dailyDungeonDone")))
