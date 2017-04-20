@@ -1,5 +1,9 @@
 import "util/main.ash";
-import "util/progress.ash";
+
+void M_misc_progress()
+{
+
+}
 
 void M_misc_cleanup()
 {
@@ -65,7 +69,6 @@ boolean dingy()
     }
     log("Going on a shore vacation to get some " + wrap($item[Shore Inc. Ship Trip Scrip]) + ".");
     adventure(1, $location[The Shore\, Inc. Travel Agency]);
-    progress_sheet();
     return true;
   }
 

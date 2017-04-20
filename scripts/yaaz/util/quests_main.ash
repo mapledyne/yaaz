@@ -32,16 +32,15 @@ import "quests/M_level_up.ash";
 // loop will try the quests. If you want to order quests differently, change it here.
 // Note that some quests will skip themselves and let a later quest do work if it's
 // waiting on something (arena quests waiting for flyers, for instance).
-boolean[string] QUEST_LIST = $strings[
-M_misc,
-M_guild,
-M_untinker,
-M_desert_beach,
-M06_pandemonium,
-M09_leaflet,
-M_dailydungeon,
-M20_necklace,
-L05_Q_goblin,
+boolean[string] QUEST_LIST = $strings[M_misc,
+                                      M_guild,
+                                      M_untinker,
+                                      M_desert_beach,
+                                      M06_pandemonium,
+                                      M09_leaflet,
+                                      M_dailydungeon,
+                                      M20_necklace,
+                                      L05_Q_goblin,
                                       L06_Q_friar,
                                       L12_Q_war,
                                       L08_Q_trapper,

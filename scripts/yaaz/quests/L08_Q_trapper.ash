@@ -1,6 +1,48 @@
 import "util/main.ash";
 string TRAPPER_URL="place.php?whichplace=mclargehuge&action=trappercabin";
 
+void L08_Q_trapper_progress()
+{
+  if (quest_status("questL08Trapper") == 1)
+  {
+    item ore_wanted = to_item(get_property("trapperOre"));
+    if (ore_wanted != $item[none])
+    {
+      int ore = item_amount(ore_wanted);
+      progress(ore, 3, wrap(ore_wanted) + " for the trapper");
+
+      int cheese = item_amount($item[goat cheese]);
+      progress(cheese, 3, wrap($item[goat cheese]) + " for the trapper");
+    }
+  }
+
+  if (quest_status("questL08Trapper") == 2)
+  {
+    int gear = 0;
+    foreach x in $items[ninja carabiner,
+                        ninja rope,
+                        ninja crampons]
+    {
+      if (have(x)) gear++;
+    }
+
+    string carabiner = UNCHECKED;
+    string rope = UNCHECKED;
+    string crampons = UNCHECKED;
+
+    if (have($item[ninja carabiner])) carabiner = CHECKED;
+    if (have($item[ninja rope])) rope = CHECKED;
+    if (have($item[ninja crampons])) crampons = CHECKED;
+
+    progress(gear, 3, "ninja gear (" + carabiner + " carabiner, " + rope + " rope, " + crampons + " crampons), or use eXtreme slope");
+  }
+
+  if (quest_status("questL08Trapper") == 3
+      || quest_status("questL08Trapper") == 4)
+  {
+    progress($location[mist-shrouded peak].turns_spent, 3, "yetis killed");
+  }
+}
 
 void L08_Q_trapper_cleanup()
 {

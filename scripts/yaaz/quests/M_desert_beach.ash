@@ -1,5 +1,17 @@
 import "util/main.ash";
 
+void M_desert_beach_progress()
+{
+  if (to_int(get_property("lastDesertUnlock")) >= my_ascensions()) return;
+
+  if (knoll_available())
+  {
+    task("Build a " + wrap($item[bitchin' meatcar]));
+  } else {
+    task("Buy a " + wrap($item[desert bus pass]));
+  }
+}
+
 void M_desert_beach_cleanup()
 {
 

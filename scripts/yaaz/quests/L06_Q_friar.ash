@@ -3,6 +3,25 @@ import "util/main.ash";
 boolean L06_Q_friar();
 boolean do_friar_area(location loc, item it);
 
+void L06_Q_friar_progress()
+{
+  if (!quest_active("questL06Friar")) return;
+  string dodecagram = UNCHECKED;
+  string candles = UNCHECKED;
+  string butterknife = UNCHECKED;
+
+  if (have($item[dodecagram]))
+    dodecagram = CHECKED;
+
+  if (have($item[box of birthday candles]))
+    candles = CHECKED;
+
+  if (have($item[eldritch butterknife]))
+    butterknife = CHECKED;
+
+  progress(friar_things(), 3, "Friar ceremony objects (" + dodecagram + " dodecagram, " + candles + " candles, " + butterknife + " butterknife)");
+}
+
 void L06_Q_friar_cleanup()
 {
 

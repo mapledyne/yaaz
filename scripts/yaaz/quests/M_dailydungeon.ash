@@ -1,5 +1,17 @@
 import "util/main.ash";
 
+void M_dailydungeon_progress()
+{
+  if (quest_status("questL13Final") < 5
+      && hero_keys() < 3
+      && !to_boolean(get_property("dailyDungeonDone")))
+  {
+    int keys = 3 - hero_keys();
+    progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
+  }
+
+}
+
 void M_dailydungeon_cleanup()
 {
 

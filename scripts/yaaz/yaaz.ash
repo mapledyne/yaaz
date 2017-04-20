@@ -14,10 +14,10 @@ int current_level;
 
 boolean ascend_loop()
 {
+  progress_sheet();
   current_quest = "";
 
   if (!can_adventure()) return false;
-
   if (quest_status("questL13Final") >= 13) return false;
 
   if (current_level != my_level())

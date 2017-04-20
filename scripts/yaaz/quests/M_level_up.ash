@@ -19,6 +19,11 @@ boolean[location] leveling_targets = $locations[the haunted pantry,
                                                 cobb's knob treasury];
 
 
+void M_level_up_progress()
+{
+
+}
+
 void M_level_up_cleanup()
 {
 

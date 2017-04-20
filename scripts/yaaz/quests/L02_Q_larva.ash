@@ -1,5 +1,13 @@
 import "util/main.ash";
 
+void L02_Q_larva_progress()
+{
+
+  if (!quest_active("questL02Larva")) return;
+
+  task("Find the " + wrap($item[mosquito larva]));
+}
+
 void L02_Q_larva_cleanup()
 {
 

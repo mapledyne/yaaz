@@ -8,6 +8,11 @@ boolean consume_ballroom_delay()
   return true;
 }
 
+void M_spookyraven_progress()
+{
+
+}
+
 void M_spookyraven_cleanup()
 {
 

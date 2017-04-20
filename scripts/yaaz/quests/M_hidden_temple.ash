@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_hidden_temple_progress()
+{
+
+}
+
 void M_hidden_temple_cleanup()
 {
 

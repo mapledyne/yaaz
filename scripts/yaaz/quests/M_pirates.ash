@@ -1,5 +1,9 @@
 import "util/main.ash";
 
+void M_pirates_progress()
+{
+
+}
 
 void M_pirates_cleanup()
 {

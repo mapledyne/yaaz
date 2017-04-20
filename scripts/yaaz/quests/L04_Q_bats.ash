@@ -1,5 +1,19 @@
 import "util/main.ash";
 
+void L04_Q_bats_progress()
+{
+  if (!quest_active("questL04Bat")) return;
+
+  int walls = quest_status("questL04Bat");
+  if (walls < 4)
+  {
+    progress(walls, 3, "walls destroyed in the " + wrap("Bat Hole", COLOR_LOCATION));
+  } else {
+    task("Defeat the " + wrap($monster[boss bat]));
+  }
+
+}
+
 void L04_Q_bats_cleanup()
 {
 

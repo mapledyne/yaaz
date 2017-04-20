@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M09_leaflet_progress()
+{
+
+}
+
 void M09_leaflet_cleanup()
 {
 

@@ -14,7 +14,10 @@ boolean sidequest(string quest);
 void do_war(string side);
 void do_war();
 
+void L12_Q_war_progress()
+{
 
+}
 
 void L12_Q_war_cleanup()
 {

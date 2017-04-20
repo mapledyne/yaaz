@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void L10_Q_garbage_progress()
+{
+
+}
+
 void L10_Q_garbage_cleanup()
 {
 

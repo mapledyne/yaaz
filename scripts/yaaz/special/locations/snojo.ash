@@ -1,7 +1,6 @@
 import "util/base/print.ash";
 import "util/base/maximize.ash";
 import "util/adventure/adventure.ash";
-import "util/progress.ash";
 
 boolean snojo_too_risky()
 {
@@ -62,8 +61,6 @@ void snojo()
     log("Off to fight a " + wrap($monster[X-32-F Combat Training Snowman]) + " at the " + wrap("Snojo", COLOR_LOCATION) + ".");
     maximize("");
     yz_adventure_bypass($location[The X-32-F Combat Training Snowman]);
-    progress_sheet();
-    progress_sheet("snojo");
   }
 }
 

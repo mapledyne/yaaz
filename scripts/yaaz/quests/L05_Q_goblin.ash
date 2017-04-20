@@ -1,5 +1,14 @@
 import "util/main.ash";
 
+void L05_Q_goblin_progress()
+{
+  if (quest_status("questL05Goblin") < 1
+      && !have($item[Knob Goblin encryption key]))
+  {
+    progress($location[The Outskirts of Cobb's Knob].turns_spent, 11, "turns in the Outskirts of Cobb's Knob to get the encryption key");
+  }
+}
+
 void L05_Q_goblin_cleanup()
 {
   if (have($item[knob goblin elite pants])) sell_all($item[knob goblin pants]);

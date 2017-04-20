@@ -1,6 +1,11 @@
 import "util/main.ash";
 
 
+void L07_Q_cyrpt_progress()
+{
+
+}
+
 void L07_Q_cyrpt_cleanup()
 {
 	while (have($item[evil eye])

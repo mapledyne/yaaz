@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_guild_progress()
+{
+
+}
+
 void M_guild_cleanup()
 {
 

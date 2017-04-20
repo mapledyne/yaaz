@@ -1,6 +1,5 @@
 import "util/base/settings.ash";
 import "util/base/print.ash";
-import "util/progress.ash";
 import "util/adventure/consult.ash";
 
 import <zlib.ash>
@@ -32,8 +31,6 @@ boolean spinner_eat(item yum)
   visit_url("inv_use.php?pwd=&which=3&whichitem=9104");
   visit_url("choice.php?pwd&whichchoice=1195&option=2");
   string ret = visit_url(url);
-
-  progress_sheet("timespinner");
 
   return true;
 
@@ -130,7 +127,7 @@ boolean time_prank(string player, string msg)
     print(ret);
     wait(30);
   }
-  progress_sheet("timespinner");
+
   return true;
 }
 

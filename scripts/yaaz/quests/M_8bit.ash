@@ -1,5 +1,27 @@
 import "util/main.ash";
 
+void M_8bit_progress()
+{
+  if (!have($item[continuum transfunctioner]))
+  {
+    task("Get the " + wrap($item[continuum transfunctioner]));
+    return;
+  }
+
+  if (!have($item[digital key])
+      && quest_status("questL13Final") < 5)
+  {
+    progress(item_amount($item[white pixel]), 30, "make a " + wrap($item[digital key]));
+  }
+
+  if (item_amount($item[red pixel potion]) < 5
+      && quest_status("questL13Final") < 11
+      && !have_skill($skill[ambidextrous funkslinging]))
+  {
+    progress(item_amount($item[red pixel potion]), 5, wrap($item[red pixel potion], 5) + " for " + wrap($monster[your shadow]));
+  }
+}
+
 void M_8bit_cleanup()
 {
   while (!have($item[digital key])

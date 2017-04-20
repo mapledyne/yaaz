@@ -153,7 +153,7 @@ void do_heart_thing(string player)
   {
     heart_msg(player, "casting " + wrap($skill[The Smile of Mr. A.]));
     use_skill(1, $skill[The Smile of Mr. A.], player);
-    progress_sheet("smiles");
+//    progress_sheet("smiles");
     return;
   }
 

@@ -1,5 +1,11 @@
 import "util/main.ash";
 
+void M20_necklace_progress()
+{
+
+}
+
+
 void M20_necklace_cleanup()
 {
 

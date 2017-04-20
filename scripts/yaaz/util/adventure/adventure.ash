@@ -4,7 +4,6 @@ import "util/adventure/consult.ash";
 import "util/base/inventory.ash";
 import "special/items/manuel.ash";
 import "util/base/util.ash";
-import "util/progress.ash";
 import "util/base/locations.ash";
 import "util/base/settings.ash";
 
@@ -63,9 +62,6 @@ boolean yz_adventure_bypass(location loc)
     info("Previous monster was clingy. Fighting the followup monster now.");
     run_combat("yz_consult");
   }
-
-
-  progress_sheet();
 
   return adv;
 }

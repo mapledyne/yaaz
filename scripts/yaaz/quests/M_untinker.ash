@@ -1,5 +1,10 @@
 import "util/main.ash";
 
+void M_untinker_progress()
+{
+
+}
+
 void M_untinker_cleanup()
 {
 

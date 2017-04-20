@@ -1,5 +1,19 @@
 import "util/main.ash";
 
+void M10_star_key_progress()
+{
+  if (!have($item[steam-powered model rocketship])) return;
+  if (have($item[richard's star key])) return;
+  if (quest_status("questL13Final") >= 5) return;
+
+  int star = min(item_amount($item[star]), 8);
+  int line = min(item_amount($item[line]), 7);
+  int chart = min(item_amount($item[star chart]), 1);
+  int key_total = star + line + chart;
+  string key_msg = " ("+star+ " " + wrap($item[star], star) + ", " + line + " " + wrap($item[line], line) + ", " + chart + " " + wrap($item[star chart], chart) + ")";
+  progress(key_total, 16, "make " + wrap($item[richard's star key]) + key_msg);
+}
+
 void M10_star_key_cleanup()
 {
   if (!have($item[richard's star key])

@@ -1,5 +1,11 @@
 import "util/main.ash";
 
+void M06_pandemonium_progress()
+{
+
+}
+
+
 void M06_pandemonium_cleanup()
 {
   foreach steel in $items[steel margarita,

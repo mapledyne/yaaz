@@ -1,6 +1,62 @@
 import "util/main.ash";
 import "special/items/deck.ash";
 
+void L13_Q_sorceress_progress()
+{
+
+  if (quest_status("questL06Friar") > UNSTARTED
+      && !have($item[wand of nagamar]))
+  {
+    int wand = 0;
+    string wand_parts = "";
+    if (have($item[ruby W]) || have($item[WA]))
+    {
+      wand_parts = "W";
+      wand++;
+    }
+    if (have($item[metallic a]) || have($item[WA]))
+    {
+      if (length(wand_parts) > 0) wand_parts += ", ";
+      wand_parts += "A";
+      wand++;
+    }
+    if (have($item[lowercase n]) || have($item[nd]))
+    {
+      if (length(wand_parts) > 0) wand_parts += ", ";
+      wand_parts += "N";
+      wand++;
+    }
+    if (have($item[heavy d]) || have($item[nd]))
+    {
+    if (length(wand_parts) > 0) wand_parts += ", ";
+    wand_parts += "D";
+      wand++;
+    }
+
+    if (length(wand_parts) > 0) wand_parts = " (" + wand_parts + ")";
+
+    progress(wand, 4, "make a " + wrap($item[wand of nagamar]) + wand_parts);
+
+  }
+
+
+  if (!quest_active("questL13Final")) return;
+
+  int contest = to_int(get_property("nsContestants1"));
+  if (contest > 0)
+    progress(10 - contest, 10, "contestants (init)");
+
+  contest = to_int(get_property("nsContestants2"));
+  if (contest > 0)
+    progress(10 - contest, 10, "contestants (" + get_property("nsChallenge1") + ")");
+
+  contest = to_int(get_property("nsContestants3"));
+  if (contest > 0)
+    progress(10 - contest, 10, "contestants (" + get_property("nsChallenge2") + ")");
+
+    // TODO: Find a way to track wall of meat progress...
+}
+
 void L13_Q_sorceress_cleanup()
 {
 
