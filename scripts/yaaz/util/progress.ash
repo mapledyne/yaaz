@@ -39,23 +39,6 @@ void level_progress()
   progress(current_substats(), next_substats(), "substats to level " + to_string(my_level()+1));
 }
 
-int twinpeak_progress()
-{
-
-  int peak = get_property("twinPeakProgress").to_int();
-
-  int progress = 0;
-  if(bit_flag(peak, 0))
-    progress += 1; // 4 Stench Resistance
-  if(bit_flag(peak, 1))
-    progress += 1; // +50% Item Drop
-  if(bit_flag(peak, 2))
-    progress += 1; // Jar of Oil
-  if(bit_flag(peak, 3))
-    progress += 1; // +40% initiative
-
-  return progress;
-}
 
 int evil_progress(int p)
 {
@@ -261,55 +244,6 @@ void progress_sheet(string detail)
 
   }
 
-  if (have_outfit("swashbuckling getup") && quest_status("questM12Pirate") == UNSTARTED)
-  {
-    task("Find " + wrap($item[cap'm caronch's map]));
-  }
-  if (quest_status("questM12Pirate") == 0)
-  {
-    task("Get " + wrap($item[Cap'm Caronch's nasty booty]));
-  }
-  if (quest_status("questM12Pirate") == 1)
-  {
-    task("Get " + wrap($item[orcish frat house blueprints]));
-  }
-  if (quest_status("questM12Pirate") == 2)
-  {
-    task("Get " + wrap($item[cap'm caronch's dentures]));
-  }
-
-  if (quest_status("questM12Pirate") > 0 && quest_status("questM12Pirate") < 5)
-  {
-    int current = pirate_insults();
-    progress(current, 8, "pirate insults (" + pirate_insult_success() + "% chance)");
-  }
-
-  if (quest_status("questM12Pirate") == 5)
-  {
-
-    string mop = UNCHECKED;
-    string ball = UNCHECKED;
-    string shampoo  = UNCHECKED;
-    int fledge_count = 0;
-    if (have($item[mizzenmast mop]))
-    {
-      mop = CHECKED;
-      fledge_count++;
-    }
-    if (have($item[ball polish]))
-    {
-      ball = CHECKED;
-      fledge_count++;
-    }
-    if (have($item[rigging shampoo]))
-    {
-      shampoo = CHECKED;
-      fledge_count++;
-    }
-
-    progress(fledge_count, 3, wrap($location[The F'c'le]) + " items (" + mop + "Mop, " + ball + "Polish, " + shampoo + "Shampoo)");
-
-  }
 
 
 
@@ -437,68 +371,6 @@ void progress_sheet(string detail)
   }
 
 
-  if(quest_active("questL09Topping"))
-  {
-    int bridge = to_int(get_property("chasmBridgeProgress"));
-    if (bridge < 30)
-    {
-      progress(bridge, 30, "bridge progress");
-    } else {
-      float oil = to_float(get_property("oilPeakProgress"));
-      if (oil > 0)
-        progress(310.66 - oil, 310.66, wrap($location[oil peak]) + " pressure");
-
-      int boo = to_int(get_property("booPeakProgress"));
-      if (boo > 0)
-        progress(100 - boo, 100, wrap($location[a-boo peak]) + " hauntedness cleared");
-      int twin = twinpeak_progress();
-      if (twin < 4)
-        progress(twin, 4, wrap($location[twin peak]) + " progress");
-
-      int peak = get_property("twinPeakProgress").to_int();
-      if(!bit_flag(peak, 2)
-         && item_amount($item[jar of oil]) == 0)
-      {
-        progress(item_amount($item[bubblin' crude]), 12, wrap($item[bubblin' crude], 12) + " needed for a " + wrap($item[jar of oil]));
-      }
-    }
-
-  }
-
-  if (quest_active("questL10Garbage"))
-  {
-
-    if (quest_status("questL10Garbage") < 2)
-    {
-      if (!have($item[enchanted bean]))
-        task("Get an " + wrap($item[enchanted bean]));
-      else
-        task("Grow the beanstalk.");
-    }
-
-    if (!have($item[s.o.c.k.]))
-    {
-      progress(immateria(), 4, "Immateria found");
-      progress($location[the penultimate fantasy airship].turns_spent, 20, "minimum turns in the airship to find the " + wrap($item[s.o.c.k.]) + ".");
-      if (immateria() == 4)
-        task("Find the " + wrap($item[s.o.c.k.]));
-    }
-
-    if (quest_status("questL10Garbage") == 7)
-      task("Open the " + wrap($location[The Castle in the Clouds in the Sky (Basement)]));
-
-    if (quest_status("questL10Garbage") == 8)
-      progress($location[The Castle in the Clouds in the Sky (Ground Floor)].turns_spent, 11, "progress to open the top floor of the castle");
-
-    if (quest_status("questL10Garbage") == 9)
-      task("Spin the garbage wheel");
-
-  }
-  if (quest_status("questL10Garbage") >= 9
-      && !have($item[steam-powered model rocketship]))
-  {
-    task("Find a " + wrap($item[steam-powered model rocketship]));
-  }
 
   if (quest_status("questM21Dance") == FINISHED
       && $location[the haunted ballroom].turns_spent < 5)

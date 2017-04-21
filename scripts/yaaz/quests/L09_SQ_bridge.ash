@@ -2,10 +2,6 @@ import "util/main.ash";
 
 void L09_SQ_bridge_cleanup()
 {
-  if (!have($item[abridged dictionary]) && !have($item[dictionary]))
-  {
-    buy(1, $item[abridged dictionary]);
-  }
 
   if (have($item[abridged dictionary]))
   {

@@ -2,6 +2,38 @@ import "util/main.ash";
 
 void L10_Q_garbage_progress()
 {
+  if (quest_status("questL10Garbage") == UNSTARTED) return;
+  
+  if (quest_status("questL10Garbage") < 2)
+  {
+    if (!have($item[enchanted bean]))
+      task("Get an " + wrap($item[enchanted bean]));
+    else
+      task("Grow the beanstalk.");
+  }
+
+  if (!have($item[s.o.c.k.]))
+  {
+    progress(immateria(), 4, "Immateria found");
+    progress($location[the penultimate fantasy airship].turns_spent, 20, "minimum turns in the airship to find the " + wrap($item[s.o.c.k.]) + ".");
+    if (immateria() == 4)
+      task("Find the " + wrap($item[s.o.c.k.]));
+  }
+
+  if (quest_status("questL10Garbage") == 7)
+    task("Open the " + wrap($location[The Castle in the Clouds in the Sky (Basement)]));
+
+  if (quest_status("questL10Garbage") == 8)
+    progress($location[The Castle in the Clouds in the Sky (Ground Floor)].turns_spent, 11, "progress to open the top floor of the castle");
+
+  if (quest_status("questL10Garbage") == 9)
+    task("Spin the garbage wheel");
+
+  if (quest_status("questL10Garbage") >= 9
+      && !have($item[steam-powered model rocketship]))
+  {
+    task("Find a " + wrap($item[steam-powered model rocketship]));
+  }
 
 }
 

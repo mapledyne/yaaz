@@ -151,12 +151,14 @@ boolean L07_Q_cyrpt()
 		}
 	}
 
-	// maybe fight it later?
-	if (dangerous($monster[bonerdagon]))
-		return false;
-
 	if(get_property("cyrptTotalEvilness").to_int() <= 0)
 	{
+		// maybe fight it later?
+		if (dangerous($monster[bonerdagon]))
+		{
+			info("Skipping fighting the " + wrap($monster[bonerdagon]) + " for a bit until he's less dangerous.");
+			return false;
+		}
 		if (my_primestat() == $stat[Mysticality])
 		{
 			log("Changing MCD to 5 to get us a " + wrap($item[rib of the bonerdagon]) + ".");
@@ -165,6 +167,7 @@ boolean L07_Q_cyrpt()
 			log("Changing MCD to 10 to get us a " + wrap($item[vertebra of the bonerdagon]) + ".");
 			change_mcd(10);
 		}
+wait(10);
 
 		set_property("choiceAdventure527", 1);
 

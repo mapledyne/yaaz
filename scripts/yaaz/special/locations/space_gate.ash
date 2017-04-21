@@ -14,9 +14,9 @@ boolean can_space_gate()
   {
     if (!visit_url("place.php?whichplace=spacegate").contains_text("Secret Underground Spacegate Facility"))
     {
-      check == "false";
+      check = "false";
     } else {
-      check == "true";
+      check = "true";
     }
     save_daily_setting("space_gate_check", check);
   }

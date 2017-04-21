@@ -12,6 +12,8 @@ boolean L12_SQ_junkyard(string side)
 {
   if (get_property("sidequestJunkyardCompleted") != "none") return false;
 
+  if (!war_junkyard_accessible()) return false;
+
   log("Trying to complete the " + wrap("Junkyard sidequest", COLOR_LOCATION) + "...");
 
   item mol = to_item(get_property("currentJunkyardTool"));

@@ -2,11 +2,70 @@ import "util/main.ash";
 
 void M_pirates_progress()
 {
+  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return;
+
+  if (!have_outfit("swashbuckling getup") && !have($item[pirate fledges]))
+  {
+    task("Get the " + wrap("swashbuckling getup", COLOR_ITEM));
+  }
+
+  if (have_outfit("swashbuckling getup") && quest_status("questM12Pirate") == UNSTARTED)
+  {
+    task("Find " + wrap($item[cap'm caronch's map]));
+  }
+
+  if (quest_status("questM12Pirate") == 0)
+  {
+    task("Get " + wrap($item[Cap'm Caronch's nasty booty]));
+  }
+  if (quest_status("questM12Pirate") == 1)
+  {
+    task("Get " + wrap($item[orcish frat house blueprints]));
+  }
+  if (quest_status("questM12Pirate") == 2)
+  {
+    task("Get " + wrap($item[cap'm caronch's dentures]));
+  }
+
+  if (quest_status("questM12Pirate") > 0 && quest_status("questM12Pirate") < 5)
+  {
+    int current = pirate_insults();
+    progress(current, 8, "pirate insults (" + pirate_insult_success() + "% chance)");
+  }
+
+  if (quest_status("questM12Pirate") == 5)
+  {
+
+    string mop = UNCHECKED;
+    string ball = UNCHECKED;
+    string shampoo  = UNCHECKED;
+    int fledge_count = 0;
+    if (have($item[mizzenmast mop]))
+    {
+      mop = CHECKED;
+      fledge_count++;
+    }
+    if (have($item[ball polish]))
+    {
+      ball = CHECKED;
+      fledge_count++;
+    }
+    if (have($item[rigging shampoo]))
+    {
+      shampoo = CHECKED;
+      fledge_count++;
+    }
+
+    progress(fledge_count, 3, wrap($location[The F'c'le]) + " items (" + mop + "Mop, " + ball + "Polish, " + shampoo + "Shampoo)");
+
+  }
 
 }
 
 void M_pirates_cleanup()
 {
+  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return;
+
   while (!have($item[Talisman o' Namsilat]) && have($item[gaudy key]))
   {
     cli_execute("checkpoint");
@@ -16,7 +75,15 @@ void M_pirates_cleanup()
     }
     use(1, $item[gaudy key]);
     cli_execute("outfit checkpoint");
+    cli_execute("refresh inv");
   }
+
+  if (!have($item[abridged dictionary]) && !have($item[dictionary]))
+  {
+    buy(1, $item[abridged dictionary]);
+  }
+
+
 }
 
 

@@ -26,6 +26,8 @@ boolean L12_SQ_lighthouse(string side)
 
   if (quest_status("questL12War") != 1) return false;
 
+  if (!war_lighthouse_accessible()) return false;
+
   if (get_property("sidequestNunsCompleted") == "none"
       && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
       && setting("war_nuns_trick") == "true")

@@ -83,17 +83,6 @@ void use_things()
     use(1, $item[book of matches]);
   }
 
-  while (item_amount($item[Talisman o' Namsilat]) == 0 && item_amount($item[gaudy key]) > 0)
-  {
-    cli_execute("checkpoint");
-    if (!have_equipped($item[pirate fledges]))
-    {
-      equip($item[pirate fledges]);
-    }
-    use(1, $item[gaudy key]);
-    cli_execute("outfit checkpoint");
-  }
-
   if (item_amount($item[boring binder clip]) > 0 && mcclusky_items() == 5)
   {
     log("Making the " + wrap($item[McClusky file (complete)]) + ".");

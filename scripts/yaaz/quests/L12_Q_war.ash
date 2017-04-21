@@ -124,7 +124,6 @@ boolean start_the_war(string side)
 
 boolean L12_Q_war(string side)
 {
-  L12_Q_war_cleanup();
 
   if (to_int(get_property("lastIslandUnlock")) >= my_ascensions())
     if (get_hippy_disguise()) return true;
@@ -143,6 +142,7 @@ boolean L12_Q_war(string side)
   {
     log("Going to the council to start the War quest.");
     council();
+    return true;
   }
 
   if (quest_status("questL12War") == STARTED)
@@ -191,15 +191,20 @@ boolean L12_Q_war(string side)
   }
 
   // handle case where the arena sidequest is paused while we wait for flyers to be delivered.
-  if (war_arena() && get_property("sidequestArenaCompleted") == "none")
+  if (war_arena()
+      && get_property("sidequestArenaCompleted") == "none")
     return false;
 
   // handle case where the nuns sidequest is paused while we wait for digitized brigands
-  if (war_nuns() && get_property("sidequestNunsCompleted") == "none")
+  if (war_nuns()
+      && get_property("sidequestNunsCompleted") == "none"
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand])
     return false;
 
   // handle case where the lighthouse sidequest is paused while we wait for digitized lobsterfrogmen
-  if (war_lighthouse() && get_property("sidequestLighthouseCompleted") == "none")
+  if (war_lighthouse()
+      && get_property("sidequestLighthouseCompleted") == "none"
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[lobsterfrogman])
     return false;
 
   location battle = $location[The Battlefield (Frat Uniform)];
@@ -207,14 +212,6 @@ boolean L12_Q_war(string side)
   if (side == "hippy")
   {
     battle = $location[The Battlefield (Hippy Uniform)];
-  }
-
-  // TODO: should do this for all the sidequests...
-  if (war_orchard() && !war_orchard_accessible())
-  {
-    maximize("", war_outfit());
-    yz_adventure(battle);
-    return true;
   }
 
   if (war_defeated() < 1000)
@@ -243,7 +240,6 @@ boolean L12_Q_war(string side)
 
   // turn in any last items...
   prep($location[none]);
-  L12_Q_war_cleanup();
 
   log("Warriors defeated. Now on to the final boss.");
   maximize("", war_outfit());

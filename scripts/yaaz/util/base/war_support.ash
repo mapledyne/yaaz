@@ -37,6 +37,27 @@ boolean war_nuns_accessible()
   return war_defeated() >= 192;
 }
 
+boolean war_arena_accessible()
+{
+  if (war_side() == 'fratboy')
+    return true;
+  return war_defeated() >= 458;
+}
+
+boolean war_junkyard_accessible()
+{
+  if (war_side() == 'fratboy')
+    return true;
+  return war_defeated() >= 192;
+}
+
+boolean war_lighthouse_accessible()
+{
+  if (war_side() == 'fratboy')
+    return true;
+  return war_defeated() >= 64;
+}
+
 boolean war_nuns_trick()
 {
 

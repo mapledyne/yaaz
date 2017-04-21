@@ -26,10 +26,8 @@ boolean have_crudes()
 
 boolean L09_SQ_oilpeak()
 {
-  L09_SQ_oilpeak_cleanup();
 
-  if (quest_status("questL09Topping") != 2)
-    return false;
+  if (quest_status("questL09Topping") != 2) return false;
 
   int progress = to_int(get_property("oilPeakProgress"));
 

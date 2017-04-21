@@ -5,9 +5,9 @@ boolean L12_SQ_arena(string side)
 {
   if (get_property("sidequestArenaCompleted") != "none") return false;
 
-  if (quest_status("questL12War") < 1) return false;
+  if (quest_status("questL12War") != 1) return false;
 
-  if (quest_status("questL12War") > 1) return false;
+  if (!war_arena_accessible()) return false;
 
   if (!have_flyers())
   {
