@@ -380,16 +380,24 @@ boolean L12_Q_war(string side)
       && get_property("sidequestArenaCompleted") == "none")
     return false;
 
+  // These next two try to let us finish other quests (nuns & lighthouse) while we have the right thing
+  // copied, but if we're done with everything (shorthanding this to the L11 quest since it's by far
+  // the most likely) we'll do the war anyway since the copy will show up and at least fighting in the
+  // war will make some progress. Can't do this in the arena as easily since working in the war there
+  // won't advance the arena quest.
+
   // handle case where the nuns sidequest is paused while we wait for digitized brigands
   if (war_nuns()
       && get_property("sidequestNunsCompleted") == "none"
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand])
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+      && quest_status("questL11MacGuffin") != FINISHED)
     return false;
 
   // handle case where the lighthouse sidequest is paused while we wait for digitized lobsterfrogmen
   if (war_lighthouse()
       && get_property("sidequestLighthouseCompleted") == "none"
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[lobsterfrogman])
+      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[lobsterfrogman]
+      && quest_status("questL11MacGuffin") != FINISHED)
     return false;
 
   location battle = $location[The Battlefield (Frat Uniform)];

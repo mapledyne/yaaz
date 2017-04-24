@@ -43,7 +43,8 @@ boolean L12_SQ_lighthouse(string side)
     return true;
   }
 
-  if (to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[lobsterfrogman])
+  if (to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[lobsterfrogman]
+      && quest_status("questL11MacGuffin") != FINISHED)
   {
     info("We're working on the lighthouse sidequest for the war, but we have the " + wrap($monster[lobsterfrogman]) + " digitized, so going to collect some of the barrels that way. Going off to do other things in the meantime.");
     return false;

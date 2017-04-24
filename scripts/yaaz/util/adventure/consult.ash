@@ -37,7 +37,8 @@ string maybe_copy(monster foe)
     default:
       return "";
     case $monster[dirty thieving brigand]:
-      if (to_int(get_property("currentNunneryMeat")) < 94000)
+      if (to_int(get_property("currentNunneryMeat")) < 94000
+          || !war_nuns_trick())
       {
         return "";
       }
