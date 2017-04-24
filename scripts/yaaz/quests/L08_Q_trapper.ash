@@ -1,6 +1,8 @@
 import "util/main.ash";
 string TRAPPER_URL="place.php?whichplace=mclargehuge&action=trappercabin";
 
+boolean do_ninja_peak();
+
 void L08_Q_trapper_progress()
 {
   if (quest_status("questL08Trapper") == 1)
@@ -18,23 +20,34 @@ void L08_Q_trapper_progress()
 
   if (quest_status("questL08Trapper") == 2)
   {
-    int gear = 0;
-    foreach x in $items[ninja carabiner,
-                        ninja rope,
-                        ninja crampons]
+    if (do_ninja_peak())
     {
-      if (have(x)) gear++;
+      int gear = 0;
+      foreach x in $items[ninja carabiner,
+                          ninja rope,
+                          ninja crampons]
+      {
+        if (have(x)) gear++;
+      }
+
+      string carabiner = UNCHECKED;
+      string rope = UNCHECKED;
+      string crampons = UNCHECKED;
+
+      if (have($item[ninja carabiner])) carabiner = CHECKED;
+      if (have($item[ninja rope])) rope = CHECKED;
+      if (have($item[ninja crampons])) crampons = CHECKED;
+
+      progress(gear, 3, "ninja gear (" + carabiner + " carabiner, " + rope + " rope, " + crampons + " crampons)");
+    } else {
+      if (!have_outfit("eXtreme Cold-Weather Gear"))
+      {
+        task("Get the " + wrap("eXtreme Cold-Weather Gear", COLOR_ITEM));
+      } else {
+        int extremity = to_int(get_property("currentExtremity"));
+        progress(extremity, 3, "eXtremity to reach the peak");
+      }
     }
-
-    string carabiner = UNCHECKED;
-    string rope = UNCHECKED;
-    string crampons = UNCHECKED;
-
-    if (have($item[ninja carabiner])) carabiner = CHECKED;
-    if (have($item[ninja rope])) rope = CHECKED;
-    if (have($item[ninja crampons])) crampons = CHECKED;
-
-    progress(gear, 3, "ninja gear (" + carabiner + " carabiner, " + rope + " rope, " + crampons + " crampons), or use eXtreme slope");
   }
 
   if (quest_status("questL08Trapper") == 3
@@ -58,9 +71,20 @@ void visit_trapper()
 boolean kill_yetis()
 {
 
-  if (quest_status("questL08Trapper") == FINISHED)
-    return false;
+  if (quest_status("questL08Trapper") == FINISHED) return false;
 
+  if ($location[mist-shrouded peak].turns_spent < 3
+      && dangerous($location[mist-shrouded peak]))
+  {
+    log("Avoiding the " + wrap($location[mist-shrouded peak]) + " until a bit later.");
+    return false;
+  }
+  else if (dangerous($monster[groar]))
+  {
+    log("Going to try to kill " + wrap($monster[groar]) + " a bit later.");
+    return false;
+  }
+  
   log("Off to kill " + $monster[Groar] + ".");
   while(item_amount($item[Groar's fur]) == 0)
   {
@@ -85,7 +109,12 @@ boolean get_cheese()
 
 boolean jump_peak()
 {
-  maximize("cold res");
+  string outfit = "";
+  if (to_int(get_property("currentExtremity")) >= 3)
+  {
+    outfit = "eXtreme Cold-Weather Gear";
+  }
+  maximize("cold res", outfit);
 
   if (numeric_modifier("cold resistance") < 5)
   {
@@ -101,9 +130,27 @@ boolean jump_peak()
 
 boolean peak_extreme()
 {
-  warning("Extreme Peak path not implemented yet.");
-  wait(15);
-  return false;
+  if (dangerous($location[the extreme slope]))
+  {
+    log("Skipping " + wrap($location[the extreme slope]) + " for now because it's dangerous.");
+    return false;
+  }
+
+  if (!have_outfit("eXtreme Cold-Weather Gear"))
+  {
+    log("Trying to get the " + wrap("eXtreme Cold-Weather Gear", COLOR_ITEM) + ".");
+    yz_adventure($location[the extreme slope], "items");
+    return true;
+  }
+
+  if (to_int(get_property("currentExtremity")) < 3)
+  {
+    maximize("-combat", "eXtreme Cold-Weather Gear");
+    yz_adventure($location[the extreme slope]);
+    return true;
+  }
+
+  return jump_peak();
 }
 
 boolean peak_ninja()
@@ -132,7 +179,7 @@ boolean peak_ninja()
   return true;
 }
 
-boolean get_to_peak()
+boolean do_ninja_peak()
 {
   int cold = numeric_modifier("cold resistance");
   if (have_skill($skill[elemental saucesphere]) && have_effect($effect[elemental saucesphere]) == 0)
@@ -151,8 +198,14 @@ boolean get_to_peak()
                     || have_familiar($familiar[jumpsuited hound dog])
                     || have($item[portable cassette player]));
 
-  if (cold >= 5 && combat)
-    return peak_ninja();
+  if (cold >= 5 && combat) return true;
+  return false;
+
+}
+
+boolean get_to_peak()
+{
+  if (do_ninja_peak()) return peak_ninja();
 
   return peak_extreme();
 }
@@ -160,8 +213,7 @@ boolean get_to_peak()
 boolean trapper_items()
 {
   // if we don't expect to do well in these area, skip for now.
-  if (expected_damage($monster[sabre-toothed goat]) > my_maxhp()/10)
-    return false;
+  if (dangerous($location[the goatlet])) return false;
 
   item ore = to_item(get_property("trapperOre"));
   maybe_pull($item[goat cheese], 3);
@@ -231,8 +283,7 @@ boolean L08_Q_trapper()
       if (trapper_items()) return true;
       break;
     case 2:
-      if (get_to_peak())
-        return true;
+      if (get_to_peak()) return true;
       break;
     case 3:
     case 4:

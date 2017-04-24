@@ -29,7 +29,7 @@ boolean L09_SQ_aboo()
   }
 
 
-  string max = "items";
+  string max = "items, hot damage, cold damage, sleaze damage, stench damage";
   if (have($item[a-boo clue]))
   {
     log("Using one " + wrap($item[a-boo clue]) + " to help with the peak.");

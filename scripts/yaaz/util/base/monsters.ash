@@ -34,7 +34,7 @@ boolean dangerous(monster mon)
   // reduce threshold a bit for bosses since they often have trickier attacks and defences:
   if (mon.boss)
   {
-    awooga = expected_damage(mon) > my_maxhp() / 6;
+    awooga = expected_damage(mon) > my_maxhp() / 8;
   }
 
   if (awooga) debug("Checking if " + wrap(mon) + " is dangerous. It is.");

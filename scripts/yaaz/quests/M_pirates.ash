@@ -352,6 +352,11 @@ boolean fcle()
 	}
 
   maximize(max, "swashbuckling getup");
+  if (my_buffedstat(my_primestat()) < $location[The F\'c\'le].recommended_stat)
+  {
+    max_effects("mainstat");
+  }
+
   yz_adventure($location[The F\'c\'le]);
   return true;
 }
@@ -399,12 +404,8 @@ boolean M_pirates()
     return true;
   }
 
-  if (fcle()) return true;
+  return fcle();
 
-  log("Shouldn't get here anymore...?");
-  wait(15);
-
-  return false;
 }
 
 void main()

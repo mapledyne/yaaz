@@ -3,7 +3,7 @@ import "util/main.ash";
 void L10_Q_garbage_progress()
 {
   if (quest_status("questL10Garbage") == UNSTARTED) return;
-  
+
   if (quest_status("questL10Garbage") < 2)
   {
     if (!have($item[enchanted bean]))
@@ -58,26 +58,25 @@ void plant_beanstalk()
 
 void get_sock()
 {
-  if (item_amount($item[s.o.c.k.]) > 0)
-    return;
-  add_attract($monster[quiet healer]);
-  while (item_amount($item[S.O.C.K.]) == 0 && can_adventure())
-  {
-    string max = "items, -combat";
-    if ($location[the penultimate fantasy airship].turns_spent < 5)
-    {
-      max = "items";
-    }
-    boolean b = yz_adventure($location[the penultimate fantasy airship], max);
-  }
-  remove_attract($monster[quiet healer]);
+  if (have($item[s.o.c.k.])) return;
 
+  add_attract($monster[quiet healer]);
+
+  string max = "items, -combat";
+  if ($location[the penultimate fantasy airship].turns_spent < 5)
+  {
+    max = "items";
+  }
+
+  boolean b = yz_adventure($location[the penultimate fantasy airship], max);
+
+  if (have($item[s.o.c.k.])) remove_attract($monster[quiet healer]);
+  return;
 }
 
 void open_ground_floor()
 {
-  if (quest_status("questL10Garbage") != 7)
-    return;
+  if (quest_status("questL10Garbage") != 7) return;
 
   maximize("", $item[amulet of extreme plot significance]);
 

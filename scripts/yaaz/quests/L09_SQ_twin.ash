@@ -151,7 +151,7 @@ boolean L09_SQ_twin()
 	int attemptNum = 0;
 	boolean attempt = false;
 
-	if (need_jar && (have($item[Jar of Oil])))
+	if (need_jar && have($item[Jar of Oil]))
 	{
     set_property("choiceAdventure606", "3");
     set_property("choiceAdventure609", "1");

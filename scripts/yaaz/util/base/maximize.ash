@@ -84,7 +84,6 @@ void do_maximize(string target, string outfit, item it)
       max += "-equip [" + to_int(nope) + "]";
     }
   }
-
   info("Maximizing equipment based on: " + max);
   maximize(max, false);
 }
@@ -225,6 +224,7 @@ void maximize()
 
 void max_effects(string target, boolean aggressive)
 {
+  debug("Maximizing effects based on: " + wrap(target, COLOR_ITEM));
   switch(target)
   {
     case "booze":
@@ -269,10 +269,25 @@ void max_effects(string target, boolean aggressive)
         cli_execute("concert elvish");
       }
       cross_streams();
-      if (!to_boolean(get_property("telescopeLookedHigh")))
+      if (!to_boolean(get_property("telescopeLookedHigh"))
+          && get_campground() contains $item[Discount Telescope Warehouse gift certificate])
       {
         log("Looking in the telescope to get " + wrap($effect[starry-eyed]));
         cli_execute("telescope look high");
+      }
+      break;
+    case "mainstat":
+      switch(my_primestat())
+      {
+        case $stat[muscle]:
+          max_effects("muscle");
+          break;
+        case $stat[moxie]:
+          max_effects("moxie");
+          break;
+        case $stat[mysticality]:
+          max_effects("mysticality");
+          break;
       }
       break;
     case "muscle":

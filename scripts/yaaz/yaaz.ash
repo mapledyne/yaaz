@@ -54,8 +54,7 @@ void skill_warning()
   if (!have_skill($skill[pulverize]))
   {
     warning("This script is written assuming you have the " + wrap($skill[pulverize]) + " skill.");
-    warning("It'll work without it, but be inefficient in several ways. I recommend getting");
-    warning(wrap($skill[pulverize]) + " before relying on this script.");
+    warning("It'll work without it, but be inefficient in a few ways. I recommend getting " + wrap($skill[pulverize]) + " before relying on this script.");
     wait(10);
   }
 
