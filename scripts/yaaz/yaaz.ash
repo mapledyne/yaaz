@@ -214,6 +214,12 @@ void intro()
     warning("This script doesn't handle well some of the monster modifiers in this path (" + wrap(my_path(), COLOR_LOCATION) + "). When this happens, you can finish the fight and re-run the script to pick back up.");
     wait(5);
   }
+
+  if (holiday() != "")
+  {
+    warning("Today is a holiday! If you want to celebrate " + wrap(holiday(), COLOR_LOCATION) + ", hit ESC and enjoy! Otherwise we'll continue as normal.");
+    wait(10);
+  }
 }
 
 void ascend()

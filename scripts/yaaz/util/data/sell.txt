@@ -130,18 +130,3 @@ seal-clubbing club	1
 saucepan	1
 stolen accordion	1
 disco ball	1
-
-# battlefield items for coins:
-# bullet-proof corduroys	1
-communications windchimes	0
-didgeridooka	0
-green clay bead	0
-hippy protest button	0
-fire poi	0
-flowing hippy skirt	0
-oversized pipe	0
-pink clay bead	0
-purple clay bead	0
-# reinforced beaded headband	1
-# round purple sunglasses	1
-# wicker shield	0

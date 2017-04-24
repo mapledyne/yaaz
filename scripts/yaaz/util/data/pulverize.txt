@@ -3,7 +3,6 @@ gaia beads	0
 hippy medical kit	0
 Lockenstock&trade; sandals	0
 smirking shrunken head	0
-wicker shield	0
 
 # Keep one:
 antique machete	1
@@ -11,7 +10,6 @@ attorney's badge	1
 bejeweled cufflinks	1
 black helmet	1
 bloody clown pants	1
-bullet-proof corduroys	1
 burnt snowpants	1
 C.A.R.N.I.V.O.R.E. button	1
 candy dress shoes	1
@@ -41,8 +39,6 @@ orange peel hat	1
 pygmy briefs	1
 plastic nunchaku	1
 ratskin belt	1
-reinforced beaded headband	1
-round purple sunglasses	1
 rusty chain necklace	1
 rubber ribcage	1
 sawblade shield	1

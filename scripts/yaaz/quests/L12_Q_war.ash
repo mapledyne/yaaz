@@ -16,12 +16,197 @@ void do_war();
 
 void L12_Q_war_progress()
 {
+  if (quest_status("questL12War") == STARTED)
+  {
+    task("Start the Island War");
+  }
+
+  if (quest_active("warProgress"))
+  {
+      if (war_arena()
+          && get_property("sidequestArenaCompleted") == "none"
+          && have_flyers())
+      {
+        int flyerML = get_property("flyeredML").to_int() / 100;
+        progress(flyerML, "flyers delivered");
+      }
+
+      if (war_nuns()
+          && get_property("sidequestNunsCompleted") == "none"
+          && (war_nuns_accessible() || war_nuns_trick()))
+      {
+        string nuns_msg = "Meat returned to the Nuns";
+        float drop = 1 + (numeric_modifier("meat drop") / 100);
+        float min_meat = $monster[dirty thieving brigand].min_meat * drop;
+        float max_meat = $monster[dirty thieving brigand].max_meat * drop;
+        int remaining = 100000 - to_int(get_property("currentNunneryMeat"));
+
+        int max_turns = round(remaining / min_meat);
+        int min_turns = round(remaining / max_meat);
+
+        nuns_msg += " (est remaining turns: " + min_turns + "-" + max_turns + ")";
+        progress(to_int(get_property("currentNunneryMeat")), 100000, nuns_msg);
+      }
+
+      if (war_orchard()
+          && war_orchard_accessible()
+          && get_property("sidequestOrchardCompleted") == "none")
+      {
+        int count = 0;
+        if (have_effect($effect[filthworm larva stench]) > 0)
+          count = 1;
+        if (have_effect($effect[filthworm drone stench]) > 0)
+          count = 2;
+        if (have_effect($effect[filthworm guard stench]) > 0)
+          count = 3;
+        if (have($item[heart of the filthworm queen]))
+          count = 4;
+
+        progress(count, 4, "Orchard filthworm progress");
+      }
+
+      if (war_junkyard()
+          && get_property("sidequestJunkyardCompleted") == "none")
+      {
+        progress(junkyard_items(), 4, "junkyard tools recovered");
+      }
+
+      if (war_lighthouse()
+          && get_property("sidequestLighthouseCompleted") == "none")
+      {
+        progress(item_amount($item[barrel of gunpowder]), 5, "barrels of gunpowder");
+      }
+
+      string msg = "hippies defeated";
+      if (war_side() == "hippy")
+      {
+        msg = "fratboys defeated";
+      }
+
+      int left = (1000 - war_defeated()) / war_multiplier();
+      msg += " (" + war_multiplier() + "/turn, " + left + " turns remain)";
+
+      progress(war_defeated(), 1000, msg);
+
+      int sq_completed = 0;
+      int sq_active = 0;
+      string sq_msg = "";
+
+      if (setting("war_nuns", "false") == "true"
+          || get_property("sidequestNunsCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestNunsCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Nuns";
+        } else {
+          sq_msg += UNCHECKED + "Nuns";
+        }
+      }
+
+      if (setting("war_orchard", "true") == "true"
+          || get_property("sidequestOrchardCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestOrchardCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Orchard";
+        } else {
+          sq_msg += UNCHECKED + "Orchard";
+        }
+      }
+
+      if (setting("war_lighthouse", "true") == "true"
+          || get_property("sidequestLighthouseCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestLighthouseCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Lighthouse";
+        } else {
+          sq_msg += UNCHECKED + "Lighthouse";
+        }
+      }
+
+      if (setting("war_arena", "true") == "true"
+          || get_property("sidequestArenaCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestArenaCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Arena";
+        } else {
+          sq_msg += UNCHECKED + "Arena";
+        }
+      }
+
+      if (setting("war_junkyard", "true") == "true"
+          || get_property("sidequestJunkyardCompleted") != "none")
+      {
+        sq_active++;
+        if (length(sq_msg) > 0) sq_msg += " ";
+        if (get_property("sidequestJunkyardCompleted") != "none")
+        {
+          sq_completed++;
+          sq_msg += CHECKED + "Junkyard";
+        } else {
+          sq_msg += UNCHECKED + "Junkyard";
+        }
+      }
+      sq_msg = "war sidequests (" + sq_msg + ")";
+      if (sq_active > 0) progress(sq_completed, sq_active, sq_msg);
+
+  }
 
 }
 
 void L12_Q_war_cleanup()
 {
-  // todo: move war specific stuff from prep() to here.
+  foreach hmph in $items[communications windchimes,
+                          didgeridooka,
+                          green clay bead,
+                          hippy protest button,
+                          fire poi,
+                          flowing hippy skirt,
+                          oversized pipe,
+                          pink clay bead,
+                          purple clay bead,
+                          red class ring,
+                          blue class ring,
+                          white class ring]
+  {
+    sell_all(hmph);
+  }
+
+  foreach smashy in $items[reinforced beaded headband,
+                            round purple sunglasses,
+                            bullet-proof corduroys,
+                            wicker shield]
+  {
+    pulverize(smashy, 1);
+  }
+
+  stock_item($item[gauze garter], 10 - item_amount($item[filthy poultice]));
+  stock_item($item[filthy poultice], 10 - item_amount($item[gauze garter]));
+
+  if (total_shadow_helpers() >= 10)
+  {
+    item trophy = $item[commemorative war stein];
+    if (war_side() == "hippy") trophy = $item[fancy seashell necklace];
+
+    coinmaster master = trophy.seller;
+    int tokens = master.available_tokens;
+    int qty = tokens / (sell_price(master, trophy));
+    buy(master, qty, trophy);
+  }
 }
 
 int sidequests(string side)
@@ -268,5 +453,5 @@ boolean L12_Q_war()
 
 void main()
 {
-  while (L12_Q_war());
+  while (L12_Q_war()) {L12_Q_war_cleanup();}
 }

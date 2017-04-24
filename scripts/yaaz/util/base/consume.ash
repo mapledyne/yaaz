@@ -259,8 +259,10 @@ boolean try_eat(item it)
     return eat(1, it);
   } else if (is_spinner_food(it))
   {
-    log("Using our " + wrap($item[time-spinner]) + " to remember a " + wrap(it) + ".");
-    return spinner_eat(it);
+    debug("Trying to use your " + wrap($item[time-spinner]) + " to remember a " + wrap(it) + ".");
+    debug("Eating via " + wrap($item[time-spinner]) + " is currently disabled to better allow for combats. This should be optimized better.");
+//    log("Using our " + wrap($item[time-spinner]) + " to remember a " + wrap(it) + ".");
+//    return spinner_eat(it);
   }
   return false;
 }

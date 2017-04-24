@@ -2,7 +2,7 @@ import "util/main.ash";
 
 void M_pirates_progress()
 {
-  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return;
+  if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return;
 
   if (!have_outfit("swashbuckling getup") && !have($item[pirate fledges]))
   {
@@ -64,7 +64,7 @@ void M_pirates_progress()
 
 void M_pirates_cleanup()
 {
-  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return;
+  if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return;
 
   while (!have($item[Talisman o' Namsilat]) && have($item[gaudy key]))
   {
@@ -358,8 +358,6 @@ boolean fcle()
 
 boolean M_pirates()
 {
-
-	M_pirates_cleanup();
 
   if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return false;
 

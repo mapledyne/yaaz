@@ -31,17 +31,6 @@ void buy_things()
   }
 
 
-  stock_item($item[gauze garter], 10 - item_amount($item[filthy poultice]));
-  stock_item($item[filthy poultice], 10 - item_amount($item[gauze garter]));
-
-  if (total_shadow_helpers() >= 10)
-  {
-    coinmaster master = $item[commemorative war stein].seller;
-    int tokens = master. available_tokens;
-    int qty = tokens / (sell_price(master, $item[commemorative war stein]));
-    buy(master, qty, $item[commemorative war stein]);
-  }
-
   // spend BACON on things for future use:
   if(setting("bought_viral_video") == "" && item_amount($item[BACON]) > 20 && item_amount($item[viral video]) < 2)
   {
