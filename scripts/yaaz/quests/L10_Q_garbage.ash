@@ -44,9 +44,11 @@ void L10_Q_garbage_cleanup()
 
 void plant_beanstalk()
 {
-  while(item_amount($item[enchanted bean]) == 0 && quest_status("questL10Garbage") < 2)
+  if (!have($item[enchanted bean])
+      && quest_status("questL10Garbage") < 2)
   {
     yz_adventure($location[the beanbat chamber], "items");
+    return;
   }
 
   if (quest_status("questL10Garbage") < 2)
