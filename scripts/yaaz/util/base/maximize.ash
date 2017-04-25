@@ -224,6 +224,7 @@ void maximize()
 
 void max_effects(string target, boolean aggressive)
 {
+  if (target == "effective") return;
   debug("Maximizing effects based on: " + wrap(target, COLOR_ITEM));
   switch(target)
   {
@@ -277,6 +278,7 @@ void max_effects(string target, boolean aggressive)
       }
       break;
     case "mainstat":
+      if (!aggressive) break;
       switch(my_primestat())
       {
         case $stat[muscle]:

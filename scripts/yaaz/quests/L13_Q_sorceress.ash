@@ -321,9 +321,21 @@ boolean contest_race()
 
 boolean hedge_maze_hard_way()
 {
-  error("The alternate path on the hedge maze isn't automated yet, sorry.");
-  wait(5);
-  return false;
+  set_property("choiceAdventure1004", 1);
+  set_property("choiceAdventure1005", 1);
+  set_property("choiceAdventure1006", 1);
+  set_property("choiceAdventure1007", 1);
+  set_property("choiceAdventure1008", 1);
+  set_property("choiceAdventure1009", 1);
+  set_property("choiceAdventure1010", 1);
+  set_property("choiceAdventure1011", 1);
+  set_property("choiceAdventure1012", 1);
+
+  restore_hp(my_maxhp() * 0.95);
+
+  yz_adventure_bypass($location[the hedge maze]);
+
+  return true;
 }
 
 boolean hedge_maze()
@@ -339,6 +351,7 @@ boolean hedge_maze()
   {
     return hedge_maze_hard_way();
   }
+
   set_property("choiceAdventure1004", 1);
   set_property("choiceAdventure1005", 2);
   set_property("choiceAdventure1008", 2);

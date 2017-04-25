@@ -354,7 +354,7 @@ boolean fcle()
   maximize(max, "swashbuckling getup");
   if (my_buffedstat(my_primestat()) < $location[The F\'c\'le].recommended_stat)
   {
-    max_effects("mainstat");
+    max_effects("mainstat", true);
   }
 
   yz_adventure($location[The F\'c\'le]);
