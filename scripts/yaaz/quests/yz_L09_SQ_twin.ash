@@ -27,12 +27,14 @@ boolean twin_adventure(string max)
 boolean do_twin_init()
 {
   maximize("init");
-  if(initiative_modifier() < 40.0)
+  if (initiative_modifier() < 40.0)
   {
-    log("You need to have more initiative to succeed at the " + wrap($location[twin peak]) + ". Will try later.");
-    return false;
+    if (my_level() < 11)
+    {
+      log("You need to have more initiative to succeed at the " + wrap($location[twin peak]) + ". Will try later.");
+      return false;
+    }
   }
-
   twin_adventure("init");
   return true;
 }
@@ -156,14 +158,14 @@ boolean L09_SQ_twin()
     set_property("choiceAdventure606", "3");
     set_property("choiceAdventure609", "1");
     set_property("choiceAdventure616", "1");
-    return do_twin_jar();
+    if (do_twin_jar()) return true;
 	}
 
 	if (need_food)
 	{
     set_property("choiceAdventure606", "2");
     set_property("choiceAdventure608", "1");
-    return do_twin_food();
+    if (do_twin_food()) return true;
 	}
 
 	if (need_stench)
@@ -171,7 +173,7 @@ boolean L09_SQ_twin()
     set_property("choiceAdventure606", "1");
     set_property("choiceAdventure607", "1");
 
-    return do_twin_stench();
+    if (do_twin_stench()) return true;
 	}
 
   if (need_init)
@@ -180,7 +182,7 @@ boolean L09_SQ_twin()
     set_property("choiceAdventure610", "1");
     set_property("choiceAdventure1056", "1");
 
-    return do_twin_init();
+    if (do_twin_init()) return true;
 	}
 
   // Wait until later, to up our odds of one of the above working,

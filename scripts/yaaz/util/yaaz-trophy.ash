@@ -20,7 +20,7 @@ record trophyentry
 };
 
 trophyentry [int] all_trophies;
-file_to_map(DATA_DIR + "trophies.txt", all_trophies);
+file_to_map(DATA_DIR + "yz_trophies.txt", all_trophies);
 
 trophyentry [int] trophies;
 int [item] consumed;
