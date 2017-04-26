@@ -111,6 +111,12 @@ boolean L11_SQ_desert()
   int starting_adv_count = my_adventures();
   get_compass();
 
+  if (dangerous($location[the oasis]))
+  {
+    info("Skipping " + wrap("the desert", COLOR_LOCATION) + " until it's less dangerous.");
+    return false;
+  }
+
   // Oasis
   if (open_oasis()) return true;
 

@@ -45,6 +45,12 @@ boolean M10_star_key()
 
   if (quest_status("questL13Final") > 3) return false;
 
+  if (dangerous($location[the hole in the sky]))
+  {
+    info("Skipping the " + wrap($location[the hole in the sky]) + " until it's less dangerous.");
+    return false;
+  }
+
   log("Going to the " + wrap($location[the hole in the sky]) + " to make " + wrap($item[richard's star key]) + ".");
 
   familiar fam = $familiar[none];

@@ -23,6 +23,13 @@ import 'special/skills/yz_summon_annoyance.ash';
 
 void special()
 {
+  while(bookshelf())
+  {
+    // cast a few of these
+  }
+
+  numberology();
+
   communism();
   teatree();
   vip_floundry();
@@ -38,6 +45,7 @@ void special()
 
   // These may actually get us in a fight, so do them after the ones above:
 
+  protonic();
   lovetunnel();
   chateau();
   witchess();

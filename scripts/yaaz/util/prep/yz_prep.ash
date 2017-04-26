@@ -19,7 +19,6 @@ import "util/prep/classes/yz_prep_pastamancer.ash";
 import "util/prep/classes/yz_prep_sauceror.ash";
 import "util/prep/classes/yz_prep_sealclubber.ash";
 import "util/prep/classes/yz_prep_turtletamer.ash";
-import "special/yz_special_check_often.ash";
 import "special/locations/yz_vip_floundry.ash";
 import "special/items/yz_deck.ash";
 import "special/items/yz_manuel.ash";
@@ -153,8 +152,6 @@ void prep(location loc)
   }
 
   heart();
-
-  special_check_often();
 
   cast_things(loc);
 

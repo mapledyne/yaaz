@@ -232,16 +232,6 @@ void ascend()
 
   day_begin();
 
-  if (quest_status("questL13Final") >= 13)
-  {
-    log("You've defeated the " + wrap($monster[naughty sorceress]) + ". Hooray!");
-    log("This script doesn't have much for you to do beyond that. Go do aftercore stuff,");
-    log("or go and ascend and do it all over again!");
-
-    skill_recommendation();
-    return;
-  }
-
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);
 
@@ -251,14 +241,11 @@ void ascend()
     log("Doing cleanup actions, but skipping main quest loop.");
   }
 
-  while(ascend_loop())
+  repeat
   {
     special();
     manuel_progress();
-  }
-
-  special();
-  manuel_progress();
+  } until (!ascend_loop());
 
   if (quest_status("questL13Final") >= 13)
   {
