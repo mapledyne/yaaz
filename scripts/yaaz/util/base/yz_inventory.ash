@@ -7,7 +7,7 @@ boolean have(item toy);
 int wad_total();
 void use_all(item it);
 void pulverize_all(item it);
-void pulverize_all_but_one(item it);
+void pulverize_all(item it, int keep);
 void pulverize_keep_if(item it, boolean keep_if);
 int immateria();
 int palindome_items();
@@ -83,18 +83,6 @@ void use_all(item it)
 	use_all(it, 0);
 }
 
-boolean should_pulverize()
-{
-  boolean config = to_boolean(setting("aggresive_pulverize", "false"));
-  if (config) return true;
-
-  // artificial limiter - why make more wads if we're swimming in them?
-  if (wad_total() < (spleen_limit() * 3))
-    return true;
-
-  return false;
-}
-
 int maybe_pull(item it, int qty)
 {
 
@@ -137,9 +125,8 @@ void stash(item it, int keep)
   put_stash(num, it);
 }
 
-void pulverize(item it, int keep)
+void pulverize_all(item it, int keep)
 {
-  if (!should_pulverize()) return;
   int num = item_amount(it) - keep;
   if (num <= 0) return;
 
@@ -148,34 +135,27 @@ void pulverize(item it, int keep)
   if (keep > 0)
     kp = " (keeping " + keep + ")";
 
+  if (!have_skill($skill[pulverize]))
+  {
+    log("Can't " + wrap($skill[pulverize]) + ", so instead selling " + num + " " + wrap(it, num) + kp + ".");
+    autosell(num, it);
+    return;
+  }
+
 	log("Pulverizing " + num + " " + wrap(it, num) + kp + ".");
 	cli_execute("pulverize " + num + " " + it);
 }
 
 void pulverize_all(item it)
 {
-  pulverize(it, 0);
-}
-
-void pulverize_all_but_one(item it)
-{
-  pulverize(it, 1);
-}
-
-void pulverize(item it)
-{
-  if (!should_pulverize()) return;
-  if (!have(it)) return;
-
-	log("Pulverizing 1 " + wrap(it) + ".");
-	cli_execute("pulverize 1 " + it);
+  pulverize_all(it, 0);
 }
 
 void pulverize_keep_if(item it, boolean keep_if)
 {
 	if (keep_if)
 	{
-		pulverize_all_but_one(it);
+		pulverize_all(it, 1);
 	} else {
 		pulverize_all(it);
 	}

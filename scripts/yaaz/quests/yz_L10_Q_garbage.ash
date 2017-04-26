@@ -213,16 +213,31 @@ boolean garbage_loop()
       get_sock();
       return true;
     case 7:
+      if (dangerous($location[The Castle in the Clouds in the Sky (Basement)]))
+      {
+        info("Skipping " + wrap($location[The Castle in the Clouds in the Sky (Basement)]) + " until it's less dangerous.");
+        return false;
+      }
       open_ground_floor();
       if (quest_status("questL10Garbage") != 7)
         log("Ground floor of the Castle has been opened.");
       return true;
     case 8:
+      if (dangerous($location[The Castle in the Clouds in the Sky (Ground Floor)]))
+      {
+        info("Skipping " + wrap($location[The Castle in the Clouds in the Sky (Ground Floor)]) + " until it's less dangerous.");
+        return false;
+      }
       open_top_floor();
       if (quest_status("questL10Garbage") != 8)
         log("Top floor of the Castle has been opened.");
       return true;
     case 9:
+      if (dangerous($location[The Castle in the Clouds in the Sky (Top Floor)]))
+      {
+        info("Skipping " + wrap($location[The Castle in the Clouds in the Sky (Top Floor)]) + " until it's less dangerous.");
+        return false;
+      }
       spin_garbage_wheel();
       if (quest_status("questL10Garbage") != 9)
         log("Garbage wheel has been spun.");

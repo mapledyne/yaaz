@@ -161,33 +161,30 @@ void effect_maintain(effect ef)
 
   if (sk != $skill[none])
   {
+    if (!have_skill(sk)) return;
+
     if (have_effect($effect[temporary amnesia]) > 0)
     {
       info("I want to cast " + wrap(sk) + ", but I have " + wrap($effect[temporary amnesia]) + ", so can't right now.");
       return;
     }
-    if (have_skill(sk))
+    if (is_turtle_buff(sk) && !have($item[turtle totem])) return;
+    log("Adding effect " + wrap(ef) + " by casting " + wrap(sk) + ".");
+    if (is_thief_buff(ef))
     {
-      if (is_turtle_buff(sk) && i_a($item[turtle totem]) == 0) return;
-      log("Adding effect " + wrap(ef) + " by casting " + wrap(sk) + ".");
-      if (is_thief_buff(ef))
+      if (!can_cast_song())
       {
-        if (!can_cast_song())
-        {
-          uneffect_song();
-        }
+        uneffect_song();
       }
-      use_skill(1, sk);
-      return;
     }
+    use_skill(1, sk);
+    return;
   }
 
   if (it != $item[none])
   {
-    if (!be_good(it))
-      return;
-    if (!can_consume(it))
-      return;
+    if (!be_good(it)) return;
+    if (!can_consume(it)) return;
 
     if (it == $item[The Inquisitor's unidentifiable object]
         && to_boolean(setting("inquisitor_chewed", "false")))

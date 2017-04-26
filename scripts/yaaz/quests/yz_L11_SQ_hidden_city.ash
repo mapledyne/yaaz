@@ -35,6 +35,15 @@ boolean get_machete()
   if (have($item[antique machete])) return false;
   if (my_path() == "Way of the Surprising Fist") return false;
 
+  if (get_property("relocatePygmyJanitor") == 0)
+  {
+    set_property("choiceAdventure789", 1); // Dig through the garbage
+  }
+  else
+  {
+    set_property("choiceAdventure789", 2); // knock over the dumpster (moves janitors to the park)
+  }
+
   maximize("");
   yz_adventure($location[the hidden park]);
   return true;
@@ -274,6 +283,8 @@ boolean L11_SQ_hidden_city()
   if (my_level() < 11) return false;
 
   if (quest_status("questL11Worship") == UNSTARTED) return false;
+
+  set_property("choiceAdventure581", 3); // fight clan of cave bars. Should it be something else?
 
   if (get_nose()) return true;
 

@@ -191,7 +191,7 @@ void L12_Q_war_cleanup()
                             bullet-proof corduroys,
                             wicker shield]
   {
-    pulverize(smashy, 1);
+    pulverize_all(smashy, 1);
   }
 
   stock_item($item[gauze garter], 10 - item_amount($item[filthy poultice]));

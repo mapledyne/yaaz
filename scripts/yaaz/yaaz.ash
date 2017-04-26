@@ -38,6 +38,7 @@ boolean ascend_loop()
     string clean = quest + "_cleanup";
     call clean();
   }
+
   foreach quest in QUEST_LIST
   {
     current_quest = quest;
@@ -45,19 +46,7 @@ boolean ascend_loop()
     if (b) return true;
   }
 
-  log("Ran out of things to do in this script. Maybe a quest is missing, or we're possibly in a state this script can't figure out.");
   return false;
-}
-
-void skill_warning()
-{
-  if (!have_skill($skill[pulverize]))
-  {
-    warning("This script is written assuming you have the " + wrap($skill[pulverize]) + " skill.");
-    warning("It'll work without it, but be inefficient in a few ways. I recommend getting " + wrap($skill[pulverize]) + " before relying on this script.");
-    wait(10);
-  }
-
 }
 
 void settings_warning()
@@ -134,7 +123,7 @@ void intro()
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>.");
-  log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2866791'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
+  log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2355952'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
   boolean has_fam = false;
   foreach f in $familiars[]
   {
@@ -226,7 +215,6 @@ void ascend()
   current_level = my_level();
 
   intro();
-  skill_warning();
 
   settings_warning();
 

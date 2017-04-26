@@ -27,7 +27,7 @@ void pulverize_things()
 
   foreach it, i in pulv_items
   {
-    pulverize(it, i);
+    pulverize_all(it, i);
   }
 
   // we may want some of these if not relying on muscle:
@@ -63,7 +63,7 @@ void pulverize_things()
   {
     foreach it in muscle_items
     {
-      pulverize(it, 0);
+      pulverize_all(it, 0);
     }
   }
 
@@ -71,7 +71,7 @@ void pulverize_things()
   {
     foreach it in mysticality_items
     {
-      pulverize(it, 0);
+      pulverize_all(it, 0);
     }
   }
 
@@ -79,7 +79,7 @@ void pulverize_things()
   {
     foreach it in moxie_items
     {
-      pulverize(it, 0);
+      pulverize_all(it, 0);
     }
   }
 
@@ -87,7 +87,7 @@ void pulverize_things()
   {
     foreach it in $items[autocalliope]
     {
-      pulverize(it, 0);
+      pulverize_all(it, 0);
     }
   }
 
@@ -97,7 +97,7 @@ void pulverize_things()
   // may be useful for the peak.
   if (get_property("booPeakProgress") > 0)
   {
-    pulverize_all_but_one($item[glowing red eye]);
+    pulverize_all($item[glowing red eye], 1);
   } else {
     pulverize_all($item[glowing red eye]);
   }
@@ -105,7 +105,7 @@ void pulverize_things()
   // bridge built
   if (quest_status("questL09Topping") > 1)
   {
-    pulverize_all_but_one($item[orcish stud-finder]);
+    pulverize_all($item[orcish stud-finder], 1);
   }
 
 

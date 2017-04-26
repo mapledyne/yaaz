@@ -81,6 +81,8 @@ boolean do_leveling_thing()
 
 boolean M_level_up()
 {
+  if (quest_status("questL13Final") == FINISHED) return false;
+
   warning("Ran out of quest things to do in this script. Adventuring (and leveling) until we can do something better.");
   do_leveling_thing();
   return true;
