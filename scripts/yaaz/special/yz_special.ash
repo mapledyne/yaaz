@@ -5,7 +5,6 @@ import 'special/items/yz_timespinner.ash';
 import 'special/locations/yz_bookshelf.ash';
 import 'special/locations/yz_chateau.ash';
 import 'special/locations/yz_clanvip.ash';
-import 'special/locations/yz_island_glaciest.ash';
 import 'special/locations/yz_lovetunnel.ash';
 import 'special/locations/yz_ltt.ash';
 import 'special/locations/yz_precinct.ash';
@@ -18,6 +17,7 @@ import 'special/locations/yz_vip_floundry.ash';
 import 'special/skills/yz_communism.ash';
 import 'special/skills/yz_eldritchhorror.ash';
 import 'special/skills/yz_numberology.ash';
+import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
@@ -28,7 +28,7 @@ void special()
   vip_floundry();
   ltt();
   timespinner();
-  island_glaciest();
+  perfect_freeze();
   thanksgarden();
   terminal();
   deck();

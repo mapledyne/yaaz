@@ -657,5 +657,5 @@ void max_effects(string target, boolean aggressive)
 
 void max_effects(string target)
 {
-  max_effects(target, true);
+  max_effects(target, false);
 }
