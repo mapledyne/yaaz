@@ -1,5 +1,5 @@
-import "util/main.ash";
-import "util/progress.ash";
+import "util/yz_main.ash";
+import "util/yaaz-progress.ash";
 
 void day_end()
 {

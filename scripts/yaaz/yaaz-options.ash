@@ -1,5 +1,5 @@
-import "util/base/util.ash";
-import "util/base/settings.ash";
+import "util/base/yz_util.ash";
+import "util/base/yz_settings.ash";
 
 string pref_line(string pref, string def, string comment)
 {

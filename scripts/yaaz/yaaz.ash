@@ -1,11 +1,11 @@
 script "yaaz.ash"
 notify "degrassi";
 
-import "util/main.ash";
-import "util/progress.ash";
-import "yaaz/yaaz-begin.ash";
+import "util/yz_main.ash";
+import "util/yaaz-progress.ash";
+import "util/yaaz-begin.ash";
 
-import "util/quests_main.ash";
+import "util/yz_quests_main.ash";
 
 // Note: If you want to change the order quests are run in, see quests.ash
 // and edit the QUEST_LIST there.
