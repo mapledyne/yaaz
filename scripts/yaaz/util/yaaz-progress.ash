@@ -1,3 +1,5 @@
+since 17948;
+
 import "util/base/yz_quests.ash";
 import "util/base/yz_print.ash";
 import "util/base/yz_inventory.ash";
