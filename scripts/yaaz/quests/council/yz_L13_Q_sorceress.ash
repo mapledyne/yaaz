@@ -62,6 +62,25 @@ void L13_Q_sorceress_cleanup()
 
 }
 
+boolean nagamar()
+{
+  if (quest_status("questL10Garbage") != FINISHED) return false;
+  if (have($item[wand of nagamar])) return false;
+  if (!have($item[disassembled clover])) return false;
+  if (!can_adventure()) return false;
+  if (my_path() == "Nuclear Autumn") return false;
+
+  log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
+  boolean clove = yz_clover($location[The Castle in the Clouds in the Sky (Basement)]);
+  if (clove)
+  {
+    log("Making a " + wrap($item[wand of nagamar]) + ".");
+    create(1, $item[wand of nagamar]);
+    return true;
+  }
+  return true;
+}
+
 boolean wall_of_skin()
 {
   if (!have($item[beehive]))
@@ -470,9 +489,9 @@ boolean loop_tower(int level)
 
 boolean L13_Q_sorceress()
 {
+  if (nagamar()) return true;
 
-  if (my_level() < 13)
-    return false;
+  if (my_level() < 13) return false;
 
   if (quest_status("questL12War") != FINISHED)
     return false;

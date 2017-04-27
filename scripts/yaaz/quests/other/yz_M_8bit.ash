@@ -70,9 +70,25 @@ void M_8bit_cleanup()
   }
 }
 
+boolean continuum()
+{
+  if (have($item[continuum transfunctioner])
+      || quest_status("questL02Larva") == UNSTARTED)
+    return false;
+
+  log("Going to get the " + wrap($item[continuum transfunctioner]) + " from the mystic.");
+
+  visit_url("place.php?whichplace=forestvillage&action=fv_mystic");
+  visit_url("choice.php?pwd="+my_hash()+"&whichchoice=664&option=1&choiceform1=Sure%2C+old+man.++Tell+me+all+about+it.");
+  visit_url("choice.php?pwd="+my_hash()+"&whichchoice=664&option=1&choiceform1=Against+my+better+judgment%2C+yes.");
+  visit_url("choice.php?pwd="+my_hash()+"&whichchoice=664&option=1&choiceform1=Er,+sure,+I+guess+so...");
+
+  return false;
+}
+
 boolean M_8bit()
 {
-  M_8bit_cleanup();
+  if (continuum()) return true;
 
   if (!have($item[continuum transfunctioner])) return false;
 

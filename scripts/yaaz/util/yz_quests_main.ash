@@ -1,11 +1,12 @@
-import "quests/other/yz_M_misc.ash";
 import "quests/other/yz_M_dailydungeon.ash";
 import "quests/other/yz_M_guild.ash";
 import "quests/other/yz_M_hidden_temple.ash";
 import "quests/other/yz_M_8bit.ash";
 import "quests/other/yz_M_desert_beach.ash";
+import "quests/other/yz_M_island.ash";
 import "quests/other/yz_M_pirates.ash";
 import "quests/other/yz_M_spookyraven.ash";
+import "quests/other/yz_M_toot.ash";
 import "quests/other/yz_M_untinker.ash";
 import "quests/other/yz_M06_pandemonium.ash";
 import "quests/other/yz_M09_leaflet.ash";
@@ -32,10 +33,11 @@ import "quests/other/yz_M_level_up.ash";
 // loop will try the quests. If you want to order quests differently, change it here.
 // Note that some quests will skip themselves and let a later quest do work if it's
 // waiting on something (arena quests waiting for flyers, for instance).
-boolean[string] QUEST_LIST = $strings[M_misc,
+boolean[string] QUEST_LIST = $strings[M_toot,
                                       M_guild,
                                       M_untinker,
                                       M_desert_beach,
+                                      M_island,
                                       M06_pandemonium,
                                       M09_leaflet,
                                       M_dailydungeon,
