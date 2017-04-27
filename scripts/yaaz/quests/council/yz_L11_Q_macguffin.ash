@@ -1,9 +1,9 @@
-import "quests/yz_L11_SQ_black_market.ash";
-import "quests/yz_L11_SQ_desert.ash";
-import "quests/yz_L11_SQ_hidden_city.ash";
-import "quests/yz_L11_SQ_palindome.ash";
-import "quests/yz_L11_SQ_summoning.ash";
-import "quests/yz_L11_SQ_pyramid.ash";
+import "quests/council/yz_L11_SQ_black_market.ash";
+import "quests/council/yz_L11_SQ_desert.ash";
+import "quests/council/yz_L11_SQ_hidden_city.ash";
+import "quests/council/yz_L11_SQ_palindome.ash";
+import "quests/council/yz_L11_SQ_summoning.ash";
+import "quests/council/yz_L11_SQ_pyramid.ash";
 
 void L11_Q_macguffin_progress()
 {

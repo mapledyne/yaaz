@@ -1,11 +1,11 @@
 import "util/yz_main.ash";
 import "util/base/yz_war_support.ash";
 
-import "quests/yz_L12_SQ_junkyard.ash";
-import "quests/yz_L12_SQ_arena.ash";
-import "quests/yz_L12_SQ_lighthouse.ash";
-import "quests/yz_L12_SQ_orchard.ash";
-import "quests/yz_L12_SQ_nuns.ash";
+import "quests/council/yz_L12_SQ_junkyard.ash";
+import "quests/council/yz_L12_SQ_arena.ash";
+import "quests/council/yz_L12_SQ_lighthouse.ash";
+import "quests/council/yz_L12_SQ_orchard.ash";
+import "quests/council/yz_L12_SQ_nuns.ash";
 
 int sidequests(string side);
 int sidequests();

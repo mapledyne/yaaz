@@ -1,31 +1,31 @@
-import "quests/yz_M_misc.ash";
-import "quests/yz_M_dailydungeon.ash";
-import "quests/yz_M_guild.ash";
-import "quests/yz_M_hidden_temple.ash";
-import "quests/yz_M_8bit.ash";
-import "quests/yz_M_desert_beach.ash";
-import "quests/yz_M_pirates.ash";
-import "quests/yz_M_spookyraven.ash";
-import "quests/yz_M_untinker.ash";
-import "quests/yz_M06_pandemonium.ash";
-import "quests/yz_M09_leaflet.ash";
-import "quests/yz_M10_star_key.ash";
-import "quests/yz_M20_necklace.ash";
+import "quests/other/yz_M_misc.ash";
+import "quests/other/yz_M_dailydungeon.ash";
+import "quests/other/yz_M_guild.ash";
+import "quests/other/yz_M_hidden_temple.ash";
+import "quests/other/yz_M_8bit.ash";
+import "quests/other/yz_M_desert_beach.ash";
+import "quests/other/yz_M_pirates.ash";
+import "quests/other/yz_M_spookyraven.ash";
+import "quests/other/yz_M_untinker.ash";
+import "quests/other/yz_M06_pandemonium.ash";
+import "quests/other/yz_M09_leaflet.ash";
+import "quests/other/yz_M10_star_key.ash";
+import "quests/other/yz_M20_necklace.ash";
 
-import "quests/yz_L02_Q_larva.ash";
-import "quests/yz_L03_Q_rats.ash";
-import "quests/yz_L04_Q_bats.ash";
-import "quests/yz_L05_Q_goblin.ash";
-import "quests/yz_L06_Q_friar.ash";
-import "quests/yz_L07_Q_cyrpt.ash";
-import "quests/yz_L08_Q_trapper.ash";
-import "quests/yz_L09_Q_topping.ash";
-import "quests/yz_L10_Q_Garbage.ash";
-import "quests/yz_L11_Q_macguffin.ash";
-import "quests/yz_L12_Q_war.ash";
-import "quests/yz_L13_Q_sorceress.ash";
+import "quests/council/yz_L02_Q_larva.ash";
+import "quests/council/yz_L03_Q_rats.ash";
+import "quests/council/yz_L04_Q_bats.ash";
+import "quests/council/yz_L05_Q_goblin.ash";
+import "quests/council/yz_L06_Q_friar.ash";
+import "quests/council/yz_L07_Q_cyrpt.ash";
+import "quests/council/yz_L08_Q_trapper.ash";
+import "quests/council/yz_L09_Q_topping.ash";
+import "quests/council/yz_L10_Q_Garbage.ash";
+import "quests/council/yz_L11_Q_macguffin.ash";
+import "quests/council/yz_L12_Q_war.ash";
+import "quests/council/yz_L13_Q_sorceress.ash";
 
-import "quests/yz_M_level_up.ash";
+import "quests/other/yz_M_level_up.ash";
 
 
 // Important: The ordering of the quests in this lists is the order that the

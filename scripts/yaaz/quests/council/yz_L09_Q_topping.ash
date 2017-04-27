@@ -1,7 +1,7 @@
-import "quests/yz_L09_SQ_bridge.ash";
-import "quests/yz_L09_SQ_oilpeak.ash";
-import "quests/yz_L09_SQ_aboo.ash";
-import "quests/yz_L09_SQ_twin.ash";
+import "quests/council/yz_L09_SQ_bridge.ash";
+import "quests/council/yz_L09_SQ_oilpeak.ash";
+import "quests/council/yz_L09_SQ_aboo.ash";
+import "quests/council/yz_L09_SQ_twin.ash";
 
 
 int twinpeak_progress()

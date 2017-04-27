@@ -1,4 +1,4 @@
-since 17948;
+since r17948;
 
 import "util/base/yz_quests.ash";
 import "util/base/yz_print.ash";

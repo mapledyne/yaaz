@@ -1,5 +1,5 @@
 import "util/yz_main.ash";
-import "quests/yz_M_pirates.ash";
+import "quests/other/yz_M_pirates.ash";
 
 
 
