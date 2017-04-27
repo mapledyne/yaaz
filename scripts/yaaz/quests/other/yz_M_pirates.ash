@@ -190,6 +190,12 @@ boolean open_belowdecks()
     return false;
   }
 
+  if (dangerous($location[the poop deck]))
+  {
+    info("Waiting on opening " + wrap($location[belowdecks]) + " until it's less dangerous to attempt.");
+    return false;
+  }
+
   log("Opening up " + wrap($location[belowdecks]) + ".");
 
 	set_property("choiceAdventure189", "1");
@@ -214,8 +220,7 @@ boolean get_talisman()
 
   if (quest_status("questM12Pirate") != FINISHED)
   {
-    open_belowdecks();
-    return true;
+    return open_belowdecks();
   }
 
   maximize("items", $item[pirate fledges]);

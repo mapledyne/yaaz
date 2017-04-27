@@ -87,8 +87,14 @@ boolean get_vinegar()
   return true;
 }
 
-void open_cellar()
+boolean open_cellar()
 {
+  if (quest_status("questM21Dance") != FINISHED) return false;
+  if (dangerous($location[the haunted ballroom]))
+  {
+    info("Skipping " + wrap($location[the haunted ballroom]) + " until it's less dangerous.");
+    return false;
+  }
   string max = "";
   if ($location[the haunted ballroom].turns_spent >= 5)
   {
@@ -99,6 +105,7 @@ void open_cellar()
   {
     log(wrap("The Haunted Cellar", COLOR_LOCATION) + " is open.");
   }
+  return true;
 }
 
 boolean open_summoning_scavenge()
@@ -162,8 +169,7 @@ boolean do_spookyraven()
       error("You should recover and read " + wrap($item[your father's MacGuffin diary]) + " before doing this quest.");
       return false;
     case STARTED:
-      open_cellar();
-      return true;
+      return open_cellar();
     case 1:
       if (!have($item[lord spookyraven's spectacles]))
       {

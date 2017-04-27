@@ -1,3 +1,5 @@
+script "yaaz-progress.ash"
+notify "degrassi";
 since r17948;
 
 import "util/base/yz_quests.ash";

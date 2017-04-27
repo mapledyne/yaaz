@@ -92,6 +92,10 @@ void cast_one_time_things()
 
 void prep(location loc)
 {
+
+  if (have_effect($effect[somewhat poisoned]) > 0)
+    uneffect($effect[somewhat poisoned]);
+
  if (my_path() != "Actually Ed the Undying")
  {
    if (have_effect($effect[beaten up]) > 0)

@@ -6,6 +6,7 @@ import "special/items/yz_manuel.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_locations.ash";
 import "util/base/yz_settings.ash";
+import "util/base/yz_quests.ash";
 
 boolean overrides();
 boolean yz_clover(location loc);
@@ -37,6 +38,7 @@ boolean yz_adventure_bypass(location loc)
     set_property("cloverProtectActive", "true");
 
   manuel_add_location(loc);
+  debug("Adventuring: " + wrap(loc) + ", to advance current quest: " + wrap(current_quest, COLOR_LOCATION));
   adv = adv1(loc, -1, "yz_consult");
 
   if (loc == $location[the haunted bedroom])

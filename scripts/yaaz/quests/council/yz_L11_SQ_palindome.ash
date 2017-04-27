@@ -61,6 +61,8 @@ boolean L11_SQ_palindome()
 
   if (!have($item[Talisman o' Namsilat])) return false;
 
+  if (quest_status("questM20Necklace") != FINISHED) return false; // we get the disposable instant camera during this quest
+
   switch(quest_status("questL11Palindome"))
   {
     default:

@@ -125,6 +125,7 @@ void intro()
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>.");
   log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2355952'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
+
   boolean has_fam = false;
   foreach f in $familiars[]
   {
@@ -151,8 +152,9 @@ void intro()
 
   log("This is an automated ascension script, but has some additional features.");
   log("To get more information, run the " + SCRIPT + "-help script.");
+  log("There are several flags available to adjust how the script works. See the available options on github: <a href='https://gist.github.com/mapledyne/46745ed32bcef4b04a303953a1f18440'>" + wrap("yaaz-options", 'blue') + "</a>.");
   log("Go to " + wrap("<a href='https://github.com/mapledyne/yaaz'>https://github.com/mapledyne/yaaz</a>", "blue") + " to see known issues, submit bugs, request features, etc.");
-  wait(5);
+  wait(10);
 
   if (my_ascensions() == 0)
   {

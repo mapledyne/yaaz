@@ -80,7 +80,7 @@ boolean get_library_key()
     log("Skipping " + wrap($location[The Haunted Billiards Room]) + " since we're too drunk to play effectively.");
     return false;
   }
-  if (my_inebriety() < 8
+  if (my_inebriety() < 7
       && approx_pool_skill() < 14)
   {
     log("Skipping " + wrap($location[The Haunted Billiards Room]) + " until we are a little more tipsy.");

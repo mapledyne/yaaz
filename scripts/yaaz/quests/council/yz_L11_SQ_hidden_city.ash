@@ -112,7 +112,15 @@ boolean bowling()
 
   if (to_int(get_property("hiddenBowlingAlleyProgress")) > 6) return false;
 
+  if (dangerous($location[the hidden bowling alley]))
+  {
+    info("Waiting a bit on " + wrap($location[the hidden bowling alley]) + " until it's less dangerous.");
+    return false;
+  }
+
   log("Defeating " + wrap($location[the hidden bowling alley]) + ".");
+
+  set_property("choiceAdventure788", 1); // bowl, and eventually fight spectre
 
   if (!have($item[Bowl Of Scorpions])
      && my_ascensions() <= to_int(get_property("hiddenTavernUnlock")))
@@ -135,8 +143,13 @@ boolean bowling()
     return true;
   }
 
+  if (dangerous($monster[ancient protector spirit]))
+  {
+    info("Will wait on the " + wrap($monster[ancient protector spirit]) + " until it's less dangerous.");
+    return false;
+  }
   log("Off to defeat the " + wrap($monster[ancient protector spirit]) + ".");
-  yz_adventure($location[the hidden bowling alley], "elemental dmg");
+  yz_adventure($location[the hidden bowling alley], "hot dmg, stench dmg, cold dmg, sleaze dmg");
 
   return true;
 }
@@ -147,10 +160,16 @@ boolean hospital()
 
   if (to_int(get_property("hiddenHospitalProgress")) > 6) return false;
 
+  if (dangerous($location[the hidden hospital]))
+  {
+    info("Waiting a bit on " + wrap($location[the hidden hospital]) + " until it's less dangerous.");
+    return false;
+  }
+
   log("Defeating " + wrap($location[the hidden hospital]) + ".");
   add_attract($monster[pygmy witch surgeon]);
 
-  maximize("mainstat, +effective, elemental dmg, 50 surgeonosity");
+  maximize("mainstat, hot dmg, stench dmg, cold dmg, sleaze dmg, 50 surgeonosity");
   yz_adventure($location[the hidden hospital]);
 
   if (to_int(get_property("hiddenHospitalProgress")) > 6)
@@ -167,12 +186,18 @@ boolean office()
 
   if (to_int(get_property("hiddenOfficeProgress")) > 6) return false;
 
+  if (dangerous($location[the hidden office building]))
+  {
+    info("Waiting a bit on " + wrap($location[the hidden office building]) + " until it's less dangerous.");
+    return false;
+  }
+
   log("Defeating " + wrap($location[the hidden office building]) + ".");
   add_attract($monster[pygmy witch accountant]);
 
   int turns = $location[the hidden office building].turns_spent % 5;
-  if (item_amount($item[boring binder clip]) > 0
-      && item_amount($item[McClusky file (complete)]) == 0
+  if (have($item[boring binder clip])
+      && !have($item[McClusky file (complete)])
       && turns == 0
       && quest_status("questL11Curses") != FINISHED)
   {
@@ -180,7 +205,22 @@ boolean office()
     return false;
   }
 
-  yz_adventure($location[the hidden office building], "");
+  if (have($item[McClusky file (complete)])
+      && dangerous($monster[ancient protector spirit (The Hidden Office Building)]))
+  {
+    info("Will fight the " + wrap($monster[ancient protector spirit (The Hidden Office Building)]) + " when it's less dangerous.");
+    return false;
+  }
+
+  string max = "";
+
+  if (have($item[McClusky file (complete)])
+      && turns == 0)
+  {
+    max = "hot dmg, stench dmg, cold dmg, sleaze dmg";
+  }
+
+  yz_adventure($location[the hidden office building], max);
 
   if (to_int(get_property("hiddenOfficeProgress")) > 6)
   {
@@ -202,6 +242,13 @@ boolean apartment()
     return false;
   }
 
+  if (dangerous($location[the hidden apartment building]))
+  {
+    info("Waiting a bit on " + wrap($location[the hidden apartment building]) + " until it's less dangerous.");
+    return false;
+  }
+
+
   log("Defeating " + wrap($location[the hidden apartment building]) + ".");
   if (get_property("olfactedMonster") != $monster[pygmy witch accountant]
       || quest_status("questL11Business") == FINISHED)
@@ -221,7 +268,12 @@ boolean apartment()
     try_consume($item[cursed punch]);
   }
 
-  yz_adventure($location[the hidden apartment building], "");
+  string max = "";
+  if (have_effect($effect[thrice-cursed]) > 0)
+  {
+    max = "hot dmg, stench dmg, cold dmg, sleaze dmg";
+  }
+  yz_adventure($location[the hidden apartment building], max);
 
   if (to_int(get_property("hiddenApartmentProgress")) > 6)
   {

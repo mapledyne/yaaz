@@ -1,3 +1,5 @@
+script "yaaz-trophy.ash"
+notify "degrassi";
 since r17948;
 
 import "util/base/yz_print.ash";

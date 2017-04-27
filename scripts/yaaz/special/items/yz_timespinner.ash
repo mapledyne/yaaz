@@ -86,8 +86,7 @@ boolean time_combat(monster mob, location loc)
 
 boolean time_prank(string player, string msg)
 {
-  if (!can_spin_time())
-    false;
+  if (!can_spin_time()) false;
 
   string url = "choice.php?pwd&whichchoice=1198&option=1&pl=" + player + "&th=" + msg;
 
@@ -133,14 +132,13 @@ boolean time_prank(string player, string msg)
 
 boolean timespinner_future()
 {
-  if (item_amount($item[time-spinner]) == 0)
-    return false;
+  if (item_amount($item[time-spinner]) == 0) return false;
 
-  if (time_minutes() < 2)
-    return false;
+  if (!to_boolean(setting("far_future", "true"))) return false;
 
-  if (get_property("_timeSpinnerReplicatorUsed") == "true")
-    return false;
+  if (time_minutes() < 2) return false;
+
+  if (get_property("_timeSpinnerReplicatorUsed") == "true") return false;
 
   if (!svn_exists("Ezandora-Far-Future-branches-Release"))
   {
