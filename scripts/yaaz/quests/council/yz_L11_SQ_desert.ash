@@ -101,9 +101,10 @@ boolean open_gnasir()
 boolean L11_SQ_desert()
 {
 
-  if(my_level() < 11)
-    return false;
+  if (my_level() < 11) return false;
 
+  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return false;
+  
   if (get_property("desertExploration").to_int() >= 100)
     return false;
 

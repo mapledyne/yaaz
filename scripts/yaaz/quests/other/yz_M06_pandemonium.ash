@@ -3,6 +3,45 @@ import "util/yz_main.ash";
 void M06_pandemonium_progress()
 {
 
+  if (!quest_active("questM10Azazel")) return;
+
+  progress(item_amount($item[imp air]), 5, "imp airs");
+  if (!have($item[observational glasses]))
+  {
+    task("Find the " + wrap($item[observational glasses]) + ".");
+  }
+
+  progress(item_amount($item[bus pass]), 5, "bus passes");
+  string band = "";
+  if (jim() != $item[none])
+  {
+    band += "Jim";
+  }
+  if (flargwurm() != $item[none])
+  {
+    if (band != "")
+      band += ", ";
+    band += "Flargwurm";
+  }
+  if (bognort() != $item[none])
+  {
+    if (band != "")
+      band += ", ";
+    band += "Bognort";
+  }
+  if (stinkface() != $item[none])
+  {
+    if (band != "")
+      band += ", ";
+    band += "Stinkface";
+  }
+
+  if (length(band) > 0)
+  {
+    band = " (" + band + ")";
+  }
+
+  progress(backstage_items(), 4, "backstage items" + band);
 }
 
 

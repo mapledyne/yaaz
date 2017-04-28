@@ -8,6 +8,19 @@ void M_island_cleanup()
 void M_island_progress()
 {
 
+  if (to_int(get_property("lastIslandUnlock")) >= my_ascensions()
+      || to_int(get_property("lastDesertUnlock")) < my_ascensions())
+  {
+    return;
+  }
+  if (!have($item[dinghy plans]))
+  {
+    progress(item_amount($item[Shore Inc. Ship Trip Scrip]), 3, "shore scrip for the dinghy plans");
+  }
+  if (!have($item[dingy planks]))
+  {
+    task("buy dinghy planks");
+  }
 }
 
 boolean M_island()

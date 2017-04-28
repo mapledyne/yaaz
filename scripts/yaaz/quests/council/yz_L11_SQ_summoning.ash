@@ -166,7 +166,6 @@ boolean do_spookyraven()
     case FINISHED:
       return false;
     case UNSTARTED:
-      error("You should recover and read " + wrap($item[your father's MacGuffin diary]) + " before doing this quest.");
       return false;
     case STARTED:
       return open_cellar();

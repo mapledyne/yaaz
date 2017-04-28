@@ -329,6 +329,16 @@ int immateria()
 													tin foil immateria]);
 }
 
+int make_all(item it, string msg)
+{
+  int make = creatable_amount(it);
+  if (make == 0) return 0;
+
+  log("Making " + make + " " + wrap(it, make) + " " + msg);
+  create(make, it);
+  return make;
+}
+
 void make_if_needed(item it, string msg)
 {
   if (!have(it) && creatable_amount(it) > 0)

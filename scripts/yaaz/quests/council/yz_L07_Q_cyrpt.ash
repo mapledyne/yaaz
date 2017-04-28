@@ -1,8 +1,28 @@
 import "util/yz_main.ash";
 
+int evil_progress(int p)
+{
+	return 25-(max(0,p-25));
+}
+
 
 void L07_Q_cyrpt_progress()
 {
+	if (!quest_active("questL07Cyrptic")) return;
+
+	int evil = 200 - to_int(get_property("cyrptTotalEvilness"));
+	progress(evil, 200, "Cyrpt progress");
+	if (get_property("cyrptAlcoveEvilness").to_int() > 0 && get_property("cyrptAlcoveEvilness").to_int() < 50)
+		progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled alcove]));
+
+	if (get_property("cyrptCrannyEvilness").to_int() > 0 && get_property("cyrptCrannyEvilness").to_int() < 50)
+		progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled cranny]));
+
+	if (get_property("cyrptNicheEvilness").to_int() > 0 && get_property("cyrptNicheEvilness").to_int() < 50)
+		progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled niche]));
+
+	if (get_property("cyrptNookEvilness").to_int() > 0 && get_property("cyrptNookEvilness").to_int() < 50)
+		progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled nook]));
 
 }
 

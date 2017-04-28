@@ -2,6 +2,13 @@ import "util/yz_main.ash";
 
 void M_pirates_progress()
 {
+  if (quest_status("questL06Friar") > UNSTARTED
+      && quest_status("questM12Pirate") < 3
+      && item_amount($item[hot wing]) < 3)
+  {
+    progress(item_amount($item[hot wing]), 3, wrap($item[hot wing], 3) + " for use with the " + wrap($item[orcish frat house blueprints]));
+  }
+
   if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return;
 
   if (!have_outfit("swashbuckling getup") && !have($item[pirate fledges]))

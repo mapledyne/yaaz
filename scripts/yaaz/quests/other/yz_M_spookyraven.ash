@@ -11,6 +11,27 @@ boolean consume_ballroom_delay()
 void M_spookyraven_progress()
 {
 
+
+  if (quest_status("questM21Dance") == FINISHED
+      && $location[the haunted ballroom].turns_spent < 5)
+  {
+    progress($location[The Haunted Ballroom].turns_spent, 5, "delay on " + wrap($location[The Haunted Ballroom]));
+  }
+
+
+  if (quest_status("questM21Dance") == UNSTARTED) return;
+  if (quest_status("questM21Dance") >= 3) return;
+
+  string shoes = UNCHECKED;
+  string gown = UNCHECKED;
+  string puff = UNCHECKED;
+  if (have($item[Lady Spookyraven's powder puff]))
+    puff = CHECKED;
+  if (have($item[Lady Spookyraven's dancing shoes]))
+    shoes = CHECKED;
+  if (have($item[Lady Spookyraven's finest gown]))
+    gown = CHECKED;
+  progress(dancing_items(), 3, "dancing things found (" + puff + " puff, " + shoes + " shoes, " + gown + " gown)");
 }
 
 void M_spookyraven_cleanup()

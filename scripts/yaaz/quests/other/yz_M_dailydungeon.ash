@@ -16,7 +16,34 @@ void M_dailydungeon_progress()
 
 void M_dailydungeon_cleanup()
 {
+  if (quest_status("questL13Final") < 5)
+  {
+    string msg = "for the perplexing door.";
+    make_if_needed($item[skeleton key], msg);
+  }
 
+  if (to_boolean(setting("always_daily_dungeon", "false"))
+      || hero_keys() < 3)
+  {
+    if (!have($item[Pick-O-Matic lockpicks]))
+    {
+      make_all($item[skeleton key], "for the daily dungeon");
+    }
+  }
+
+  if (quest_status("questL13Final") >= 5
+      || (hero_keys() >= 3 && have($item[skeleton key])))
+  {
+    // don't need any more skeleton keys?
+    if (!to_boolean(setting("always_daily_dungeon", "false"))
+        || have($item[Pick-O-Matic lockpicks]))
+    {
+      sell_all($item[skeleton key], 1);
+      sell_all($item[skeleton bone]);
+      sell_all($item[loose teeth]);
+    }
+
+  }
 }
 
 boolean M_dailydungeon()

@@ -45,6 +45,7 @@ void M_8bit_cleanup()
   {
     sell_all($item[Blue Pixel]);
     sell_all($item[Green Pixel]);
+    sell_all($item[White Pixel]);
   }
 
   if (have_skill($skill[Ambidextrous Funkslinging]))
@@ -53,7 +54,6 @@ void M_8bit_cleanup()
     if (have($item[digital key]))
     {
       sell_all($item[Red Pixel]);
-      sell_all($item[white pixel]);
     }
   } else {
     // no funkslinging
@@ -65,7 +65,13 @@ void M_8bit_cleanup()
 
     if (creatable_amount($item[red pixel potion]) > 0)
     {
-      create(creatable_amount($item[red pixel potion]), $item[red pixel potion]);
+      make_all($item[red pixel potion], "to help fight the shadow");
+    }
+    // shadow defeated:
+    if (quest_status("questL13Final") > 10)
+    {
+      sell_all($item[black pixel]);
+      sell_all($item[Red Pixel]);
     }
   }
 }

@@ -44,11 +44,6 @@ void level_progress()
 }
 
 
-int evil_progress(int p)
-{
-	return 25-(max(0,p-25));
-}
-
 
 boolean do_detail(string test, string detail)
 {
@@ -211,113 +206,6 @@ void progress_sheet(string detail)
     string quest_progress = quest + "_progress";
     call quest_progress();
   }
-
-
-  if (!have($item[dingy dinghy])
-      && to_int(get_property("lastDesertUnlock")) >= my_ascensions())
-  {
-    if (!have($item[dinghy plans]))
-    {
-      progress(item_amount($item[Shore Inc. Ship Trip Scrip]), 3, "shore scrip for the dinghy plans");
-    }
-    if (!have($item[dingy planks]))
-    {
-      task("buy dinghy planks");
-    }
-  }
-
-
-  if (quest_status("questM21Dance") > UNSTARTED && quest_status("questM21Dance") < 3)
-  {
-    string shoes = UNCHECKED;
-    string gown = UNCHECKED;
-    string puff = UNCHECKED;
-    if (have($item[Lady Spookyraven's powder puff]))
-      puff = CHECKED;
-    if (have($item[Lady Spookyraven's dancing shoes]))
-      shoes = CHECKED;
-    if (have($item[Lady Spookyraven's finest gown]))
-      gown = CHECKED;
-    progress(dancing_items(), 3, "dancing things found (" + puff + " puff, " + shoes + " shoes, " + gown + " gown)");
-  }
-
-  if (quest_active("questM10Azazel"))
-  {
-    progress(item_amount($item[imp air]), 5, "imp airs");
-    if (!have($item[observational glasses]))
-    {
-      task("Find the " + wrap($item[observational glasses]) + ".");
-    }
-
-    progress(item_amount($item[bus pass]), 5, "bus passes");
-    string band = "";
-    if (jim() != $item[none])
-    {
-      band += "Jim";
-    }
-    if (flargwurm() != $item[none])
-    {
-      if (band != "")
-        band += ", ";
-      band += "Flargwurm";
-    }
-    if (bognort() != $item[none])
-    {
-      if (band != "")
-        band += ", ";
-      band += "Bognort";
-    }
-    if (stinkface() != $item[none])
-    {
-      if (band != "")
-        band += ", ";
-      band += "Stinkface";
-    }
-
-    if (length(band) > 0)
-    {
-      band = " (" + band + ")";
-    }
-
-    progress(backstage_items(), 4, "backstage items" + band);
-
-  }
-
-  if (quest_status("questL06Friar") > UNSTARTED
-      && quest_status("questM12Pirate") < 3
-      && item_amount($item[hot wing]) < 3)
-  {
-    progress(item_amount($item[hot wing]), 3, wrap($item[hot wing], 3) + " for use with the " + wrap($item[orcish frat house blueprints]));
-  }
-
-  if (quest_active("questL07Cyrptic"))
-  {
-    int evil = 200 - to_int(get_property("cyrptTotalEvilness"));
-    progress(evil, 200, "Cyrpt progress");
-    if (get_property("cyrptAlcoveEvilness").to_int() > 0 && get_property("cyrptAlcoveEvilness").to_int() < 50)
-      progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled alcove]));
-
-    if (get_property("cyrptCrannyEvilness").to_int() > 0 && get_property("cyrptCrannyEvilness").to_int() < 50)
-      progress(evil_progress(get_property("cyrptCrannyEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled cranny]));
-
-    if (get_property("cyrptNicheEvilness").to_int() > 0 && get_property("cyrptNicheEvilness").to_int() < 50)
-      progress(evil_progress(get_property("cyrptNicheEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled niche]));
-
-    if (get_property("cyrptNookEvilness").to_int() > 0 && get_property("cyrptNookEvilness").to_int() < 50)
-      progress(evil_progress(get_property("cyrptNookEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled nook]));
-
-  }
-
-
-
-  if (quest_status("questM21Dance") == FINISHED
-      && $location[the haunted ballroom].turns_spent < 5)
-  {
-    progress($location[The Haunted Ballroom].turns_spent, 5, "delay on " + wrap($location[The Haunted Ballroom]));
-  }
-
-
-
 
   progress_sheet_detail(detail);
 
