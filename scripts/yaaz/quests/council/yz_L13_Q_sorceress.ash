@@ -39,6 +39,29 @@ void L13_Q_sorceress_progress()
 
   }
 
+  if (quest_status("questL13Final") < 5
+      && hero_keys() < 3)
+  {
+    int keys = hero_keys();
+    string pete = UNCHECKED;
+    string boris = UNCHECKED;
+    string jarl = UNCHECKED;
+
+    if (have($item[boris's key])) boris = CHECKED;
+    if (have($item[jarlsberg's key])) jarl = CHECKED;
+    if (have($item[sneaky pete's key])) pete = CHECKED;
+
+    progress(keys, 3, "hero keys (" + boris + "Boris, " + pete + "Pete, " + jarl + "Jarlsberg)");
+  }
+  
+  if (quest_status("questL13Final") < 5
+      && quest_status("questL07Cyrptic") > UNSTARTED
+      && !have($item[skeleton key]))
+  {
+    task("make skeleton key");
+  }
+
+
 
   if (!quest_active("questL13Final")) return;
 

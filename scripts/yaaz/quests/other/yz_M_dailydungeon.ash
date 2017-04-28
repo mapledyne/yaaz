@@ -2,14 +2,16 @@ import "util/yz_main.ash";
 
 void M_dailydungeon_progress()
 {
-  if (quest_status("questL13Final") < 5
-      && hero_keys() < 3
-      && !to_boolean(get_property("dailyDungeonDone")))
+  if (!to_boolean(get_property("dailyDungeonDone"))) return;
+
+  if (quest_status("questL13Final") >= 5
+      || hero_keys() >= 3)
   {
-    int keys = 3 - hero_keys();
-    progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
+    if (!to_boolean(setting("always_daily_dungeon", "false"))) return;
   }
 
+  int keys = 3 - hero_keys();
+  progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
 }
 
 void M_dailydungeon_cleanup()
@@ -55,6 +57,11 @@ boolean M_dailydungeon()
     do_dungeon = true;
   }
 
+  if (to_boolean(setting("always_daily_dungeon", "false")))
+  {
+    do_dungeon = true;
+  }
+
   if (!do_dungeon)
   {
     return false;
@@ -84,8 +91,6 @@ boolean M_dailydungeon()
     set_property("choiceAdventure692", 2);
   } else if (my_buffedstat(my_primestat()) >= 30)
   {
-  //[20:14] Gaikotsu: [237] The Daily Dungeon (Room 2) Encounter: I Wanna Be a Door Requested choice (5) for choice #692 is not currently available. choice 1: Try the doorknob (suffer trap effects) choice 6: Sneak past it (bypass trap with moxie) choice 8: Leave the way ...
-  //[20:14] Gaikotsu: ... you came in. (leave, no turn spent) Click here to continue in the relay browser.
 
     switch(my_primestat())
     {
