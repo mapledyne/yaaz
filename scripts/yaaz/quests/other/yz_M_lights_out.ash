@@ -28,7 +28,7 @@ location next_lights_out_location()
   location dark = to_location(get_property("nextSpookyravenElizabethRoom"));
   if (!location_open(dark)
       || (dark == $location[the haunted gallery]
-          && to_boolean(setting("agressive_optimize", "false"))))
+          && to_boolean(setting("aggressive_optimize", "false"))))
   {
     dark = to_location(get_property("nextSpookyravenStephenRoom"));
   }
@@ -46,11 +46,11 @@ boolean M_lights_out()
 
   location dark = next_lights_out_location();
 
-  if (to_boolean(setting("agressive_optimize", "false"))
+  if (to_boolean(setting("aggressive_optimize", "false"))
       && (dark == $location[the haunted gallery]
           || dark == $location[the haunted laboratory]))
   {
-    info("You've set 'yz_aggressive_optimize' to true, and advancing the Lights Out quest any further would take a turn, so skipping them. If you want to complete the Lights Out quest, either 'set yz_agressive_optimize=false' or complete it manually.");
+    info("You've set 'yz_aggressive_optimize' to true, and advancing the Lights Out quest any further would take a turn, so skipping them. If you want to complete the Lights Out quest, either 'set yz_aggressive_optimize=false' or complete it manually.");
     return false;
   }
 

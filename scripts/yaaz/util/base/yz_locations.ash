@@ -12,6 +12,16 @@ location pick_semi_rare_location()
 {
   location last = to_location(get_property("semirareLocation"));
 
+  boolean maybe_pool = !to_boolean(setting("aggressive_optimize", "false"));
+  maybe_pool = to_boolean(setting("pool_skill", maybe_pool));
+
+  if (last != $location[the haunted billiards room]
+      && maybe_pool
+      && have($item[Spookyraven billiards room key]))
+  {
+    return $location[the haunted billiards room];
+  }
+
   if (quest_status("questL10Garbage") >= 9
       && to_boolean(setting("war_nuns", "false"))
       && get_property("sidequestNunsCompleted") == "none"
