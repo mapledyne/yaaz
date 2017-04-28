@@ -70,8 +70,27 @@ boolean location_open(location l)
       return quest_status("questL05Goblin") >= 1;
     case $location[8-bit realm]:
       return have($item[continuum transfunctioner]);
+    case $location[the haunted kitchen]:
     case $location[the haunted conservatory]:
       return quest_status("questM20Necklace") != UNSTARTED;
+    case $location[the haunted billiards room]:
+      return have($item[Spookyraven billiards room key]);
+    case $location[the haunted library]:
+      return have($item[[7302]Spookyraven library key]);
+    case $location[the haunted bathroom]:
+    case $location[the haunted bedroom]:
+    case $location[the haunted gallery]:
+      return quest_status("questM21Dance") >= 1;
+    case $location[the haunted ballroom]:
+      return quest_status("questM21Dance") >= 3;
+    case $location[the haunted storage room]:
+    case $location[the haunted laboratory]:
+    case $location[the haunted nursery]:
+      return quest_status("questM21Dance") == FINISHED;
+    case $location[the haunted wine cellar]:
+    case $location[the haunted boiler room]:
+    case $location[the haunted laundry room]:
+      return quest_status("questL11Manor") >= 1;
     default:
       return true;
   }

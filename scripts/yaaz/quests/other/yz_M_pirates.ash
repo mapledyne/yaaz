@@ -27,10 +27,10 @@ void M_pirates_progress()
     task("Get " + wrap($item[cap'm caronch's dentures]));
   }
 
-  if (quest_status("questM12Pirate") > 0 && quest_status("questM12Pirate") < 5)
+  int insult_count = pirate_insults();
+  if (insult_count > 0 && quest_status("questM12Pirate") < 5)
   {
-    int current = pirate_insults();
-    progress(current, 8, "pirate insults (" + pirate_insult_success() + "% chance)");
+    progress(insult_count, 8, "pirate insults (" + pirate_insult_success() + "% chance)");
   }
 
   if (quest_status("questM12Pirate") == 5)
@@ -135,16 +135,16 @@ boolean beer_pong(string page)
 				if(page.contains_text(insults[i].retort))
 				{
 					log("Found appropriate retort for insult.");
-					log("Insult: " + insults[i].insult);
-					log("Retort: " + insults[i].retort);
+					log(wrap("Insult: ", COLOR_LOCATION) + insults[i].insult);
+					log(wrap("Retort: ", COLOR_LOCATION) + insults[i].retort);
 					page = visit_url("beerpong.php?value=Retort!&response=" + i);
 					break;
 				}
 				else
 				{
 					warning("Looks like you needed a retort you haven't learned.");
-					log("Insult: " + insults[i].insult);
-					log("Retort: " + insults[i].retort);
+					log(wrap("Insult: ", COLOR_LOCATION) + insults[i].insult);
+					log(wrap("Retort: ", COLOR_LOCATION) + insults[i].retort);
 
 					// Give a bad retort
 					page = visit_url("beerpong.php?value=Retort!&response=9");
@@ -170,7 +170,7 @@ boolean try_beer_pong()
 	boolean won = false;
 	if(contains_text(page, "Arrr You Man Enough?"))
 	{
-    log("Attempting beer pong. Chance of success is " + pirate_insult_success() + "%.");
+    log("Attempting beer pong. Chance of success is " + wrap(pirate_insult_success(), COLOR_LOCATION) + "%.");
 		won = beer_pong(visit_url("choice.php?pwd&whichchoice=187&option=1"));
 	}
 	return won;
@@ -235,6 +235,10 @@ boolean get_getup()
 	if (my_basestat($stat[moxie]) < 25) return false; // needed for pants
 	if (my_basestat($stat[mysticality]) < 25) return false; // needed for parrot
 
+  maybe_pull($item[stuffed shoulder parrot]);
+	maybe_pull($item[eyepatch]);
+	maybe_pull($item[swashbuckling pants]);
+
   if (have_outfit("swashbuckling getup"))
     return false;
 
@@ -242,15 +246,8 @@ boolean get_getup()
 	if (dangerous($location[The Obligatory Pirate's Cove])) return false;
 
   log("Get the swashbuckling getup...");
-	maybe_pull($item[stuffed shoulder parrot]);
-	maybe_pull($item[eyepatch]);
-	maybe_pull($item[swashbuckling pants]);
 
-  while(!have_outfit("swashbuckling getup"))
-  {
-    boolean b = yz_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
-    if (!b) return true;
-  }
+  boolean b = yz_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
   return true;
 }
 
@@ -284,12 +281,8 @@ boolean get_capm_map()
 {
   if (quest_status("questM12Pirate") > UNSTARTED) return false;
 
-  while (item_amount($item[Cap'm Caronch's Map]) == 0)
-  {
-    maximize("", "swashbuckling getup");
-    boolean b = yz_adventure($location[barrrney's barrr]);
-    if (!b) return true;
-  }
+  maximize("", "swashbuckling getup");
+  boolean b = yz_adventure($location[barrrney's barrr]);
   return true;
 }
 
@@ -299,12 +292,10 @@ boolean get_blueprints()
 
   if (item_amount($item[Cap'm Caronch's nasty booty]) == 0) return false;
 
-  while (item_amount($item[Orcish Frat House blueprints]) == 0)
-  {
-    maximize("", "swashbuckling getup");
-    boolean b = yz_adventure($location[barrrney's barrr]);
-    if (!b) return true;
-  }
+  if (have($item[Orcish Frat House blueprints])) return false;
+
+  maximize("", "swashbuckling getup");
+  boolean b = yz_adventure($location[barrrney's barrr]);
   return true;
 }
 
@@ -319,11 +310,8 @@ boolean get_skirt()
     return true;
   }
   log("Head to the " + wrap($location[the degrassi knoll gym]) + " to get a " + wrap($item[frilly skirt]) + ".");
-  while (i_a($item[frilly skirt]) == 0)
-  {
-    boolean b = yz_adventure($location[the degrassi knoll gym], "items");
-    if (!b) return true;
-  }
+
+  boolean b = yz_adventure($location[the degrassi knoll gym], "items");
   return true;
 }
 
