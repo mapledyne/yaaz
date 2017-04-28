@@ -10,6 +10,7 @@ import "util/yaaz-pvp.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_monsters.ash";
 
-string version = "1.1a: Baa'baa'bu'ran"; // lights out
+string version = "1.1b: Baa'baa'bu'ran"; // pool semi-rare
+#string version = "1.1a: Baa'baa'bu'ran"; // lights out
 #string version = "1.1: Baa'baa'bu'ran"; // no_dispose, etc
 #string version = "1.0: Antique accordion";

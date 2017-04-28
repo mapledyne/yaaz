@@ -14,12 +14,22 @@ location pick_semi_rare_location()
 
   boolean maybe_pool = !to_boolean(setting("aggressive_optimize", "false"));
   maybe_pool = to_boolean(setting("pool_skill", maybe_pool));
+  int shark_visits = to_int(get_property("poolSharkCount"));
 
   if (last != $location[the haunted billiards room]
       && maybe_pool
-      && have($item[Spookyraven billiards room key]))
+      && have($item[Spookyraven billiards room key])
+      && shark_visits < 25)
   {
+    set_property("choiceAdventure330", 1);
     return $location[the haunted billiards room];
+  }
+  if (shark_visits >= 25)
+  {
+    // switch to the fight once we have enough pool skill.
+    // this script won't auto-choose it at this point, but polite to change it
+    // if the other option isn't needed anymore.
+    set_property("choiceAdventure330", 2);
   }
 
   if (quest_status("questL10Garbage") >= 9
