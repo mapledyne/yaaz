@@ -85,12 +85,9 @@ boolean kill_yetis()
     return false;
   }
 
-  log("Off to kill " + $monster[Groar] + ".");
-  while(item_amount($item[Groar's fur]) == 0)
-  {
-    string max = "cold res, meat, " + default_maximize_string();
-    boolean b = yz_adventure($location[mist-shrouded peak]);
-  }
+  log("Off to kill " + wrap($monster[Groar]) + ".");
+  string max = "cold res, 0.1 meat, 0.1 mainstat";
+  boolean b = yz_adventure($location[mist-shrouded peak], max);
   return true;
 }
 

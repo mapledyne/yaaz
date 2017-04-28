@@ -165,7 +165,7 @@ boolean hospital()
     info("Waiting a bit on " + wrap($location[the hidden hospital]) + " until it's less dangerous.");
     return false;
   }
-
+  set_property("choiceAdventure784", 1);
   log("Defeating " + wrap($location[the hidden hospital]) + ".");
   add_attract($monster[pygmy witch surgeon]);
 
@@ -194,6 +194,19 @@ boolean office()
 
   log("Defeating " + wrap($location[the hidden office building]) + ".");
   add_attract($monster[pygmy witch accountant]);
+
+  if (!have($item[boring binder clip]))
+  {
+    set_property("choiceAdventure786", 2); // get binder clip
+  }
+  else if (!have($item[McClusky file (complete)]))
+  {
+    set_property("choiceAdventure786", 3); // fight accountant
+  }
+  else
+  {
+    set_property("choiceAdventure786", 1); // fight spirit
+  }
 
   int turns = $location[the hidden office building].turns_spent % 5;
   if (have($item[boring binder clip])

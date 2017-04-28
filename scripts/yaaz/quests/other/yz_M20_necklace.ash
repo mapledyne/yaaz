@@ -27,12 +27,9 @@ void M20_necklace_progress()
         break;
       case 1:
       case 2:
-        int pool = approx_pool_skill();
+        int pool = max(approx_pool_skill(), 0);
         int max_pool = max(pool, 18);
-        if (pool >= 0)
-        {
-          progress(pool, max_pool, "approx. pool skill for the " + wrap($location[the haunted billiards room]));
-        }
+        progress(pool, max_pool, "approx. pool skill for the " + wrap($location[the haunted billiards room]));
         break;
       case 4:
         task("Return the "+ wrap($item[ghost of a necklace]) + " to " + wrap("Lady Spookyraven", COLOR_MONSTER));

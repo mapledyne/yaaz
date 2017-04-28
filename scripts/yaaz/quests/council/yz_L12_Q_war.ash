@@ -262,9 +262,9 @@ boolean start_the_war(string side)
 {
   string outfit = war_outfit();
 
-  location camp = $location[hippy camp];
+  location camp = $location[wartime hippy camp];
   if (side == "fratboy")
-    camp = $location[frat house];
+    camp = $location[wartime frat house];
 
   foreach key,doodad in outfit_pieces(outfit)
   {
@@ -273,6 +273,11 @@ boolean start_the_war(string side)
 
   if (!have_outfit(war_outfit()))
   {
+    if (dangerous(camp))
+    {
+      info("Will try collecting the " + wrap(war_outfit(), COLOR_ITEM) + " when it's a bit less dangerous.");
+      return false;
+    }
     log("Off to get the " + wrap(outfit, COLOR_ITEM) + " from the " + wrap(camp) + ".");
 
     set_property("choiceAdventure141", 2); // random food
@@ -290,6 +295,12 @@ boolean start_the_war(string side)
   camp = $location[wartime hippy camp];
   if (side == "hippy")
     camp = $location[wartime frat house];
+
+  if (dangerous(camp))
+  {
+    info("Will try starting the war when it's a bit less dangerous.");
+    return false;
+  }
 
   // should check to see if we have hippy war outfit and maybe change 139, 140?
   set_property("choiceAdventure139", 3); // fight space cadet

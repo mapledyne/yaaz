@@ -104,6 +104,11 @@ void settings_warning()
     wait(10);
   }
 
+  if (to_boolean(setting("no_dispose", "false")))
+  {
+    warning("You've 'set yz_no_dispose=true'. This means the script won't get rid of anything. You'll have to sell and otherwise manage your inventory manually.");
+    wait(5);
+  }
 
   if (!hippy_stone_broken()
       && setting("no_pvp") != "true"
@@ -120,7 +125,7 @@ void settings_warning()
 
 void intro()
 {
-
+  print("Version: " + version);
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>.");

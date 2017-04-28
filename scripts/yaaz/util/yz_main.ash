@@ -9,3 +9,5 @@ import "util/base/yz_maximize.ash";
 import "util/yaaz-pvp.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_monsters.ash";
+
+string version = "1.1";
