@@ -110,6 +110,14 @@ void settings_warning()
     wait(5);
   }
 
+  if (to_boolean(setting("always_daily_dungeon", "false"))
+      && to_boolean(setting("aggressive_optimize", "false")))
+  {
+    warning("You've asked to always do the daily dungeon, but also to agressively optimize.");
+    warning("Will continue to do the daily dungeon, but know it's not optimal.");
+    wait(5);
+  }
+
   if (!hippy_stone_broken()
       && setting("no_pvp") != "true"
       && my_daycount() == 1)
