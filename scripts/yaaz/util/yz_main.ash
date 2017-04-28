@@ -10,4 +10,5 @@ import "util/yaaz-pvp.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_monsters.ash";
 
-string version = "1.1";
+string version = "1.1: Gelatinous Noob";
+#string version = "1.0: Mosquito Larva";
