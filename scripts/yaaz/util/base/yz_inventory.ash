@@ -114,6 +114,8 @@ void stash(item it, int keep)
 {
   if (get_clan_name() == "") return;
 
+  if (to_boolean(setting("no_dispose", "false"))) return;
+
   string config = setting("use_stash", "false");
 
   if (!to_boolean(config)) return;
@@ -127,6 +129,8 @@ void stash(item it, int keep)
 
 void pulverize_all(item it, int keep)
 {
+  if (to_boolean(setting("no_dispose", "false"))) return;
+
   int num = item_amount(it) - keep;
   if (num <= 0) return;
 
@@ -163,6 +167,8 @@ void pulverize_keep_if(item it, boolean keep_if)
 
 void closet(item it, int keep)
 {
+  if (to_boolean(setting("no_dispose", "false"))) return;
+
 	int qty = item_amount(it) - keep;
 	if (qty < 1)
 		return;
@@ -393,6 +399,8 @@ int hero_keys()
 
 void sell_coin_item(item it, int keep)
 {
+  if (to_boolean(setting("no_dispose", "false"))) return;
+
   if(it.buyer == $coinmaster[none])
   {
     warning("Trying to sell " + wrap(it) + " to a coinmaster, but it's not that sort of item.");
@@ -479,6 +487,8 @@ void stock_item(item it)
 
 void sell_all(item it, int keep)
 {
+  if (to_boolean(setting("no_dispose", "false"))) return;
+
   // handle coinmaster items differently:
   if (it.buyer != $coinmaster[none])
   {
