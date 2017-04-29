@@ -22,7 +22,7 @@ import "quests/council/yz_L06_Q_friar.ash";
 import "quests/council/yz_L07_Q_cyrpt.ash";
 import "quests/council/yz_L08_Q_trapper.ash";
 import "quests/council/yz_L09_Q_topping.ash";
-import "quests/council/yz_L10_Q_Garbage.ash";
+import "quests/council/yz_L10_Q_garbage.ash";
 import "quests/council/yz_L11_Q_macguffin.ash";
 import "quests/council/yz_L12_Q_war.ash";
 import "quests/council/yz_L13_Q_sorceress.ash";
