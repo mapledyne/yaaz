@@ -86,7 +86,8 @@ void settings_warning()
       warning("You've created a 'yaaz' mood to add your custom mood interested. Setting your mood to that.");
     }
     wait(10);
-    set_property("currentMood", mood);
+    if (mood == 'yaaz')
+      set_property("currentMood", mood);
   }
 
 
