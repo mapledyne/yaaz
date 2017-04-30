@@ -195,17 +195,17 @@ boolean office()
   log("Defeating " + wrap($location[the hidden office building]) + ".");
   add_attract($monster[pygmy witch accountant]);
 
-  if (!have($item[boring binder clip]))
+  if (have($item[McClusky file (complete)]))
+  {
+    set_property("choiceAdventure786", 1); // fight spirit
+  }
+  else if (!have($item[boring binder clip]))
   {
     set_property("choiceAdventure786", 2); // get binder clip
   }
-  else if (!have($item[McClusky file (complete)]))
-  {
-    set_property("choiceAdventure786", 3); // fight accountant
-  }
   else
   {
-    set_property("choiceAdventure786", 1); // fight spirit
+    set_property("choiceAdventure786", 3); // fight accountant
   }
 
   int turns = $location[the hidden office building].turns_spent % 5;
