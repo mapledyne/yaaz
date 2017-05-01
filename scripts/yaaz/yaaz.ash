@@ -120,15 +120,30 @@ void settings_warning()
   }
 
   if (!hippy_stone_broken()
-      && setting("no_pvp") != "true"
       && my_daycount() == 1)
   {
-    warning("You haven't broken your Hippy Stone to enable PvP.");
-    warning("This script can handle PvP for you if you break the stone.");
-    warning("If you don't want to fight in PvP, and don't want this message,");
-    log("set " + SETTING_PREFIX + "_no_pvp=true");
-    warning("Otherwise, his ESC and go break that stone!");
-    wait(10);
+    if (setting("pvp") == "false" || setting("no_pvp") == "true")
+    {
+      // No warning, skip all pvp
+    } else if (setting("pvp") == "always")
+    {
+      string pvpcontents = visit_url("peevpee.php?confirm=on&action=smashstone&pwd");
+      if (pvpcontents.contains_text("Pledge allegiance to"))
+      {
+        warning("PVP Clan allegiance unset (new season?), automatically pledging...");
+        wait(20);
+        visit_url("peevpee.php?action=pledge&place=fight&pwd");
+      }
+    } else {
+      warning("You haven't broken your Hippy Stone to enable PvP.");
+      warning("This script can handle PvP for you if you break the stone.");
+      warning("If you don't want to fight in PvP, and don't want this message,");
+      log("set " + SETTING_PREFIX + "_pvp=false");
+      warning("If you always want to fight in PvP, and don't want this message,");
+      log("set " + SETTING_PREFIX + "_pvp=always");
+      warning("Otherwise, his ESC and go break that stone!");
+      wait(10);
+    }
   }
 }
 
