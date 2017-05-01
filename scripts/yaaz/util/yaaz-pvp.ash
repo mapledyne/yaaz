@@ -179,8 +179,8 @@ void dress_for_pvp()
     case "Pirate":
       cli_execute("outfit birthday suit");
       letter_equip_clothes();
-      max_effects("booze, -combat");
-
+      max_effects("booze");
+      max_effects("-combat");
   }
 }
 
