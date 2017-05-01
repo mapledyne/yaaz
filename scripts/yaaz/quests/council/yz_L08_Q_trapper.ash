@@ -40,7 +40,7 @@ void L08_Q_trapper_progress()
 
       progress(gear, 3, "ninja gear (" + carabiner + " carabiner, " + rope + " rope, " + crampons + " crampons)");
     } else {
-      if (!have_outfit("eXtreme Cold-Weather Gear"))
+      if (!have_outfit_simple("eXtreme Cold-Weather Gear"))
       {
         task("Get the " + wrap("eXtreme Cold-Weather Gear", COLOR_ITEM));
       } else {
@@ -133,11 +133,17 @@ boolean peak_extreme()
     return false;
   }
 
-  if (!have_outfit("eXtreme Cold-Weather Gear"))
+  if (!have_outfit_simple("eXtreme Cold-Weather Gear"))
   {
     log("Trying to get the " + wrap("eXtreme Cold-Weather Gear", COLOR_ITEM) + ".");
     yz_adventure($location[the extreme slope], "items");
     return true;
+  }
+
+  if (!have_outfit("eXtreme Cold-Weather Gear"))
+  {
+    log("Skipping " + wrap($location[the extreme slope]) + " for now because we can't wear the eXtreme Cold-Weather Gear.");
+    return false;
   }
 
   if (to_int(get_property("currentExtremity")) < 3)
