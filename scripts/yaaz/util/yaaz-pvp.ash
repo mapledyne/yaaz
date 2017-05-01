@@ -5,23 +5,65 @@ import "util/base/yz_maximize.ash";
 
 //  Numeric: ("Numeric", "numericSwagger", "back to")
 //  Bear:    ("Bear", "bearSwagger", "Barely Dressed")
-
-string PVP_SEASON = "Ice";
-string PVP_SWAGGER = "iceSwagger";
-string PVP_FIGHT = "Ready to Melt";
+//  Ice:     ("Ice", "iceSwagger", "Ready to Melt")
 
 void pvp();
 void effects_for_pvp();
-string school_letter(int threshold);
-string school_letter();
+string pvp_equip_letter(int threshold);
+string pvp_equip_letter();
 item find_best_clothes(slot s);
 void school_clothes(string letter);
 
+void collect_pvp_info()
+{
+  string v = visit_url("/peevpee.php?place=shop");
 
-string school_letter(int threshold)
+  if (contains_text(v,"Swagger Jack"))
+  {
+    save_daily_setting("pvp_season", "Pirate");
+    save_daily_setting("pvp_swagger", "pirateSwagger");
+    save_daily_setting("pvp_fight", "Letter of the Moment");
+    return;
+  }
+}
+
+string pvp_season()
+{
+  if (setting("pvp_season", "") != "")
+  {
+    return setting("pvp_season");
+  }
+
+  collect_pvp_info();
+  return setting("pvp_season");
+}
+
+string pvp_swagger()
+{
+  if (setting("pvp_swagger", "") != "")
+  {
+    return setting("pvp_swagger");
+  }
+
+  collect_pvp_info();
+  return setting("pvp_swagger");
+}
+
+string pvp_fight()
+{
+  if (setting("pvp_fight", "") != "")
+  {
+    return setting("pvp_fight");
+  }
+
+  collect_pvp_info();
+  return setting("pvp_fight");
+}
+
+string pvp_equip_letter(int threshold)
 {
   string info = visit_url("peevpee.php?place=rules");
-  matcher letter = create_matcher("<b>([A-Z])<\/b> in their equipment.", info);
+  matcher letter = create_matcher("<b>([A-Z])<\/b>s? in their equipment.", info);
   string current = "A";
   if(letter.find())
   {
@@ -44,21 +86,22 @@ string school_letter(int threshold)
 
   if (sec > 0 && sec < threshold)
   {
-    log(CLUB + " The current school letter is " + wrap(current, COLOR_ITEM) + " but it's changing soon to " + wrap(next, COLOR_ITEM) + ", so we'll use that letter instead.");
+    log(CLUB + " The current " + pvp_season() + " equipment letter is " + wrap(current, COLOR_ITEM) + " but it's changing soon to " + wrap(next, COLOR_ITEM) + ", so we'll use that letter instead.");
     current = next;
   }
 
   return current;
 }
 
-string school_letter()
+string pvp_equip_letter()
 {
-  return school_letter(0);
+  return pvp_equip_letter(0);
 }
+
 
 item find_best_clothes(slot s)
 {
-  string letter = school_letter();
+  string letter = pvp_equip_letter();
   item target = $item[none];
   int current = 0;
   foreach i in get_inventory()
@@ -78,9 +121,9 @@ item find_best_clothes(slot s)
 }
 
 
-void school_clothes(string letter)
+void letter_equip_clothes(string letter)
 {
-  log(CLUB + " Optimizing wardrobe for PvP. School letter is currently: " + wrap(letter, COLOR_ITEM));
+  log(CLUB + " Optimizing wardrobe for PvP. " + pvp_season() + " letter is currently: " + wrap(letter, COLOR_ITEM));
 
   if(equipped_item($slot[hat]) == $item[none])
     equip($slot[hat], find_best_clothes($slot[hat]));
@@ -106,23 +149,23 @@ void school_clothes(string letter)
     equip($slot[acc3], find_best_clothes($slot[acc1]));
 }
 
-void school_clothes()
+void letter_equip_clothes()
 {
   int time = 60 * 60; // one hour
-  string letter = school_letter(time);
-  school_clothes(letter);
+  string letter = pvp_equip_letter(time);
+  letter_equip_clothes(letter);
 }
 
 void dress_for_pvp()
 {
-  switch(PVP_SEASON)
+  switch(pvp_season())
   {
     default:
       cli_execute("outfit birthday suit");
       return;
     case "School":
       cli_execute("outfit birthday suit");
-      school_clothes();
+      letter_equip_clothes();
       return;
     case "Holiday":
       maximize("cold res, -combat");
@@ -133,12 +176,17 @@ void dress_for_pvp()
     case "Ice":
       maximize("cold res, 0.2 hot dmg, 0.2 hot spell dmg");
       return;
+    case "Pirate":
+      cli_execute("outfit birthday suit");
+      letter_equip_clothes();
+      max_effects("booze, -combat");
+
   }
 }
 
 void effects_for_pvp()
 {
-  switch(PVP_SEASON)
+  switch(pvp_season())
   {
     default:
       break;
@@ -178,33 +226,31 @@ void pvp_rollover()
 void pvp()
 {
 
-  if (hippy_stone_broken())
+  if (!hippy_stone_broken()) return;
+
+  if (can_deck("clubs"))
+    cheat_deck("clubs", "more PVP fights");
+
+  if (pvp_attacks_left() > 0)
+    log (CLUB + " Using up our PVP attacks.");
+
+  if (pvp_attacks_left() > 0)
   {
-    if (can_deck("clubs"))
-      cheat_deck("clubs", "more PVP fights");
-
-    if (pvp_attacks_left() > 0)
-      log (CLUB + " Using up our PVP attacks.");
-
-    if (pvp_attacks_left() > 0)
-    {
-      log("About to get dressed and set up effects for PVP.");
-      wait(5);
-      cli_execute("checkpoint");
-      dress_for_pvp();
-      effects_for_pvp();
-      string fame = "fame";
-      if (can_interact()) fame = "loot";
-      cli_execute("pvp " + fame + " " + PVP_FIGHT);
-      cli_execute("outfit checkpoint");
-    }
-    visit_url("peevpee.php?place=shop");
-    log(CLUB + " PVP swagger: " + get_property("availableSwagger"));
-    int totalSwag = to_int(get_property(PVP_SWAGGER));
-    log(CLUB + " " + PVP_SEASON + " swagger: " + totalSwag);
+    log("About to get dressed and set up effects for PVP.");
     wait(5);
+    cli_execute("checkpoint");
+    dress_for_pvp();
+    effects_for_pvp();
+    string fame = "fame";
+    if (can_interact()) fame = "loot";
+    cli_execute("pvp " + fame + " " + pvp_fight());
+    cli_execute("outfit checkpoint");
   }
-
+  visit_url("peevpee.php?place=shop");
+  log(CLUB + " PVP swagger: " + get_property("availableSwagger"));
+  int totalSwag = to_int(get_property(pvp_swagger()));
+  log(CLUB + " " + pvp_season() + " swagger: " + totalSwag);
+  wait(5);
 }
 
 void main()
