@@ -110,8 +110,8 @@ void numberology()
 {
 	if (!have_skill($skill[calculate the universe]))
 		return;
-	if (to_int(get_property("_universeCalculated")) != 0)
-		return; // TODO: doesn't account for >1 calculations possible yet.
+	if (to_int(get_property("_universeCalculated")) >= to_int(get_property("skillLevel144")))
+		return;
 	int goal = pick_a_number();
 
 	if (goal == 0)
