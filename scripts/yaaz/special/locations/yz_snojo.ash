@@ -2,6 +2,18 @@ import "util/base/yz_print.ash";
 import "util/base/yz_maximize.ash";
 import "util/adventure/yz_adventure.ash";
 
+void snojo_progress()
+{
+
+  if (to_boolean(get_property("snojoAvailable"))
+      && to_int(get_property("_snojoFreeFights")) < 10)
+  {
+    int fights = to_int(get_property("_snojoFreeFights"));
+    progress(fights, 10, "free " + wrap("snojo", COLOR_LOCATION) + " fights", "blue");
+  }
+
+}
+
 boolean snojo_too_risky()
 {
   // return true if we think it's worth the risk to fight a snowman.

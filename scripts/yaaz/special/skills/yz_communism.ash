@@ -1,5 +1,10 @@
 import "util/base/yz_print.ash";
 
+void communism_progress()
+{
+
+}
+
 void communism()
 {
   if (!have_skill($skill[communism!])) return;

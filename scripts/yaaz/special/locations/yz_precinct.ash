@@ -1,6 +1,16 @@
 import "util/base/yz_util.ash";
 import "util/base/yz_settings.ash";
 
+boolean can_precinct();
+
+void precinct_progress()
+{
+  if (!can_precinct()) return;
+
+  progress(to_int(get_property("_detectiveCasesCompleted")), 3, "detective cases solved", "blue");
+
+}
+
 boolean can_precinct()
 {
   return (to_int(get_property("_detectiveCasesCompleted")) < 3 && to_boolean(get_property("hasDetectiveSchool")));

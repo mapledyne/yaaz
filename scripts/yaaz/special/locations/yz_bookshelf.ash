@@ -1,5 +1,10 @@
 import "util/base/yz_util.ash";
 
+void bookshelf_progress()
+{
+
+}
+
 boolean have_love_song()
 {
   foreach ef in $effects[broken heart,
@@ -104,27 +109,23 @@ skill next_libram()
   return $skill[none];
 }
 
-boolean bookshelf()
+void bookshelf()
 {
-  float mp_limit = my_mp() * 0.2;
   skill book = next_libram();
-  if (book == $skill[none])
-    return false;
+  if (book == $skill[none]) return;
 
   int cost = mp_cost(book);
-  if (cost > mp_limit)
-    return false;
 
-  log("Casting " + wrap(book) + " since we have enough spare MP. Cost should be " + cost + " MP.");
-  use_skill(1, book);
-  return true;
+  while (cost < my_mp() * 0.3)
+  {
+    log("Casting " + wrap(book) + " since we have enough spare MP. Cost should be " + cost + " MP.");
+    use_skill(1, book);
+    cost = mp_cost(book);
+    book = next_libram();
+  }
 }
 
 void main()
 {
-  while(bookshelf())
-  {
-    // work in bookshelf();
-  }
-
+  bookshelf();
 }

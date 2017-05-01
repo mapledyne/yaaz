@@ -11,6 +11,7 @@ import "util/base/yz_paths.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_locations.ash";
 
+import "special/yz_special.ash";
 import "util/yz_quests_main.ash";
 
 int level_substats(int level)
@@ -43,13 +44,6 @@ void level_progress()
   progress(current_substats(), next_substats(), "substats to level " + to_string(my_level()+1));
 }
 
-
-
-boolean do_detail(string test, string detail)
-{
-  return test == detail || detail == "all";
-}
-
 void smoke_if_got_it(item it)
 {
   if (!have(it)) return;
@@ -57,137 +51,38 @@ void smoke_if_got_it(item it)
   task("You have a " + wrap(it) + ". Manually use or closet (or sell, or whatever)");
 }
 
-void progress_sheet_detail(string detail)
+void progress_sheet_detail()
 {
   // extra details for the sheet when requested.
 
-  if (do_detail("smiles", detail)
-      && smiles_remaining() > 0)
+  string detail = "all"; // to be removed once we get rid of do_detail
+
+  foreach special_thing in SPECIAL_LIST
   {
-    progress(5 - smiles_remaining(), total_smiles(), "smiles from your Golden Mr. Accessory", "blue");
+    string special_progress = special_thing + "_progress";
+    call special_progress();
   }
 
-  if (do_detail("floundry", detail)
-      && have($item[fishin' pole])
-      && !to_boolean(get_property("_floundryItemUsed")))
+  if (smiles_remaining() > 0)
   {
-    task("get item from the floundry");
-  }
-
-  if (do_detail("witchess", detail)
-      && get_campground() contains $item[Witchess Set])
-  {
-    int fights = to_int(get_property("_witchessFights"));
-    if (fights < 5)
-    {
-      progress(fights, 5, "Witchess fights", "blue");
-    }
-  }
-
-  if (do_detail("snojo", detail)
-      && to_boolean(get_property("snojoAvailable"))
-      && to_int(get_property("_snojoFreeFights")) < 10)
-  {
-    int fights = to_int(get_property("_snojoFreeFights"));
-    progress(fights, 10, "free snojo fights", "blue");
-  }
-
-  if (do_detail("protonic", detail)
-      && have($item[protonic accelerator pack])
-      && to_location(get_property("ghostLocation")) != $location[none])
-  {
-    task("defeat ghost (" + wrap(to_location(get_property("ghostLocation")))+ ")");
-  }
-
-  if (do_detail("precinct", detail)
-      && to_int(get_property("_detectiveCasesCompleted")) < 3
-      && to_boolean(get_property("hasDetectiveSchool")))
-  {
-    progress(to_int(get_property("_detectiveCasesCompleted")), 3, "detective cases solved", "blue");
-  }
-
-  if (do_detail("timespinner", detail)
-      && have($item[time-spinner]))
-  {
-    int used = to_int(get_property("_timeSpinnerMinutesUsed"));
-
-    if (used < 10)
-    {
-      progress(used, 10, wrap($item[time-spinner]) + " minutes used", "blue");
-      if (!to_boolean(get_property("_timeSpinnerReplicatorUsed")))
-      {
-        task("use Time Spinner replicator");
-      }
-    }
-  }
-
-  if (do_detail("deck", detail)
-      && have($item[deck of every card])
-      && to_int(get_property("_deckCardsDrawn")) < 15)
-  {
-    progress(to_int(get_property("_deckCardsDrawn")), 15, "Deck of Every Card cards drawn", "blue");
-  }
-
-  if (do_detail("numberology", detail)
-      && have_skill($skill[calculate the universe])
-      && to_int(get_property("_universeCalculated")) == 0)
-  {
-    task("Calculate the Universe");
-  }
-
-  if (do_detail("goodwill", detail)
-       && my_path() == "Way of the Surprising Fist")
-  {
-    int charity = to_int(get_property("totalCharitableDonations"));
-    if (charity < 1000000)
-    {
-      progress(charity, 1000000, "Good Will Hunting trophy", "blue");
-    }
-  }
-
-  if (do_detail("lovetunnel", detail)
-      && to_boolean(get_property("loveTunnelAvailable"))
-      && !to_boolean(get_property("_loveTunnelUsed")))
-  {
-    task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is available and hasn't been used today.");
-  }
-
-  if (to_boolean(get_property("loveTunnelAvailable"))
-      && !to_boolean(get_property("_loveTunnelUsed"))
-      && !to_boolean(setting("do_lovetunnel", "true")))
-  {
-    task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is not being automated because you set yz_do_lovetunnel=false. You'll need to do the tunnel yourself.");
-  }
-
-  if (do_detail("gingerbread", detail)
-      && get_property("gingerbreadCityAvailable") == "true")
-  {
-    task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
-  }
-  if (do_detail("space_gate", detail)
-      && to_int(get_property("_spacegateTurnsLeft")) > 0)
-  {
-    progress(20 - to_int(get_property("_spacegateTurnsLeft")), 20, wrap("Spacegate", COLOR_LOCATION) + " energy. This is not automated. Do this yourself if interested during the run.");
+    progress(5 - smiles_remaining(), total_smiles(), "smiles from your " + wrap($item[Golden Mr. Accessory]), "blue");
   }
 
 }
 
-void progress_sheet(string detail)
+void progress_sheet(boolean detailed)
 {
 
-  if (detail != "" && detail != "all")
-  {
-    progress_sheet_detail(detail);
-    return;
-  }
-
-  if (detail == "")
-  {
-    log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ".");
-  }
-  if (detail == "all")
+  if (detailed)
   {
     log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ", over " + wrap(my_daycount(), COLOR_LOCATION) + " days.");
+    string hc = "";
+    if (in_hardcore()) hc = "Hardcore ";
+    log("Current path: " + wrap(hc + my_path(), COLOR_LOCATION));
+  }
+  else
+  {
+    log("Turns used this ascension: " + wrap(my_turncount(), COLOR_LOCATION) + ".");
   }
 
   if (quest_status("questL13Final") >= 13)
@@ -215,7 +110,10 @@ void progress_sheet(string detail)
     call quest_progress();
   }
 
-  progress_sheet_detail(detail);
+  if (detailed)
+  {
+    progress_sheet_detail();
+  }
 
   for x from 0 to 25
   {
@@ -268,7 +166,7 @@ void progress_sheet(string detail)
     smoke_if_got_it(puff);
   }
 
-  if (detail == "all")
+  if (detailed)
   {
     foreach toy in $items[special edition batfellow comic]
     {
@@ -326,21 +224,18 @@ void progress_sheet(string detail)
         task("You have a " + wrap(f.hatchling) + " which can hatch into a " + wrap(f) + ", which you don't have.");
       }
     }
-
-
   }
-
 }
 
 void progress_sheet()
 {
-  progress_sheet("");
+  progress_sheet(false);
 }
 
 void main()
 {
   print("Version: " + version);
   print("Current progress in a few things:");
-  progress_sheet("all");
+  progress_sheet(true);
 
 }

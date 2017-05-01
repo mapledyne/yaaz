@@ -14,6 +14,24 @@ int tunnel_statitem(stat st);
 
 void lovetunnel();
 
+void lovetunnel_progress()
+{
+  if (!to_boolean(get_property("loveTunnelAvailable"))
+      || to_boolean(get_property("_loveTunnelUsed")))
+  {
+    return;
+  }
+
+  if (to_boolean(setting("do_lovetunnel", "true")))
+  {
+    task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is available and hasn't been used today.");
+  }
+  else
+  {
+    task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is not being automated because you set yz_do_lovetunnel=false. You'll need to do the tunnel yourself.");
+  }
+
+}
 
 int tunnel_effect(effect ef)
 {

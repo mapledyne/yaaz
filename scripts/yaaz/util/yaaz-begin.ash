@@ -5,7 +5,7 @@ void day_begin()
   log("Beginning start-of-day prep.");
 
   log("Current progress:");
-  progress_sheet("all");
+  progress_sheet(true);
   wait(5);
 
   if (get_property("cloverProtectActive") != "true")

@@ -2,6 +2,18 @@ import "util/base/yz_print.ash";
 import "util/base/yz_maximize.ash";
 import "util/adventure/yz_adventure.ash";
 
+void witchess_progress()
+{
+  if (get_campground() contains $item[Witchess Set])
+  {
+    int fights = to_int(get_property("_witchessFights"));
+    if (fights < 5)
+    {
+      progress(fights, 5, "Witchess fights", "blue");
+    }
+  }
+}
+
 int witchess_left()
 {
   if (get_campground() contains $item[Witchess Set])

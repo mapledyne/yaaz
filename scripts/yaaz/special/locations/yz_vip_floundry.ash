@@ -9,6 +9,14 @@ floundry_fish[3] = "bass";
 floundry_fish[4] = "hatchetfish";
 floundry_fish[5] = "tuna";
 
+void vip_floundry_progress()
+{
+	if (have($item[fishin' pole]) && !to_boolean(get_property("_floundryItemUsed")))
+	{
+		task("get item from the floundry");
+	}
+}
+
 location[string] parse_holes() {
 	//Determine where we can find the fish
 

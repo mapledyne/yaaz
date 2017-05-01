@@ -4,6 +4,17 @@ import "util/base/yz_familiars.ash";
 import "util/base/yz_quests.ash";
 import "util/base/yz_util.ash";
 
+void deck_progress()
+{
+  if (!have($item[deck of every card])) return;
+
+  int drawn = to_int(get_property("_deckCardsDrawn"));
+  if (drawn >= 15) return;
+
+  progress(drawn, 15, wrap($item[Deck of Every Card]) + " cards drawn", "blue");
+
+}
+
 boolean can_deck()
 {
   if (can_adventure()

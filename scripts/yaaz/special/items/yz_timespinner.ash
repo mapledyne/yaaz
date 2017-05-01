@@ -4,6 +4,22 @@ import "util/adventure/yz_consult.ash";
 
 import <zlib.ash>
 
+void timespinner_progress()
+{
+  if (!have($item[time-spinner])) return;
+
+  int used = to_int(get_property("_timeSpinnerMinutesUsed"));
+
+  if (used < 10)
+  {
+    progress(used, 10, wrap($item[time-spinner]) + " minutes used", "blue");
+    if (!to_boolean(get_property("_timeSpinnerReplicatorUsed")))
+    {
+      task("use Time Spinner replicator");
+    }
+  }
+}
+
 int time_minutes()
 {
   if (item_amount($item[time-spinner]) == 0)

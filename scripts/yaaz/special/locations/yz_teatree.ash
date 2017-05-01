@@ -1,5 +1,10 @@
 import "util/base/yz_print.ash";
 
+void teatree_progress()
+{
+
+}
+
 void teatree()
 {
   if (!(get_campground() contains $item[potted tea tree]))

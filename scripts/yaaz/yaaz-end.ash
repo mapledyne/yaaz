@@ -80,7 +80,7 @@ void day_end()
     remove_non_rollover();
     pvp_rollover();
   }
-  progress_sheet("all");
+  progress_sheet(true);
   manuel_progress();
 
 }

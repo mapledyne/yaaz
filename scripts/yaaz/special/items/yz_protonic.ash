@@ -4,6 +4,16 @@ import "util/base/yz_maximize.ash";
 // Note: Crossing streams functions are in maximize.ash since they're only
 // used at this point to maximize stats.
 
+
+void protonic_progress()
+{
+  if (!have($item[protonic accelerator pack])) return;
+  location ghostly = to_location(get_property("ghostLocation"));
+  if (ghostly == $location[none]) return;
+
+  task("defeat ghost (" + wrap(ghostly)+ ")");
+}
+
 boolean ghost_hunting()
 {
   // need better logic here to decide if we're going to hunt a ghost.

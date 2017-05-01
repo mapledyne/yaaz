@@ -3,6 +3,14 @@ import "base/yz_war_support.ash";
 import "util/adventure/yz_consult.ash";
 import "base/yz_inventory.ash";
 
+void numberology_progress()
+{
+	if (!have_skill($skill[calculate the universe])) return;
+	if (to_int(get_property("_universeCalculated")) >= to_int(get_property("skillLevel144"))) return;
+
+	task("Calculate the Universe");
+}
+
 int moon_sign_id()
 {
 	switch(my_sign())

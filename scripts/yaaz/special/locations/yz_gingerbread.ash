@@ -1,10 +1,17 @@
 import "util/base/yz_maximize.ash";
 
+void gingerbread_progress()
+{
+  if (!to_boolean(get_property("gingerbreadCityAvailable") == "true")) return;
+
+  task(wrap("Gingerbread City", COLOR_LOCATION) + " is not automated, but you have it. Do this yourself if interested during the run.");
+}
+
 boolean can_gingerbread()
 {
   if (!to_boolean(get_property("gingerbreadCityAvailable"))) return false;
 
-  return true;
+  return to_boolean(setting("do_gingerbread", "false"));
 }
 
 boolean gingerbread()
