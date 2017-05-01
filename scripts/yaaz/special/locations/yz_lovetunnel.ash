@@ -124,7 +124,7 @@ void lovetunnel()
     return;
   if (to_boolean(get_property("_loveTunnelUsed")))
     return;
-  if (!to_boolean(get_property("do_lovetunnel", "true")))
+  if (!to_boolean(setting("do_lovetunnel", "true")))
     return;
 
   // should add some nuance to this...

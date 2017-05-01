@@ -154,7 +154,7 @@ void progress_sheet_detail(string detail)
 
   if (to_boolean(get_property("loveTunnelAvailable"))
       && !to_boolean(get_property("_loveTunnelUsed"))
-      && !to_boolean(get_property("do_lovetunnel", "true")))
+      && !to_boolean(setting("do_lovetunnel", "true")))
   {
     task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is not being automated because you set yz_do_lovetunnel=false. You'll need to do the tunnel yourself.");
   }
