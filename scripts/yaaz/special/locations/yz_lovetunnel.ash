@@ -124,6 +124,8 @@ void lovetunnel()
     return;
   if (to_boolean(get_property("_loveTunnelUsed")))
     return;
+  if (!to_boolean(get_property("do_lovetunnel", "true")))
+    return;
 
   // should add some nuance to this...
   boolean fight_fight_fight = my_level() > 4;

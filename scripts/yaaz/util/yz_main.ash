@@ -10,9 +10,10 @@ import "util/yaaz-pvp.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_monsters.ash";
 
-string version = "1.2.1: Cactuary"; // Don't shore vacation before you can access the desert.
+string version = "1.3: Demoninja"; // do_lovetunnel, don't override mood
+#string version = "1.2.1: Cactuary"; // Don't shore vacation before you can access the desert.
 #string version = "1.2: Cactuary"; // always_daily_dungeon
 #string version = "1.1.2: Baa'baa'bu'ran"; // pool semi-rare
 #string version = "1.1.1: Baa'baa'bu'ran"; // lights out
 #string version = "1.1: Baa'baa'bu'ran"; // no_dispose, etc
-#string version = "1.0: Antique accordion";
+#string version = "1.0: Alphabet Giant";
