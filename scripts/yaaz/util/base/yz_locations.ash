@@ -106,7 +106,7 @@ boolean location_open(location l)
     case $location[the haunted storage room]:
     case $location[the haunted laboratory]:
     case $location[the haunted nursery]:
-      return quest_status("questM21Dance") == FINISHED;
+      return quest_status("questM17Babies") != UNSTARTED;
     case $location[the haunted wine cellar]:
     case $location[the haunted boiler room]:
     case $location[the haunted laundry room]:

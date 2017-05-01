@@ -31,7 +31,7 @@ boolean M_desert_beach()
     return false;
   }
 
-  if (my_meat() > 7000)
+  if (my_meat() > 6000)
   {
     log("Buying a " + wrap($item[desert bus pass]) + " to access the beach.");
     buy(1, $item[desert bus pass]);

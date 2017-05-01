@@ -78,6 +78,18 @@ boolean market_loop()
           info("Can't get your father's diary until you access the desert.");
           return false;
         }
+        switch (my_primestat())
+        {
+          case $stat[muscle]:
+            set_property("choiceAdventure793", 1);
+            break;
+          case $stat[mysticality]:
+            set_property("choiceAdventure793", 2);
+            break;
+          case $stat[moxie]:
+            set_property("choiceAdventure793", 3);
+            break;
+        }
         yz_adventure($location[The Shore\, Inc. Travel Agency]);
       }
       return true;

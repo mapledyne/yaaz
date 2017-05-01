@@ -46,11 +46,19 @@ boolean M_spookyraven()
 
   if (quest_status("questM21Dance") == FINISHED)
   {
+    if (quest_status("questM17Babies") == UNSTARTED)
+    {
+      log("Visiting Lady Spookyraven on the third floor.");
+      string v = visit_url("place.php?whichplace=manor3&action=manor3_ladys");
+      return true;
+    }
+
     return consume_ballroom_delay();
   }
 
   // bail if we're unlikely to kill things easily enough (using a representative monster):
   if (dangerous($location[the haunted bathroom])) return false;
+  print(3);
 
   if (!have($item[lady spookyraven's powder puff]))
   {

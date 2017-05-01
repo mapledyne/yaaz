@@ -255,7 +255,7 @@ boolean apartment()
     return false;
   }
 
-  if (dangerous($location[the hidden apartment building]))
+  if (dangerous($monster[ancient protector spirit]))
   {
     info("Waiting a bit on " + wrap($location[the hidden apartment building]) + " until it's less dangerous.");
     return false;
@@ -263,6 +263,16 @@ boolean apartment()
 
 
   log("Defeating " + wrap($location[the hidden apartment building]) + ".");
+
+  if (have_effect($effect[thrice-cursed]) > 0)
+  {
+    set_property("choiceAdventure780", 1); // fight spirit
+  }
+  else
+  {
+    set_property("choiceAdventure780", 2); // increase our curse
+  }
+
   if (get_property("olfactedMonster") != $monster[pygmy witch accountant]
       || quest_status("questL11Business") == FINISHED)
   {
