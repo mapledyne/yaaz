@@ -393,14 +393,31 @@ boolean try_consume(item it)
   return false;
 }
 
+
+
 boolean consume_best()
 {
   item[int] noms = consume_list();
 
+  item best_drink = $item[none];
+  foreach it in $items[]
+  {
+    if (item_amount(it) == 0) continue;
+    if (it.inebriety == 0) continue;
+    if (average_range(it.adventures) < average_range(best_drink.adventures)) continue;
+    best_drink = it;
+  }
+
   foreach nom, it in noms
   {
-     if (try_consume(it))
-      return true;
+    if (it == best_drink
+        && item_amount(it) < 2
+        && can_consume(it))
+    {
+      debug("Not drinking a " + wrap(it) + " to save it for rollover.");
+      continue;
+    }
+    if (try_consume(it)) return true;
   }
 
   // we have nothing in our inventory we can consume right now.

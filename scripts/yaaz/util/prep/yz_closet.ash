@@ -26,33 +26,6 @@ void closet_things()
     if (stored.inebriety > max_drink_size()) continue;
     if (average_range(stored.adventures) > average_range(best_stored.adventures)) best_stored = stored;
   }
-
-  item best_held = $item[none];
-  foreach held in get_inventory()
-  {
-    if (held.inebriety == 0) continue;
-    if (held.inebriety > max_drink_size()) continue;
-    if (average_range(held.adventures) > average_range(best_held.inebriety)) best_held = held;
-  }
-
-//  print(best_held);
-//  print(best_stored);
-
-  if (best_held != $item[none]
-      && best_held.inebriety > best_stored.inebriety)
-  {
-    foreach drink, qty in get_closet()
-    {
-      if (drink.inebriety > 0)
-      {
-        log("Taking " + qty + " " + wrap(drink, qty) + " from the closet to maybe drink in the future.");
-        take_closet(qty, drink);
-      }
-    }
-    log("Putting one " + wrap(best_held) + " in the closet for use at the end of the day.");
-    put_closet(1, best_held);
-  }
-
 }
 
 void main()
