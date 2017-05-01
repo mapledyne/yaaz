@@ -170,7 +170,12 @@ string maybe_banish(monster foe)
 // $skill[breath out]
 
   string banish = "";
-  if (have_skill($skill[breathe out])) banish = "skill breathe out";
+  if (have_skill($skill[breathe out]))
+  {
+    banish = "skill breathe out";
+  } else if (have_skill($skill[breathe out])) {
+    banish = "skill snokebomb";
+  }
 
   if (banish == "") return "";
 
