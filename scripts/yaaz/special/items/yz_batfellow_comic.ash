@@ -2,6 +2,13 @@ import "util/base/yz_inventory.ash";
 import "util/base/yz_print.ash";
 import "util/base/yz_settings.ash";
 
+void batfellow_comic_progress()
+{
+  if (have($item[special edition batfellow comic]))
+  {
+    task("Consider using your " + wrap($item[special edition batfellow comic]) + ".");
+  }
+}
 
 item batfellow_item()
 {

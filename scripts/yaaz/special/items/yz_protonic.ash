@@ -40,10 +40,10 @@ location protonic_loc()
 }
 
 
-boolean protonic()
+void protonic()
 {
-  if (my_adventures() < 3) return false;
-  if (my_inebriety() > inebriety_limit()) return false;
+  if (my_adventures() < 3) return;
+  if (my_inebriety() > inebriety_limit()) return;
 
   location prot = protonic_loc();
   if (prot != $location[none])
@@ -56,9 +56,7 @@ boolean protonic()
     maximize("", $item[protonic accelerator pack]);
     adv1(prot, -1, "");
     cli_execute("outfit checkpoint");
-    return true;
   }
-  return false;
 }
 
 void main()

@@ -22,6 +22,11 @@ void terminal_educate();
 void terminal();
 void main();
 
+void terminal_progress()
+{
+
+}
+
 boolean have_educate(string edu)
 {
   return list_contains(get_property("sourceTerminalEducateKnown"), edu, ",");

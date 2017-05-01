@@ -1,6 +1,12 @@
 import "util/base/yz_settings.ash";
 import "util/base/yz_print.ash";
 
+
+void summon_annoyance_progress()
+{
+
+}
+
 boolean[item] annoyances = $items[brick,
                                   glass of warm water,
                                   jawbruiser,

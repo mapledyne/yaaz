@@ -21,7 +21,6 @@ import "util/prep/classes/yz_prep_sealclubber.ash";
 import "util/prep/classes/yz_prep_turtletamer.ash";
 import "special/locations/yz_vip_floundry.ash";
 import "special/items/yz_deck.ash";
-import "special/items/yz_manuel.ash";
 import "special/skills/yz_flavour_of_magic.ash";
 
 import <zlib.ash>
@@ -188,8 +187,6 @@ void prep(location loc)
     use(1, $item[screencapped monster]);
     cli_execute("outfit checkpoint");
   }
-
-  manuel();
 
   maybe_pull($item[disassembled clover], 3);
 

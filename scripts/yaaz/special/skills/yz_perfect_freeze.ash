@@ -1,4 +1,9 @@
 
+void perfect_freeze_progress()
+{
+
+}
+
 void perfect_freeze()
 {
   if (have_skill($skill[perfect freeze])

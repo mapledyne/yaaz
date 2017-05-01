@@ -14,15 +14,19 @@ boolean can_gingerbread()
   return to_boolean(setting("do_gingerbread", "false"));
 }
 
-boolean gingerbread()
+void gingerbread()
 {
-  if (!can_gingerbread()) return false;
+  if (!can_gingerbread()) return;
 
   if (!svn_exists("veracity0-gingerbread"))
   {
-    error("This Gingerbread script relies on Veracity's Gingerbread City script.");
-    error("Install that and try again if you'd like to automate the Gingerbread City.");
-    abort();
+    if (!to_boolean(setting("gingerbread_warning", "false")))
+    {
+      save_daily_setting("gingerbread_warning", "true");
+      error("This Gingerbread script relies on Veracity's Gingerbread City script.");
+      error("Install that and try again if you'd like to automate the Gingerbread City.");
+    }
+    return;
   }
 
   if (!can_interact())
@@ -36,7 +40,6 @@ boolean gingerbread()
   maximize("sprinkles");
   visit_url("inv_equip.php?which=2&action=customoutfit&outfitname=Gingerbread City");
   cli_execute("call Gingerbread City.ash");
-  return true;
 }
 
 

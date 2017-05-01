@@ -168,14 +168,6 @@ void progress_sheet(boolean detailed)
 
   if (detailed)
   {
-    foreach toy in $items[special edition batfellow comic]
-    {
-      if (have(toy))
-      {
-        task("Consider using your " + wrap(toy) + ".");
-      }
-    }
-
     if (to_boolean(setting("do_jerk", "true"))
         && to_boolean(setting("do_heart", "true")))
     {

@@ -6,6 +6,12 @@ import "util/base/yz_maximize.ash";
 
 import 'special/locations/yz_terminal.ash';
 
+void chateau_progress()
+{
+
+}
+
+
 boolean can_chateau()
 {
   return to_boolean(get_property("chateauAvailable"));

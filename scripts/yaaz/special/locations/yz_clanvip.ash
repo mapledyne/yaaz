@@ -4,13 +4,64 @@ boolean is_vip_item(item it);
 boolean can_vip_drink();
 boolean can_vip_drink(item it);
 boolean can_vip();
+boolean can_vip_shower();
+boolean vip_shower(string temp);
 
 // Note: more complex Clan VIP items have their own entry, like the Floundry.
+
+void clanvip_progress()
+{
+  if (!can_vip()) return;
+  if (can_vip_shower())
+  {
+    task("Take a shower in the " + wrap($item[clan shower]));
+  }
+}
 
 void vip_hottub()
 {
   if (can_vip())
     visit_url("clan_viplounge.php?action=hottub");
+}
+
+boolean can_vip_shower()
+{
+  if (!have($item[clan vip lounge key])) return false;
+  if (to_boolean(get_property("_aprilShower"))) return false;
+  if (!is_unrestricted($item[clan shower])) return false;
+
+  return get_clan_lounge() contains $item[clan shower];
+}
+
+boolean vip_shower(string temp)
+{
+  if (!can_vip_shower()) return false;
+
+  switch (to_lower_case(temp))
+  {
+    case 'mainstat':
+      return vip_shower(my_primestat());
+    case 'muscle':
+      temp = 'warm';
+      break;
+    case 'moxie':
+      temp = 'cool';
+      break;
+    case 'mysticality':
+      temp = 'lukewarm';
+      break;
+  }
+
+  log("About to use the " + wrap($item[clan shower]) + " set to " + wrap(temp, COLOR_ITEM));
+  cli_execute("shower " + temp);
+  return true;
+}
+
+boolean vip_shower()
+{
+  string temp = setting('shower_temp', 'mainstat');
+
+  return vip_shower(temp);
 }
 
 boolean can_vip()
@@ -59,7 +110,12 @@ boolean is_vip_item(item it)
   return false;
 }
 
+void clanvip()
+{
+
+}
+
 void main()
 {
-  // this file just has utility functions. There's no "always do this if you have VIP" at this point.
+  clanvip();
 }

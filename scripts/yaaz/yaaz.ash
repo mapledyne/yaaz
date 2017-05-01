@@ -267,7 +267,6 @@ void ascend()
   repeat
   {
     special();
-    manuel_progress();
   } until (!ascend_loop());
 
   if (quest_status("questL13Final") >= 13)

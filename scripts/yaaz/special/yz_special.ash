@@ -1,5 +1,6 @@
 import 'special/items/yz_batfellow_comic.ash';
 import 'special/items/yz_deck.ash';
+import 'special/items/yz_manuel.ash';
 import 'special/items/yz_protonic.ash';
 import 'special/items/yz_timespinner.ash';
 import 'special/locations/yz_bookshelf.ash';
@@ -23,10 +24,16 @@ import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
-boolean[string] SPECIAL_LIST = $strings[communism,
+boolean[string] SPECIAL_LIST = $strings[bookshelf,
+                                        communism,
                                         numberology,
                                         teatree,
+                                        clanvip,
                                         vip_floundry,
+                                        summon_annoyance,
+                                        perfect_freeze,
+                                        thanksgarden,
+                                        terminal,
                                         ltt,
                                         deck,
                                         precinct,
@@ -35,13 +42,16 @@ boolean[string] SPECIAL_LIST = $strings[communism,
                                         protonic,
                                         lovetunnel,
                                         witchess,
+                                        chateau,
+                                        eldritchhorror,
+                                        batfellow_comic,
                                         gingerbread,
-                                        spacegate];
+                                        spacegate,
+                                        manuel];
 
 
 void special()
 {
-  bookshelf();
 
   foreach special_thing in SPECIAL_LIST
   {
@@ -50,17 +60,6 @@ void special()
   }
   current_quest = "";
 
-  perfect_freeze();
-  thanksgarden();
-  terminal();
-  deck();
-  summon_annoyance();
-  batfellow_comic();
-
-  // These may actually get us in a fight, so do them after the ones above:
-
-  chateau();
-  eldritchhorror();
 }
 
 void main()

@@ -4,6 +4,11 @@ import "util/base/yz_util.ash";
 import "util/base/yz_inventory.ash";
 import "util/base/yz_quests.ash";
 
+void thanksgarden_progress()
+{
+
+}
+
 void harvest_thanksgarden()
 {
   if (get_campground()[$item[cornucopia]] > 1)

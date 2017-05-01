@@ -26,6 +26,8 @@ void day_end()
     cli_execute("concert elvish");
   }
 
+  vip_shower();
+
   if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
   {
     log("We haven't used the Friar's blessing today. Heading there.");
