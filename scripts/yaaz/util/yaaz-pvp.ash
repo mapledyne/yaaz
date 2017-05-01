@@ -3,28 +3,50 @@ import "special/items/yz_deck.ash";
 import "util/base/yz_settings.ash";
 import "util/base/yz_maximize.ash";
 
-//  Numeric: ("Numeric", "numericSwagger", "back to")
-//  Bear:    ("Bear", "bearSwagger", "Barely Dressed")
-//  Ice:     ("Ice", "iceSwagger", "Ready to Melt")
-
 void pvp();
 void effects_for_pvp();
 string pvp_equip_letter(int threshold);
 string pvp_equip_letter();
 item find_best_clothes(slot s);
-void school_clothes(string letter);
+void letter_equip_clothes(string letter);
+void letter_equip_clothes();
 
 void collect_pvp_info()
 {
   string v = visit_url("/peevpee.php?place=shop");
 
-  if (contains_text(v,"Swagger Jack"))
+  if (contains_text(v,"pirate season"))
   {
     save_daily_setting("pvp_season", "Pirate");
     save_daily_setting("pvp_swagger", "pirateSwagger");
     save_daily_setting("pvp_fight", "Letter of the Moment");
     return;
   }
+
+  if (contains_text(v,"numeric season"))
+  {
+    save_daily_setting("pvp_season", "Numeric");
+    save_daily_setting("pvp_swagger", "numericSeason");
+    save_daily_setting("pvp_fight", "back to");
+    return;
+  }
+
+  if (contains_text(v,"bear season"))
+  {
+    save_daily_setting("pvp_season", "Bear");
+    save_daily_setting("pvp_swagger", "bearSeason");
+    save_daily_setting("pvp_fight", "Barely Dressed");
+    return;
+  }
+
+  if (contains_text(v,"ice season"))
+  {
+    save_daily_setting("pvp_season", "Ice");
+    save_daily_setting("pvp_swagger", "iceSeason");
+    save_daily_setting("pvp_fight", "Ready to Melt");
+    return;
+  }
+
 }
 
 string pvp_season()
@@ -179,8 +201,6 @@ void dress_for_pvp()
     case "Pirate":
       cli_execute("outfit birthday suit");
       letter_equip_clothes();
-      max_effects("booze");
-      max_effects("-combat");
   }
 }
 
@@ -213,6 +233,10 @@ void effects_for_pvp()
       max_effects("hot spell damage");
       max_effects("cold res");
       max_effects("booze");
+      break;
+    case "Pirate":
+      max_effects("booze");
+      max_effects("-combat");
       break;
   }
 }
