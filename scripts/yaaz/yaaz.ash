@@ -184,7 +184,7 @@ void intro()
 
   log("This is an automated ascension script, but has some additional features.");
   log("To get more information, run the " + SCRIPT + "-help script.");
-  log("There are several flags available to adjust how the script works. See the available options on github: <a href='https://gist.github.com/mapledyne/46745ed32bcef4b04a303953a1f18440'>" + wrap("yaaz-options", 'blue') + "</a>.");
+  log("There are several flags available to adjust how the script works. See the available options on github: <a href='https://github.com/mapledyne/yaaz/wiki/yaaz-options'>" + wrap("yaaz-options", 'blue') + "</a>.");
   log("Go to " + wrap("<a href='https://github.com/mapledyne/yaaz'>https://github.com/mapledyne/yaaz</a>", "blue") + " to see known issues, submit bugs, request features, etc.");
   wait(10);
 

@@ -11,7 +11,7 @@ print("* Ability to run automation on individual quests or goals");
 print("* Work at any level of skill and IotM ownership");
 print("* Automatically send gifts and nice things to people");
 print("");
-print_html("You can customize how the script operates by changing some of its flags. Info here: <a href='https://gist.github.com/mapledyne/46745ed32bcef4b04a303953a1f18440'>yaaz-options</a>");
+print_html("You can customize how the script operates by changing some of its flags. Info here: <a href='https://github.com/mapledyne/yaaz/wiki/yaaz-options'>yaaz-options</a>");
 print("");
 print("Beyond just 'yaaz' there are some other tools you may be interested in that part of the yaaz set of tools:");
 print_html("* <i>yaaz-begin</i>: Do daily startup things without adventuring");
