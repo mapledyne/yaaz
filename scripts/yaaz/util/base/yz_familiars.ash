@@ -156,7 +156,7 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[chocolate lab]);
       break;
     default: // everything that doesn't have a set items. Should usually be stat familiars but the exceptions to that seem to be piling up.
-      newbie = choose_familiar_from_list($familiars[gelatinous cubeling, robortender, space jellyfish, intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, lil\' barrel mimic, smiling rat, happy medium, hovering sombrero, llama lama, grinning turtle, artistic goth kid]);
+      newbie = choose_familiar_from_list($familiars[gelatinous cubeling, robortender, space jellyfish, intergnat, rockin\' robin, hovering sombrero, blood-faced volleyball, penguin goodfella, ancient yuletide troll, baby bugged bugbear, lil\' barrel mimic, smiling rat, happy medium, hovering sombrero, llama lama, grinning turtle, artistic goth kid, puck man, ms. puck man]);
       add_familiar_weight = false;
       break;
   }
