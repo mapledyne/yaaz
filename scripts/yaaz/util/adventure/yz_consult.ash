@@ -173,9 +173,13 @@ string maybe_banish(monster foe)
   if (have_skill($skill[breathe out]))
   {
     banish = "skill breathe out";
-  } else if (have_skill($skill[breathe out])) {
+  }
+  else if (have_skill($skill[snokebomb]) && my_mp() > mp_cost($skill[snokebomb]))
+  {
     banish = "skill snokebomb";
-  } else if (have($item[tennis ball]) {
+  }
+  else if (have($item[tennis ball]))
+  {
     banish = "item tennis ball";
   }
 
