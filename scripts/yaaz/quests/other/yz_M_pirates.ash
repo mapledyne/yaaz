@@ -322,6 +322,21 @@ boolean get_skirt()
   return true;
 }
 
+boolean get_hot_wings()
+{
+  // If we've somehow not got them already, acquire them
+  item hotwing = $item[hot wing];
+  location slums = $location[pandamonium slums];
+
+  if (item_amount(hotwing) >= 3) return false;
+
+  if (maybe_pull(hotwing, 3) > 0) return true;
+
+  log("Head to the " + wrap(slums) + " to get 3 " + wrap(hotwing) + ".");
+  yz_adventure(slums, "items");
+  return true;
+}
+
 boolean fcle()
 {
 
@@ -390,6 +405,7 @@ boolean M_pirates()
   if (quest_status("questM12Pirate") == 2)
   {
     if (get_skirt()) return true;
+    if (get_hot_wings()) return true;
     equip($item[frilly skirt]);
     set_property("choiceAdventure188", 3);
     use(1, $item[orcish frat house blueprints]);
