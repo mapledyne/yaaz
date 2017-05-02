@@ -1,10 +1,11 @@
 
 import "util/base/yz_print.ash";
+import "util/base/yz_util.ash";
 
 
 boolean valid_thrall(thrall slave)
 {
-  skill sk = thrall_to_skill(slave);
+  skill sk = to_skill(slave);
   if (!have_skill(sk)) return false;
   if (my_maxmp() < mp_cost(sk)) return false;
   return true;
