@@ -184,6 +184,11 @@ boolean peak_ninja()
 
 boolean do_ninja_peak()
 {
+  if (have_outfit_simple("eXtreme Cold-Weather Gear")) {
+    // We've already sunk that effort, carry on with that path and don't flip-flop
+    return false;
+  }
+
   int cold = numeric_modifier("cold resistance");
   if (have_skill($skill[elemental saucesphere]) && have_effect($effect[elemental saucesphere]) == 0)
     cold += 2;
