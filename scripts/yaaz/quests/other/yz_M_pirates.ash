@@ -332,7 +332,8 @@ boolean get_hot_wings()
 
   if (maybe_pull(hotwing, 3) > 0) return true;
 
-  log("Head to the " + wrap(slums) + " to get 3 " + wrap(hotwing) + ".");
+  int needed_hotwings = 3 - item_amount(hotwing);
+  log("Head to the " + wrap(slums) + " to get " + needed_hotwings + " " + wrap(hotwing, needed_hotwings) + ".");
   yz_adventure(slums, "items");
   return true;
 }
