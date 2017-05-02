@@ -31,6 +31,17 @@ string pluralize(int count, item it)
   return to_plural(it);
 }
 
+string add_link(string target, string name)
+{
+  string target_encoded = replace_string(replace_string(target, " ", "_"), "'", "%27");
+  return "<a href='http://kol.coldfront.net/thekolwiki/index.php/" + target_encoded + "'>" + name + "</a>";
+}
+
+string add_link(string target)
+{
+  return add_link(target, target);
+}
+
 string wrap(string i, string color)
 {
 	return ("<font color='" + color + "'>" + i + "</font>");
@@ -38,27 +49,27 @@ string wrap(string i, string color)
 
 string wrap(item i)
 {
-	return wrap(i.name, COLOR_ITEM);
+	return wrap(add_link(i.name), COLOR_ITEM);
 }
 
 string wrap(item i, int qty)
 {
-  return wrap(pluralize(qty, i), COLOR_ITEM);
+  return wrap(add_link(i.name, pluralize(qty, i)), COLOR_ITEM);
 }
 
 string wrap(familiar f)
 {
-	return wrap(f, COLOR_ITEM);
+	return wrap(add_link(f), COLOR_ITEM);
 }
 
 string wrap(thrall t)
 {
-	return wrap(t, COLOR_ITEM);
+	return wrap(add_link(t), COLOR_ITEM);
 }
 
 string wrap(monster m)
 {
-  return wrap(m, COLOR_MONSTER);
+  return wrap(add_link(m), COLOR_MONSTER);
 }
 
 string wrap(stat s)
@@ -68,7 +79,7 @@ string wrap(stat s)
 
 string wrap(skill s)
 {
-  return wrap(s, COLOR_SKILL);
+  return wrap(add_link(s), COLOR_SKILL);
 }
 
 string wrap(class c)
@@ -78,12 +89,12 @@ string wrap(class c)
 
 string wrap(location l)
 {
-	return wrap(l, COLOR_LOCATION);
+	return wrap(add_link(l), COLOR_LOCATION);
 }
 
 string wrap(effect e)
 {
-  return wrap(e, COLOR_EFFECT);
+  return wrap(add_link(e), COLOR_EFFECT);
 }
 
 string wrap(coinmaster c)
