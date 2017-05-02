@@ -155,7 +155,7 @@ void intro()
   print("Version: " + version);
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
-  log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>.");
+  log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>, <a href='showplayer.php?who=1566270'>" + wrap("LeaChim (#1566270)", 'blue') + "</a>.");
   log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2355952'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
 
   boolean has_fam = false;
