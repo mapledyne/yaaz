@@ -45,14 +45,15 @@ boolean dangerous(location loc)
 {
   int counter = 0;
   monster[int] monsters = get_monsters(loc);
-  int threshold = count(monsters) / 2;
-//  int threshold = 2;
+  float threshold = 0.5;
   foreach i, mon in monsters
   {
     if (dangerous(mon)) counter++;
-    if (counter >= threshold)
+    if (to_float(counter)/count(monsters) >= threshold)
     {
       debug("Checking " + wrap(loc) + " to see if it's dangerous. It is.");
+      debug("Danger num: " + to_float(counter)/count(monsters));
+      abort();
       return true;
     }
   }
