@@ -159,7 +159,7 @@ void maximize(string target, string outfit, item it, familiar fam)
 
   if (contains_text(target, 'rollover'))
   {
-    target = 'adv, pvp fights';
+    target = 'adv, pvp fights, -tie';
     familiar pet = to_familiar(setting("100familiar"));
     if (pet != $familiar[none]
         && pet != $familiar[Trick-or-Treating Tot]
