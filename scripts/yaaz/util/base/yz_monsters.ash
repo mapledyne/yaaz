@@ -52,8 +52,6 @@ boolean dangerous(location loc)
     if (to_float(counter)/count(monsters) >= threshold)
     {
       debug("Checking " + wrap(loc) + " to see if it's dangerous. It is.");
-      debug("Danger num: " + to_float(counter)/count(monsters));
-      abort();
       return true;
     }
   }
