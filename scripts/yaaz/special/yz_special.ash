@@ -6,6 +6,7 @@ import 'special/items/yz_timespinner.ash';
 import 'special/locations/yz_bookshelf.ash';
 import 'special/locations/yz_chateau.ash';
 import 'special/locations/yz_clanvip.ash';
+import 'special/locations/yz_deep_machine_tunnels.ash';
 import 'special/locations/yz_gingerbread.ash';
 import 'special/locations/yz_lovetunnel.ash';
 import 'special/locations/yz_ltt.ash';
@@ -39,6 +40,7 @@ boolean[string] SPECIAL_LIST = $strings[bookshelf,
                                         precinct,
                                         timespinner,
                                         snojo,
+                                        dmt,
                                         protonic,
                                         lovetunnel,
                                         witchess,
