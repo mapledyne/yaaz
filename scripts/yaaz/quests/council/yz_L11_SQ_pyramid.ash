@@ -87,9 +87,9 @@ boolean L11_SQ_pyramid()
     log("Skipping the Pyramid for now since we're low on adventures and " + wrap($monster[ed the undying]) + " takes a bunch of them.");
     return false;
   }
-  if (get_counters('Digitize Monster', 0, 15) != ""
-      || get_counters('Enamorang Monster', 0, 15) != ""
-      || get_counters('Fortune Cookie', 0, 15) != "")
+  if (get_counters('Digitize Monster', 0, 8) != ""
+      || get_counters('Enamorang Monster', 0, 8) != ""
+      || get_counters('Fortune Cookie', 0, 8) != "")
   {
     log("Skipping the Pyramid for now since we don't want to accidentally clobber something coming up soon.");
     return false;
