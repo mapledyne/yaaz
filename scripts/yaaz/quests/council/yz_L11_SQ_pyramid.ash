@@ -74,10 +74,34 @@ boolean L11_SQ_pyramid()
     return true;
   }
 
-  if (quest_status("questL11Pyramid") < 3 || turners() < 10)
+  if (!get_property("pyramidBombUsed").to_boolean()
+    && (quest_status("questL11Pyramid") < 3 || turners() < 10))
   {
     yz_adventure($location[The Middle Chamber], "items");
     return true;
+  }
+
+  while (!get_property("pyramidBombUsed").to_boolean())
+  {
+    // We've not used the bomb yet, but we should have sufficient turners
+    if (have($item[ancient bomb]))
+    {
+      log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
+      turn_wheel_until(1);
+      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    }
+    else if (have($item[ancient bronze token]))
+    {
+      log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
+      turn_wheel_until(3);
+      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    }
+    else
+    {
+      log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
+      turn_wheel_until(4);
+      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    }
   }
 
   // Make sure we have enough adventures
@@ -94,19 +118,6 @@ boolean L11_SQ_pyramid()
     log("Skipping the Pyramid for now since we don't want to accidentally clobber something coming up soon.");
     return false;
   }
-
-
-  log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
-  turn_wheel_until(4);
-  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-
-  log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
-  turn_wheel_until(3);
-  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-
-  log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
-  turn_wheel_until(1);
-  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
 
   log("Off to fight " + wrap($monster[ed the undying]) + ".");
   maximize("");
