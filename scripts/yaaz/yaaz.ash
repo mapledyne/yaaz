@@ -148,6 +148,13 @@ void settings_warning()
       }
     }
   }
+
+  if (setting("adventure_floor", "10").to_int() < 8)
+  {
+    warning("You've set the adventure_floor to less than 8.");
+    warning("This may cause problems with the Pyramid quest.");
+    wait(5);
+  }
 }
 
 void intro()
