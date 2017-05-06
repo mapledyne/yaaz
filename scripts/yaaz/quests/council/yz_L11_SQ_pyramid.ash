@@ -80,7 +80,7 @@ boolean L11_SQ_pyramid()
     return true;
   }
 
-  if (my_adventures() < 15)
+  if (my_adventures() < 8)
   {
     // Should try consuming something at this point instead of just skipping
     log("Skipping the Pyramid for now since we're low on adventures and " + wrap($monster[ed the undying]) + " takes a bunch of them.");
