@@ -149,10 +149,6 @@ boolean L09_SQ_twin()
     return true;
 	}
 
-
-	int attemptNum = 0;
-	boolean attempt = false;
-
 	if (need_jar && have($item[Jar of Oil]))
 	{
     set_property("choiceAdventure606", "3");
