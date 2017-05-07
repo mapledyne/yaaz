@@ -142,7 +142,7 @@ boolean L09_SQ_twin()
 
   set_property("choiceAdventure618", "2"); // in case we take too long, burn it down.
 
-	if($location[twin peak].turns_spent == 0)
+	if($location[twin peak].noncombat_queue == "")
 	{
 		set_property("choiceAdventure605", "1");
 		yz_adventure($location[Twin Peak]);
