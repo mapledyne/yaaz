@@ -45,7 +45,7 @@ boolean dangerous(location loc)
 {
   int counter = 0;
   monster[int] monsters = get_monsters(loc);
-  float threshold = 0.5;
+  float threshold = 0.55;
   foreach i, mon in monsters
   {
     if (dangerous(mon)) counter++;
