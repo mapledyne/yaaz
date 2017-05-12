@@ -53,7 +53,7 @@ void L13_Q_sorceress_progress()
 
     progress(keys, 3, "hero keys (" + boris + "Boris, " + pete + "Pete, " + jarl + "Jarlsberg)");
   }
-  
+
   if (quest_status("questL13Final") < 5
       && quest_status("questL07Cyrptic") > UNSTARTED
       && !have($item[skeleton key]))
@@ -187,10 +187,15 @@ boolean mirror()
 
 boolean shadow()
 {
-  if (item_amount($item[gauze garter]) + item_amount($item[filthy poultice]) < 8)
+  int healing_items = item_amount($item[gauze garter]) + item_amount($item[filthy poultice]);
+  if (!(
+    (have_skill($skill[ambidextrous funkslinging]) && healing_items >= 5) ||
+    (healing_items >= 8)
+  ))
   {
     warning("I don't know how to check if we can pass the shadow. I'm expecting a bunch of healing items I can't find.");
-    return false;
+    // If we've gotten to this point, there's nothing else that's going to fix this situation, so lets abort
+    abort();
   }
   yz_adventure($location[tower level 5], "");
 
