@@ -2,8 +2,8 @@ import "util/base/yz_print.ash";
 
 void update_bounties()
 {
-  if (to_bounty(get_property("currentEasyBountyItem")) == $bounty[none]
-      && to_bounty(get_property("_untakenEasyBountyItem")) == $bounty[none])
+  if (to_bounty(get_property("currentSpecialBountyItem")) == $bounty[none]
+      && to_bounty(get_property("_untakenSpecialBountyItem")) == $bounty[none])
   {
     log("Updating available bounties.");
     cli_execute("bounty");
