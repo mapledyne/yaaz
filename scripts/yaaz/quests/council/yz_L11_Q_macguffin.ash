@@ -108,7 +108,7 @@ void L11_Q_macguffin_progress()
     }
   }
 
-  if (quest_active("questL11Pyramid"))
+  if (quest_active("questL11Pyramid") && !get_property("pyramidBombUsed").to_boolean())
   {
     progress(turners(), 10, "wheel turning things");
   }
