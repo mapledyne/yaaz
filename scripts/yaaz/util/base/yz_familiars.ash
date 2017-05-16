@@ -80,12 +80,6 @@ familiar choose_familiar(string fam)
 {
   if (my_path() == "Actually Ed the Undying") return $familiar[none];
 
-  if (!have_familiar($familiar[mosquito]))
-  {
-    warning("You don't have much in the way of familiars yet. Go get a couple and this script can start using them.");
-    return $familiar[none];
-  }
-
   familiar solo = to_familiar(setting("100familiar"));
   if (solo != $familiar[none])
   {
