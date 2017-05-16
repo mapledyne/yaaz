@@ -282,7 +282,7 @@ boolean try_drink(item it)
 
   if (have_skill($skill[the ode to booze]) && mp_cost($skill[the ode to booze]) < my_mp())
   {
-    if (have_effect($effect[ode to booze]) == 0)
+    if (have_effect($effect[ode to booze]) < it.inebriety)
     {
       log("Casting " + wrap($skill[the ode to booze]) + " for better booze action.");
       if (!can_cast_song()) uneffect_song();
