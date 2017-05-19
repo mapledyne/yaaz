@@ -4,6 +4,7 @@ import 'special/items/yz_manuel.ash';
 import 'special/items/yz_protonic.ash';
 import 'special/items/yz_timespinner.ash';
 import 'special/locations/yz_bookshelf.ash';
+import 'special/locations/yz_barrelgod.ash';
 import 'special/locations/yz_chateau.ash';
 import 'special/locations/yz_clanvip.ash';
 import 'special/locations/yz_deep_machine_tunnels.ash';
@@ -26,6 +27,7 @@ import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
 boolean[string] SPECIAL_LIST = $strings[bookshelf,
+                                        barrelgod,
                                         communism,
                                         numberology,
                                         teatree,
