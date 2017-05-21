@@ -74,7 +74,9 @@ boolean L11_SQ_palindome()
     case STARTED:
     case UNSTARTED:
       log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
-      get_photographs();
+      if (get_photographs()) {
+        return true;
+      }
       if (!have($item[[7262]&quot;I Love Me\, Vol. I&quot;])) return false;
 
       equip($item[Talisman o' Namsilat]);
