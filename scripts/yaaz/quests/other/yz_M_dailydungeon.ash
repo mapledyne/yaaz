@@ -2,7 +2,7 @@ import "util/yz_main.ash";
 
 void M_dailydungeon_progress()
 {
-  if (!to_boolean(get_property("dailyDungeonDone"))) return;
+  if (to_boolean(get_property("dailyDungeonDone"))) return;
 
   if (quest_status("questL13Final") >= 5
       || hero_keys() >= 3)
@@ -10,7 +10,6 @@ void M_dailydungeon_progress()
     if (!to_boolean(setting("always_daily_dungeon", "false"))) return;
   }
 
-  int keys = 3 - hero_keys();
   progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
 }
 

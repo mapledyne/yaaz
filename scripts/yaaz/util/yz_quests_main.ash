@@ -1,3 +1,4 @@
+import "quests/other/yz_M_bounty.ash";
 import "quests/other/yz_M_dailydungeon.ash";
 import "quests/other/yz_M_guild.ash";
 import "quests/other/yz_M_hidden_temple.ash";
@@ -36,6 +37,7 @@ import "quests/other/yz_M_level_up.ash";
 // waiting on something (arena quests waiting for flyers, for instance).
 boolean[string] QUEST_LIST = $strings[M_lights_out,
                                       M_toot,
+                                      M_bounty,
                                       M_guild,
                                       M_untinker,
                                       M_desert_beach,

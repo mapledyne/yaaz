@@ -13,6 +13,15 @@ import "util/yz_quests_main.ash";
 
 int current_level;
 
+void quest_cleanup()
+{
+  foreach quest in QUEST_LIST
+  {
+    string clean = quest + "_cleanup";
+    call clean();
+  }
+}
+
 boolean ascend_loop()
 {
   progress_sheet();
@@ -30,16 +39,7 @@ boolean ascend_loop()
     return true;
   }
 
-  // Quests that have been converted to the new format.
-  // Only move quests into this loop when they original code is adjacent to this
-  // so it can preserve the quest loop ordering:
-
-  foreach quest in QUEST_LIST
-  {
-    string clean = quest + "_cleanup";
-    call clean();
-  }
-
+  quest_cleanup();
   foreach quest in QUEST_LIST
   {
     current_quest = quest;
@@ -264,6 +264,8 @@ void ascend()
 
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);
+
+  quest_cleanup();
 
   if (!can_adventure())
   {
