@@ -28,7 +28,6 @@ boolean ascend_loop()
   current_quest = "";
 
   if (!can_adventure()) return false;
-  if (quest_status("questL13Final") >= 13) return false;
 
   if (current_level != my_level())
   {

@@ -210,6 +210,7 @@ string maybe_sniff(monster foe)
   switch (foe)
   {
     default:
+      if (is_bounty_monster(foe)) break;
       return "";
     case $monster[blooper]:
       if (have($item[digital key])) return "";

@@ -67,6 +67,8 @@ boolean location_open(location l)
 {
   switch (l)
   {
+    case $location[the spooky forest]:
+      return quest_status("questL02Larva") >= STARTED;
     case $location[the old landfill]:
       return (quest_status("questM19Hippy") != UNSTARTED);
     case $location[madness bakery]:
@@ -84,10 +86,27 @@ boolean location_open(location l)
       } else {
         return open_location(l);
       }
+    case $location[the "fun" house]:
+      return quest_status("questG04Nemesis") >= 5;
+    case $location[a barroom brawl]:
+      return quest_status("questL03Rat") >= 1;
+    case $location[the beanbat chamber]:
+      return quest_status("questL04Bat") >= 1;
+    case $location[south of the border]:
+      return to_int(get_property("lastDesertUnlock")) >= my_ascensions();
     case $location[cobb's knob harem]:
     case $location[cobb's knob treasury]:
     case $location[cobb's knob kitchens]:
       return quest_status("questL05Goblin") >= 1;
+    case $location[cobb's knob laboratory]:
+      return item_amount($item[cobb's knob lab key]) > 0;
+    case $location[Cobb's Knob Menagerie, Level 1]:
+    case $location[Cobb's Knob Menagerie, Level 2]:
+    case $location[Cobb's Knob Menagerie, Level 3]:
+      return item_amount($item[Cobb's Knob Menagerie key]) > 0;
+    case $location[the degrassi knoll restroom]:
+    case $location[the degrassi knoll gym]:
+      return !knoll_available();
     case $location[8-bit realm]:
       return have($item[continuum transfunctioner]);
     case $location[the haunted kitchen]:
@@ -111,7 +130,10 @@ boolean location_open(location l)
     case $location[the haunted boiler room]:
     case $location[the haunted laundry room]:
       return quest_status("questL11Manor") >= 1;
+    case $location[the hidden office building]:
+      return to_int(get_property("hiddenOfficeProgress")) > 0;
     default:
+      debug("Checking location_open(" + wrap(l) + ") and returning the default: " + wrap('true', COLOR_LOCATION));
       return true;
   }
 }
