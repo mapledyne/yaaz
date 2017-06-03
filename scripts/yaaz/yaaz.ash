@@ -231,6 +231,12 @@ void intro()
     wait(5);
   }
 
+  if (my_path() == "License to Adventure") {
+    // Setting this here so it's active before we hit it
+    // As it'll show up in any location
+    set_property("choiceAdventure1258", 2);
+  }
+
   if (holiday() != "")
   {
     warning("Today is a holiday! If you want to celebrate " + wrap(holiday(), COLOR_LOCATION) + ", hit ESC and enjoy! Otherwise we'll continue as normal.");
