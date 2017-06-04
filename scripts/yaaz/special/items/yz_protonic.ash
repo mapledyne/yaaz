@@ -1,3 +1,4 @@
+import "util/adventure/yz_adventure.ash";
 import "util/base/yz_print.ash";
 import "util/base/yz_maximize.ash";
 
@@ -46,15 +47,23 @@ void protonic()
   if (my_inebriety() > inebriety_limit()) return;
 
   location prot = protonic_loc();
+  string max_target = "";
   if (prot != $location[none])
   {
     log("Who ya gonna call? No one. You're going to trap the ghost in " + wrap(prot) + " and keep it for yourself.");
     wait(3);
+
+    // If the ghost is in the peak, we need resistance
+    if (prot == $location[The Icy Peak])
+    {
+      max_target = "cold res, 5 min, 5 max";
+    }
+
     set_property("ghostLocation", "");
 
     cli_execute("checkpoint");
-    maximize("", $item[protonic accelerator pack]);
-    adv1(prot, -1, "");
+    maximize(max_target, $item[protonic accelerator pack]);
+    yz_adventure(prot);
     cli_execute("outfit checkpoint");
   }
 }
