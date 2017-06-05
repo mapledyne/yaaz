@@ -101,25 +101,6 @@ string maybe_extract(monster foe)
   return "";
 }
 
-string maybe_trap_ghost(monster foe)
-{
-  if (!(ghosts contains foe)) return "";
-
-  if (have_skill($skill[shoot ghost]))
-  {
-    if (expected_damage(foe) < (my_hp() / 2))
-    {
-      return "skill shoot ghost";
-    }
-  }
-
-  if (have_skill($skill[trap ghost]))
-  {
-      return "skill trap ghost";
-  }
-  return "";
-}
-
 string maybe_shadow(monster foe)
 {
   // this could obviously use some much better finesse.
@@ -283,9 +264,6 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_banish(foe);
-  if (maybe != "") return maybe;
-
-  maybe = maybe_trap_ghost(foe);
   if (maybe != "") return maybe;
 
   maybe = maybe_copy(foe);
