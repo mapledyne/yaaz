@@ -177,6 +177,38 @@ string maybe_banish(monster foe)
   return banish;
 }
 
+string maybe_lta_item(monster foe)
+{
+  if (foe == $monster[Villainous Minion])
+  {
+    // Use a spy item if we have one, for the quest
+    if (
+      have($item[Knob Goblin firecracker])
+      && !get_property("_villainLairFirecrackerUsed").to_boolean()
+    )
+    {
+      return "item Knob Goblin firecracker";
+    }
+
+    if (
+      have($item[spider web])
+      && !get_property("_villainLairWebUsed").to_boolean()
+    )
+    {
+      return "item spider web";
+    }
+
+    if (
+      have($item[razor-sharp can lid])
+      && !get_property("_villainLairCanLidUsed").to_boolean()
+    )
+    {
+      return "item razor-sharp can lid";
+    }
+  }
+  return "";
+}
+
 string maybe_run(monster foe)
 {
   // check for spooky jellied to see if we want to run so we defeat someone else?
@@ -279,6 +311,9 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_portscan(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_lta_item(foe);
   if (maybe != "") return maybe;
 
   return "consult WHAM.ash";
