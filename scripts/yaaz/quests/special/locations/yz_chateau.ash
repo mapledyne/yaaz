@@ -11,6 +11,10 @@ void chateau_progress()
 
 }
 
+void chateau_cleanup()
+{
+
+}
 
 boolean can_chateau()
 {
@@ -29,11 +33,11 @@ monster chateau_monster()
   return to_monster(get_property("chateauMonster"));
 }
 
-void chateau()
+boolean chateau()
 {
   if (!can_chateau())
   {
-    return;
+    return false;
   }
 
   if (!to_boolean(get_property("_chateauDeskHarvested")))
@@ -54,6 +58,7 @@ void chateau()
     {
       visit_url("place.php?whichplace=chateau&action=chateau_desk" + desk);
     }
+    return true;
   }
 
   if (chateau_monster() == $monster[writing desk]
@@ -75,14 +80,15 @@ void chateau()
       maximize();
       string temp = visit_url('place.php?whichplace=chateau&action=chateau_painting');
       run_combat('yz_consult');
+      return true;
     }
   }
-
+  return false;
 
 }
 
 void main()
 {
   log("Doing default actions with the " + wrap("Chateau Mantegna", COLOR_LOCATION) + ".");
-  chateau();
+  while(chateau());
 }

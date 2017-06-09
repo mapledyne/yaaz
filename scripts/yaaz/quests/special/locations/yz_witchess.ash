@@ -14,6 +14,11 @@ void witchess_progress()
   }
 }
 
+void witchess_cleanup()
+{
+
+}
+
 int witchess_left()
 {
   if (get_campground() contains $item[Witchess Set])
@@ -63,31 +68,29 @@ void witchess(item it)
 
 }
 
-void witchess()
+boolean witchess()
 {
   if (!can_witchess())
-    return;
+    return false;
 
   log("Checking your " + $item[witchess set] + ".");
 
-  while (can_witchess())
+  maximize("");
+  if (!have($item[armored prawn]))
   {
-    maximize("");
-    if (!have($item[armored prawn]))
-    {
-      witchess($item[armored prawn]);
-      continue;
-    }
-    if (!have($item[greek fire]))
-    {
-      witchess($item[greek fire]);
-      continue;
-    }
-    witchess($item[Sacramento wine]);
+    witchess($item[armored prawn]);
+    return true;
   }
+  if (!have($item[greek fire]))
+  {
+    witchess($item[greek fire]);
+    return true;
+  }
+  witchess($item[Sacramento wine]);
+  return true;
 }
 
 void main()
 {
-  witchess();
+  while(witchess());
 }

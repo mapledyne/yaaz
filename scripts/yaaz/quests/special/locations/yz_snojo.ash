@@ -14,6 +14,11 @@ void snojo_progress()
 
 }
 
+void snojo_cleanup()
+{
+
+}
+
 boolean snojo_too_risky()
 {
   // return true if we think it's worth the risk to fight a snowman.
@@ -66,18 +71,19 @@ boolean can_snojo()
   return false;
 }
 
-void snojo()
+boolean snojo()
 {
-  while(can_snojo())
+  if (!can_snojo())
   {
-    log("Off to fight a " + wrap($monster[X-32-F Combat Training Snowman]) + " at the " + wrap("Snojo", COLOR_LOCATION) + ".");
-    maximize("");
-    yz_adventure_bypass($location[The X-32-F Combat Training Snowman]);
+    return false;
   }
+  log("Off to fight a " + wrap($monster[X-32-F Combat Training Snowman]) + " at the " + wrap("Snojo", COLOR_LOCATION) + ".");
+  maximize("");
+  return yz_adventure_bypass($location[The X-32-F Combat Training Snowman]);
 }
 
 void main()
 {
   log("Doing default actions with the " + $location[The X-32-F Combat Training Snowman] + ".");
-  snojo();
+  while(snojo());
 }
