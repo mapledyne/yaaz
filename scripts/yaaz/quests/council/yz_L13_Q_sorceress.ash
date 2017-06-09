@@ -528,11 +528,7 @@ boolean L13_Q_sorceress()
   if (quest_status("questL13Final") == FINISHED)
     return false;
 
-  while (loop_tower(quest_status("questL13Final")))
-  {
-    // actions in loop_tower
-  }
-  return true;
+  return loop_tower(quest_status("questL13Final"));
 }
 
 void main()
