@@ -430,6 +430,13 @@ item pick_extrude_item()
     warning("Going to extrude a " + wrap(ext) + " since we don't want it to go to waste, but we won't be able to use it for a while.");
     wait(3);
   }
+
+  if (my_path() == "License to Adventure" && ext == $item[browser cookie])
+  {
+    // Can't eat in LTA
+    ext = $item[hacked gibson];
+  }
+
   return ext;
 
 }

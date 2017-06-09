@@ -360,6 +360,12 @@ boolean L12_Q_war(string side)
     }
   }
 
+  while(have($item[Targeted Plague Vector]))
+  {
+    log("Spraying a " + wrap($item[Targeted Plague Vector]) + " into the war.");
+    use(1, $item[Targeted Plague Vector]);
+  }
+
 
   if (war_arena())
   {
