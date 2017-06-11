@@ -19,6 +19,7 @@ import "util/prep/classes/yz_prep_pastamancer.ash";
 import "util/prep/classes/yz_prep_sauceror.ash";
 import "util/prep/classes/yz_prep_sealclubber.ash";
 import "util/prep/classes/yz_prep_turtletamer.ash";
+import "util/prep/paths/yz_prep_lta.ash";
 import "special/locations/yz_vip_floundry.ash";
 import "special/items/yz_deck.ash";
 import "special/skills/yz_flavour_of_magic.ash";
@@ -172,6 +173,8 @@ void prep(location loc)
   prep_sauceror(loc);
   prep_sealclubber(loc);
   prep_turtletamer(loc);
+
+  prep_lta();
 
   cast_one_time_things();
   cast_surplus_mp();

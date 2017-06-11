@@ -310,6 +310,10 @@ boolean try_drink(item it)
     return cli_execute("drink 1 " + it);
   }
 
+  if (it.image == "martini.gif" && have($item[tuxedo shirt])) {
+    // Get more adventures from Tuxedo Shirt
+    equip($slot[shirt], $item[tuxedo shirt]);
+  }
 
   log("Drinking a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
   return drink(1, it);
