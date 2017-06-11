@@ -156,6 +156,8 @@ boolean timespinner_future()
 
   if (get_property("_timeSpinnerReplicatorUsed") == "true") return false;
 
+  if (my_path() == "License to Adventure") return false;
+
   if (!svn_exists("Ezandora-Far-Future-branches-Release"))
   {
     if (!to_boolean(setting("far_future_svn_warning", "false")))
