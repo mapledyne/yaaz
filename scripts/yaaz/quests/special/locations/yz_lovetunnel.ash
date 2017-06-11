@@ -12,7 +12,7 @@ int tunnel_effect(effect ef);
 int tunnel_statitem();
 int tunnel_statitem(stat st);
 
-void lovetunnel();
+boolean lovetunnel();
 
 void lovetunnel_progress()
 {
@@ -30,6 +30,11 @@ void lovetunnel_progress()
   {
     task(wrap("LOVE Tunnel", COLOR_LOCATION) + " is not being automated because you set yz_do_lovetunnel=false. You'll need to do the tunnel yourself.");
   }
+
+}
+
+void lovetunnel_cleanup()
+{
 
 }
 
@@ -136,14 +141,14 @@ int tunnel_giftitem()
   return tunnel_giftitem($item[lov enamorang]);
 }
 
-void lovetunnel()
+boolean lovetunnel()
 {
   if (!to_boolean(get_property("loveTunnelAvailable")))
-    return;
+    return false;
   if (to_boolean(get_property("_loveTunnelUsed")))
-    return;
+    return false;
   if (!to_boolean(setting("do_lovetunnel", "true")))
-    return;
+    return false;
 
   // should add some nuance to this...
   boolean fight_fight_fight = my_level() > 4;
@@ -160,7 +165,7 @@ void lovetunnel()
 		warning("Already visited L.O.V.E. Tunnel, but I just tried to again.");
 		tun = visit_url("choice.php?pwd=&whichchoice=1222&option=2");
     set_property("_loveTunnelUsed", "true");
-		return;
+		return false;
 	}
 
   tun = visit_url("choice.php?pwd=&whichchoice=1222&option=1");
@@ -202,7 +207,7 @@ void lovetunnel()
 
 	tun = visit_url("choice.php?pwd=&whichchoice=1228&option=" + tunnel_giftitem());
 
-
+  return true;
 }
 
 void main()

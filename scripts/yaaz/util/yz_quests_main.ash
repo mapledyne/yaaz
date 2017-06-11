@@ -31,12 +31,26 @@ import "quests/council/yz_L13_Q_sorceress.ash";
 
 import "quests/other/yz_M_level_up.ash";
 
+import 'quests/special/items/yz_protonic.ash';
+import 'quests/special/locations/yz_chateau.ash';
+import 'quests/special/locations/yz_deep_machine_tunnels.ash';
+import 'quests/special/locations/yz_lovetunnel.ash';
+import 'quests/special/locations/yz_snojo.ash';
+import 'quests/special/locations/yz_witchess.ash';
+import 'quests/special/skills/yz_numberology.ash';
 
 // Important: The ordering of the quests in this lists is the order that the
 // loop will try the quests. If you want to order quests differently, change it here.
 // Note that some quests will skip themselves and let a later quest do work if it's
 // waiting on something (arena quests waiting for flyers, for instance).
-boolean[string] QUEST_LIST = $strings[M_lights_out,
+boolean[string] QUEST_LIST = $strings[numberology,
+                                      snojo,
+                                      dmt,
+                                      protonic,
+                                      lovetunnel,
+                                      witchess,
+                                      chateau,
+                                      M_lights_out,
                                       M_toot,
                                       M_super_villain_lair,
                                       M_bounty,

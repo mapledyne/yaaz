@@ -15,6 +15,11 @@ void protonic_progress()
   task("defeat ghost (" + wrap(ghostly)+ ")");
 }
 
+void protonic_cleanup()
+{
+
+}
+
 boolean ghost_hunting()
 {
   // need better logic here to decide if we're going to hunt a ghost.
@@ -41,10 +46,10 @@ location protonic_loc()
 }
 
 
-void protonic()
+boolean protonic()
 {
-  if (my_adventures() < 3) return;
-  if (my_inebriety() > inebriety_limit()) return;
+  if (my_adventures() < 3) return false;
+  if (my_inebriety() > inebriety_limit()) return false;
 
   location prot = protonic_loc();
   string max_target = "";
@@ -65,10 +70,12 @@ void protonic()
     maximize(max_target, $item[protonic accelerator pack]);
     yz_adventure(prot);
     cli_execute("outfit checkpoint");
+    return true;
   }
+  return false;
 }
 
 void main()
 {
-  protonic();
+  while(protonic());
 }

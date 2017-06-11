@@ -21,6 +21,11 @@ void dmt_progress()
 
 }
 
+void dmt_cleanup()
+{
+
+}
+
 boolean can_dmt()
 {
   if (!can_adventure())
@@ -35,18 +40,18 @@ boolean can_dmt()
   return false;
 }
 
-void dmt()
+boolean dmt()
 {
-  while(can_dmt())
-  {
-    log("Off to fight in the " + wrap(deep_machine_tunnels) + ".");
-    maximize("", $familiar[machine elf]);
-    yz_adventure(deep_machine_tunnels);
+  if (!can_dmt()) {
+    return false;
   }
+  log("Off to fight in the " + wrap(deep_machine_tunnels) + ".");
+  maximize("", $familiar[machine elf]);
+  return yz_adventure(deep_machine_tunnels);
 }
 
 void main()
 {
   log("Doing default actions with the " + wrap(deep_machine_tunnels) + ".");
-  dmt();
+  while(dmt());
 }
