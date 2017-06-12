@@ -22,6 +22,44 @@ void M_super_villain_lair_cleanup()
 
 }
 
+boolean acquire_spy_items()
+{
+  boolean ret;
+
+  if (
+    !have($item[Knob Goblin firecracker])
+    && !get_property("_villainLairFirecrackerUsed").to_boolean()
+  )
+  {
+    ret = time_combat($monster[Sub-Assistant Knob Mad Scientist], $location[The Outskirts of Cobb's Knob]);
+    if (ret) return true;
+  }
+
+  if (
+    !have($item[spider web])
+    && !get_property("_villainLairWebUsed").to_boolean()
+  )
+  {
+    ret = time_combat($monster[big creepy spider], $location[the sleazy back alley]);
+    if (ret) return true;
+    ret = time_combat($monster[completely different spider], $location[the sleazy back alley]);
+    if (ret) return true;
+  }
+
+  if (
+    !have($item[razor-sharp can lid])
+    && !get_property("_villainLairCanLidUsed").to_boolean()
+  )
+  {
+    ret = time_combat($monster[possessed can of tomatoes], $location[The Haunted Pantry]);
+    if (ret) return true;
+    ret = time_combat($monster[fiendish can of asparagus], $location[The Haunted Pantry]);
+    if (ret) return true;
+  }
+
+  return false;
+}
+
 boolean M_super_villain_lair()
 {
 
@@ -45,6 +83,13 @@ boolean M_super_villain_lair()
   if (get_property("_villainLairProgress").to_int() > 0) {
     // Use Minions-Be-Gone
     use_all($item[can of Minions-Be-Gone]);
+  }
+
+  // Acquire lair shortening items.
+  // If an item reduces lair by 3, and we can (hopefully) get the item in 1
+  // that's a net gain of 2 adventures per item
+  if (acquire_spy_items()) {
+    return true;
   }
 
   return yz_adventure($location[Super Villain's Lair], "-combat");
