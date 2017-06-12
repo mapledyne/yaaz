@@ -130,6 +130,8 @@ int war_multiplier()
     mult = mult * 2;
   if (get_property("sidequestFarmCompleted") == war_side())
     mult = mult * 2;
+  if (get_property("bondWar").to_boolean())
+    mult = mult + 3;
 
   return mult;
 }
