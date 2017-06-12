@@ -1,3 +1,4 @@
+import "util/base/yz_consume.ash";
 import "util/base/yz_print.ash";
 import "util/base/yz_maximize.ash";
 import "util/adventure/yz_adventure.ash";
@@ -86,7 +87,11 @@ boolean witchess()
     witchess($item[greek fire]);
     return true;
   }
-  witchess($item[Sacramento wine]);
+  if (can_drink($item[Sacramento wine])) {
+    witchess($item[Sacramento wine]);
+    return true;
+  }
+  witchess($item[greek fire]);
   return true;
 }
 
