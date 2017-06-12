@@ -173,6 +173,9 @@ void prep_lta()
     return;
   }
 
+  // Use victor's spoils
+  use_all($item[victor's spoils]);
+
   // Watch for changes
   if (lta_current_level != my_level())
   {
