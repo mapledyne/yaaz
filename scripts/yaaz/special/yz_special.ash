@@ -1,5 +1,6 @@
 import 'special/items/yz_batfellow_comic.ash';
 import 'special/items/yz_deck.ash';
+import 'special/items/yz_kgb.ash';
 import 'special/items/yz_manuel.ash';
 import 'special/items/yz_timespinner.ash';
 import 'special/locations/yz_bookshelf.ash';
@@ -33,6 +34,7 @@ boolean[string] SPECIAL_LIST = $strings[bookshelf,
                                         deck,
                                         precinct,
                                         timespinner,
+                                        kgb,
                                         eldritchhorror,
                                         batfellow_comic,
                                         gingerbread,
