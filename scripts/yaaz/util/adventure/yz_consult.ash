@@ -242,8 +242,8 @@ string maybe_sniff(monster foe)
       if (to_int(get_property("palindomeDudesDefeated")) >= 5) return "";
       break;
     case $monster[tomb rat]:
-      if (quest_status("questL11Pyramid") >= 3) return "";
-      if (turners() < 10) return "";
+      if (quest_status("questL11Pyramid") > 3) return "";
+      if (turners() >= 10) return "";
       break;
     case $monster[bearpig topiary animal]:
     case $monster[elephant (meatcar?) topiary animal]:
