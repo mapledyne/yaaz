@@ -373,8 +373,12 @@ void max_effects(string target, boolean aggressive)
       if (!to_boolean(get_property("concertVisited"))
           && get_property("sidequestArenaCompleted") == "fratboy")
       {
+        cli_execute("checkpoint");
+        cli_execute("outfit frat warrior fatigues");
         cli_execute("concert winklered");
+        cli_execute("outfit checkpoint");
       }
+      effect_maintain($effect[Always be Collecting]);
 
       if (aggressive)
       {
