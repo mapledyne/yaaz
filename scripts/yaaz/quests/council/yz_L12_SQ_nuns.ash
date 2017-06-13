@@ -17,10 +17,13 @@ boolean do_nuns_quest(string side)
   int meat_recovered = to_int(get_property("currentNunneryMeat"));
 
   if (doing_trick
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+      && (
+        to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+        || to_monster(get_property("enamorangMonster")) == $monster[dirty thieving brigand]
+      )
       && meat_recovered + (max_expected_nuns_meat() * 2) > 100000)
   {
-    log("We've digitized a " + wrap($monster[dirty thieving brigand]) + ", so will wait on the nuns quest until we've gotten the rest of the meat through that copy.");
+    log("We've digitized/enamoranged a " + wrap($monster[dirty thieving brigand]) + ", so will wait on the nuns quest until we've gotten the rest of the meat through that copy.");
     return false;
   }
 
