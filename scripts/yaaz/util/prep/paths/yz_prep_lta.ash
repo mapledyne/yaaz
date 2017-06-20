@@ -161,7 +161,7 @@ lta_skills["bondWpn"].w = "s";
 int total_social_capital_obtained() {
   return (
     my_level() / 3 +
-    get_property("bondPoints").to_int() +
+    min(24, get_property("bondPoints").to_int()) +
     get_property("bondVillainsDefeated").to_int() * 2
     );
 }
@@ -181,9 +181,15 @@ int available_social_capital() {
 
 boolean buy_lta_skill(string sk)
 {
-  log("Training up on " + sk + ".");
+  log("Using " + available_social_capital() + " social capital to train " + sk + ".");
   wait(5);
+  visit_url("place.php?whichplace=town_right&action=town_bondhq");
   visit_url("choice.php?whichchoice=1259&option=1&k=" + lta_skills[sk].k + "&w=" + lta_skills[sk].w + "&pwd=" + my_hash());
+
+  if (!get_property(sk).to_boolean()) {
+    // Something went wrong
+    abort("Tried to buy " + sk + " but something went wrong!");
+  }
   return true;
 }
 
