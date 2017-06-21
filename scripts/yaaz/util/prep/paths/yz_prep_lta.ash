@@ -1,7 +1,6 @@
+since r18104;
+import "util/base/yz_inventory.ash";
 import "util/base/yz_print.ash";
-
-int lta_current_level;
-int lta_current_quest_progress;
 
 boolean[string] lta_skills_wanted = $strings[
   bondSymbols,
@@ -159,11 +158,38 @@ lta_skills["bondWpn"].cost = 1;
 lta_skills["bondWpn"].k = 2;
 lta_skills["bondWpn"].w = "s";
 
+int total_social_capital_obtained() {
+  return (
+    my_level() / 3 +
+    min(24, get_property("bondPoints").to_int()) +
+    get_property("bondVillainsDefeated").to_int() * 2
+    );
+}
+
+int available_social_capital() {
+  int available_capital = total_social_capital_obtained();
+
+  foreach sk in lta_skills_wanted
+  {
+    if (get_property(sk).to_boolean()) {
+      available_capital -= lta_skills[sk].cost;
+    }
+  }
+
+  return available_capital;
+}
+
 boolean buy_lta_skill(string sk)
 {
-  log("Training up on " + sk + ".");
+  log("Using " + available_social_capital() + " social capital to train " + sk + ".");
   wait(5);
+  visit_url("place.php?whichplace=town_right&action=town_bondhq");
   visit_url("choice.php?whichchoice=1259&option=1&k=" + lta_skills[sk].k + "&w=" + lta_skills[sk].w + "&pwd=" + my_hash());
+
+  if (!get_property(sk).to_boolean()) {
+    // Something went wrong
+    abort("Tried to buy " + sk + " but something went wrong!");
+  }
   return true;
 }
 
@@ -176,45 +202,21 @@ void prep_lta()
   // Use victor's spoils
   use_all($item[victor's spoils]);
 
-  // Watch for changes
-  if (lta_current_level != my_level())
-  {
-    lta_current_level = my_level();
-    save_daily_setting("social_capital_used", false);
-  }
-
-  if (lta_current_quest_progress != get_property("_villainLairProgress").to_int()) {
-    lta_current_quest_progress = get_property("_villainLairProgress").to_int();
-    if (lta_current_quest_progress == 999) {
-      save_daily_setting("social_capital_used", false);
-    }
-  }
-
-  if (setting("social_capital_used", "false").to_boolean()) {
+  if (available_social_capital() == 0) {
     return;
   }
 
-  string li11_hq = visit_url("place.php?whichplace=town_right&action=town_bondhq");
-  matcher match_capital = create_matcher("You have ([0-9]+) pounds of social capital", li11_hq);
-  if (match_capital.find()) {
-    int available_capital = match_capital.group(1).to_int();
-    debug("Using up " + available_capital + " social capital.");
+  foreach sk in lta_skills_wanted
+  {
+    if (get_property(sk).to_boolean()) continue;
 
-    foreach sk in lta_skills_wanted
-    {
-      if (get_property(sk).to_boolean()) continue;
-
-      if (lta_skills[sk].cost > available_capital) {
-        // Stop when we hit something too expensive, and save it. Don't spend on 1's all the time etc.
-        break;
-      }
-
-      buy_lta_skill(sk);
-      available_capital -= lta_skills[sk].cost;
+    if (lta_skills[sk].cost > available_social_capital()) {
+      // Stop when we hit something too expensive, and save it. Don't spend on 1's all the time etc.
+      break;
     }
-  }
 
-  save_daily_setting("social_capital_used", true);
+    buy_lta_skill(sk);
+  }
 }
 
 void main()

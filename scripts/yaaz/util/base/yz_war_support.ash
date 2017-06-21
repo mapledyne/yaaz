@@ -135,3 +135,10 @@ int war_multiplier()
 
   return mult;
 }
+
+int max_expected_nuns_meat()
+{
+  int max_expected_meat = $monster[dirty thieving brigand].max_meat;
+  max_expected_meat = max_expected_meat * (1 + (numeric_modifier("meat drop") / 100));
+  return max_expected_meat;
+}

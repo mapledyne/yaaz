@@ -74,6 +74,8 @@ void day_end()
 
   consider_chrome_item();
 
+  kgb_enchant("adventures");
+
   log("Dressing for rollover.");
   if (hippy_stone_broken())
   {

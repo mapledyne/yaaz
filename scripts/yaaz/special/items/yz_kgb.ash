@@ -4,17 +4,28 @@ import "util/base/yz_print.ash";
 boolean can_kgb() {
   if (!have($item[Kremlin's Greatest Briefcase])) return false;
 
+  return true;
+}
+
+boolean can_daily_kgb() {
+  if (!can_kgb()) return false;
+
   if (!setting("kgb_complete", "false").to_boolean()) return true;
 
   return false;
 }
 
 void kgb_progress() {
+  if (!can_daily_kgb()) return;
+}
+
+void kgb_enchant(string enchantments) {
   if (!can_kgb()) return;
+  cli_execute("call Briefcase.ash enchantment " + enchantments);
 }
 
 void kgb() {
-  if (!can_kgb()) return;
+  if (!can_daily_kgb()) return;
 
   if (!svn_exists("Ezandora-Briefcase-branches-Release")) {
       if (!to_boolean(setting("kgb_svn_warning", "false")))
@@ -32,6 +43,7 @@ void kgb() {
   log("Briefcase unlocked.");
   cli_execute("call Briefcase.ash drink");
   log("Briefcase drinks obtained.");
+  kgb_enchant("prismatic init -combat");
   save_daily_setting("kgb_complete", "true");
 }
 
