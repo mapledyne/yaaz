@@ -120,7 +120,7 @@ int tunnel_giftitem(item it)
     case $item[LOV Elephant]:
       return 5;
     case $item[toast]:
-      if (have_familiar($familiar[space jellyfish]))
+      if (can_adventure_with_familiar($familiar[space jellyfish]))
         return 6;
       warning("Trying to get " + wrap(it) + " from the " + wrap("LOVE Tunnel", COLOR_LOCATION) + " but you don't have a " + wrap($familiar[space jellyfish]) + ".");
       return tunnel_giftitem();
@@ -135,7 +135,7 @@ int tunnel_giftitem(item it)
 int tunnel_giftitem()
 {
 //  Do we want to consider toast if we have the jellyfish?
-//  if (have_familiar($familiar[space jellyfish]))
+//  if (can_adventure_with_familiar($familiar[space jellyfish]))
 //    return tunnel_giftitem($item[toast]);
 
   return tunnel_giftitem($item[lov enamorang]);

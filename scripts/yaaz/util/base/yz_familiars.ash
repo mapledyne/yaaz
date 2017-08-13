@@ -4,6 +4,19 @@ import <zlib.ash>
 
 boolean add_familiar_weight = false;
 
+boolean can_adventure_with_familiar(familiar fam)
+{
+  familiar solo = to_familiar(setting("100familiar"));
+  if (solo != $familiar[none])
+  {
+    return (solo == fam);
+  }
+  else
+  {
+    return have_familiar(fam);
+  }
+}
+
 void equip_familiar(familiar fam)
 {
   if (my_familiar() == fam)

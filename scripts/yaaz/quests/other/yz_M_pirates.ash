@@ -349,7 +349,7 @@ boolean fcle()
   // it'd default to a 'default' familiar, and we want to fall back to an
   // items familiar in this case.
   string max = "items, combat";
-  if (have_familiar($familiar[jumpsuited hound dog]) && setting("100familiar") == "")
+  if (can_adventure_with_familiar($familiar[jumpsuited hound dog]))
   {
     max = "combat, items";
   }

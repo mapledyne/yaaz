@@ -203,7 +203,7 @@ boolean do_ninja_peak()
                     || have_skill($skill[Carlweather's Cantata of Confrontation])
                     || have($item[musk turtle])
                     || have($item[reodorant])
-                    || have_familiar($familiar[jumpsuited hound dog])
+                    || can_adventure_with_familiar($familiar[jumpsuited hound dog])
                     || have($item[portable cassette player]));
 
   if (cold >= 5 && combat) return true;

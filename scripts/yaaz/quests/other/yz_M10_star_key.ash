@@ -54,7 +54,7 @@ boolean M10_star_key()
   log("Going to the " + wrap($location[the hole in the sky]) + " to make " + wrap($item[richard's star key]) + ".");
 
   familiar fam = $familiar[none];
-  if (have_familiar($familiar[space jellyfish]))
+  if (can_adventure_with_familiar($familiar[space jellyfish]))
     fam = $familiar[space jellyfish];
   maximize("items", fam);
 
