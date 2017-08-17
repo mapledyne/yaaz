@@ -47,8 +47,7 @@ int pick_a_number()
 			return 0;
 		}
 
-		if (have_familiar($familiar[intergnat])
-		    && to_familiar(setting("100_familiar")) == $familiar[none]
+		if (can_adventure_with_familiar($familiar[intergnat])
 				&& my_adventures() > 8)
 		{
 			// wait a bit to collect bacon and get a viral video:

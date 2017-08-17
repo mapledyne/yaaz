@@ -29,7 +29,7 @@ boolean do_one_market_adv()
     max = "combat, 0.2 items";
   }
 
-  if (!have(bird.hatchling) && have_familiar(bird))
+  if (!have(bird.hatchling) && can_adventure_with_familiar(bird))
   {
     maximize(max, $item[blackberry galoshes], bird);
   } else {
