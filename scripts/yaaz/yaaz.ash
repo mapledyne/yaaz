@@ -5,6 +5,7 @@ since r17948;
 import "util/yz_main.ash";
 import "util/yaaz-progress.ash";
 import "util/yaaz-begin.ash";
+import "util/base/yz_speedy.ash";
 
 import "util/yz_quests_main.ash";
 
@@ -179,7 +180,7 @@ void intro()
   log("To get more information, run the " + SCRIPT + "-help script.");
   log("There are several flags available to adjust how the script works. See the available options on github: <a href='https://github.com/mapledyne/yaaz/wiki/yaaz-options'>" + wrap("yaaz-options", 'blue') + "</a>.");
   log("Go to " + wrap("<a href='https://github.com/mapledyne/yaaz'>https://github.com/mapledyne/yaaz</a>", "blue") + " to see known issues, submit bugs, request features, etc.");
-  wait(10);
+  speedy_wait(10);
 
   if (my_ascensions() == 0)
   {
@@ -255,7 +256,7 @@ void ascend()
   day_begin();
 
   log("Day startup tasks complete. About to begin doing stuff.");
-  wait(10);
+  speedy_wait(10);
 
   quest_cleanup();
 

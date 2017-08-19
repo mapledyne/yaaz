@@ -1,10 +1,11 @@
 import "util/yz_main.ash";
 import "util/yaaz-progress.ash";
+import "util/base/yz_speedy.ash";
 
 void day_end()
 {
   log("Wrapping up for the end of the day.");
-  wait(5);
+  speedy_wait(5);
 
   // if there are any source terminal enhances left
   consume_enhances();
@@ -102,7 +103,7 @@ void main()
 	log("This script will consume resources as if you're at the end of your day.");
 	log("If you want to adventure more, press " + wrap("ESC", COLOR_LOCATION) + " now.");
   log("This script will prep you for rollover, but won't make you overdrink. Do that manually.");
-	wait(15);
+	speedy_wait(15);
 	day_end();
   log("Yaaz complete. You should be at the end of your day with rollover clothes equipped.");
   log("Do what you'd like, then overdrink when ready.");
