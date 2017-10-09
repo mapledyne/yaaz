@@ -1,4 +1,3 @@
-import "kgblib/kgblib.ash";
 import "util/base/yz_print.ash";
 
 boolean can_kgb() {
