@@ -136,7 +136,7 @@ familiar choose_familiar(string fam)
         newbie = $familiar[robortender];
         break;
       }
-      if (have_familiar($familiar[trick-or-treating tot]) && have($item[li'l pirate costume]))
+      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l pirate costume]) > 0)
       {
         newbie = $familiar[trick-or-treating tot];
         break;
@@ -147,7 +147,7 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[Happy Medium, Xiblaxian Holo-Companion, Oily Woim]);
       break;
     case "items":
-      if (have_familiar($familiar[trick-or-treating tot]) && have($item[li'l ninja costume]))
+      if (have_familiar($familiar[trick-or-treating tot]) && i_a($item[li'l ninja costume]) > 0)
       {
         newbie = $familiar[trick-or-treating tot];
         break;
