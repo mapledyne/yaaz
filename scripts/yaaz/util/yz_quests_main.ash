@@ -54,10 +54,7 @@ boolean[string] QUEST_LIST = $strings[tuxedo_shirt,
                                       chateau,
                                       M_lights_out,
                                       M_toot,
-<<<<<<< HEAD
-=======
                                       M_super_villain_lair,
->>>>>>> master
                                       M_bounty,
                                       M_guild,
                                       M_untinker,
