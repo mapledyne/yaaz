@@ -7,6 +7,7 @@ import "util/base/yz_util.ash";
 void deck_progress()
 {
   if (!have($item[deck of every card])) return;
+  if (!be_good($item[deck of every card])) return;
 
   int drawn = to_int(get_property("_deckCardsDrawn"));
   if (drawn >= 15) return;
@@ -19,7 +20,8 @@ boolean can_deck()
 {
   if (can_adventure()
       && have($item[deck of every card])
-      && to_int(get_property("_deckCardsDrawn")) < 15)
+      && to_int(get_property("_deckCardsDrawn")) < 15
+      && be_good($item[deck of every card]))
     return true;
   return false;
 }

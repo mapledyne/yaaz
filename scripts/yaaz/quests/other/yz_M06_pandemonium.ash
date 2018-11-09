@@ -134,19 +134,22 @@ boolean M06_pandemonium()
     visit_url("pandamonium.php?action=sven&bandmember=Stinkface&togive=" + to_int(stinkface()) + "&preaction=try");
   }
 
-  foreach it in $items[Hilarious Comedy Prop, Victor\, the Insult Comic Hellhound Puppet, Observational Glasses]
+  if (!have($item[Azazel's lollipop]))
   {
-    if (!have(it)) continue;
-
-    if (!have_equipped(it))
+    foreach it in $items[Hilarious Comedy Prop, Victor\, the Insult Comic Hellhound Puppet, Observational Glasses]
     {
-      log("Equipping the " + wrap(it) + " because it's funny.");
-      equip(it);
-    }
+      if (!have(it)) continue;
 
-    log("Heading to " + wrap("Mourn's", COLOR_LOCATION) + " to show him our " + wrap(it) + ".");
-    wait(3);
-    string temp = visit_url("pandamonium.php?action=mourn&whichitem=" + to_int(it) + "&pwd=");
+      if (!have_equipped(it))
+      {
+        log("Equipping the " + wrap(it) + " because it's funny.");
+        equip(it);
+      }
+
+      log("Heading to " + wrap("Mourn's", COLOR_LOCATION) + " to show him our " + wrap(it) + ".");
+      wait(3);
+      string temp = visit_url("pandamonium.php?action=mourn&whichitem=" + to_int(it) + "&pwd=");
+    }
   }
 
   if (!have($item[Azazel\'s Tutu])

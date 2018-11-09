@@ -57,6 +57,11 @@ string wrap(item i, int qty)
   return wrap(add_link(i.name, pluralize(qty, i)), COLOR_ITEM);
 }
 
+string wrap(bounty b)
+{
+  return wrap(b, COLOR_ITEM);
+}
+
 string wrap(familiar f)
 {
 	return wrap(add_link(f), COLOR_ITEM);

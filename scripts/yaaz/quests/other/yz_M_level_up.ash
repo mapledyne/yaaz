@@ -83,9 +83,17 @@ boolean M_level_up()
 {
   if (quest_status("questL13Final") == FINISHED) return false;
 
-  warning("Ran out of quest things to do in this script. Adventuring (and leveling) until we can do something better.");
-  do_leveling_thing();
-  return true;
+  if (to_boolean(setting("abort_on_no_tasks", "false"))) {
+    warning("Ran out of quest things to do in this script.");
+    log("You can just adventure/level up at this point by setting " + SETTING_PREFIX + "_abort_on_no_tasks to false");
+    abort();
+  } else {
+    warning("Ran out of quest things to do in this script. Adventuring (and leveling) until we can do something better.");
+    log("You can make the script stop here by setting " + SETTING_PREFIX + "_abort_on_no_tasks to true");
+    do_leveling_thing();
+    return true;
+  }
+  return false;
 }
 
 void main()

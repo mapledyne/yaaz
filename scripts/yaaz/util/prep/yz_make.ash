@@ -163,6 +163,11 @@ void make_things()
     use(1, $item[turtle wax]);
   }
 
+  if (creatable_amount($item[imbued seal-blubber candle]) > 0 && my_meat() > 1000)
+  {
+    create(creatable_amount($item[imbued seal-blubber candle]), $item[imbued seal-blubber candle]);
+  }
+
   // double-ice things:
   if (item_amount($item[shard of double-ice]) > 5 && i_a($item[double-ice cap]) == 0)
   {

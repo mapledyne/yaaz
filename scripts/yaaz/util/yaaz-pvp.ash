@@ -44,6 +44,14 @@ void collect_pvp_info()
     return;
   }
 
+  if (contains_text(v,"safari season"))
+  {
+    save_daily_setting("pvp_season", "Safari");
+    save_daily_setting("pvp_swagger", "safariSwagger");
+    save_daily_setting("pvp_fight", "Letter of the Moment");
+    return;
+  }
+
 }
 
 string pvp_season()
@@ -156,6 +164,11 @@ void effects_for_pvp()
       max_effects("booze");
       max_effects("-combat");
       break;
+    case "Safari":
+      max_effects("familiar");
+      max_effects("familiar weight");
+      max_effects("items");
+      break;
   }
 }
 
@@ -191,7 +204,7 @@ void pvp()
 
   if (pvp_attacks_left() > 0)
   {
-    log("About to get dressed and set up effects for PVP.");
+    log("About to get dressed and set up effects for PVP (" + pvp_season() + " Season).");
     wait(5);
     cli_execute("checkpoint");
     dress_for_pvp();
