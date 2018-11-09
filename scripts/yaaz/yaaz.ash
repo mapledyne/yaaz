@@ -13,13 +13,21 @@ import "util/yz_quests_main.ash";
 
 int current_level;
 
+void quest_cleanup()
+{
+  foreach quest in QUEST_LIST
+  {
+    string clean = quest + "_cleanup";
+    call clean();
+  }
+}
+
 boolean ascend_loop()
 {
   progress_sheet();
   current_quest = "";
 
   if (!can_adventure()) return false;
-  if (quest_status("questL13Final") >= 13) return false;
 
   if (current_level != my_level())
   {
@@ -30,16 +38,7 @@ boolean ascend_loop()
     return true;
   }
 
-  // Quests that have been converted to the new format.
-  // Only move quests into this loop when they original code is adjacent to this
-  // so it can preserve the quest loop ordering:
-
-  foreach quest in QUEST_LIST
-  {
-    string clean = quest + "_cleanup";
-    call clean();
-  }
-
+  quest_cleanup();
   foreach quest in QUEST_LIST
   {
     current_quest = quest;
@@ -147,6 +146,13 @@ void settings_warning()
         wait(10);
       }
     }
+  }
+
+  if (setting("adventure_floor", "10").to_int() < 8)
+  {
+    warning("You've set the adventure_floor to less than 8.");
+    warning("This may cause problems with the Pyramid quest.");
+    wait(5);
   }
 }
 
@@ -257,6 +263,8 @@ void ascend()
 
   log("Day startup tasks complete. About to begin doing stuff.");
   wait(10);
+
+  quest_cleanup();
 
   if (!can_adventure())
   {

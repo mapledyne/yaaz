@@ -14,7 +14,7 @@ void chateau_progress()
 
 boolean can_chateau()
 {
-  return to_boolean(get_property("chateauAvailable"));
+  return to_boolean(get_property("chateauAvailable")) && be_good($item[Chateau Mantegna room key]);
 }
 
 boolean can_chateau_fight()

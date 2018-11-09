@@ -42,6 +42,18 @@ void L10_Q_garbage_cleanup()
 
   // some things we're likely to run into during this quest:
   sell_all($item[disturbing fanfic], 1);
+
+  foreach pulv in $items[giant penguin keychain]
+  {
+    pulverize_all(pulv);
+  }
+
+  // things to keep one of:
+  foreach pulv in $items[giant needle]
+  {
+    pulverize_all(pulv, 1);
+  }
+
 }
 
 void plant_beanstalk()

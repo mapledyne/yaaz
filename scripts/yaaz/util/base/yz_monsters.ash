@@ -45,16 +45,30 @@ boolean dangerous(location loc)
 {
   int counter = 0;
   monster[int] monsters = get_monsters(loc);
-  int threshold = count(monsters) / 2;
-//  int threshold = 2;
+  float threshold = 0.55;
   foreach i, mon in monsters
   {
     if (dangerous(mon)) counter++;
-    if (counter >= threshold)
+    if (to_float(counter)/count(monsters) >= threshold)
     {
       debug("Checking " + wrap(loc) + " to see if it's dangerous. It is.");
       return true;
     }
+  }
+  return false;
+}
+
+boolean is_bounty_monster(monster mon)
+{
+  foreach hardness in $strings[Easy, Hard, Special]
+  {
+    string prop = "current" + hardness + "BountyItem";
+    prop = get_property(prop);
+    if (prop == "") continue;
+
+    string[2] bounty_parts = split_string(prop, ":");
+    bounty b = to_bounty(bounty_parts[0]);
+    if (mon == b.monster) return true;
   }
   return false;
 }

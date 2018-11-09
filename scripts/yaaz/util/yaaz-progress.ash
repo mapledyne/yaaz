@@ -47,6 +47,7 @@ void level_progress()
 void smoke_if_got_it(item it)
 {
   if (!have(it)) return;
+  if (!be_good(it)) return;
 
   task("You have a " + wrap(it) + ". Manually use or closet (or sell, or whatever)");
 }
@@ -177,7 +178,7 @@ void progress_sheet(boolean detailed)
                                  glass of warm water]
       {
         int so_many = get_free_pulls()[freepull];
-        if (so_many > 0)
+        if (so_many > 0 && be_good(freepull))
         {
           if (!have(freepull))
           {
@@ -203,7 +204,7 @@ void progress_sheet(boolean detailed)
       }
     }
 
-    if (have($item[burned government manual fragment]))
+    if (have($item[burned government manual fragment]) && be_good($item[burned government manual fragment]))
     {
       task("Consider using your " + wrap($item[burned government manual fragment]) + " (they'll disappear after ascension)");
     }

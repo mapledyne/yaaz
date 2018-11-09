@@ -74,38 +74,50 @@ boolean L11_SQ_pyramid()
     return true;
   }
 
-  if (quest_status("questL11Pyramid") < 3 || turners() < 10)
+  if (!get_property("pyramidBombUsed").to_boolean()
+    && (quest_status("questL11Pyramid") < 3 || turners() < 10))
   {
     yz_adventure($location[The Middle Chamber], "items");
     return true;
   }
 
-  if (my_adventures() < 15)
+  while (!get_property("pyramidBombUsed").to_boolean())
   {
-    // Should try consuming something at this point instead of just skipping
-    log("Skipping the Pyramid for now since we're low on adventures and " + wrap($monster[ed the undying]) + " takes a bunch of them.");
-    return false; // do this later.
+    // We've not used the bomb yet, but we should have sufficient turners
+    if (have($item[ancient bomb]))
+    {
+      log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
+      turn_wheel_until(1);
+      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    }
+    else if (have($item[ancient bronze token]))
+    {
+      log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
+      turn_wheel_until(3);
+      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    }
+    else
+    {
+      log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
+      turn_wheel_until(4);
+      visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
+    }
   }
-  if (get_counters('Digitize Monster', 0, 15) != ""
-      || get_counters('Enamorang Monster', 0, 15) != ""
-      || get_counters('Fortune Cookie', 0, 15) != "")
+
+  // Make sure we have enough adventures
+  prep();
+  if (my_adventures() < 8)
+  {
+    log("Skipping the Pyramid for now since we're low on adventures and " + wrap($monster[ed the undying]) + " takes a bunch of them.");
+    return false;
+  }
+  if (get_counters('Digitize Monster', 0, 8) != ""
+      || get_counters('Enamorang Monster', 0, 8) != ""
+      || get_counters('Fortune Cookie', 0, 8) != "")
   {
     log("Skipping the Pyramid for now since we don't want to accidentally clobber something coming up soon.");
     return false;
   }
-
-
-  log("Turning the wheel to get the " + wrap($item[ancient bronze token]));
-  turn_wheel_until(4);
-  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-
-  log("We have the " + wrap($item[ancient bronze token]) + ", now off to spin the wheel to get the " + wrap($item[ancient bomb]) + ".");
-  turn_wheel_until(3);
-  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
-
-  log("We have the " + wrap($item[ancient bomb]) + ", now off to spin the wheel to get the stairs down.");
-  turn_wheel_until(1);
-  visit_url("choice.php?pwd&whichchoice=929&option=5&choiceform5=Head+down+to+the+Lower+Chambers+%281%29&pwd="+my_hash());
 
   log("Off to fight " + wrap($monster[ed the undying]) + ".");
   maximize("");

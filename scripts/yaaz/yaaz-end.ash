@@ -75,13 +75,12 @@ void day_end()
   consider_chrome_item();
 
   log("Dressing for rollover.");
-  maximize("rollover");
   if (hippy_stone_broken())
   {
-    log("Tweaking nighttime outfit for better PvP.");
-    remove_non_rollover();
+    log("Starting nighttime outfit for better PvP.");
     pvp_rollover();
   }
+  maximize("rollover");
   progress_sheet(true);
   manuel_progress();
 

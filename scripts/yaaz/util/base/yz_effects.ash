@@ -223,14 +223,13 @@ void effect_maintain(effect ef)
 
 void cast_surplus_mp()
 {
-
   if (have_effect($effect[temporary amnesia]) > 0)
   {
     info("I have " + wrap($effect[temporary amnesia]) + ", so can't right use up surplus MP right now.");
     return;
   }
 
-  if (my_mp() < (my_maxmp() * 0.8)) return;
+  if (my_mp() < (my_maxmp() * 0.9)) return;
 
   effect[int] effect_list;
   int count = 0;
@@ -272,7 +271,7 @@ void cast_surplus_mp()
 
   foreach ef in effect_list
   {
-    if(my_mp() < (my_maxmp() * 0.8))
+    if(my_mp() < (my_maxmp() * 0.9))
       break;
     skill sk = to_skill(effect_list[ef]);
     if (is_turtle_buff(sk) && !have($item[turtle totem]))

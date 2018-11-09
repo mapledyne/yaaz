@@ -2,6 +2,7 @@ import "util/base/yz_util.ash";
 import "util/base/yz_inventory.ash";
 import "util/base/yz_print.ash";
 import "util/base/yz_paths.ash";
+import "util/base/yz_quests.ash";
 
 int[item] closet_items;
 file_to_map(DATA_DIR + "yz_closet.txt", closet_items);
@@ -26,6 +27,7 @@ void closet_things()
     if (stored.inebriety > max_drink_size()) continue;
     if (average_range(stored.adventures) > average_range(best_stored.adventures)) best_stored = stored;
   }
+
 }
 
 void main()

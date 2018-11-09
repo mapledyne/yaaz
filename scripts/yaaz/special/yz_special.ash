@@ -1,11 +1,15 @@
 import 'special/items/yz_batfellow_comic.ash';
 import 'special/items/yz_deck.ash';
+import 'special/items/yz_geniebottle.ash';
 import 'special/items/yz_manuel.ash';
 import 'special/items/yz_protonic.ash';
+import 'special/items/yz_sealfigurines.ash';
 import 'special/items/yz_timespinner.ash';
 import 'special/locations/yz_bookshelf.ash';
+import 'special/locations/yz_barrelgod.ash';
 import 'special/locations/yz_chateau.ash';
 import 'special/locations/yz_clanvip.ash';
+import 'special/locations/yz_deep_machine_tunnels.ash';
 import 'special/locations/yz_gingerbread.ash';
 import 'special/locations/yz_lovetunnel.ash';
 import 'special/locations/yz_ltt.ash';
@@ -24,7 +28,9 @@ import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
-boolean[string] SPECIAL_LIST = $strings[bookshelf,
+boolean[string] SPECIAL_LIST = $strings[geniebottle,
+                                        bookshelf,
+                                        barrelgod,
                                         communism,
                                         numberology,
                                         teatree,
@@ -34,11 +40,13 @@ boolean[string] SPECIAL_LIST = $strings[bookshelf,
                                         perfect_freeze,
                                         thanksgarden,
                                         terminal,
+                                        sealfigurines,
                                         ltt,
                                         deck,
                                         precinct,
                                         timespinner,
                                         snojo,
+                                        dmt,
                                         protonic,
                                         lovetunnel,
                                         witchess,

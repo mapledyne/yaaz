@@ -7,9 +7,6 @@ void pvp();
 void effects_for_pvp();
 string pvp_equip_letter(int threshold);
 string pvp_equip_letter();
-item find_best_clothes(slot s);
-void letter_equip_clothes(string letter);
-void letter_equip_clothes();
 
 void collect_pvp_info()
 {
@@ -44,6 +41,14 @@ void collect_pvp_info()
     save_daily_setting("pvp_season", "Ice");
     save_daily_setting("pvp_swagger", "iceSeason");
     save_daily_setting("pvp_fight", "Ready to Melt");
+    return;
+  }
+
+  if (contains_text(v,"safari season"))
+  {
+    save_daily_setting("pvp_season", "Safari");
+    save_daily_setting("pvp_swagger", "safariSwagger");
+    save_daily_setting("pvp_fight", "Letter of the Moment");
     return;
   }
 
@@ -120,88 +125,9 @@ string pvp_equip_letter()
   return pvp_equip_letter(0);
 }
 
-
-item find_best_clothes(slot s)
-{
-  string letter = pvp_equip_letter();
-  item target = $item[none];
-  int current = 0;
-  foreach i in get_inventory()
-  {
-    if (to_slot(i) != s)
-      continue;
-    if (!can_equip(i))
-      continue;
-    string[int] spl = split_string(to_upper_case(i), letter);
-    if (count(spl) > current)
-    {
-      target = i;
-      current = count(spl);
-    }
-  }
-  return target;
-}
-
-
-void letter_equip_clothes(string letter)
-{
-  log(CLUB + " Optimizing wardrobe for PvP. " + pvp_season() + " letter is currently: " + wrap(letter, COLOR_ITEM));
-
-  if(equipped_item($slot[hat]) == $item[none])
-    equip($slot[hat], find_best_clothes($slot[hat]));
-  if(equipped_item($slot[weapon]) == $item[none])
-    equip($slot[weapon], find_best_clothes($slot[weapon]));
-  if (weapon_hands(equipped_item($slot[weapon])) == 1
-      && equipped_item($slot[off-hand]) == $item[none])
-    equip($slot[off-hand], find_best_clothes($slot[off-hand]));
-  if(equipped_item($slot[pants]) == $item[none])
-    equip($slot[pants], find_best_clothes($slot[pants]));
-  if (have_skill($skill[torso awaregness])
-      && equipped_item($slot[shirt]) == $item[none])
-    equip($slot[shirt], find_best_clothes($slot[shirt]));
-  if(equipped_item($slot[back]) == $item[none])
-    equip($slot[back], find_best_clothes($slot[back]));
-  if(equipped_item($slot[familiar]) == $item[none])
-    equip($slot[familiar], find_best_clothes($slot[familiar]));
-  if(equipped_item($slot[acc1]) == $item[none])
-    equip($slot[acc1], find_best_clothes($slot[acc1]));
-  if(equipped_item($slot[acc2]) == $item[none])
-    equip($slot[acc2], find_best_clothes($slot[acc1]));
-  if(equipped_item($slot[acc3]) == $item[none])
-    equip($slot[acc3], find_best_clothes($slot[acc1]));
-}
-
-void letter_equip_clothes()
-{
-  int time = 60 * 60; // one hour
-  string letter = pvp_equip_letter(time);
-  letter_equip_clothes(letter);
-}
-
 void dress_for_pvp()
 {
-  switch(pvp_season())
-  {
-    default:
-      cli_execute("outfit birthday suit");
-      return;
-    case "School":
-      cli_execute("outfit birthday suit");
-      letter_equip_clothes();
-      return;
-    case "Holiday":
-      maximize("cold res, -combat");
-      return;
-    case "Bear":
-      cli_execute("outfit birthday suit");
-      return;
-    case "Ice":
-      maximize("cold res, 0.2 hot dmg, 0.2 hot spell dmg");
-      return;
-    case "Pirate":
-      cli_execute("outfit birthday suit");
-      letter_equip_clothes();
-  }
+  cli_execute("UberPvPOptimizer.ash");
 }
 
 void effects_for_pvp()
@@ -238,12 +164,17 @@ void effects_for_pvp()
       max_effects("booze");
       max_effects("-combat");
       break;
+    case "Safari":
+      max_effects("familiar");
+      max_effects("familiar weight");
+      max_effects("items");
+      break;
   }
 }
 
 void pvp_rollover()
 {
-//  dress_for_pvp();
+  dress_for_pvp();
   effects_for_pvp();
 }
 
@@ -251,6 +182,19 @@ void pvp()
 {
 
   if (!hippy_stone_broken()) return;
+
+  if (!svn_exists("uberpvpoptimizer"))
+  {
+    if (!to_boolean(setting("uberpvpoptimizer_svn_warning", "false")))
+    {
+      save_daily_setting("uberpvpoptimizer_svn_warning", "true");
+      warning("You want to run PVP but I don't know how to automate dessing up.");
+      warning("If you install the " + wrap("UberPvPOptimizer", COLOR_ITEM) + " script, I'll call it to automatically do this for you.");
+      warning("In the meantime, you'll have to do this yourself, if interested.");
+      wait(10);
+    }
+    return;
+  }
 
   if (can_deck("clubs"))
     cheat_deck("clubs", "more PVP fights");
@@ -260,7 +204,7 @@ void pvp()
 
   if (pvp_attacks_left() > 0)
   {
-    log("About to get dressed and set up effects for PVP.");
+    log("About to get dressed and set up effects for PVP (" + pvp_season() + " Season).");
     wait(5);
     cli_execute("checkpoint");
     dress_for_pvp();
