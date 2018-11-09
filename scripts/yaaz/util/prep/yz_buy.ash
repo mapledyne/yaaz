@@ -23,7 +23,7 @@ void buy_things()
     }
   }
 
-  if (have_familiar($familiar[trick-or-treating tot]))
+  if (can_adventure_with_familiar($familiar[trick-or-treating tot]))
   {
     stock_item($item[li'l unicorn costume]);
     stock_item($item[li'l candy corn costume]);

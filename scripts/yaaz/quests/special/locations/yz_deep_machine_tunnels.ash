@@ -12,12 +12,17 @@ int dmt_fights_remaining()
 void dmt_progress()
 {
 
-  if (have_familiar($familiar[machine elf])
+  if (can_adventure_with_familiar($familiar[machine elf])
       && dmt_fights_remaining() > 0)
   {
     int fights = get_property("_machineTunnelsAdv").to_int();
     progress(fights, 5, "free " + wrap(deep_machine_tunnels) + " fights", "blue");
   }
+
+}
+
+void dmt_cleanup()
+{
 
 }
 
@@ -29,24 +34,24 @@ boolean can_dmt()
   if (dangerous(deep_machine_tunnels))
     return false;
 
-  if (have_familiar($familiar[Machine Elf]) && dmt_fights_remaining() > 0)
+  if (can_adventure_with_familiar($familiar[Machine Elf]) && dmt_fights_remaining() > 0)
     return true;
 
   return false;
 }
 
-void dmt()
+boolean dmt()
 {
-  while(can_dmt())
-  {
-    log("Off to fight in the " + wrap(deep_machine_tunnels) + ".");
-    maximize("", $familiar[machine elf]);
-    yz_adventure(deep_machine_tunnels);
+  if (!can_dmt()) {
+    return false;
   }
+  log("Off to fight in the " + wrap(deep_machine_tunnels) + ".");
+  maximize("", $familiar[machine elf]);
+  return yz_adventure(deep_machine_tunnels);
 }
 
 void main()
 {
   log("Doing default actions with the " + wrap(deep_machine_tunnels) + ".");
-  dmt();
+  while(dmt());
 }

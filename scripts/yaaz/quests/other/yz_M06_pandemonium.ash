@@ -97,6 +97,7 @@ boolean M06_pandemonium()
   if (quest_status("questL06Friar") != FINISHED) return false;
   if (my_path() == "Nuclear Autumn") return false;
   if (my_class() == $class[Ed]) return false;
+  if (my_path() == "License to Adventure") return false;
 
 
   if(quest_status("questM10Azazel") == UNSTARTED)

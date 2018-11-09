@@ -37,7 +37,7 @@ string maybe_copy(monster foe)
     default:
       return "";
     case $monster[dirty thieving brigand]:
-      if (to_int(get_property("currentNunneryMeat")) < 94000
+      if (to_int(get_property("currentNunneryMeat")) < (100000 - max_expected_nuns_meat() * 4)
           || !war_nuns_trick())
       {
         return "";
@@ -97,25 +97,6 @@ string maybe_extract(monster foe)
   {
     if (foe.attack_element != $element[none])
       return "skill extract jelly";
-  }
-  return "";
-}
-
-string maybe_trap_ghost(monster foe)
-{
-  if (!(ghosts contains foe)) return "";
-
-  if (have_skill($skill[shoot ghost]))
-  {
-    if (expected_damage(foe) < (my_hp() / 2))
-    {
-      return "skill shoot ghost";
-    }
-  }
-
-  if (have_skill($skill[trap ghost]))
-  {
-      return "skill trap ghost";
   }
   return "";
 }
@@ -196,6 +177,38 @@ string maybe_banish(monster foe)
   return banish;
 }
 
+string maybe_lta_item(monster foe)
+{
+  if (foe == $monster[Villainous Minion])
+  {
+    // Use a spy item if we have one, for the quest
+    if (
+      have($item[Knob Goblin firecracker])
+      && !get_property("_villainLairFirecrackerUsed").to_boolean()
+    )
+    {
+      return "item Knob Goblin firecracker";
+    }
+
+    if (
+      have($item[spider web])
+      && !get_property("_villainLairWebUsed").to_boolean()
+    )
+    {
+      return "item spider web";
+    }
+
+    if (
+      have($item[razor-sharp can lid])
+      && !get_property("_villainLairCanLidUsed").to_boolean()
+    )
+    {
+      return "item razor-sharp can lid";
+    }
+  }
+  return "";
+}
+
 string maybe_run(monster foe)
 {
   // check for spooky jellied to see if we want to run so we defeat someone else?
@@ -229,8 +242,8 @@ string maybe_sniff(monster foe)
       if (to_int(get_property("palindomeDudesDefeated")) >= 5) return "";
       break;
     case $monster[tomb rat]:
-      if (quest_status("questL11Pyramid") >= 3) return "";
-      if (turners() < 10) return "";
+      if (quest_status("questL11Pyramid") > 3) return "";
+      if (turners() >= 10) return "";
       break;
     case $monster[bearpig topiary animal]:
     case $monster[elephant (meatcar?) topiary animal]:
@@ -285,9 +298,6 @@ string yz_consult(int round, string mob, string text)
   maybe = maybe_banish(foe);
   if (maybe != "") return maybe;
 
-  maybe = maybe_trap_ghost(foe);
-  if (maybe != "") return maybe;
-
   maybe = maybe_copy(foe);
   if (maybe != "") return maybe;
 
@@ -301,6 +311,9 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_portscan(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_lta_item(foe);
   if (maybe != "") return maybe;
 
   return "consult WHAM.ash";

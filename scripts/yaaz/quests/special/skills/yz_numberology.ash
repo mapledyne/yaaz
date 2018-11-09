@@ -11,6 +11,11 @@ void numberology_progress()
 	task("Calculate the Universe");
 }
 
+void numberology_cleanup()
+{
+
+}
+
 int universe_result(int input)
 {
   return reverse_numberology()[input];
@@ -42,8 +47,7 @@ int pick_a_number()
 			return 0;
 		}
 
-		if (have_familiar($familiar[intergnat])
-		    && to_familiar(setting("100_familiar")) == $familiar[none]
+		if (can_adventure_with_familiar($familiar[intergnat])
 				&& my_adventures() > 8)
 		{
 			// wait a bit to collect bacon and get a viral video:
@@ -73,19 +77,23 @@ int pick_a_number()
 	return 0;
 }
 
-void numberology()
+boolean numberology()
 {
 	if (!have_skill($skill[calculate the universe]))
-		return;
+		return false;
 	if (to_int(get_property("_universeCalculated")) >= to_int(get_property("skillLevel144")))
-		return;
+		return false;
 	int goal = pick_a_number();
 
 	if (goal == 0)
-	 	return;
+	{
+	 	return false;
+	} else {
+		return true;
+	}
 }
 
 void main()
 {
-	numberology();
+	while(numberology());
 }

@@ -44,11 +44,20 @@ void collect_pvp_info()
     return;
   }
 
+
   if (contains_text(v,"safari season"))
   {
     save_daily_setting("pvp_season", "Safari");
     save_daily_setting("pvp_swagger", "safariSwagger");
     save_daily_setting("pvp_fight", "Letter of the Moment");
+    return;
+  }
+
+  if (contains_text(v, "optimal season"))
+  {
+    save_daily_setting("pvp_season", "Optimal");
+    save_daily_setting("pvp_swagger", "optimalSeason");
+    save_daily_setting("pvp_fight", "Optimal Dresser");
     return;
   }
 

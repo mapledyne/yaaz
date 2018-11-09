@@ -5,7 +5,9 @@ void L13_Q_sorceress_progress()
 {
 
   if (quest_status("questL06Friar") > UNSTARTED
-      && !have($item[wand of nagamar]))
+      && !have($item[wand of nagamar])
+      && my_path() != "License to Adventure"
+  )
   {
     int wand = 0;
     string wand_parts = "";
@@ -92,6 +94,7 @@ boolean nagamar()
   if (!have($item[disassembled clover])) return false;
   if (!can_adventure()) return false;
   if (my_path() == "Nuclear Autumn") return false;
+  if (my_path() == "License to Adventure") return false;
 
   log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
   boolean clove = yz_clover($location[The Castle in the Clouds in the Sky (Basement)]);
@@ -528,11 +531,7 @@ boolean L13_Q_sorceress()
   if (quest_status("questL13Final") == FINISHED)
     return false;
 
-  while (loop_tower(quest_status("questL13Final")))
-  {
-    // actions in loop_tower
-  }
-  return true;
+  return loop_tower(quest_status("questL13Final"));
 }
 
 void main()

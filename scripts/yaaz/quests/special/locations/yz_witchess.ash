@@ -1,3 +1,4 @@
+import "util/base/yz_consume.ash";
 import "util/base/yz_print.ash";
 import "util/base/yz_maximize.ash";
 import "util/adventure/yz_adventure.ash";
@@ -12,6 +13,11 @@ void witchess_progress()
       progress(fights, 5, "Witchess fights", "blue");
     }
   }
+}
+
+void witchess_cleanup()
+{
+
 }
 
 int witchess_left()
@@ -63,31 +69,33 @@ void witchess(item it)
 
 }
 
-void witchess()
+boolean witchess()
 {
   if (!can_witchess())
-    return;
+    return false;
 
   log("Checking your " + $item[witchess set] + ".");
 
-  while (can_witchess())
+  maximize("");
+  if (!have($item[armored prawn]))
   {
-    maximize("");
-    if (!have($item[armored prawn]))
-    {
-      witchess($item[armored prawn]);
-      continue;
-    }
-    if (!have($item[greek fire]))
-    {
-      witchess($item[greek fire]);
-      continue;
-    }
-    witchess($item[Sacramento wine]);
+    witchess($item[armored prawn]);
+    return true;
   }
+  if (!have($item[greek fire]))
+  {
+    witchess($item[greek fire]);
+    return true;
+  }
+  if (can_drink($item[Sacramento wine])) {
+    witchess($item[Sacramento wine]);
+    return true;
+  }
+  witchess($item[greek fire]);
+  return true;
 }
 
 void main()
 {
-  witchess();
+  while(witchess());
 }

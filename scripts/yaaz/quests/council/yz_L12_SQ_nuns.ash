@@ -2,13 +2,6 @@ import "util/yz_main.ash";
 import "util/base/yz_war_support.ash";
 import "special/locations/yz_terminal.ash";
 
-int max_expected_nuns_meat()
-{
-  int max_expected_meat = $monster[dirty thieving brigand].max_meat;
-  max_expected_meat = max_expected_meat * (1 + (numeric_modifier("meat drop") / 100));
-  return max_expected_meat;
-}
-
 boolean do_nuns_quest(string side)
 {
   boolean doing_trick = false;
@@ -16,16 +9,33 @@ boolean do_nuns_quest(string side)
   if (side == "hippy" && war_side() == "fratboy") doing_trick = true;
   int meat_recovered = to_int(get_property("currentNunneryMeat"));
 
+  boolean about_to_finish = (meat_recovered + max_expected_nuns_meat() > 100000);
+
   if (doing_trick
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
-      && meat_recovered + (max_expected_nuns_meat() * 2) > 100000)
+      && (
+        to_monster(get_property("_sourceTerminalDigitizeMonster")) == $monster[dirty thieving brigand]
+        || to_monster(get_property("enamorangMonster")) == $monster[dirty thieving brigand]
+      )
+      && about_to_finish)
   {
-    log("We've digitized a " + wrap($monster[dirty thieving brigand]) + ", so will wait on the nuns quest until we've gotten the rest of the meat through that copy.");
+    log("We've digitized/enamoranged a " + wrap($monster[dirty thieving brigand]) + ", so will wait on the nuns quest until we've gotten the rest of the meat through that copy.");
     return false;
   }
 
+  if (
+    !get_property("_mayoDeviceRented").to_boolean() &&
+    !get_property("mayoWhipRented").to_boolean() &&
+    my_meat() > 30000
+  ) {
+    // If we have plenty of meat, get a miracle whip
+    buy(1, $item[miracle whip]);
+  }
   maximize("meat", war_outfit(side));
   effect_maintain($effect[Sinuses For Miles]);
+
+  if (doing_trick && about_to_finish) {
+    abort("We were trying to do the Nun's trick, but now we're about to adventure for the last time and we didn't make a copy");
+  }
 
   yz_adventure($location[the themthar hills]);
   return true;

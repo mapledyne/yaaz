@@ -164,21 +164,8 @@ void intro()
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>, <a href='showplayer.php?who=1566270'>" + wrap("LeaChim (#1566270)", 'blue') + "</a>.");
   log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2355952'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
 
-  boolean has_fam = false;
-  foreach f in $familiars[]
-  {
-    if (have_familiar(f))
-    {
-      has_fam = true;
-      break;
-    }
-  }
-
-  if (!has_fam)
-  {
-    error("You don't have any familiars yet. This script needs to have at least one familiar. Go get one manually and try re-running this script.");
-    abort();
-  }
+  // Check to see if we have a familiar - if the path allows familiars
+  choose_familiar("");
 
   if (!svn_exists("winterbay-mafia-wham"))
   {
@@ -242,6 +229,12 @@ void intro()
   {
     warning("This script doesn't handle well some of the monster modifiers in this path (" + wrap(my_path(), COLOR_LOCATION) + "). When this happens, you can finish the fight and re-run the script to pick back up.");
     wait(5);
+  }
+
+  if (my_path() == "License to Adventure") {
+    // Setting this here so it's active before we hit it
+    // As it'll show up in any location
+    set_property("choiceAdventure1258", 2);
   }
 
   if (holiday() != "")

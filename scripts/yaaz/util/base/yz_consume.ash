@@ -97,6 +97,8 @@ float adv_per_consumption(item it)
       return 0;
     if (my_path() == "Nuclear Autumn" && it.inebriety > 1)
       return 0;
+    if (my_path() == "License to Adventure" && it.image != "martini.gif")
+      return 0;
     return average_range(it.adventures) / to_float(it.inebriety);
   }
 
@@ -198,6 +200,8 @@ boolean can_drink(item it)
   if (consume_cost(it) > inebriety_remaining())
     return false;
   if (my_path() == "Nuclear Autumn" && consume_cost(it) > 1)
+    return false;
+  if (my_path() == "License to Adventure" && it.image != "martini.gif")
     return false;
   if (!be_good(it))
     return false;
@@ -306,6 +310,10 @@ boolean try_drink(item it)
     return cli_execute("drink 1 " + it);
   }
 
+  if (it.image == "martini.gif" && have($item[tuxedo shirt])) {
+    // Get more adventures from Tuxedo Shirt
+    equip($slot[shirt], $item[tuxedo shirt]);
+  }
 
   log("Drinking a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
   return drink(1, it);

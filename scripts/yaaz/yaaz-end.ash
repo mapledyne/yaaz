@@ -74,6 +74,8 @@ void day_end()
 
   consider_chrome_item();
 
+  kgb_enchant("adventures");
+
   log("Dressing for rollover.");
   if (hippy_stone_broken())
   {
@@ -81,6 +83,14 @@ void day_end()
     pvp_rollover();
   }
   maximize("rollover");
+
+  log("Consuming free rests.");
+  while(total_free_rests() - get_property("timesRested").to_int() > 0)
+  {
+    prep();
+    cli_execute("rest");
+  }
+
   progress_sheet(true);
   manuel_progress();
 

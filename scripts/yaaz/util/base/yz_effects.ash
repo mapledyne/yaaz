@@ -134,7 +134,7 @@ void try_summon_demon(effect ef)
 }
 
 
-void effect_maintain(effect ef)
+void effect_maintain(effect ef, boolean use_turns)
 {
   if (have_effect(ef) > 0)
     return;
@@ -205,8 +205,13 @@ void effect_maintain(effect ef)
           buy(1, it);
         }
       }
-      if (creatable_amount(it) > 0)
-      {
+      if (
+        creatable_amount(it) > 0 &&
+        (
+          use_turns ||
+          creatable_turns(it, 1, true) == 0
+        )
+      ) {
         log("Creating " + wrap(it) + " to maintain " + wrap(ef));
         create(1, it);
       }
@@ -219,6 +224,10 @@ void effect_maintain(effect ef)
       return;
     }
   }
+}
+
+void effect_maintain(effect ef) {
+  effect_maintain(ef, false);
 }
 
 void cast_surplus_mp()
