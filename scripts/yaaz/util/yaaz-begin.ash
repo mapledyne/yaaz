@@ -1,4 +1,5 @@
 import "util/yz_main.ash";
+import "util/base/yz_speedy.ash";
 
 void day_begin()
 {
@@ -6,7 +7,7 @@ void day_begin()
 
   log("Current progress:");
   progress_sheet(true);
-  wait(5);
+  speedy_wait(5);
 
   if (get_property("cloverProtectActive") != "true")
     set_property("cloverProtectActive", "true");
