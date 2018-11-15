@@ -1,6 +1,7 @@
 import 'special/items/yz_batfellow_comic.ash';
 import 'special/items/yz_deck.ash';
 import 'special/items/yz_geniebottle.ash';
+import 'special/items/yz_invisiblestring.ash';
 import 'special/items/yz_manuel.ash';
 import 'special/items/yz_kgb.ash';
 import 'special/items/yz_protonic.ash';
@@ -47,6 +48,7 @@ boolean[string] SPECIAL_LIST = $strings[geniebottle,
                                         gingerbread,
                                         spacegate,
                                         votingbooth,
+                                        invisiblestring,
                                         manuel];
 
 
