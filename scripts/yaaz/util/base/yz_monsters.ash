@@ -29,12 +29,12 @@ void remove_duplicate(monster mon);
 // monster or area will really make this script smarter.
 boolean dangerous(monster mon)
 {
-  boolean awooga = expected_damage(mon) > my_maxhp() / 4;
+  boolean awooga = expected_damage(mon) > my_hp() / 4;
 
-  // reduce threshold a bit for bosses since they often have trickier attacks and defences:
+  // reduce threshold a bit for bosses since they often have trickier attacks and defenses:
   if (mon.boss)
   {
-    awooga = expected_damage(mon) > my_maxhp() / 8;
+    awooga = expected_damage(mon) > my_hp() / 8;
   }
 
   if (awooga) debug("Checking if " + wrap(mon) + " is dangerous. It is.");
