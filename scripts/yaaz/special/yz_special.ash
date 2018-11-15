@@ -18,6 +18,7 @@ import 'special/locations/yz_teatree.ash';
 import 'special/locations/yz_terminal.ash';
 import 'special/locations/yz_thanksgarden.ash';
 import 'special/locations/yz_vip_floundry.ash';
+import 'special/locations/yz_votingbooth.ash';
 import 'special/skills/yz_communism.ash';
 import 'special/skills/yz_eldritchhorror.ash';
 import 'special/skills/yz_perfect_freeze.ash';
@@ -45,6 +46,7 @@ boolean[string] SPECIAL_LIST = $strings[geniebottle,
                                         batfellow_comic,
                                         gingerbread,
                                         spacegate,
+                                        votingbooth,
                                         manuel];
 
 

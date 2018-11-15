@@ -116,6 +116,23 @@ void progress_sheet(boolean detailed)
     progress_sheet_detail();
   }
 
+  item votedsticker = $item[9990]; // "I Voted" sticker
+
+  if (have(votedsticker))
+  {
+    int turns = total_turns_played() % 11;
+    int wait_time = 11;
+    if (turns == 1) wait_time = 0;
+    if (turns == 0) wait_time = 1;
+    if (turns == 10) wait_time = 2;
+    if (turns == 9) wait_time = 3;
+    if (wait_time < 4)
+    {
+      yz_print("Voting monster is up in " + wrap(wait_time, COLOR_MONSTER) + " turns.", COLOR_TASK);
+    }
+
+  }
+
   for x from 0 to 25
   {
     if (get_counters("Digitize monster", x, x) != "")

@@ -31,6 +31,7 @@ void bottle_wish(monster mon)
   print("Using the " + wrap($item[genie bottle]) + " to fight a " + wrap(mon));
   maximize();
   cli_execute("genie monster " + mon);
+  run_combat();
 }
 
 boolean can_wish()
