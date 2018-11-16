@@ -39,6 +39,7 @@ Ninja mop	0
 Patchouli Incense Stick	0
 Phat Turquoise Bead	0
 Photoprotoneutron Torpedo	0
+pile of gold coins	0
 pirate pelvis	0
 Procrastination Potion	0
 Ratgut	0

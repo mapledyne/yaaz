@@ -30,6 +30,10 @@ void buy_things()
 
   }
 
+  if (!canadia_available())
+  {
+    stock_item($item[detuned radio]);
+  }
 
   // spend BACON on things for future use:
   if (!to_boolean(setting("bought_viral_video", "false"))

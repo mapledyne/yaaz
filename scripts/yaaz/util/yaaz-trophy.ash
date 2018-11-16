@@ -516,7 +516,7 @@ void trophy()
 	basic_trophy(to_int(get_property("boneAbacusVictories")), 1000, 124);
 	basic_consumption_trophy($item[warbear gyro], 108, 129);
 	if (my_path() == "Avatar of Sneaky Pete") basic_trophy(my_level(), 30, 136);
-	basic_consumption_trophy($item[mini-martini], 7, 139);
+	basic_consumption_trophy($item[mini-martini], 11, 139);
 
 	int spel = 0;
 	for x from 0 to length(get_property("spelunkyUpgrades")) - 1
@@ -536,6 +536,8 @@ void trophy()
 		}
 		basic_trophy(count, 125, 151);
 	}
+	basic_consumption_trophy($item[primitive alien salad], 11, 152);
+
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 
 	nom_something();

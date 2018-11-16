@@ -101,17 +101,21 @@ void prep(location loc)
    if (have_effect($effect[beaten up]) > 0)
      uneffect($effect[beaten up]);
 
-   if (my_hp() < (my_maxhp() * 0.75))
+   float hpTarget = to_float(get_property("hpAutoRecoveryTarget"));
+   float hpRecovery = to_float(get_property("hpAutoRecovery"));
+   if (my_hp() < (my_maxhp() * hpRecovery))
    {
      log("Restoring health...");
-     restore_hp(my_maxhp() * 0.9);
+     restore_hp(my_maxhp() * hpTarget);
    }
 
    // should put more finesse here to just recover what we need...
-   if (my_mp() < (my_maxmp() * 0.5))
+   float mpTarget = to_float(get_property("mpAutoRecoveryTarget"));
+   float mpRecovery = to_float(get_property("mpAutoRecovery"));
+   if (my_mp() < (my_maxmp() * mpRecovery))
    {
-     log("Restoring MP...");
-     restore_mp(my_maxmp() * 0.6);
+       log("Restoring MP...");
+       restore_mp(my_maxmp() * mpTarget);
    }
 
  }
@@ -202,7 +206,8 @@ void prep(location loc)
 
   if (!($locations[the boss bat's lair,
                    Haert of the Cyrpt,
-                   Throne Room] contains loc))
+                   Throne Room] contains loc)
+      && (have($item[detuned radio]) || canadia_available()))
   {
     int annoy = 10;
     if (canadia_available()) annoy = 11;

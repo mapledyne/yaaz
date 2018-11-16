@@ -149,3 +149,6 @@
 149	oh_the_horror	Tentacle Tickler	Defeat 666 Eldritch Tentacles
 150	all_you_need_is_it	LOVE, LOVE, LOVE	Solve the L.O.V. Exit puzzle
 151	i_had_to_drink_from_the_liquid_cup	Gelatinous Hubris	Learn all 125 Gelatinous Noob skills in a single ascension.
+152	in_space_noone_can_hear_you_laugh	Salads of Many Worlds	Eat 11 primitive alien salads
+153	eleven_inch_flautist	Ultimate Cosmic Power	Solve the genie puzzle
+154	cross_about_naught	Commemorative Replica Blob	Defeat a giant amorphous blob
