@@ -1,7 +1,7 @@
 import 'special/items/yz_batfellow_comic.ash';
 import 'special/items/yz_deck.ash';
 import 'special/items/yz_geniebottle.ash';
-import 'special/items/yz_invisiblestring.ash';
+import 'special/items/yz_lattemug.ash';
 import 'special/items/yz_manuel.ash';
 import 'special/items/yz_kgb.ash';
 import 'special/items/yz_protonic.ash';
@@ -26,7 +26,7 @@ import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
-boolean[string] SPECIAL_LIST = $strings[geniebottle,
+boolean[string] SPECIAL_LIST = $strings[votingbooth,
                                         bookshelf,
                                         barrelgod,
                                         communism,
@@ -40,15 +40,15 @@ boolean[string] SPECIAL_LIST = $strings[geniebottle,
                                         sealfigurines,
                                         ltt,
                                         deck,
+                                        lattemug,
                                         precinct,
                                         timespinner,
                                         kgb,
+                                        geniebottle,
                                         eldritchhorror,
                                         batfellow_comic,
                                         gingerbread,
                                         spacegate,
-                                        votingbooth,
-                                        invisiblestring,
                                         manuel];
 
 

@@ -22,16 +22,17 @@ void geniebottle_progress()
 
 void bottle_wish(string wishingfor)
 {
-  print("Using the " + wrap($item[genie bottle]) + " to " + wrap(wishingfor, COLOR_ITEM));
+  log("Using the " + wrap($item[genie bottle]) + " to " + wrap(wishingfor, COLOR_ITEM));
   cli_execute("genie " + wishingfor);
 }
 
 void bottle_wish(monster mon)
 {
-  print("Using the " + wrap($item[genie bottle]) + " to fight a " + wrap(mon));
+  log("Using the " + wrap($item[genie bottle]) + " to fight a " + wrap(mon));
   maximize();
   cli_execute("genie monster " + mon);
-  run_combat();
+  string temp = visit_url("main.php"); // we seem to not always know we're in a fight
+  run_combat("yz_consult");
 }
 
 boolean can_wish()
