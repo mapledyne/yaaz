@@ -132,6 +132,8 @@ boolean location_open(location l)
       return quest_status("questL11Manor") >= 1;
     case $location[the hidden office building]:
       return to_int(get_property("hiddenOfficeProgress")) > 0;
+    case $location[lair of the ninja snowmen]:
+      return quest_status("questL08Trapper") >= 2;
     default:
       debug("Checking location_open(" + wrap(l) + ") and returning the default: " + wrap('true', COLOR_LOCATION));
       return true;

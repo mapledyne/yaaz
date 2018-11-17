@@ -5,6 +5,7 @@ import "quests/other/yz_M_hidden_temple.ash";
 import "quests/other/yz_M_8bit.ash";
 import "quests/other/yz_M_desert_beach.ash";
 import "quests/other/yz_M_island.ash";
+import "quests/other/yz_M_invisiblestring.ash";
 import "quests/other/yz_M_lights_out.ash";
 import "quests/other/yz_M_pirates.ash";
 import "quests/other/yz_M_spookyraven.ash";
@@ -44,7 +45,8 @@ import 'quests/special/skills/yz_numberology.ash';
 // loop will try the quests. If you want to order quests differently, change it here.
 // Note that some quests will skip themselves and let a later quest do work if it's
 // waiting on something (arena quests waiting for flyers, for instance).
-boolean[string] QUEST_LIST = $strings[tuxedo_shirt,
+boolean[string] QUEST_LIST = $strings[M_invisiblestring,
+                                      tuxedo_shirt,
                                       numberology,
                                       snojo,
                                       dmt,

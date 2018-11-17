@@ -75,8 +75,8 @@ void votingbooth()
   if (have(voted_sticker)) return;
 
   log('Seeing what the choices are for voting.');
-//  string choices = visit_url('/place.php?whichplace=town_right&action=townright_vote');
-//  visit_url("choice.php?whichchoice=582&option=2&pwd");
+  string choices = visit_url('/place.php?whichplace=town_right&action=townright_vote');
+  visit_url("choice.php?whichchoice=582&option=2&pwd");
 
   int candidate = random(2) + 1;
 
