@@ -2,6 +2,7 @@ import "util/base/yz_print.ash";
 import "util/base/yz_inventory.ash";
 import "util/base/yz_effects.ash";
 import "util/base/yz_familiars.ash";
+import "special/items/yz_january_garbage.ash";
 import "special/locations/yz_terminal.ash";
 import "special/locations/yz_bookshelf.ash";
 
@@ -170,6 +171,24 @@ void maximize(string target, string outfit, item it, familiar fam)
       warning("Yaaz will automatically switch back before adventuring if you use the script, but you'll want to be careful not to manually adventure. You'll have to make this familiar change manually, but there's little downside if you're careful not to adventure afterwards.");
       wait(3);
     }
+  }
+
+  // January Garbage Tote
+  switch(target)
+  {
+    case "ml":
+      get_garbage_item($item[tinsel tights]);
+      break;
+    case "items":
+    case "meat":
+      get_garbage_item($item[wad of used tape]);
+      break;
+    case "rollover":
+      get_garbage_item($item[makeshift garbage shirt]);
+      break;
+    default: // is this a good default?
+      get_garbage_item($item[wad of used tape]);
+      break;
   }
 
   if (add_familiar_weight) max_effects("familiar weight", false);
