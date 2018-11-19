@@ -20,7 +20,6 @@ void max_effects(string target, boolean aggressive);
 void cross_streams(string player);
 void cross_streams();
 
-
 void cross_streams(string player)
 {
   if (!have($item[protonic accelerator pack]))
