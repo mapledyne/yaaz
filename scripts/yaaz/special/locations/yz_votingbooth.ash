@@ -57,9 +57,10 @@ int get_vote_choice(boolean reverse)
   {
     string initiative = "_voteLocal" + to_string(x);
     string initiative_contents = get_property(initiative);
-    if (is_positive_initiative(initiative_contents)) return x;
+    if (is_positive_initiative(initiative_contents)) return x - 1;
   }
-  return 1;
+
+  return start - 1;
 
 }
 
@@ -76,15 +77,14 @@ void votingbooth()
 
   log('Seeing what the choices are for voting.');
   string choices = visit_url('/place.php?whichplace=town_right&action=townright_vote');
-  visit_url("choice.php?whichchoice=582&option=2&pwd");
 
   int candidate = random(2) + 1;
 
   int local1 = get_vote_choice();
   int local2 = get_vote_choice(true);
+  log("Voting for two initiatives: " + wrap(get_property("_voteLocal" + (local1 + 1)), COLOR_MONSTER) + ", " + wrap(get_property("_voteLocal" + (local2 + 1)), COLOR_MONSTER) + ".");
   string url = "choice.php?whichchoice=1331&option=1&g=" + candidate + "&local[]=" + local1 + "&local[]=" + local2 + "&pwd";
-  print(visit_url(url));
-
+  visit_url(url);
 }
 
 void main()

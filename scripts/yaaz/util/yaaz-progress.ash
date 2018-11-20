@@ -186,7 +186,10 @@ void progress_sheet(boolean detailed)
       foreach freepull in $items[holiday fun!,
                                  aggressive carrot,
                                  roll of toilet paper,
-                                 glass of warm water]
+                                 glass of warm water,
+                                 Unmotivator: Crashed Meat Car,
+                                 Unmotivator: Crashed Orca,
+                                 Unmotivator: Success Warrior]
       {
         int so_many = get_free_pulls()[freepull];
         if (so_many > 0 && be_good(freepull))

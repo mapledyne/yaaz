@@ -227,6 +227,23 @@ void do_heart_thing(string player)
     return;
   }
 
+  boolean[item] unmotivators = $items[Unmotivator: Crashed Meat Car,
+                                      Unmotivator: Crashed Orca,
+                                      Unmotivator: Success Warrior];
+
+  foreach um in unmotivators
+  {
+    if (item_amount(um) > 0
+        && random_heart_picker()
+        && do_jerk_things())
+    {
+      heart_msg(player, "unmotivating them with an " + wrap(um) + ". Jerk");
+      cli_execute("throw " + um + " at " + player);
+      return;
+    }
+
+  }
+
   // throw personalized coffee mug at abulafia || abcd | efgh | ijkl
   // visit_url("curse.php?action=use&pwd&whichitem=7697&targetplayer=abulafia&message=test");
   if (do_jerk_things())

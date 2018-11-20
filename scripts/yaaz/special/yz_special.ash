@@ -1,6 +1,7 @@
 import 'special/items/yz_batfellow_comic.ash';
 import 'special/items/yz_deck.ash';
 import 'special/items/yz_geniebottle.ash';
+import 'special/items/yz_january_garbage.ash';
 import 'special/items/yz_lattemug.ash';
 import 'special/items/yz_manuel.ash';
 import 'special/items/yz_kgb.ash';
@@ -26,7 +27,8 @@ import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
-boolean[string] SPECIAL_LIST = $strings[votingbooth,
+boolean[string] SPECIAL_LIST = $strings[january_garbage,
+                                        votingbooth,
                                         bookshelf,
                                         barrelgod,
                                         communism,
