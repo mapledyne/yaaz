@@ -48,6 +48,17 @@ boolean can_wish()
 
 void geniebottle()
 {
+// From forum as strategy:
+// I used to get a Bass Clarinet from the Clan Floundry each day, which you can "drain" for 10 white pixels.
+// Now, with the genie, I can wish for a ghost to fight, which drops up to 5 white pixels (with just 150% item).
+// By digitizing the ghost I was able to fight six in one day, gaining 30 white pixels. I also fought
+// five writing desks by wishing for one and digitizing.
+
+// This lets me pull a Fish Hatchet from the Floundry instead of the clarinet. The Fish Hatchet gives
+// 5 of each bridge building material type. So the genie is letting me save a nice handful of turns,
+// since it takes somewhere around 15 adventures to get 10 of each bridge parts, and I only have to
+// spend 6 adventures on the ghosts.
+
   if (!can_wish()) return;
 
   if (!have($item[blessed rustproof +2 gray dragon scale mail])
