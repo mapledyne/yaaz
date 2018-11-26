@@ -31,8 +31,18 @@ boolean L09_SQ_oilpeak()
 
   int progress = to_int(get_property("oilPeakProgress"));
 
-  if (progress == 0
-      && !contains_text($location[oil peak].noncombat_queue, "Unimpressed with Pressure"))
+  boolean lit = to_boolean(setting("oilpeak_lit", "false"));
+
+  if (progress == 0 && !lit)
+  {
+    string peaks = visit_url("place.php?whichplace=highlands");
+    if (index_of(peaks, 'orcchasm/fire3.gif') >= 0);
+    debug("Looks like we've already lit the " + wrap($location[oil peak]) + ". I'll note this so I remember.");
+    save_daily_setting("oilpeak_lit", true);
+    return true;
+  }
+
+  if (progress == 0 && !lit)
   {
     log("Going to light the " + wrap($location[oil peak]));
     yz_adventure($location[oil peak]);
@@ -41,7 +51,7 @@ boolean L09_SQ_oilpeak()
 
   if (progress == 0
       && have_crudes()
-      && contains_text($location[oil peak].noncombat_queue, "Unimpressed with Pressure"))
+      && lit)
   {
     return false;
   }
