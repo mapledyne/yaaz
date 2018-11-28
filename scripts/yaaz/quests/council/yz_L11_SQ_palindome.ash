@@ -8,7 +8,7 @@ import "quests/other/yz_M_pirates.ash";
 boolean get_photographs()
 {
   if (palindome_items() == 5
-      && to_int(get_property("palindomeDudesDefeated")) <= 5
+      && to_int(get_property("palindomeDudesDefeated")) >= 5
       && have($item[stunt nuts]))
     return false;
 
@@ -20,6 +20,8 @@ boolean get_photographs()
     max = "items";
   }
   maximize(max, $item[talisman o' namsilat]);
+
+  log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
 
   yz_adventure($location[inside the palindome]);
   return true;
@@ -73,7 +75,6 @@ boolean L11_SQ_palindome()
       return false;
     case STARTED:
     case UNSTARTED:
-      log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
       if (get_photographs()) {
         return true;
       }
