@@ -119,3 +119,16 @@ void remove_attract(monster mon)
   updatevars();
 
 }
+
+location where_monster(monster mob)
+{
+  foreach loc in $locations[]
+  {
+    monster [int] mob_list = get_monsters(loc);
+    foreach m in mob_list
+    {
+      if (mob_list[m] == mob) return loc;
+    }
+  }
+  return $location[none];
+}

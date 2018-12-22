@@ -32,6 +32,7 @@ import "quests/council/yz_L13_Q_sorceress.ash";
 
 import "quests/other/yz_M_level_up.ash";
 
+import 'quests/special/items/yz_newyou.ash';
 import 'quests/special/items/yz_protonic.ash';
 import 'quests/special/items/yz_tuxedo_shirt.ash';
 import 'quests/special/locations/yz_chateau.ash';
@@ -57,6 +58,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       M_lights_out,
                                       M_toot,
                                       M_super_villain_lair,
+                                      newyou,
                                       M_bounty,
                                       M_guild,
                                       M_untinker,

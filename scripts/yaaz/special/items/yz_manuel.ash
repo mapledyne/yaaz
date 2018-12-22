@@ -13,7 +13,7 @@ boolean manuel_exclude_monster(monster mon)
 void manuel_add_location(location loc)
 {
   string locs = setting("manuel_locations");
-  locs = list_add(locs, loc);
+  locs = list_add(locs, loc, "•");
   save_daily_setting("manuel_locations", locs);
 }
 
@@ -177,7 +177,7 @@ void manuel_progress(location loc)
 
 void manuel_progress()
 {
-  string[int] locs = split_string(setting("manuel_locations"), ", ");
+  string[int] locs = split_string(setting("manuel_locations"), "•");
   foreach i in locs
   {
     location l = to_location(locs[i]);

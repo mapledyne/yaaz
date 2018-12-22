@@ -32,6 +32,15 @@ string maybe_copy(monster foe)
 
   if (action == "") return "";
 
+  monster newyoumon = to_monster(get_property("_newYouQuestMonster"));
+
+  if (newyoumon == foe
+      && newyoumon != $monster[none] &&
+      !to_boolean("_newYouQuestCompleted"))
+  {
+    return action;
+  }
+
   switch (foe)
   {
     default:
@@ -277,6 +286,19 @@ string maybe_portscan(monster foe)
   return "skill portscan";
 }
 
+string maybe_sharpen(monster foe)
+{
+  monster sharp = to_monster(get_property("_newYouQuestMonster"));
+  if (sharp != foe) return "";
+  if (to_boolean(get_property("_newYouQuestCompleted"))) return "";
+
+  int last_sharp = to_int(setting("newyou_last_sharp", "0"));
+  if (last_sharp == turns_played()) return "";
+
+  save_daily_setting("new_you_last_sharp", turns_played());
+  return "skill " + get_property("_newYouQuestSkill");
+}
+
 string yz_consult(int round, string mob, string text)
 {
   // do something like this if we want to consider stealing, but WHAM should take care of this for us generally.
@@ -314,6 +336,9 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_lta_item(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_sharpen(foe);
   if (maybe != "") return maybe;
 
   return "consult WHAM.ash";
