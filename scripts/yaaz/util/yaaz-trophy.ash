@@ -538,6 +538,8 @@ void trophy()
 	}
 	basic_consumption_trophy($item[primitive alien salad], 11, 152);
 
+	basic_trophy(item_amount($item[dropped scrap of paper]), 11, 155);
+
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 
 	nom_something();

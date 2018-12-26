@@ -152,3 +152,4 @@
 152	in_space_noone_can_hear_you_laugh	Salads of Many Worlds	Eat 11 primitive alien salads
 153	eleven_inch_flautist	Ultimate Cosmic Power	Solve the genie puzzle
 154	cross_about_naught	Commemorative Replica Blob	Defeat a giant amorphous blob
+155	eleven_inch_flautist	Ultimate Cosmic Power	 Wishing for "trophy Xxxxx" where Xxxxx is the solution to your genie puzzle
