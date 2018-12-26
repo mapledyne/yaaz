@@ -6,6 +6,7 @@ import "util/base/yz_print.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_settings.ash";
 import "util/base/yz_consume.ash";
+import "special/items/yz_manuel.ash";
 
 boolean DEBUG_TROPHY = false;
 
@@ -430,6 +431,23 @@ int nom_sorter(item it)
 	return price;
 }
 
+void fight_something()
+{
+	if (!have_manuel()) return;
+
+	int[monster] choices = missing_manuel_monster(false, 3);
+	if (count(choices) == 0) return;
+	string msg;
+	foreach c in choices
+	{
+		if (msg != "") msg += ", ";
+		msg += wrap(c);
+	}
+
+	msg = "Fill out your Manuel: Consider fighting one of: " + msg;
+	log(msg);
+}
+
 void nom_something()
 {
 	item[int] nomlist;
@@ -538,8 +556,11 @@ void trophy()
 	}
 	basic_consumption_trophy($item[primitive alien salad], 11, 152);
 
+	basic_trophy(item_amount($item[dropped scrap of paper]), 11, 155);
+
 	royalty(); // not a trophy, but seems to fit here in the spirit of things.
 
+	fight_something();
 	nom_something();
 	discovery();
 }

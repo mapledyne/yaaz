@@ -3,6 +3,25 @@ import "util/base/yz_inventory.ash";
 void buy_things()
 {
 
+  if (quest_status("questL13Final") == FINISHED)
+  {
+    // Aftercore stuff to buy:
+    int royal_threshold = to_int(setting("royal_tea_threshold", "0"));
+    if (royal_threshold > 0)
+    {
+      if (my_meat() > (3 * royal_threshold)
+          && !to_boolean(setting("royal_tea_bought", "false")))
+      {
+        log("Buying a " + wrap($item[cuppa royal tea]) + " since the price (" + wrap(mall_price($item[cuppa royal tea]), COLOR_ITEM) + ") is below your threshold (" + wrap(royal_threshold, COLOR_ITEM) + ").");
+        wait(10);
+        save_daily_setting("royal_tea_bought", "true");
+        int royal_price = mall_price($item[cuppa royal tea]);
+        buy(1, $item[cuppa royal tea], royal_threshold);
+      }
+    }
+  }
+
+
   if (quest_status("questL13Final") < 5)
   {
     stock_item($item[boris's key]);

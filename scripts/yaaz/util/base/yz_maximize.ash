@@ -54,9 +54,6 @@ void do_maximize(string target, string outfit, item it)
 {
   string max = target;
 
-
-  if (max == "") max = "all res";
-  
   if (outfit != "")
   {
     if (max != "")
@@ -86,12 +83,6 @@ void do_maximize(string target, string outfit, item it)
       if (max != "") max += ", ";
       max += "-equip [" + to_int(nope) + "]";
     }
-  }
-
-  if (it == $item[none] && outfit == "" && have($item[toyleporter]))
-  {
-    if (max != "") max += ", ";
-    max += "+equip [" + to_int($item[toyleporter]) + "]";
   }
 
   info("Maximizing equipment based on: " + max);

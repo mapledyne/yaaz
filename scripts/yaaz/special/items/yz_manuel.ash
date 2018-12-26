@@ -188,6 +188,50 @@ void manuel_progress()
   save_daily_setting("manuel_locations", "");
 }
 
+int[monster] missing_manuel_monster(boolean copyable, int list_max)
+{
+  int current = list_max;
+  int[monster] go_get_em;
+
+  boolean[monster] excludes = $monsters["blofeld"];
+  monster[int] everyone;
+
+  int count = 0;
+  foreach m in $monsters[]
+  {
+    everyone[count] = m;
+    count += 1;
+  }
+  sort everyone by random(100000);
+
+
+  foreach idx, mon in everyone
+  {
+    if (current < 1) break;
+    // if copyable, we're probably trying to Genie it or similar, so exclude
+    // some known weird ones that don't work well with the Genie:
+
+    if (mon.boss && copyable) continue;
+    if (contains_text(mon, "\"") && copyable) continue;
+    if (contains_text(mon, "\"") && copyable) continue;
+    if (contains_text(mon, "<s>") && copyable) continue;
+    if (contains_text(mon, "'") && copyable) continue;
+    if (contains_text(mon, "(") && copyable) continue;
+
+    int facts = monster_factoids_available(mon, false);
+    if (facts > 2) continue;
+
+    go_get_em[mon] = facts;
+    current -= 1;
+  }
+  return go_get_em;
+}
+
+int[monster] missing_manuel_monster()
+{
+  return missing_manuel_monster(true, 5);
+}
+
 void manuel()
 {
   maintain_avatar();

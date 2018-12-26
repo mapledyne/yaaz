@@ -295,7 +295,7 @@ string maybe_sharpen(monster foe)
   int last_sharp = to_int(setting("newyou_last_sharp", "0"));
   if (last_sharp == turns_played()) return "";
 
-  save_daily_setting("new_you_last_sharp", turns_played());
+  save_daily_setting("newyou_last_sharp", turns_played());
   return "skill " + get_property("_newYouQuestSkill");
 }
 
