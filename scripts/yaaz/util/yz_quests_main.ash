@@ -33,6 +33,7 @@ import "quests/council/yz_L13_Q_sorceress.ash";
 
 import "quests/other/yz_M_level_up.ash";
 
+import 'quests/special/items/yz_godlobster.ash';
 import 'quests/special/items/yz_newyou.ash';
 import 'quests/special/items/yz_protonic.ash';
 import 'quests/special/items/yz_tuxedo_shirt.ash';
@@ -51,6 +52,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       tuxedo_shirt,
                                       numberology,
                                       snojo,
+                                      godlobster,
                                       dmt,
                                       protonic,
                                       lovetunnel,

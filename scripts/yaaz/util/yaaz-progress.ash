@@ -229,6 +229,27 @@ void progress_sheet(boolean detailed)
       task("Consider using your " + wrap($item[burned government manual fragment]) + " (they'll disappear after ascension)");
     }
 
+    if (setting("long_aftercore") == "true"
+        && quest_status("questL13Final") == FINISHED)
+    {
+      boolean header = false;
+      string head_msg = "Here are some additional things you may want to consider doing manually:";
+
+      if (get_property("unknownRecipe5062") == "false"
+          && item_amount($item[knob goblin firecracker]) > 10)
+      {
+        if (!header) { log(head_msg); header = true; }
+
+        task("You have several " + wrap($item[knob goblin firecracker], 2) + ", which you can make " + wrap($item[popcorn]) + " from if you get some " + wrap($item[cob of corn], 2));
+      }
+      if (creatable_amount($item[chaos popcorn]) > 10)
+      {
+        if (!header) { log(head_msg); header = true; }
+        task("You can make some " + wrap($item[chaos popcorn]));
+      }
+
+    }
+
     // get new familiars as you find them:
     foreach f in $familiars[]
     {
@@ -244,6 +265,8 @@ void progress_sheet()
 {
   progress_sheet(false);
 }
+
+
 
 void main()
 {

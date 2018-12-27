@@ -68,6 +68,7 @@ valuable trinket	0
 6-ball	1
 7-ball	1
 7-foot dwarven mattock	1
+acid sqirting flower	1
 amulet of extreme plot significance	1
 ancient machete	1
 bone abacus	1
@@ -101,6 +102,7 @@ misty robe	1
 Mr. Screege's spectacles	1
 Orcish baseball cap	1
 Orcish cargo shorts	1
+pocket theremin	1
 sabre teeth	1
 snowboarder pants	1
 spooky stick	1

@@ -190,13 +190,25 @@ void make_things()
 
   if (setting("long_aftercore", "false") == "true"
       && setting("do_heart", "false") == "true"
-      && quest_status("questL13Final") == FINISHED
-      && have($item[gob of wet hair])
-      && get_property("unknownRecipe5062") == "false")
+      && quest_status("questL13Final") == FINISHED)
+  {
+    if (have($item[gob of wet hair])
+        && get_property("unknownRecipe5062") == "false")
     {
       int gobs = item_amount($item[gob of wet hair]);
       stock_item($item[wooden figurine], gobs);
       log("Making " + wrap($item[creepy voodoo doll], gobs) + " to give them to people.");
       create(creatable_amount($item[creepy voodoo doll]), $item[creepy voodoo doll]);
     }
+    if (get_property("unknownRecipe5067") == "false")
+    {
+      int pops = item_amount($item[knob goblin firecracker]) - 10;
+      pops = min(pops, item_amount($item[cob of corn]));
+      if (pops > 0)
+      {
+        create(pops, $item[popcorn]);
+      }
+    }
+  }
+
 }
