@@ -106,6 +106,7 @@ snowboarder pants	1
 spooky stick	1
 stuffed shoulder parrot	1
 vampire collar	1
+viking helmet	1
 
 # Keep ... 2?
 bum cheek	2
@@ -120,6 +121,21 @@ ant agonist	10
 anti-anti-antidote	20
 loose teeth	5
 salacious crumbs	20
+super-spiky hair gel	20
+
+# consumables that can just get to really high inv levels
+angry farmer candy	50
+blackberry	100
+bottle of gin	100
+bottle of whiskey	100
+coconut shell	100
+cranberries	100
+exotic jungle fruit	100
+funky dried mushroom	100
+gob of wet hair	100
+imitation white russian	100
+rat appendix	25
+tonic water	100
 
 # Worth keeping?
 knob goblin scimitar	1

@@ -5,6 +5,17 @@ void buy_things()
 
   if (quest_status("questL13Final") == FINISHED)
   {
+
+    boolean long_aftercore = to_boolean(setting("long_aftercore", "false"));
+    if (long_aftercore)
+    {
+      if (!(get_campground() contains $item[clockwork maid]))
+      {
+        stock_item($item[clockwork maid], 1);
+        if (have($item[clockwork maid])) use(1, $item[clockwork maid]);
+      }
+    }
+
     // Aftercore stuff to buy:
     int royal_threshold = to_int(setting("royal_tea_threshold", "0"));
     if (royal_threshold > 0)

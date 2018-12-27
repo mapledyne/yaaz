@@ -435,7 +435,7 @@ void fight_something()
 {
 	if (!have_manuel()) return;
 
-	int[monster] choices = missing_manuel_monster(false, 3);
+	int[monster] choices = missing_manuel_monster(true, 3);
 	if (count(choices) == 0) return;
 	string msg;
 	foreach c in choices

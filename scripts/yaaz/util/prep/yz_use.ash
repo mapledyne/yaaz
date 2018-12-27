@@ -141,6 +141,17 @@ void use_things()
     use(1, $item[dr. hobo's map]);
   }
 
+  if (item_amount($item[inkwell]) > 0
+      && item_amount($item[tattered scrap of paper]) > 0
+      && item_amount($item[disintegrating quill pen]) > 0)
+  {
+    int scrolls = min(item_amount($item[inkwell]), item_amount($item[tattered scrap of paper]));
+    scrolls = min(scrolls, item_amount($item[disintegrating quill pen]));
+
+    log("Making " + scrolls + " " + wrap($item[scroll of ancient forbidden unspeakable evil], scrolls) + ".");
+    use(scrolls, $item[disintegrating quill pen]);
+
+  }
 }
 
 void main()

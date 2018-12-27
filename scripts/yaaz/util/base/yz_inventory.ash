@@ -181,6 +181,20 @@ int wad_total()
 	return item_amount($item[twinkly wad]) + item_amount($item[cold wad]) + item_amount($item[hot wad]) + item_amount($item[spooky wad]) + item_amount($item[sleaze wad]) + item_amount($item[stench wad]);
 }
 
+boolean have_or_get_all_wads()
+{
+  foreach wad in $items[twinkly wad, cold wad, hot wad, spooky wad, sleaze wad, stench wad]
+  {
+    if (item_amount(wad) == 0)
+    {
+      if (closet_amount(wad) == 0) return false;
+      take_closet(1, wad);
+    }
+  }
+
+  return true;
+}
+
 boolean have_all_wads()
 {
 	if (!have($item[twinkly wad]))

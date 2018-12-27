@@ -7,6 +7,7 @@ import "quests/other/yz_M_desert_beach.ash";
 import "quests/other/yz_M_island.ash";
 import "quests/other/yz_M_invisiblestring.ash";
 import "quests/other/yz_M_lights_out.ash";
+import "quests/other/yz_M_nemesis.ash";
 import "quests/other/yz_M_pirates.ash";
 import "quests/other/yz_M_spookyraven.ash";
 import "quests/other/yz_M_super_villain_lair.ash";
@@ -58,6 +59,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       M_lights_out,
                                       M_toot,
                                       M_super_villain_lair,
+                                      M_nemesis,
                                       newyou,
                                       M_bounty,
                                       M_guild,

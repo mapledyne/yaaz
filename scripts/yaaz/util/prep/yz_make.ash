@@ -105,10 +105,10 @@ void make_things()
   make_if_needed($item[asshat], "because it's funny.");
 
   // rainbow summons:
-  while (have_all_wads()
-         && have_skill($skill[rainbow gravitation])
+  while (have_skill($skill[rainbow gravitation])
          && to_int(get_property("prismaticSummons")) < 3)
   {
+    if (!have_or_get_all_wads()) break;
     log("Summoning a " + wrap($item[prismatic wad]) + ".");
     use_skill(1, $skill[rainbow gravitation]);
   }
@@ -187,4 +187,16 @@ void make_things()
     log("Turning " + wrap($item[shard of double-ice]) + " into a " + wrap($item[double-ice box]) + ".");
     create(1, $item[double-ice box]);
   }
+
+  if (setting("long_aftercore", "false") == "true"
+      && setting("do_heart", "false") == "true"
+      && quest_status("questL13Final") == FINISHED
+      && have($item[gob of wet hair])
+      && get_property("unknownRecipe5062") == "false")
+    {
+      int gobs = item_amount($item[gob of wet hair]);
+      stock_item($item[wooden figurine], gobs);
+      log("Making " + wrap($item[creepy voodoo doll], gobs) + " to give them to people.");
+      create(creatable_amount($item[creepy voodoo doll]), $item[creepy voodoo doll]);
+    }
 }

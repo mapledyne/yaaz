@@ -128,6 +128,12 @@ void progress_sheet(boolean detailed)
 
   }
 
+  if (get_property("_creepyVoodooDollUsed") != "true"
+      && have($item[creepy voodoo doll]))
+  {
+    task("Use a " + wrap($item[creepy voodoo doll]));
+  }
+
   for x from 0 to 25
   {
     if (get_counters("Digitize monster", x, x) != "")
