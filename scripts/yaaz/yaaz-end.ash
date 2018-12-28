@@ -94,7 +94,6 @@ void day_end()
   progress_sheet(true);
   manuel_progress();
 
-  progress_create();
 }
 
 void main()

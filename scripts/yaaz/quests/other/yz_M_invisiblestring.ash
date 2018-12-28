@@ -40,8 +40,8 @@ boolean M_invisiblestring()
   // if we can't use the tot (we're doing a tour guide with something else)
   // then never attempt the string path.
 
-  if (setting("100familar") != $familiar[trick-or-treating tot]
-      && setting("100familar") != $familiar[none]) return false;
+  if (to_familiar(setting("100familar")) != $familiar[trick-or-treating tot]
+      && to_familiar(setting("100familar")) != $familiar[none]) return false;
 
   if (have($item[li'l ghost costume])) return false;
 

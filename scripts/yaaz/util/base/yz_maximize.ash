@@ -191,6 +191,30 @@ void maximize(string target, string outfit, item it, familiar fam)
       break;
   }
 
+  if (have($item[SongBoom&trade; BoomBox]) && target == "")
+  {
+    int booms = to_int(get_property("_boomBoxSongsLeft"));
+    string song = get_property("boomBoxSong");
+
+    if (booms > 0)
+    {
+      if (quest_status("cyrptTotalEvilness") > 0
+          && song != "Eye of the Giger")
+      {
+        cli_execute("boombox giger");
+      }
+      else if (my_meat() < 5000
+               && song != "Total Eclipse of Your Meat")
+      {
+        cli_execute("boombox meat");
+      }
+      else if (song != "Food Vibrations")
+      {
+        cli_execute("boombox food");
+      }
+    }
+  }
+
   if (add_familiar_weight) max_effects("familiar weight", false);
 
   do_maximize(target, outfit, it);
@@ -404,6 +428,14 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[The Inquisitor's Unknown Effect]);
       }
 
+      if (have($item[SongBoom&trade; BoomBox]))
+      {
+        int booms = to_int(get_property("_boomBoxSongsLeft"));
+        if (booms > 0 && get_property("boomBoxSong") != "Total Eclipse of Your Meat")
+        {
+          cli_execute("boombox meat");
+        }
+      }
       break;
     case "items":
       effect_maintain($effect[ermine eyes]);

@@ -88,6 +88,20 @@ void cast_one_time_things()
   cast_if($skill[Pastamastery], to_int(get_property("noodleSummons")) == 0);
   cast_if($skill[summon crimbo candy], to_int(get_property("_candySummons")) == 0);
   cast_if($skill[Summon Holiday Fun!], !to_boolean(get_property("_holidayFunUsed")));
+  cast_if($skill[summon snowcones], to_int(get_property("_snowconeSummons")) < 3);
+  cast_if($skill[summon stickers], to_int(get_property("_stickerSummons")) < 3);
+}
+
+void clip_art()
+{
+  if (!have_skill($skill[summon clip art])) return;
+  if (!be_good($skill[summon clip art])) return;
+  item[int] clip;
+  for art from 5224 to 5283
+  {
+
+  }
+
 }
 
 void prep(location loc)
@@ -162,6 +176,9 @@ void prep(location loc)
   heart();
 
   cast_things(loc);
+
+  // have to handle clipart differently than other summon skills
+  clip_art();
 
   pulverize_things();
   sell_things();
