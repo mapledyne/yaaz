@@ -187,7 +187,7 @@ void intro()
     wait(5);
   }
 
-  if (!in_hardcore() && my_ascensions() > 0)
+  if (!in_hardcore() && my_ascensions() > 0 && quest_status("questL13Final") != FINISHED)
   {
     warning("This script is built with Hardcore in mind. It has rudimentary Softcore support, but it may still do some things the hard way.");
     if (to_boolean(setting("no_pulls", false)))
@@ -196,6 +196,13 @@ void intro()
     } else {
       log("This script will make pulls from Hangk's as it thinks is appropriate. Set " + SETTING_PREFIX + "_no_pulls=true if you want the script to not make any pulls.");
     }
+  }
+
+  if (quest_status("questL13Final") == FINISHED && setting("long_aftercore", "") == "")
+  {
+    log("You're in aftercore (yay!), but haven't let me know if you want to stick around or not.");
+    log("This is fine, but if you set " + wrap("yz_long_aftercore", COLOR_ITEM) + " to either true or false,");
+    log("I'll use resources more appropriately as if you're going to stay in aftercore longer.");
   }
 
   if (my_ascensions() < 10

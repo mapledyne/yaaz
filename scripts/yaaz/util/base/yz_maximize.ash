@@ -20,6 +20,33 @@ void max_effects(string target, boolean aggressive);
 void cross_streams(string player);
 void cross_streams();
 
+boolean is_spacegate_vaccine(effect vaccine)
+{
+  return $effects[rainbow vaccine, Broad-Spectrum Vaccine, Emotional Vaccine] contains vaccine;
+}
+
+boolean spacegate_vaccine(effect vaccine)
+{
+  if (get_property("spacegateAlways") != "true") return false;
+
+  int[effect] vaccines;
+
+  vaccines[$effect[rainbow vaccine]] = 1;
+  vaccines[$effect[Broad-Spectrum Vaccine]] = 2;
+  vaccines[$effect[Emotional Vaccine]] = 3;
+
+  if (!is_spacegate_vaccine(vaccine))
+  {
+    warning("Trying to use the " + wrap("Spacegate Facility", COLOR_LOCATION) + " to vaccinate for " + wrap(vaccine) + ", but that's not a vaccine.");
+    return false;
+  }
+
+  if (to_boolean(get_property("_spacegateVaccine"))) return false;
+
+  return cli_execute('spacegate vaccine ' + vaccines[vaccine]);
+}
+
+
 void cross_streams(string player)
 {
   if (!have($item[protonic accelerator pack]))

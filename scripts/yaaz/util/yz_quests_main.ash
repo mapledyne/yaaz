@@ -39,8 +39,11 @@ import 'quests/special/items/yz_protonic.ash';
 import 'quests/special/items/yz_tuxedo_shirt.ash';
 import 'quests/special/locations/yz_chateau.ash';
 import 'quests/special/locations/yz_deep_machine_tunnels.ash';
+import 'quests/special/locations/yz_gingerbread.ash';
 import 'quests/special/locations/yz_lovetunnel.ash';
+import 'quests/special/locations/yz_ltt.ash';
 import 'quests/special/locations/yz_snojo.ash';
+import 'quests/special/locations/yz_spacegate.ash';
 import 'quests/special/locations/yz_witchess.ash';
 import 'quests/special/skills/yz_numberology.ash';
 
@@ -53,6 +56,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       numberology,
                                       snojo,
                                       godlobster,
+                                      ltt,
                                       dmt,
                                       protonic,
                                       lovetunnel,
@@ -64,6 +68,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       M_nemesis,
                                       newyou,
                                       M_bounty,
+                                      gingerbread,
                                       M_guild,
                                       M_untinker,
                                       M_desert_beach,
@@ -71,6 +76,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       M06_pandemonium,
                                       M09_leaflet,
                                       M_dailydungeon,
+                                      spacegate,
                                       M20_necklace,
                                       L05_Q_goblin,
                                       L06_Q_friar,

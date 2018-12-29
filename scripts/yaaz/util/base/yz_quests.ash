@@ -42,6 +42,11 @@ int quest_status(string quest)
 	return -1;
 }
 
+boolean in_aftercore()
+{
+  return quest_status("questL13Final") == FINISHED;
+}
+
 boolean start_galaktik()
 {
 	if(quest_status("questM24Doc") == UNSTARTED && my_path() != "Nuclear Autumn")

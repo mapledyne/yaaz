@@ -12,10 +12,7 @@ import 'special/locations/yz_bookshelf.ash';
 import 'special/locations/yz_barrelgod.ash';
 import 'special/locations/yz_chateau.ash';
 import 'special/locations/yz_clanvip.ash';
-import 'special/locations/yz_gingerbread.ash';
-import 'special/locations/yz_ltt.ash';
 import 'special/locations/yz_precinct.ash';
-import 'special/locations/yz_spacegate.ash';
 import 'special/locations/yz_teatree.ash';
 import 'special/locations/yz_terminal.ash';
 import 'special/locations/yz_thanksgarden.ash';
@@ -40,7 +37,6 @@ boolean[string] SPECIAL_LIST = $strings[january_garbage,
                                         thanksgarden,
                                         terminal,
                                         sealfigurines,
-                                        ltt,
                                         deck,
                                         lattemug,
                                         precinct,
@@ -49,8 +45,6 @@ boolean[string] SPECIAL_LIST = $strings[january_garbage,
                                         geniebottle,
                                         eldritchhorror,
                                         batfellow_comic,
-                                        gingerbread,
-                                        spacegate,
                                         manuel];
 
 

@@ -39,6 +39,7 @@ boolean godlobster()
   visit_url("main.php?fightgodlobster=1");
   run_combat();
 
+  visit_url('choice.php');
   int choice = 2;
   if (equipped_amount($item[god lobster's crown]) == 0) choice = 1;
   run_choice(choice);

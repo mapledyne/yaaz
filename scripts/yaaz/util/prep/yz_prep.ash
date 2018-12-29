@@ -96,12 +96,36 @@ void clip_art()
 {
   if (!have_skill($skill[summon clip art])) return;
   if (!be_good($skill[summon clip art])) return;
-  item[int] clip;
-  for art from 5224 to 5283
+  int summons = to_int(get_property("_clipartSummons"));
+
+  while (summons < 3 && my_mp() > 10)
   {
+    item toy = $item[none];
+    int qty = 1000000;
 
+    for clip from 5224 to 5283
+    {
+      item art = to_item(clip);
+      int current = item_amount(art) + closet_amount(art);
+
+      // give preference to consumables once we have the equipment
+      if (can_equip(art))
+      {
+        current = current * 1000;
+      } else {
+        current += 1;
+      }
+
+      if (current < qty)
+      {
+        toy = art;
+        qty = current;
+      }
+    }
+    create(1, toy);
+
+    summons = to_int(get_property("_clipartSummons"));
   }
-
 }
 
 void prep(location loc)
