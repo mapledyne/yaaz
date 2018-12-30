@@ -154,7 +154,17 @@ boolean attempt_ltt()
     start_ltt_quest();
     return true;
   }
-  yz_adventure($location[Investigating a Plaintive Telegram], ltt_maximizer());
+  maximize(ltt_maximizer());
+
+  if (quest_status("questLTTQuestByWire") == 3
+      && to_int(get_property("lttQuestStageCount")) == 9)
+  {
+    log("The LT&T bosses are complicated enough, I don't know how to defeat them.");
+    log("Exiting so you can handle them manually before continuing.");
+    abort();
+  }
+
+  yz_adventure($location[Investigating a Plaintive Telegram]);
   return true;
 }
 

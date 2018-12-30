@@ -52,7 +52,6 @@ void maybe_instruct()
     if (it != $item[none]) break;
   }
   log("I want " + qty + " " + it);
-
 }
 
 void daycare()
@@ -60,10 +59,7 @@ void daycare()
   if (get_property("daycareOpen") != "true") return;
 
   maybe_recruit();
-  maybe_instruct();
-
-
-
+//  maybe_instruct();
 }
 
 void main()

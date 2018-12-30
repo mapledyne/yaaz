@@ -72,12 +72,13 @@ boolean M_dailydungeon()
   if (!can_adventure_with_familiar($familiar[Gelatinous Cubeling])
       && (!have($item[deck of every card]) || !be_good($item[deck of every card]))
       && my_level() > 4
-      && hero_keys() < 3)
+      && hero_keys() < 3
+      && !in_aftercore())
   {
     do_dungeon = true;
   }
 
-  if (to_boolean(setting("always_daily_with_cubeling"))
+  if (to_boolean(setting("always_daily_with_cubeling", "true"))
       && have_cubeling_items())
   {
     do_dungeon = true;
