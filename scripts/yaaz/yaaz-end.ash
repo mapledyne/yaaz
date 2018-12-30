@@ -55,7 +55,7 @@ void day_end()
       && get_property("daycareOpen") == "true")
   {
     log("Going to the spa for a treatment.");
-    cli_execute("daycare items");
+    cli_execute("daycare " + to_string(my_primestat()));
   }
 
 
