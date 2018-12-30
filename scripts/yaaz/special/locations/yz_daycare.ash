@@ -23,7 +23,7 @@ void maybe_recruit()
     current_cost = current_cost * 10;
   }
 
-  if (my_meat()10 > current_cost * 10)
+  if (my_meat() > current_cost * 10)
   {
     log("Going to recruit at the Daycare. Current cost: " + current_cost);
     visit_url('place.php?whichplace=town_wrong&action=townwrong_boxingdaycare');
