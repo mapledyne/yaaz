@@ -45,6 +45,20 @@ void day_end()
     }
   }
 
+  if (get_property("_lyleFavored") == "false")
+  {
+    log("Off to visit Lyle at the monorail.");
+    visit_url("place.php?whichplace=monorail&action=monorail_lyle");
+  }
+
+  if (get_property("_daycareSpa") != "true"
+      && get_property("daycareOpen") == "true")
+  {
+    log("Going to the spa for a treatment.");
+    cli_execute("daycare items");
+  }
+
+
   prep();
 
   if (hippy_stone_broken())

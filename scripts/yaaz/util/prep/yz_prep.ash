@@ -179,6 +179,23 @@ void prep(location loc)
     }
   }
 
+  if (get_property("_daycareNap") != "true"
+      && get_property("daycareOpen") == "true")
+  {
+    log("Have a boxing daydream...");
+    visit_url('place.php?whichplace=town_wrong&action=townwrong_boxingdaycare');
+    run_choice(1);
+  }
+
+  if (get_property("_daycareGymScavenges") == "0"
+      && get_property("daycareOpen") == "true")
+  {
+    log("Going to scavenge at the Daycare. It's free!");
+    visit_url('place.php?whichplace=town_wrong&action=townwrong_boxingdaycare');
+    run_choice(3);
+    run_choice(2);
+  }
+
   consume();
 
   if (to_int(setting("adventure_floor", "10")) > my_adventures())

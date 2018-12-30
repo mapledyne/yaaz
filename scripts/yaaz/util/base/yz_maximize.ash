@@ -361,6 +361,12 @@ void max_effects(string target, boolean aggressive)
           max_effects("mysticality");
           break;
       }
+      if (get_property("_lyleFavored") == "false")
+      {
+        log("Off to visit Lyle at the monorail.");
+        visit_url("place.php?whichplace=monorail&action=monorail_lyle");
+      }
+
       break;
     case "muscle":
       max_effects("stats");
@@ -378,7 +384,16 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[broken heart]);
       if (!have_love_song())
         effect_maintain($effect[sweet heart]);
+
+      if (get_property("_daycareSpa") != "true"
+          && get_property("daycareOpen") == "true")
+      {
+        log("Going to the spa for a treatment.");
+        cli_execute("daycare muscle");
+      }
+
       break;
+
     case "moxie":
       max_effects("stats");
       effect_maintain($effect[Newt Gets In Your Eyes]);
@@ -397,6 +412,13 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[cold hearted]);
       if (!have_love_song())
         effect_maintain($effect[lustful heart]);
+      if (get_property("_daycareSpa") != "true"
+          && get_property("daycareOpen") == "true")
+      {
+        log("Going to the spa for a treatment.");
+        cli_execute("daycare moxie");
+      }
+
       break;
     case "mysticality":
       max_effects("stats");
@@ -417,6 +439,14 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[fiery heart]);
 
       uneffect($effect[sugar rush]);
+
+      if (get_property("_daycareSpa") != "true"
+          && get_property("daycareOpen") == "true")
+      {
+        log("Going to the spa for a treatment.");
+        cli_execute("daycare mysticality");
+      }
+
 
       break;
     case "meat":
@@ -522,6 +552,14 @@ void max_effects(string target, boolean aggressive)
       }
       if (!have_love_song())
         effect_maintain($effect[lustful heart]);
+      if (get_property("_daycareSpa") != "true"
+          && get_property("daycareOpen") == "true")
+      {
+        log("Going to the spa for a treatment.");
+        cli_execute("daycare moxie");
+      }
+
+
       break;
     case "-combat":
       effect_maintain($effect[gummed shoes]);
