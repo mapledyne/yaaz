@@ -5,7 +5,7 @@ import "util/adventure/yz_adventure.ash";
 
 void witchess_progress()
 {
-  if (get_campground() contains $item[Witchess Set])
+  if (get_campground() contains $item[Witchess Set] && be_good($item[witchess set]))
   {
     int fights = to_int(get_property("_witchessFights"));
     if (fights < 5)
@@ -29,7 +29,7 @@ int witchess_left()
 
 boolean can_witchess()
 {
-  if(can_adventure() && witchess_left() > 0)
+  if(can_adventure() && witchess_left() > 0 && be_good($item[witchess set]))
     return true;
   return false;
 }
@@ -37,6 +37,7 @@ boolean can_witchess()
 void witchess(item it)
 {
   if(get_campground() contains $item[Witchess Set]
+     && be_good($item[witchess set])
      && get_property("_witchessFights").to_int() < 5)
   {
     int choice = 0;

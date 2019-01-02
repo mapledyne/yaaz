@@ -6,7 +6,7 @@ import <zlib.ash>
 
 void timespinner_progress()
 {
-  if (!have($item[time-spinner])) return;
+  if (!have($item[time-spinner]) && be_good($item[time-spinner])) return;
 
   int used = to_int(get_property("_timeSpinnerMinutesUsed"));
 
@@ -54,10 +54,12 @@ boolean spinner_eat(item yum)
 
 boolean can_spin_time(int min)
 {
-  if (item_amount($item[time-spinner]) == 0)
-    return false;
-  if (time_minutes() < min)
-    return false;
+  if (!be_good($item[time-spinner])) return false;
+
+  if (item_amount($item[time-spinner]) == 0) return false;
+
+  if (time_minutes() < min) return false;
+
   return true;
 }
 
@@ -148,6 +150,8 @@ boolean time_prank(string player, string msg)
 
 boolean timespinner_future()
 {
+  if (!be_good($item[time-spinner])) return false;
+
   if (item_amount($item[time-spinner]) == 0) return false;
 
   if (!to_boolean(setting("far_future", "true"))) return false;

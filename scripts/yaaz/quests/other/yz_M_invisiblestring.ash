@@ -77,7 +77,6 @@ boolean M_invisiblestring()
     return true;
   }
 
-  debug("I might want to do something with the " + wrap($item[invisible string]) + " ...");
   return false;
 }
 

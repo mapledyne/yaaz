@@ -11,6 +11,8 @@ floundry_fish[5] = "tuna";
 
 void vip_floundry_progress()
 {
+	if (!be_good($item[fishin' pole])) return;
+
 	if (have($item[fishin' pole]) && !to_boolean(get_property("_floundryItemUsed")))
 	{
 		task("get item from the floundry");
@@ -92,6 +94,8 @@ int floundry_item_no(item it)
 
 void maybe_use_fish(item it)
 {
+	if (!be_good($item[fishin' pole])) return;
+
   switch(it)
   {
     default:
@@ -178,6 +182,7 @@ void floundry_daily_check()
 
 void vip_floundry()
 {
+	if (!be_good($item[fishin' pole])) return;
 	if (item_amount($item[fishin' pole]) == 0) return;
 
   floundry_daily_check();
