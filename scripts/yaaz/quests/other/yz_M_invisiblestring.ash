@@ -7,6 +7,8 @@ void M_invisiblestring_cleanup()
 
 void M_invisiblestring_progress()
 {
+  if (!be_good($item[invisible string])) return;
+
   if (have($item[invisible string]))
   {
     task("You have an " + wrap($item[invisible string]) + ".");
@@ -43,6 +45,7 @@ boolean M_invisiblestring()
   if (to_familiar(setting("100familar")) != $familiar[trick-or-treating tot]
       && to_familiar(setting("100familar")) != $familiar[none]) return false;
 
+  if (!be_good($item[invisible string])) return false;
   if (have($item[li'l ghost costume])) return false;
 
   // skip if we can't adventure here yet:

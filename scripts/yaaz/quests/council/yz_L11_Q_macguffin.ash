@@ -1,4 +1,5 @@
 import "quests/council/yz_L11_SQ_black_market.ash";
+import "quests/council/yz_L11_SQ_copperhead.ash";
 import "quests/council/yz_L11_SQ_desert.ash";
 import "quests/council/yz_L11_SQ_hidden_city.ash";
 import "quests/council/yz_L11_SQ_palindome.ash";
@@ -78,7 +79,6 @@ void L11_Q_macguffin_progress()
       progress(curse, 3, "curses for the penthouse");
     }
 
-
   }
 
   if (quest_active("questL11Palindome"))
@@ -88,6 +88,11 @@ void L11_Q_macguffin_progress()
       progress(to_int(get_property("palindomeDudesDefeated")), 5, "Palindome dudes defeated");
       progress(palindome_items(), 5, "Palindome items found");
     }
+  }
+
+  if (quest_active("questL11Shen"))
+  {
+    task("Find the " + wrap(shen_item()) + " in " + wrap(shen_to_location()) + " for Shen.");
   }
 
   if (quest_active("questL11Manor"))
@@ -132,6 +137,7 @@ boolean L11_Q_macguffin()
     council();
   }
 
+  if (L11_SQ_copperhead()) return true;
   if (L11_SQ_black_market()) return true;
   if (L11_SQ_hidden_city()) return true;
   if (L11_SQ_palindome()) return true;
