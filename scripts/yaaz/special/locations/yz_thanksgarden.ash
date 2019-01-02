@@ -11,7 +11,7 @@ void thanksgarden_progress()
 
 void harvest_thanksgarden()
 {
-  if (get_campground()[$item[cornucopia]] > 1)
+  if (get_campground()[$item[cornucopia]] > 1 && be_good($item[Granny Tood's Thanksgarden Catalog]))
   {
     log("Harvesting the " + wrap("Thanksgarden", COLOR_ITEM) + ".");
     visit_url('campground.php?action=garden');
@@ -22,6 +22,8 @@ void harvest_thanksgarden()
 
 void cashew()
 {
+  if (!be_good($item[Granny Tood's Thanksgarden Catalog])) return;
+  
   if (to_int(setting("stuffing_ascension","0")) < my_ascensions())
   {
     save_setting("stuffing_ascension", my_ascensions());
@@ -55,8 +57,9 @@ void cashew()
 
 void thanksgarden()
 {
-  if (!(get_campground() contains $item[cornucopia]))
-    return;
+  if (!(get_campground() contains $item[cornucopia])) return;
+
+  if (!be_good($item[Granny Tood's Thanksgarden Catalog])) return;
 
   harvest_thanksgarden();
 
