@@ -71,25 +71,6 @@ void M_pirates_progress()
 
 void M_pirates_cleanup()
 {
-  if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return;
-
-  while (!have($item[Talisman o' Namsilat]) && have($item[gaudy key]))
-  {
-    cli_execute("checkpoint");
-    if (!have_equipped($item[pirate fledges]))
-    {
-      equip($item[pirate fledges]);
-    }
-    use(1, $item[gaudy key]);
-    cli_execute("outfit checkpoint");
-    cli_execute("refresh inv");
-  }
-
-  if (!have($item[abridged dictionary]) && !have($item[dictionary]))
-  {
-    buy(1, $item[abridged dictionary]);
-  }
-
 
 }
 
@@ -217,25 +198,6 @@ boolean open_belowdecks()
 	return true;
 }
 
-
-
-boolean get_talisman()
-{
-  if (!have($item[pirate fledges])) return false;
-
-  if (have($item[Talisman o' Namsilat])) return false;
-
-  if (quest_status("questM12Pirate") != FINISHED)
-  {
-    return open_belowdecks();
-  }
-
-  maximize("items", $item[pirate fledges]);
-	if (time_combat($monster[gaudy pirate], $location[belowdecks])) return true;
-
-	yz_adventure($location[belowdecks]);
-  return true;
-}
 
 boolean get_getup()
 {

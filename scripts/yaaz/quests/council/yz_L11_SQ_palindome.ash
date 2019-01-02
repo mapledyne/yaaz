@@ -59,7 +59,6 @@ boolean stunt_nut_stew()
 
 boolean L11_SQ_palindome()
 {
-  if (get_talisman()) return true;
 
   if (!have($item[Talisman o' Namsilat])) return false;
 

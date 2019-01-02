@@ -6,7 +6,7 @@ import <zlib.ash>
 
 void timespinner_progress()
 {
-  if (!have($item[time-spinner]) && be_good($item[time-spinner])) return;
+  if (!have($item[time-spinner]) || !be_good($item[time-spinner])) return;
 
   int used = to_int(get_property("_timeSpinnerMinutesUsed"));
 
