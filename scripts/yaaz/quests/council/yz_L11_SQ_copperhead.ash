@@ -2,9 +2,9 @@ import "util/yz_main.ash";
 
 void L11_SQ_copperhead_cleanup()
 {
-  if (creatable_amount($item[unstable fulminate]) > 0)
-    create(1, $item[unstable fulminate]);
+
 }
+
 void visit_shen()
 {
   // talk to Shen.
@@ -47,9 +47,9 @@ location shen_to_location()
 
 boolean L11_SQ_copperhead()
 {
-  if (!quest_active("questL11Shen");
+  if (!quest_active("questL11Shen")) return false;
 
-  if (quest_status("questL11Shen")
+  if (quest_status("questL11Shen") == STARTED)
   {
     visit_shen();
     return true;

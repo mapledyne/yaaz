@@ -5,6 +5,7 @@ import "quests/council/yz_L11_SQ_hidden_city.ash";
 import "quests/council/yz_L11_SQ_palindome.ash";
 import "quests/council/yz_L11_SQ_summoning.ash";
 import "quests/council/yz_L11_SQ_pyramid.ash";
+import "quests/council/yz_L11_SQ_zeppelin.ash";
 
 void L11_Q_macguffin_progress()
 {
@@ -95,6 +96,17 @@ void L11_Q_macguffin_progress()
     task("Find the " + wrap(shen_item()) + " in " + wrap(shen_to_location()) + " for Shen.");
   }
 
+  if (quest_active("questL11Ron"))
+  {
+    int prot = to_int(get_property("zeppelinProtestors"));
+    if (prot < 80 && prot > 0)
+    {
+      progress(prot, 80, "Protestors defeated from " + wrap($location[A Mob of Zeppelin Protesters]));
+    }
+
+  }
+
+
   if (quest_active("questL11Manor"))
   {
     if (quest_status("questL11Manor") == 2)
@@ -141,6 +153,7 @@ boolean L11_Q_macguffin()
   if (L11_SQ_black_market()) return true;
   if (L11_SQ_hidden_city()) return true;
   if (L11_SQ_palindome()) return true;
+  if (L11_SQ_zeppelin()) return true;
   if (L11_SQ_summoning()) return true;
   if (to_int(get_property("lastDesertUnlock")) >= my_ascensions())
   {
