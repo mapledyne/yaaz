@@ -38,9 +38,9 @@ void lattemug()
   if (!have($item[latte lovers member's mug])) return;
   if (!be_good($item[latte lovers member's mug])) return;
 
-  if (to_boolean(get_property("_latteCopyUsed"))) return;
-  if (to_boolean(get_property("_latteDrinkUsed"))) return;
-  if (to_boolean(get_property("_latteBanishUsed"))) return;
+  if (!to_boolean(get_property("_latteCopyUsed"))) return;
+  if (!to_boolean(get_property("_latteDrinkUsed"))) return;
+  if (!to_boolean(get_property("_latteBanishUsed"))) return;
 
   latte_refill();
 }
