@@ -22,7 +22,7 @@ boolean L11_SQ_zeppelin()
       return false;
     case STARTED:
       yz_adventure($location[A Mob of Zeppelin Protesters]);
-      return true;
+      break;
     case 1:
       set_property("choiceAdventure856", 1);
       set_property("choiceAdventure857", 1);
@@ -44,6 +44,14 @@ boolean L11_SQ_zeppelin()
       }
 
       yz_adventure($location[A Mob of Zeppelin Protesters], "-combat, sleaze damage" + stuff);
+      break;
+    case 2:
+      yz_adventure($location[the red zeppelin]);
+      break;
+    case 3:
+    case 4:
+      yz_adventure($location[the red zeppelin], "");
+      break;
   }
   return true;
 }

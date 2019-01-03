@@ -49,11 +49,9 @@ boolean spacegate_vaccine(effect vaccine)
 
 void cross_streams(string player)
 {
-  if (!have($item[protonic accelerator pack]))
-    return;
-
-  if (to_boolean(get_property("_streamsCrossed")))
-    return;
+  if (!have($item[protonic accelerator pack])) return;
+  if (!be_good($item[protonic accelerator pack])) return;
+  if (to_boolean(get_property("_streamsCrossed"))) return;
 
   if (player == 'ProtonicBot')
   {
@@ -166,18 +164,22 @@ void maximize(string target, string outfit, item it, familiar fam)
   string[int] split_map;
   split_map = split_string(target, ", ");
 
-  item snowglobe = $item[9133]; // kol con 13 snowglobe
+//  item default_offhand = $item[9133]; // kol con 13 snowglobe
 
-  // if we're going with all-defaults, favor the snowglobe as an item
+  item default_offhand = $item[latte lovers member's mug];
+
+
+  // if we're going with all-defaults, favor the default_offhand as an item
   // it won't ever get picked by the maximizer, but it nice to use sometimes
+  // Change: was snowglobe, now latte mug.
 
   if (target == ""
       && it == $item[none]
       && outfit == ""
       && fam == $familiar[none]
-      && have(snowglobe))
+      && have(default_offhand))
   {
-    it = snowglobe;
+    it = default_offhand;
   }
 
   if (fam != $familiar[none])
@@ -461,7 +463,6 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[so you can work more...]);
       // Not really ascension relevant:
 //      effect_maintain($effect[The Ballad of Richie Thingfinder]);
-      effect_maintain($effect[wasabi sinuses]);
       effect_maintain($effect[thanksgetting]);
       terminal_enhance($effect[meat.enh]);
       if (!have_colored_tongue())
@@ -483,6 +484,7 @@ void max_effects(string target, boolean aggressive)
       if (aggressive)
       {
         effect_maintain($effect[The Inquisitor's Unknown Effect]);
+        effect_maintain($effect[wasabi sinuses]);
       }
 
       if (have($item[SongBoom&trade; BoomBox]))
@@ -502,11 +504,16 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[Fat Leon's Phat Loot Lyric]);
 //      effect_maintain($effect[hip to the jive]);
       effect_maintain($effect[ocelot eyes]);
-      effect_maintain($effect[peeled eyeballs]);
       effect_maintain($effect[2091]); // [Sacré Mental]
       effect_maintain($effect[serendipi tea]);
       effect_maintain($effect[singer's faithful ocelot]);
       effect_maintain($effect[The Inquisitor's Unknown Effect]);
+
+      if (aggressive)
+      {
+        effect_maintain($effect[peeled eyeballs]);
+      }
+
 
       // Not really ascension relevant:
 //      effect_maintain($effect[The Ballad of Richie Thingfinder]);
@@ -616,7 +623,6 @@ void max_effects(string target, boolean aggressive)
       break;
     case "familiar weight":
       // consider this, but it's also -10% all stats...
-      // effect_maintain($effect[heavy petting]);
       effect_maintain($effect[empathy]);
       effect_maintain($effect[leash of linguini]);
       effect_maintain($effect[loyal tea]);
@@ -631,6 +637,7 @@ void max_effects(string target, boolean aggressive)
 
       if (aggressive)
       {
+        effect_maintain($effect[heavy petting]);
         effect_maintain($effect[thanksgetting]);
         effect_maintain($effect[The Inquisitor's Unknown Effect]);
       }

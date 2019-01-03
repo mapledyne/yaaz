@@ -101,6 +101,34 @@ void make_things()
 
   // *** Less requirements, but still sometimes useful or fun:
 
+
+  if (be_good($item[metal meteoroid]) && have($item[metal meteoroid]))
+  {
+
+    item target = $item[none];
+    int qty = 1000;
+    foreach metal in $items[meteorthopedic shoes, asteroid belt, meteorb, shooting morning star, meteorite guard, meteortarboard]
+    {
+      if (i_a(metal) < qty)
+      {
+        qty = i_a(metal);
+        target = metal;
+      }
+    }
+
+    int[item] metal_choices;
+    metal_choices[$item[meteortarboard]] = 1;
+    metal_choices[$item[meteorite guard]] = 2;
+    metal_choices[$item[meteorb]] = 3;
+    metal_choices[$item[asteroid belt]] = 4;
+    metal_choices[$item[meteorthopedic shoes]] = 5;
+    metal_choices[$item[shooting morning star]] = 6;
+
+    log("Making a " + wrap(target) + " from a " + wrap($item[metal meteoroid]));
+    visit_url('choice.php?whichchoice=1264&option=' + metal_choices[target] + '&pwd');
+  }
+
+
   make_if_needed($item[ratskin belt], "for a meat bonus item.");
   make_if_needed($item[asshat], "because it's funny.");
 

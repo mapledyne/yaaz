@@ -39,11 +39,11 @@ int snojo_fights_remaining()
 
 boolean can_snojo()
 {
-  if (!can_adventure())
-    return false;
+  if (!can_adventure()) return false;
 
-  if (snojo_too_risky())
-    return false;
+  if (snojo_too_risky()) return false;
+
+  if (!be_good($item[X-32-F snowman crate])) return false;
 
   if (to_boolean(get_property("snojoAvailable")) && get_property("snojoSetting") == "NONE")
   {

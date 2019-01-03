@@ -28,6 +28,8 @@ void day_end()
 
   vip_shower();
 
+  vip_fortune(to_lower_case(my_primestat()));
+
   if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
   {
     log("We haven't used the Friar's blessing today. Heading there.");
@@ -55,7 +57,7 @@ void day_end()
       && get_property("daycareOpen") == "true")
   {
     log("Going to the spa for a treatment.");
-    cli_execute("daycare " + to_string(my_primestat()));
+    cli_execute("daycare " + to_lower_case(to_string(my_primestat())));
   }
 
 
@@ -80,7 +82,8 @@ void day_end()
   pvp();
 
   if (get_campground() contains $item[spinning wheel]
-      && !to_boolean(get_property("_spinningWheel")))
+      && !to_boolean(get_property("_spinningWheel"))
+      && be_good($item[spinning wheel]))
   {
     log("Spinning some meat from the " + wrap($item[spinning wheel]) + ".");
     visit_url("campground.php?action=spinningwheel");

@@ -346,18 +346,22 @@ boolean L12_Q_war(string side)
     return start_the_war(side);
   }
 
-  int stuffing_used = to_int(setting("stuffing_used"));
-
-  while(have($item[stuffing fluffer])
-        && war_defeated() < 64)
+  if (be_good($item[stuffing fluffer]))
   {
-    log("Throwing a " + wrap($item[stuffing fluffer]) + " into the war.");
-    boolean u = use(1, $item[stuffing fluffer]);
-    if (u)
+    int stuffing_used = to_int(setting("stuffing_used"));
+
+    while(have($item[stuffing fluffer])
+          && war_defeated() < 64)
     {
-      stuffing_used += 1;
-      save_setting("stuffing_used", stuffing_used);
+      log("Throwing a " + wrap($item[stuffing fluffer]) + " into the war.");
+      boolean u = use(1, $item[stuffing fluffer]);
+      if (u)
+      {
+        stuffing_used += 1;
+        save_setting("stuffing_used", stuffing_used);
+      }
     }
+
   }
 
   while(have($item[Targeted Plague Vector]))

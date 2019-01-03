@@ -9,6 +9,7 @@ import "util/base/yz_maximize.ash";
 void protonic_progress()
 {
   if (!have($item[protonic accelerator pack])) return;
+  if (!be_good($item[protonic accelerator pack])) return;
   location ghostly = to_location(get_property("ghostLocation"));
   if (ghostly == $location[none]) return;
 
@@ -50,6 +51,7 @@ boolean protonic()
 {
   if (my_adventures() < 3) return false;
   if (my_inebriety() > inebriety_limit()) return false;
+  if (!be_good($item[protonic accelerator pack])) return false;
 
   location prot = protonic_loc();
   string max_target = "";

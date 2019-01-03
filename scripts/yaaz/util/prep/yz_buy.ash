@@ -60,6 +60,11 @@ void buy_things()
 
   }
 
+  if (quest_active("questL11Ron") && my_meat() > 15000)
+  {
+    stock_item($item[Red Zeppelin ticket]);
+  }
+
   if (!canadia_available())
   {
     stock_item($item[detuned radio]);

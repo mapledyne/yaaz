@@ -172,6 +172,15 @@ string maybe_banish(monster foe)
   {
     banish = "item tennis ball";
   }
+  else if (have_skill($skill[throw latte on opponent]))
+  {
+    banish = "skill throw latte on opponent";
+  }
+  else if (have_skill($skill[Macrometeorite]))
+  {
+    // not exactly a banish, but similar.
+    banish = "skill Macrometeorite";
+  }
 
   if (banish == "") return "";
 
@@ -181,6 +190,10 @@ string maybe_banish(monster foe)
       return "";
     case $monster[A.M.C. Gremlin]:
       break;
+    case $monster[red herring]:
+    case $monster[red snapper]:
+     if (!quest_active("questL11Ron")) return "";
+     break;
   }
   log("Trying to banish the " + wrap(foe) + ".");
   return banish;
@@ -226,8 +239,18 @@ string maybe_run(monster foe)
 
 string maybe_sniff(monster foe)
 {
-  if (!have_skill($skill[Transcendent Olfaction])) return "";
-  if (have_effect($effect[on the trail]) > 0) return "";
+  string action = "";
+
+  if (have_skill($skill[Transcendent Olfaction])
+      && have_effect($effect[on the trail]) == 0)
+  {
+    action = "skill Transcendent Olfaction";
+  }
+  else if (have_skill($skill[Offer Latte to Opponent])
+           && (have_effect($effect[on the trail]) == 0 || get_property("olfactedMonster") != foe))
+  {
+    action = "skill Offer Latte to Opponent";
+  }
 
   switch (foe)
   {
@@ -259,9 +282,25 @@ string maybe_sniff(monster foe)
     case $monster[spider (duck?) topiary animal]:
       if (to_int(get_property("twinPeakProgress")) == 15) return "";
         break;
+    case $monster[red skeleton]:
+    case $monster[man with the red buttons]:
+    case $monster[red butler]:
+      if (!quest_active("questL11Ron")) return "";
+      break;
   }
 
-  return "skill Transcendent Olfaction";
+  return action;
+}
+
+string maybe_latte(monster foe)
+{
+  if (get_property("_latteBanishUsed") == "false") return "";
+  if (get_property("_latteCopyUsed") == "false") return "";
+
+  if (my_mp() < my_maxmp() || my_hp() < my_maxhp())
+    return "skill gulp latte";
+
+  return "";
 }
 
 string maybe_portscan(monster foe)
@@ -339,6 +378,9 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_sharpen(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_latte(foe);
   if (maybe != "") return maybe;
 
   return "consult WHAM.ash";

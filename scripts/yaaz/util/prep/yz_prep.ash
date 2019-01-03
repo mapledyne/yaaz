@@ -29,7 +29,7 @@ import <zlib.ash>
 
 void prep_fishing(location loc)
 {
-  if (is_fishing_hole(loc))
+  if (is_fishing_hole(loc) && be_good($item[fishin' pole]))
   {
     log("This location (" + wrap(loc) + ") may have floundry fish in it.");
     effect_maintain($effect[baited hook]);
@@ -272,6 +272,14 @@ void prep(location loc)
     if (current_mcd() != annoy)
       change_mcd(annoy);
   }
+
+  if (get_property("sidequestOrchardCompleted") != "none"
+      && get_property("_hippyMeatCollected") == "false")
+  {
+    log("Going to get our share of the hippy orchard profits...");
+    visit_url("shop.php?whichshop=hippy");
+  }
+
 
   buy_skills();
 }

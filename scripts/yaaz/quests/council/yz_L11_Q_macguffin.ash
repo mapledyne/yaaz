@@ -98,9 +98,9 @@ void L11_Q_macguffin_progress()
 
   if (quest_active("questL11Ron"))
   {
-    int prot = to_int(get_property("zeppelinProtestors"));
-    if (prot < 80 && prot > 0)
+    if (quest_status("questL11Ron") == 1)
     {
+      int prot = to_int(get_property("zeppelinProtestors"));
       progress(prot, 80, "Protestors defeated from " + wrap($location[A Mob of Zeppelin Protesters]));
     }
 
