@@ -23,7 +23,7 @@ void collect_pvp_info()
   if (contains_text(v,"numeric season"))
   {
     save_daily_setting("pvp_season", "Numeric");
-    save_daily_setting("pvp_swagger", "numericSeason");
+    save_daily_setting("pvp_swagger", "numericSwagger");
     save_daily_setting("pvp_fight", "back to");
     return;
   }
@@ -31,7 +31,7 @@ void collect_pvp_info()
   if (contains_text(v,"bear season"))
   {
     save_daily_setting("pvp_season", "Bear");
-    save_daily_setting("pvp_swagger", "bearSeason");
+    save_daily_setting("pvp_swagger", "bearSwagger");
     save_daily_setting("pvp_fight", "Barely Dressed");
     return;
   }
@@ -39,7 +39,7 @@ void collect_pvp_info()
   if (contains_text(v,"ice season"))
   {
     save_daily_setting("pvp_season", "Ice");
-    save_daily_setting("pvp_swagger", "iceSeason");
+    save_daily_setting("pvp_swagger", "iceSwagger");
     save_daily_setting("pvp_fight", "Ready to Melt");
     return;
   }
@@ -56,7 +56,7 @@ void collect_pvp_info()
   if (contains_text(v, "optimal season"))
   {
     save_daily_setting("pvp_season", "Optimal");
-    save_daily_setting("pvp_swagger", "optimalSeason");
+    save_daily_setting("pvp_swagger", "optimalSwagger");
     save_daily_setting("pvp_fight", "Optimal Dresser");
     return;
   }
