@@ -29,7 +29,7 @@ void votingbooth_progress()
   int max_free = 3;
   if (free_fights < max_free)
   {
-    progress(max_free - free_fights, max_free, "free voting fights remaining");
+    progress(free_fights, max_free, "free voting fights used");
   }
 }
 

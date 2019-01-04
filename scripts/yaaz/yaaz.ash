@@ -113,7 +113,7 @@ void settings_warning()
   if (to_boolean(setting("always_daily_dungeon", "false"))
       && to_boolean(setting("aggressive_optimize", "false")))
   {
-    warning("You've asked to always do the daily dungeon, but also to agressively optimize.");
+    warning("You've asked to always do the daily dungeon, but also to aggressively optimize.");
     warning("Will continue to do the daily dungeon, but know it's not optimal.");
     wait(5);
   }

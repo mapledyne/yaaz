@@ -5,6 +5,8 @@ import "util/adventure/yz_adventure.ash";
 void snojo_progress()
 {
 
+  if (!be_good($item[X-32-F snowman crate])) return;
+
   if (to_boolean(get_property("snojoAvailable"))
       && to_int(get_property("_snojoFreeFights")) < 10)
   {

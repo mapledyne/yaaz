@@ -38,7 +38,7 @@ void eldritchhorror()
 
   int cost = mp_cost($skill[evoke eldritch horror]);
 
-  if (cost < my_mp() * 1.5)
+  if (cost * 1.5 < my_mp())
   {
     maximize();
     use_skill(1, $skill[evoke eldritch horror]);

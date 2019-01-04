@@ -90,6 +90,7 @@ void cast_one_time_things()
   cast_if($skill[Summon Holiday Fun!], !to_boolean(get_property("_holidayFunUsed")));
   cast_if($skill[summon snowcones], to_int(get_property("_snowconeSummons")) < 3);
   cast_if($skill[summon stickers], to_int(get_property("_stickerSummons")) < 3);
+  cast_if($skill[summon carrot], !to_boolean(get_property("_summonCarrotUsed")));
 }
 
 void clip_art()

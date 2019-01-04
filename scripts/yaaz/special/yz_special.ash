@@ -5,6 +5,7 @@ import 'special/items/yz_january_garbage.ash';
 import 'special/items/yz_lattemug.ash';
 import 'special/items/yz_manuel.ash';
 import 'special/items/yz_kgb.ash';
+import 'special/items/yz_pantogram.ash';
 import 'special/items/yz_protonic.ash';
 import 'special/items/yz_sealfigurines.ash';
 import 'special/items/yz_timespinner.ash';
@@ -27,6 +28,7 @@ import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
 
 boolean[string] SPECIAL_LIST = $strings[january_garbage,
+                                        pantogram,
                                         votingbooth,
                                         bookshelf,
                                         barrelgod,
