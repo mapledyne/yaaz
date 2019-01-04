@@ -55,7 +55,7 @@ string maybe_copy(monster foe)
     case $monster[ninja snowman assassin]:
       pref_digitize = true;
       break;
-    case $monster[writing desk]:
+//    case $monster[writing desk]:
     case $monster[lobsterfrogman]:
       int thingwanted = item_amount($item[barrel of gunpowder]);
       if (foe == $monster[writing desk])

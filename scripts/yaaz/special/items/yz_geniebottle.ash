@@ -70,6 +70,7 @@ void geniebottle()
 
   // other monsters to consider/add: lobsterfrogman, ninja snowman assassin, dirty theiving brigand?
 
+/*
   if (to_int(get_property("writingDesksDefeated")) < 5
       && !dangerous($monster[writing desk])
       && to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[Writing Desk]
@@ -78,6 +79,7 @@ void geniebottle()
     bottle_wish($monster[writing desk]);
     return;
   }
+*/
 
 }
 
