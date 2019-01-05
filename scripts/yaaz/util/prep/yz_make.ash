@@ -125,6 +125,7 @@ void make_things()
     metal_choices[$item[shooting morning star]] = 6;
 
     log("Making a " + wrap(target) + " from a " + wrap($item[metal meteoroid]));
+    visit_url('inv_use.php?which=3&whichitem=9516');
     visit_url('choice.php?whichchoice=1264&option=' + metal_choices[target] + '&pwd');
   }
 

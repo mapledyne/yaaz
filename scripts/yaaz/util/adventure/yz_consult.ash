@@ -303,6 +303,14 @@ string maybe_latte(monster foe)
   return "";
 }
 
+string maybe_hug(monster foe)
+{
+  if (!have_skill($skill[hugs and kisses!])) return "";
+
+  debug("Missing logic to decide if we should use the skill: " + wrap($skill[hugs and kisses!]));
+  return "";
+}
+
 string maybe_portscan(monster foe)
 {
   if (!have_skill($skill[portscan])) return "";
@@ -348,6 +356,9 @@ string yz_consult(int round, string mob, string text)
   monster foe = to_monster(mob);
 
   string maybe = maybe_run(foe);
+  if (maybe != "") return maybe;
+
+  maybe = maybe_hug(foe);
   if (maybe != "") return maybe;
 
   maybe = maybe_sniff(foe);
