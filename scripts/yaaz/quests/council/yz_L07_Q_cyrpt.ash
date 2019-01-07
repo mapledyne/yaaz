@@ -68,6 +68,7 @@ void clear_niche()
 
 		log("Undefiling " + wrap($location[The Defiled Niche]) + ".");
 
+		monster_attract = $monsters[dirty old lihc];
 		maximize("items", $item[gravy boat]);
 		yz_adventure($location[The Defiled Niche]);
 }

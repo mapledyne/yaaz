@@ -16,13 +16,9 @@ boolean[monster] ghosts = $monsters[the ghost of ebenoozer screege,
                                      The ghost of Richard Cockingham,
                                      The Headless Horseman];
 
-void add_attract(monster mon);
-void remove_attract(monster mon);
-void add_yellow_ray(monster mon);
-void remove_yellow_ray(monster mon);
-void add_duplicate(monster mon);
-void remove_duplicate(monster mon);
 
+boolean[monster] monster_attract;
+boolean[monster] monster_banish;
 
 // Note: These dangerous() functions I think are key to optimizing this script overall.
 // Once it can ascend fully, making this function smarter on when we should skip a
@@ -71,53 +67,6 @@ boolean is_bounty_monster(monster mon)
     if (mon == b.monster) return true;
   }
   return false;
-}
-
-void add_attract(monster mon)
-{
-  if (mon == $monster[none])
-    return;
-  debug("add_attract(" + wrap(mon) + ") is deprecated. This functionality should be moved to yz_consult.");
-
-  if (have_effect($effect[on the trail]) > 0)
-  {
-    if (to_monster(get_property("olfactedMonster")) != mon && item_amount($item[soft green echo eyedrop antidote]) > 0)
-    {
-      log("Trying to remove " + wrap($effect[on the trail]) + " since its smelling the wrong monster.");
-      cli_execute("uneffect on the trail");
-    }
-  }
-  string attract_list = vars["BatMan_attract"];
-
-  if (contains_text(attract_list, mon))
-  {
-    return;
-  }
-  log("Adding " + wrap(mon) + " to the attract (olifact) list.");
-
-  attract_list = list_add(attract_list, mon);
-
-  vars["BatMan_attract"] = attract_list;
-  updatevars();
-}
-
-void remove_attract(monster mon)
-{
-  if (mon == $monster[none])
-    return;
-
-  string attract_list = vars["BatMan_attract"];
-
-  if (!contains_text(attract_list, mon))
-  {
-    return;
-  }
-
-  log("Removing " + wrap(mon) + " from the attract (olifact) list.");
-  attract_list = list_remove(attract_list, mon);
-  vars["BatMan_attract"] = attract_list;
-  updatevars();
-
 }
 
 location where_monster(monster mob)

@@ -23,6 +23,7 @@ import 'special/locations/yz_vip_fortune.ash';
 import 'special/locations/yz_votingbooth.ash';
 import 'special/skills/yz_communism.ash';
 import 'special/skills/yz_eldritchhorror.ash';
+import 'special/skills/yz_numberology.ash';
 import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
 import 'special/skills/yz_summon_annoyance.ash';
@@ -39,6 +40,7 @@ boolean[string] SPECIAL_LIST = $strings[january_garbage,
                                         vip_fortune,
                                         summon_annoyance,
                                         perfect_freeze,
+                                        numberology,
                                         thanksgarden,
                                         terminal,
                                         sealfigurines,

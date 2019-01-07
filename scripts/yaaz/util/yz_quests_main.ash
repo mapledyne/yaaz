@@ -45,7 +45,6 @@ import 'quests/special/locations/yz_ltt.ash';
 import 'quests/special/locations/yz_snojo.ash';
 import 'quests/special/locations/yz_spacegate.ash';
 import 'quests/special/locations/yz_witchess.ash';
-import 'quests/special/skills/yz_numberology.ash';
 
 // Important: The ordering of the quests in this lists is the order that the
 // loop will try the quests. If you want to order quests differently, change it here.
@@ -53,7 +52,6 @@ import 'quests/special/skills/yz_numberology.ash';
 // waiting on something (arena quests waiting for flyers, for instance).
 boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       tuxedo_shirt,
-                                      numberology,
                                       snojo,
                                       godlobster,
                                       ltt,

@@ -49,6 +49,7 @@ boolean L11_SQ_zeppelin()
       yz_adventure($location[the red zeppelin]);
       break;
     case 3:
+      monster_attract = $monsters[red skeleton, man with the red buttons, red butler];
     case 4:
       yz_adventure($location[the red zeppelin], "");
       break;

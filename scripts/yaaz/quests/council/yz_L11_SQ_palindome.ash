@@ -23,6 +23,12 @@ boolean get_photographs()
 
   log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
 
+
+  if (to_int(get_property("palindomeDudesDefeated")) < 4)
+  {
+    monster_attract = $monsters[racecar bob, bob racecar, drab bard];
+  }
+
   yz_adventure($location[inside the palindome]);
   return true;
 }

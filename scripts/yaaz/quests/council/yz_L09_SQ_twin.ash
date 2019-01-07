@@ -20,6 +20,9 @@ boolean twin_adventure(string max)
   {
     use(1, $item[rusty hedge trimmers]);
   }
+
+  monster_attract = $monsters[bearpig topiary animal, elephant (meatcar?) topiary animal, spider (duck?) topiary animal];
+
   return yz_adventure($location[twin peak]);
   return true;
 }

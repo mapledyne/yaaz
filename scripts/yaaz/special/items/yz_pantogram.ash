@@ -71,6 +71,7 @@ void make_pantogram()
   url += "&s3=" + url_encode(pant_sacrifice3());
 
   log("Off to make some pants with the " + wrap($item[portable pantogram]) + ".");
+  visit_url("inv_use.php?pwd&which=3&whichitem=9573");
   visit_url(url);
 }
 

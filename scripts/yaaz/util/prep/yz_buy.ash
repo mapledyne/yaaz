@@ -60,7 +60,7 @@ void buy_things()
 
   }
 
-  if (quest_active("questL11Ron") && my_meat() > 15000)
+  if (quest_active("questL11Ron") && my_meat() > 10000)
   {
     stock_item($item[Red Zeppelin ticket]);
   }

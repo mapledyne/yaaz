@@ -131,12 +131,11 @@ boolean bowling()
 
   if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
   {
-    add_attract($monster[pygmy bowler]);
+    monster_attract = $monsters[pygmy bowler];
     yz_adventure($location[the hidden bowling alley], "items");
     return true;
   }
 
-  remove_attract($monster[pygmy bowler]);
   if (!have($item[bowling ball]))
   {
     yz_adventure($location[the hidden bowling alley], "items");
@@ -167,14 +166,13 @@ boolean hospital()
   }
   set_property("choiceAdventure784", 1);
   log("Defeating " + wrap($location[the hidden hospital]) + ".");
-  add_attract($monster[pygmy witch surgeon]);
+  monster_attract = $monsters[pygmy witch surgeon];
 
   maximize("mainstat, hot dmg, stench dmg, cold dmg, sleaze dmg, 50 surgeonosity");
   yz_adventure($location[the hidden hospital]);
 
   if (to_int(get_property("hiddenHospitalProgress")) > 6)
   {
-    remove_attract($monster[pygmy witch surgeon]);
     log(wrap($location[the hidden hospital]) + " cleared.");
   }
   return true;
@@ -193,8 +191,8 @@ boolean office()
   }
 
   log("Defeating " + wrap($location[the hidden office building]) + ".");
-  add_attract($monster[pygmy witch accountant]);
 
+  monster_attract = $monsters[pygmy witch accountant];
   if (have($item[McClusky file (complete)]))
   {
     set_property("choiceAdventure786", 1); // fight spirit
@@ -237,7 +235,6 @@ boolean office()
 
   if (to_int(get_property("hiddenOfficeProgress")) > 6)
   {
-    remove_attract($monster[pygmy witch accountant]);
     log(wrap($location[the hidden office building]) + " cleared.");
   }
 
@@ -276,7 +273,7 @@ boolean apartment()
   if (get_property("olfactedMonster") != $monster[pygmy witch accountant]
       || quest_status("questL11Business") == FINISHED)
   {
-    add_attract($monster[pygmy shaman]);
+    monster_attract = $monsters[pygmy shaman];
   }
 
   if (to_int(get_property("hiddenTavernUnlock")) < my_ascensions())
@@ -300,7 +297,6 @@ boolean apartment()
 
   if (to_int(get_property("hiddenApartmentProgress")) > 6)
   {
-    remove_attract($monster[pygmy shaman]);
     log(wrap($location[the hidden apartment building]) + " cleared.");
   }
 

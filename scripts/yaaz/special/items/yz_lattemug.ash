@@ -20,6 +20,18 @@ void lattemug_progress()
 
 }
 
+boolean[string] latte_unlocked()
+{
+  boolean[string] ingreds;
+
+  foreach ind, ing in split_string(get_property("latteUnlocks"), ",")
+  {
+    ingreds[ing] = true;
+  }
+
+  return ingreds;
+}
+
 void latte_refill()
 {
   if (!have($item[latte lovers member's mug])) return;

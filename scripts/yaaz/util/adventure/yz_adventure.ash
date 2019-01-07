@@ -38,7 +38,10 @@ boolean yz_adventure_bypass(location loc)
     set_property("cloverProtectActive", "true");
 
   manuel_add_location(loc);
-  debug("Adventuring: " + wrap(loc) + ", to advance current quest: " + wrap(current_quest, COLOR_LOCATION));
+  string msg = "Adventuring: " + wrap(loc);
+  if (current_quest != "") msg += ", to advance current quest: " + wrap(current_quest, COLOR_LOCATION);
+  log(msg);
+
   adv = adv1(loc, -1, "yz_consult");
 
   if (loc == $location[the haunted bedroom])

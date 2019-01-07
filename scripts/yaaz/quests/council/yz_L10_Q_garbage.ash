@@ -76,17 +76,16 @@ void get_sock()
 {
   if (have($item[s.o.c.k.])) return;
 
-  add_attract($monster[quiet healer]);
 
   string max = "items, -combat";
   if ($location[the penultimate fantasy airship].turns_spent < 5)
   {
     max = "items";
   }
+  if (!have($item[s.o.c.k.])) monster_attract = $monsters[quiet healer];
 
   boolean b = yz_adventure($location[the penultimate fantasy airship], max);
 
-  if (have($item[s.o.c.k.])) remove_attract($monster[quiet healer]);
   return;
 }
 

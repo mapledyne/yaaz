@@ -77,6 +77,7 @@ boolean L11_SQ_pyramid()
   if (!get_property("pyramidBombUsed").to_boolean()
     && (quest_status("questL11Pyramid") < 3 || turners() < 10))
   {
+    monster_attract = $monsters[tomb rat];
     yz_adventure($location[The Middle Chamber], "items");
     return true;
   }

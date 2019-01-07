@@ -5,74 +5,64 @@ import "util/base/yz_monsters.ash";
 import "util/base/yz_war_support.ash";
 import "util/base/yz_quests.ash";
 
-string maybe_copy(monster foe)
+boolean attracted(monster foe)
 {
   monster digitized = to_monster(get_property("_sourceTerminalDigitizeMonster"));
   int copiesmade = to_int(get_property("_sourceTerminalDigitizeMonsterCount"));
+  if (digitized == foe && copiesmade <= 2) return true;
+  if (to_monster(get_property("enamorangMonster")) == foe) return true;
+  if (to_monster(get_property("_latteMonster")) == foe) return true;
 
-  if (digitized == foe && copiesmade <= 2) return "";
-  if (to_monster(get_property("enamorangMonster")) == foe) return "";
+  return false;
+}
 
-  boolean pref_digitize = false;
-  boolean can_digitize = false;
-  string action = "";
-
+string attract_action(monster foe)
+{
   if (have_skill($skill[digitize])
       && digitize_remaining() > 0)
   {
-    can_digitize = true;
-    action = "skill digitize";
+    return "skill digitize";
+  }
+
+  if (have_skill($skill[offer latte to Opponent]))
+  {
+    return "skill offer latte to opponent";
   }
 
   if (have($item[LOV Enamorang])
       && get_property("enamorangMonster") == "")
   {
-    action = "item LOV enamorang";
+    return "item LOV enamorang";
   }
+  if (have_skill($skill[Transcendent Olfaction])
+      && have_effect($effect[on the trail]) == 0
+      && my_mp() > mp_cost($skill[Transcendent Olfaction]))
+  {
+    return "skill Transcendent Olfaction";
+  }
+
+  return "";
+}
+
+string maybe_attract(monster foe)
+{
+  if (foe == $monster[none]) return "";
+
+  string action = attract_action(foe);
 
   if (action == "") return "";
 
+  if (attracted(foe)) return "";
+
   monster newyoumon = to_monster(get_property("_newYouQuestMonster"));
+  if (get_property("_newYouQuestCompleted") != "false") newyoumon = $monster[none];
 
-  if (newyoumon == foe
-      && newyoumon != $monster[none] &&
-      !to_boolean("_newYouQuestCompleted"))
-  {
-    return action;
-  }
+  if (is_bounty_monster(foe)) return action;
 
-  switch (foe)
-  {
-    default:
-      return "";
-    case $monster[dirty thieving brigand]:
-      if (to_int(get_property("currentNunneryMeat")) < (100000 - max_expected_nuns_meat() * 4)
-          || !war_nuns_trick())
-      {
-        return "";
-      }
-      break;
-    case $monster[ninja snowman assassin]:
-      pref_digitize = true;
-      break;
-//    case $monster[writing desk]:
-    case $monster[lobsterfrogman]:
-      int thingwanted = item_amount($item[barrel of gunpowder]);
-      if (foe == $monster[writing desk])
-      {
-        thingwanted = to_int(get_property("writingDesksDefeated"));
-      }
+  if (newyoumon == foe) return action;
+  if (monster_attract contains foe) return action;
 
-      // we want 5, but if we have 4 already then defeating one more will give us 5,
-      // so only looking for 3 or less of the things we want.
-      if (thingwanted >= 4) return "";
-      if (thingwanted < 3) pref_digitize = true;
-      break;
-  }
-
-  if (pref_digitize && can_digitize) action = "skill digitize";
-
-  return action;
+  return "";
 }
 
 string maybe_duplicate(monster foe)
@@ -237,67 +227,12 @@ string maybe_run(monster foe)
   return "";
 }
 
-string maybe_sniff(monster foe)
-{
-  string action = "";
-
-  if (have_skill($skill[Transcendent Olfaction])
-      && have_effect($effect[on the trail]) == 0)
-  {
-    action = "skill Transcendent Olfaction";
-  }
-  else if (have_skill($skill[Offer Latte to Opponent])
-           && (have_effect($effect[on the trail]) == 0 || get_property("olfactedMonster") != foe))
-  {
-    action = "skill Offer Latte to Opponent";
-  }
-
-  switch (foe)
-  {
-    default:
-      if (is_bounty_monster(foe)) break;
-      return "";
-    case $monster[blooper]:
-      if (have($item[digital key])) return "";
-      break;
-    case $monster[knob goblin harem girl]:
-      if (have_outfit("Knob Goblin Harem Girl Disguise")) return "";
-      break;
-    case $monster[dirty old lihc]:
-      break;
-    case $monster[dairy goat]:
-      if (item_amount($item[goat cheese]) > 2) return "";
-      break;
-    case $monster[racecar bob]:
-    case $monster[bob racecar]:
-    case $monster[drab bard]:
-      if (to_int(get_property("palindomeDudesDefeated")) >= 5) return "";
-      break;
-    case $monster[tomb rat]:
-      if (quest_status("questL11Pyramid") > 3) return "";
-      if (turners() >= 10) return "";
-      break;
-    case $monster[bearpig topiary animal]:
-    case $monster[elephant (meatcar?) topiary animal]:
-    case $monster[spider (duck?) topiary animal]:
-      if (to_int(get_property("twinPeakProgress")) == 15) return "";
-        break;
-    case $monster[red skeleton]:
-    case $monster[man with the red buttons]:
-    case $monster[red butler]:
-      if (!quest_active("questL11Ron")) return "";
-      break;
-  }
-
-  return action;
-}
-
 string maybe_latte(monster foe)
 {
   if (get_property("_latteBanishUsed") == "false") return "";
   if (get_property("_latteCopyUsed") == "false") return "";
 
-  if (my_mp() < my_maxmp() || my_hp() < my_maxhp())
+  if (my_mp() < (my_maxmp() / 2) || my_hp() < (my_maxhp() / 2))
     return "skill gulp latte";
 
   return "";
@@ -358,11 +293,11 @@ string yz_consult(int round, string mob, string text)
   string maybe = maybe_run(foe);
   if (maybe != "") return maybe;
 
-  maybe = maybe_hug(foe);
-  if (maybe != "") return maybe;
-
-  maybe = maybe_sniff(foe);
-  if (maybe != "") return maybe;
+  if (round == 1)
+  {
+    maybe = maybe_hug(foe);
+    if (maybe != "") return maybe;
+  }
 
   maybe = maybe_extract(foe);
   if (maybe != "") return maybe;
@@ -370,7 +305,7 @@ string yz_consult(int round, string mob, string text)
   maybe = maybe_banish(foe);
   if (maybe != "") return maybe;
 
-  maybe = maybe_copy(foe);
+  maybe = maybe_attract(foe);
   if (maybe != "") return maybe;
 
   maybe = maybe_duplicate(foe);

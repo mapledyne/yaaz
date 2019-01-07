@@ -19,15 +19,12 @@ boolean get_wine_bomb()
     return false;
   }
 
-  add_attract($monster[monstrous boiler]);
-
+  if (!have($item[wine bomb])) monster_attract = $monsters[monstrous boiler];
   log("Going after the " + wrap($monster[monstrous boiler]) + " to make the " + wrap($item[wine bomb]));
 
   maximize("ml", $item[unstable fulminate]);
   yz_adventure($location[the haunted boiler room]);
 
-  if (have($item[wine bomb]))
-    remove_attract($monster[monstrous boiler]);
   return true;
 }
 
@@ -51,10 +48,9 @@ boolean get_blasting()
 
   log("Trying to find the " + wrap($item[blasting soda]) + " in the " + wrap($location[the haunted laundry room]) + ".");
 
-  add_attract($monster[cabinet of dr. limpieza]);
+  if (!have($item[blasting soda])) monster_attract = $monsters[cabinet of dr. limpieza];
   yz_adventure($location[the haunted laundry room], "items");
-  if (have($item[blasting soda]))
-    remove_attract($monster[cabinet of dr. limpieza]);
+
   return true;
 }
 
@@ -79,11 +75,9 @@ boolean get_vinegar()
 
   log("Trying to find the " + wrap($item[bottle of Chateau de Vinegar]) + " in the " + wrap($location[the haunted wine cellar]) + ".");
 
-  add_attract($monster[possessed wine rack]);
+  if (!have($item[bottle of Chateau de Vinegar])) monster_attract= $monsters[possessed wine rack];
 
   yz_adventure($location[the haunted wine cellar], "items");
-  if (have($item[bottle of Chateau de Vinegar]))
-    remove_attract($monster[possessed wine rack]);
   return true;
 }
 

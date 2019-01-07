@@ -125,6 +125,7 @@ boolean M_8bit()
 
   maximize("items", $item[continuum transfunctioner]);
   if (time_combat($monster[blooper], $location[8-bit realm])) return true;
+  monster_attract = $monsters[blooper];
 
   yz_adventure($location[8-bit realm]);
 

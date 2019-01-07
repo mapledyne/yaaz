@@ -111,7 +111,10 @@ boolean L05_Q_goblin()
       return false;
     }
 
+
     log("Off to try to get the " + wrap("Knob Goblin Harem Girl Disguise", COLOR_ITEM) + " from the " + wrap(harem) + ".");
+
+    monster_attract = $monsters[knob goblin harem girl];
     yz_adventure(harem, "items");
     return true;
   }

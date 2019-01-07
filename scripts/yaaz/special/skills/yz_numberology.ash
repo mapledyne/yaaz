@@ -11,11 +11,6 @@ void numberology_progress()
 	task("Calculate the Universe");
 }
 
-void numberology_cleanup()
-{
-
-}
-
 int universe_result(int input)
 {
   return reverse_numberology()[input];
@@ -95,5 +90,5 @@ boolean numberology()
 
 void main()
 {
-	while(numberology());
+	numberology();
 }

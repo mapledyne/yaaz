@@ -100,6 +100,8 @@ boolean get_cheese()
 
   if (maybe_pull(cheese, 3) > 0) return true;
 
+  if (item_amount($item[goat cheese]) < 2) monster_attract = $monsters[dairy goat];
+
   yz_adventure(goatlet, "items");
   return true;
 }
@@ -178,6 +180,7 @@ boolean peak_ninja()
     warning("If you can modify your rate you may be able to just rerun this script, otherwise this may be a bug.");
     abort();
   }
+  if (ninja_snowman_items() < 2) monster_attract = $monsters[ninja snowman assassin];
   yz_adventure($location[lair of the ninja snowmen]);
   return true;
 }
