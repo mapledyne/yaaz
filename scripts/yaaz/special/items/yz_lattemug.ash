@@ -32,6 +32,23 @@ boolean[string] latte_unlocked()
   return ingreds;
 }
 
+string latte_stat_ingredient()
+{
+  return "";
+}
+
+string latte_ingredients()
+{
+  string[int] ingreds;
+
+  boolean[string] all_ingreds = latte_unlocked();
+
+  ingreds[0] = latte_stat_ingredient();
+
+  return "cinnamon pumpkin vanilla";
+
+}
+
 void latte_refill()
 {
   if (!have($item[latte lovers member's mug])) return;
@@ -39,7 +56,7 @@ void latte_refill()
   int refills = to_int(get_property("_latteRefillsUsed"));
   if (refills >= 3) return;
 
-  string ingred = "cinnamon pumpkin vanilla";
+  string ingred = latte_ingredients();
   log("About to refill our " + wrap($item[latte lovers member's mug]) + " with: " + wrap(ingred, COLOR_ITEM));
   cli_execute("latte refill " + ingred);
 
