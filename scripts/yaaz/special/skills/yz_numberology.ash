@@ -72,20 +72,14 @@ int pick_a_number()
 	return 0;
 }
 
-boolean numberology()
+void numberology()
 {
 	if (!have_skill($skill[calculate the universe]))
-		return false;
+		return;
 	if (to_int(get_property("_universeCalculated")) >= to_int(get_property("skillLevel144")))
-		return false;
+		return;
 	int goal = pick_a_number();
 
-	if (goal == 0)
-	{
-	 	return false;
-	} else {
-		return true;
-	}
 }
 
 void main()

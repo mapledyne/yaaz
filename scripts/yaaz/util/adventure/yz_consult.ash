@@ -242,7 +242,14 @@ string maybe_hug(monster foe)
 {
   if (!have_skill($skill[hugs and kisses!])) return "";
 
-  debug("Missing logic to decide if we should use the skill: " + wrap($skill[hugs and kisses!]));
+  switch(foe)
+  {
+    case $monster[blooper]:
+      if (!have($item[digital key]))
+        return "skill hugs and kisses!";
+      break;
+  }
+
   return "";
 }
 
