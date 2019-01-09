@@ -170,8 +170,9 @@ boolean attempt_ltt()
 
 boolean ltt()
 {
-  if (get_property("telegraphOfficeAvailable") != "true")
-    return false;
+  if (get_property("telegraphOfficeAvailable") != "true") return false;
+
+  if (!be_good($item[your cowboy boots])) return false;
 
   if (!have($item[your cowboy boots]))
   {

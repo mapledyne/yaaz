@@ -151,6 +151,17 @@ void prep(location loc)
    // should put more finesse here to just recover what we need...
    float mpTarget = to_float(get_property("mpAutoRecoveryTarget"));
    float mpRecovery = to_float(get_property("mpAutoRecovery"));
+
+   if (my_mp() < (my_maxmp() / 2))
+   {
+    if (have($item[magical sausage])
+        && be_good($item[magical sausage])
+        && to_int(get_property("_sausagesEaten")) < 23)
+        {
+          eat(1, $item[magical sausage]);
+        }
+   }
+
    if (my_mp() < (my_maxmp() * mpRecovery))
    {
        log("Restoring MP...");

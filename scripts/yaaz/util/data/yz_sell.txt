@@ -41,6 +41,7 @@ Phat Turquoise Bead	0
 Photoprotoneutron Torpedo	0
 pile of gold coins	0
 pirate pelvis	0
+powdered organs	0
 Procrastination Potion	0
 Ratgut	0
 ridiculously overelaborate ninja weapon	0
@@ -134,8 +135,12 @@ coconut shell	100
 cranberries	100
 exotic jungle fruit	100
 funky dried mushroom	100
+generic healing potion	100
 gob of wet hair	100
 imitation white russian	100
+inkwell	50
+leftovers	25
+mummy wrapping	25
 rat appendix	25
 tonic water	100
 

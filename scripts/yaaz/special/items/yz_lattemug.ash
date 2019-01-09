@@ -215,7 +215,7 @@ boolean is_latte_location(location here)
 }
 
 
-string latte_ingredients()
+string latte_ingredients(boolean[string] yum)
 {
   int[string] choices;
 
@@ -269,7 +269,8 @@ string latte_ingredients()
   foreach c in choices
   {
     if (!(unlocked contains c)) continue;
-
+    if (yum contains c) choices[c] = choices[c] * 10;
+    
     string ing = c;
     int ing_score = choices[c];
     if (ing_score > scores[0])
@@ -305,17 +306,29 @@ string latte_ingredients()
 
 }
 
-void latte_refill()
+void latte_refill(boolean[string] yum)
 {
   if (!have($item[latte lovers member's mug])) return;
   if (!be_good($item[latte lovers member's mug])) return;
   int refills = to_int(get_property("_latteRefillsUsed"));
   if (refills >= 3) return;
 
-  string ingred = latte_ingredients();
+  string ingred = latte_ingredients(yum);
   log("About to refill our " + wrap($item[latte lovers member's mug]) + " with: " + wrap(ingred, COLOR_ITEM));
   cli_execute("latte refill " + ingred);
 
+}
+
+void latte_refill()
+{
+  latte_refill($strings[none]);
+}
+
+void latte_refill(string s)
+{
+  boolean[string] yum;
+  yum[s] = true;
+  latte_refill(yum);
 }
 
 void lattemug()

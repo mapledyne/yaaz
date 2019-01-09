@@ -23,7 +23,7 @@ void harvest_thanksgarden()
 void cashew()
 {
   if (!be_good($item[Granny Tood's Thanksgarden Catalog])) return;
-  
+
   if (to_int(setting("stuffing_ascension","0")) < my_ascensions())
   {
     save_setting("stuffing_ascension", my_ascensions());
@@ -47,7 +47,7 @@ void cashew()
     stock_item($item[stuffing fluffer], stock);
   }
 
-  while(item_amount($item[cashew]) >= 3)
+  while(item_amount($item[cashew]) >= 3 && i_a($item[turkey blaster]) < 3)
   {
     log("Turning in " + wrap($item[cashew], 3) + " to get a " + wrap($item[turkey blaster]));
 		buy($item[turkey blaster].seller, 1, $item[turkey blaster]);

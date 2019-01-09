@@ -509,6 +509,30 @@ void stock_item(item it)
   stock_item(it, 1);
 }
 
+int grind(int qty, item it)
+{
+  // try to grind things instead of selling. Return how many we have left
+
+  if (qty <= 0) return 0;
+
+  if (!have($item[Kramco Sausage-o-Matic&trade;])) return qty;
+  if (!be_good($item[Kramco Sausage-o-Matic&trade;])) return qty;
+  int price = autosell_price(it);
+  if (price == 0) return qty;
+  if (!it.tradeable) return qty;
+  if (!it.discardable) return qty;
+  if (it.gift) return qty;
+  int current = to_int(get_property("_sausageGrinderUnits"));
+
+  if (current > to_int(setting("max_sausage_units", "50000"))) return qty;
+
+  log("Off to grind " + qty + " " + wrap(it, qty));
+  visit_url('inventory.php?action=grind');
+  visit_url("choice.php?whichchoice=1339&option=1&qty=" + qty + "&iid=" + to_int(it));
+  log("You just gained " + wrap(to_int(get_property("_sausageGrinderUnits")) - current, COLOR_ITEM) + " grinder units (you now have " + wrap(get_property("_sausageGrinderUnits"), COLOR_ITEM) + ")");
+  return 0;
+}
+
 void sell_all(item it, int keep)
 {
   if (to_boolean(setting("no_dispose", "false"))) return;
@@ -525,7 +549,11 @@ void sell_all(item it, int keep)
     return;
 
   int qty = item_amount(it) - keep;
+
+  if (my_meat() > 1000) qty = grind(qty, it);
+
   if (qty <= 0) return;
+
   log("Selling " + qty + " " + wrap(pluralize(item_amount(it), it), COLOR_ITEM));
   int old_qty = item_amount(it);
   autosell(qty, it);
