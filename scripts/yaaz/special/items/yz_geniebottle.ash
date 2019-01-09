@@ -5,6 +5,17 @@ import "util/base/yz_monsters.ash";
 import "util/base/yz_settings.ash";
 import "util/base/yz_inventory.ash";
 
+boolean can_wish()
+{
+  if (!have($item[genie bottle])) return false;
+  if (!be_good($item[genie bottle])) return false;
+  int wishes = to_int(get_property("_genieWishesUsed"));
+
+  if (wishes >= 3) return false;
+
+  return true;
+}
+
 void geniebottle_progress()
 {
   if (!have($item[genie bottle])) return;
@@ -20,29 +31,22 @@ void geniebottle_progress()
 
 }
 
-void bottle_wish(string wishingfor)
+boolean bottle_wish(string wishingfor)
 {
+  if (!can_wish()) return false;
   log("Using the " + wrap($item[genie bottle]) + " to " + wrap(wishingfor, COLOR_ITEM));
   cli_execute("genie " + wishingfor);
+  return true;
 }
 
-void bottle_wish(monster mon)
+boolean bottle_wish(monster mon)
 {
+  if (!can_wish()) return false;
   log("Using the " + wrap($item[genie bottle]) + " to fight a " + wrap(mon));
   maximize();
   cli_execute("genie monster " + mon);
   string temp = visit_url("main.php"); // we seem to not always know we're in a fight
   run_combat("yz_consult");
-}
-
-boolean can_wish()
-{
-  if (!have($item[genie bottle])) return false;
-  if (!be_good($item[genie bottle])) return false;
-  int wishes = to_int(get_property("_genieWishesUsed"));
-
-  if (wishes >= 3) return false;
-
   return true;
 }
 
@@ -68,18 +72,7 @@ void geniebottle()
     return;
   }
 
-  // other monsters to consider/add: lobsterfrogman, ninja snowman assassin, dirty theiving brigand?
-
-/*
-  if (to_int(get_property("writingDesksDefeated")) < 5
-      && !dangerous($monster[writing desk])
-      && to_monster(get_property("_sourceTerminalDigitizeMonster")) != $monster[Writing Desk]
-      && !have($item[ghost of a necklace]))
-  {
-    bottle_wish($monster[writing desk]);
-    return;
-  }
-*/
+  // monsters to consider/add: lobsterfrogman, ninja snowman assassin, dirty theiving brigand?
 
 }
 

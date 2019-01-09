@@ -5,6 +5,8 @@ boolean get_junkyard_item()
 {
   location loc = to_location(get_property("currentJunkyardLocation"));
   effect_maintain($effect[hot jellied]); // so we can banish the gremlin with Breathe Out
+  monster_banish = $monsters[A.M.C. Gremlin];
+
   return yz_adventure(loc, "");
 }
 

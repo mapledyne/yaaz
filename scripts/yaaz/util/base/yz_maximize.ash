@@ -2,6 +2,7 @@ import "util/base/yz_print.ash";
 import "util/base/yz_inventory.ash";
 import "util/base/yz_effects.ash";
 import "util/base/yz_familiars.ash";
+import "util/base/yz_monsters.ash";
 import "special/items/yz_january_garbage.ash";
 import "special/locations/yz_terminal.ash";
 import "special/locations/yz_bookshelf.ash";
@@ -124,6 +125,23 @@ string default_maximize_string()
 
 void maximize(string target, string outfit, item it, familiar fam)
 {
+//  item default_offhand = $item[9133]; // kol con 13 snowglobe
+
+  item default_offhand = $item[latte lovers member's mug];
+
+  // if we're going with all-defaults, favor the default_offhand as an item
+  // it won't ever get picked by the maximizer, but it nice to use sometimes
+  // Change: was snowglobe, now latte mug.
+
+  if (target == ""
+      && it == $item[none]
+      && outfit == ""
+      && fam == $familiar[none]
+      && have(default_offhand))
+  {
+    it = default_offhand;
+  }
+
 
   if (target == '')
     target = default_maximize_string();
@@ -164,24 +182,6 @@ void maximize(string target, string outfit, item it, familiar fam)
   string[int] split_map;
   split_map = split_string(target, ", ");
 
-//  item default_offhand = $item[9133]; // kol con 13 snowglobe
-
-  item default_offhand = $item[latte lovers member's mug];
-
-
-  // if we're going with all-defaults, favor the default_offhand as an item
-  // it won't ever get picked by the maximizer, but it nice to use sometimes
-  // Change: was snowglobe, now latte mug.
-
-  if (target == ""
-      && it == $item[none]
-      && outfit == ""
-      && fam == $familiar[none]
-      && have(default_offhand))
-  {
-    it = default_offhand;
-  }
-
   if (fam != $familiar[none])
     choose_familiar(fam);
   else
@@ -199,48 +199,6 @@ void maximize(string target, string outfit, item it, familiar fam)
       warning("But if you switch to a " + wrap($familiar[Trick-or-Treating Tot]) + " for rollover, you'll get some extra adventures (equip the " + wrap($item[li'l unicorn costume]) + ").");
       warning("Yaaz will automatically switch back before adventuring if you use the script, but you'll want to be careful not to manually adventure. You'll have to make this familiar change manually, but there's little downside if you're careful not to adventure afterwards.");
       wait(3);
-    }
-  }
-
-  // January Garbage Tote
-  switch(target)
-  {
-    case "ml":
-      get_garbage_item($item[tinsel tights]);
-      break;
-    case "items":
-    case "meat":
-      get_garbage_item($item[wad of used tape]);
-      break;
-    case "rollover":
-      get_garbage_item($item[makeshift garbage shirt]);
-      break;
-    default: // is this a good default?
-      // get_garbage_item($item[wad of used tape]);
-      break;
-  }
-
-  if (have($item[SongBoom&trade; BoomBox]) && target == "")
-  {
-    int booms = to_int(get_property("_boomBoxSongsLeft"));
-    string song = get_property("boomBoxSong");
-
-    if (booms > 0)
-    {
-      if (quest_status("cyrptTotalEvilness") > 0
-          && song != "Eye of the Giger")
-      {
-        cli_execute("boombox giger");
-      }
-      else if (my_meat() < 5000
-               && song != "Total Eclipse of Your Meat")
-      {
-        cli_execute("boombox meat");
-      }
-      else if (song != "Food Vibrations")
-      {
-        cli_execute("boombox food");
-      }
     }
   }
 
