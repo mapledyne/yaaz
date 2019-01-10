@@ -292,6 +292,30 @@ void prep(location loc)
     visit_url("shop.php?whichshop=hippy");
   }
 
+  if (have($item[SongBoom&trade; BoomBox]))
+  {
+    int booms = to_int(get_property("_boomBoxSongsLeft"));
+    string song = get_property("boomBoxSong");
+
+    if (booms > 0)
+    {
+      if (quest_status("cyrptTotalEvilness") > 0
+          && item_amount($item[nightmare fuel]) < 3)
+      {
+        if (song != "Eye of the Giger") cli_execute("boombox giger");
+      }
+      else if (my_meat() < 5000)
+      {
+        if (song != "Total Eclipse of Your Meat") cli_execute("boombox meat");
+      }
+      else if (song != "Food Vibrations")
+      {
+        cli_execute("boombox food");
+      }
+    }
+  }
+
+
 
   buy_skills();
 }

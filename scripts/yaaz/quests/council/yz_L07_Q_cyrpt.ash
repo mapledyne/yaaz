@@ -40,16 +40,6 @@ float modern_zmobie_pct()
 	return min(100.0, 15.0 + initiative_modifier() / 10.0);
 }
 
-/*
-int estimated_alcove_turns()
-{
-	float pct = modern_zmobie_pct();
-	float average = 1 * ((100-pct)/100) + 5 * (pct/100);
-	float turns = (max(0, get_property("cyrptAlcoveEvilness").to_int() - 25) / average);
-	return turns;
-}
-*/
-
 void clear_alcove()
 {
 
@@ -69,6 +59,7 @@ void clear_niche()
 		log("Undefiling " + wrap($location[The Defiled Niche]) + ".");
 
 		monster_attract = $monsters[dirty old lihc];
+		monster_banish = $monsters[senile lihc, slick lihc];
 		maximize("items", $item[gravy boat]);
 		yz_adventure($location[The Defiled Niche]);
 }
@@ -129,6 +120,13 @@ boolean L07_Q_cyrpt()
 	}
 	if (dangerous($location[the defiled alcove])) return false;
 
+	if (get_property("cyrptTotalEvilness").to_int() > 0
+	    && have($item[nightmare fuel])
+			&& to_int(get_property("_nightmareFuelCharges")) == 0)
+	{
+		use(1, $item[nightmare fuel]);
+	}
+
 	if (get_property("cyrptAlcoveEvilness").to_int() > 0)
 	{
 		if (get_property("cyrptAlcoveEvilness").to_int() > 25
@@ -188,7 +186,6 @@ boolean L07_Q_cyrpt()
 			log("Changing MCD to 10 to get us a " + wrap($item[vertebra of the bonerdagon]) + ".");
 			change_mcd(10);
 		}
-wait(10);
 
 		set_property("choiceAdventure527", 1);
 

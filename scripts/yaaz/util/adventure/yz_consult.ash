@@ -174,19 +174,13 @@ string maybe_banish(monster foe)
 
   if (banish == "") return "";
 
-  switch (foe)
+  if (monster_banish contains foe)
   {
-    default:
-      return "";
-    case $monster[A.M.C. Gremlin]:
-      break;
-    case $monster[red herring]:
-    case $monster[red snapper]:
-     if (!quest_active("questL11Ron")) return "";
-     break;
+    log("Trying to banish the " + wrap(foe) + ".");
+    return banish;
   }
-  log("Trying to banish the " + wrap(foe) + ".");
-  return banish;
+
+  return "";
 }
 
 string maybe_lta_item(monster foe)
@@ -248,7 +242,12 @@ string maybe_hug(monster foe)
       if (!have($item[digital key]))
         return "skill hugs and kisses!";
       break;
+    case $monster[toothy sklelton]:
+    case $monster[spiny skelelton]:
+      return "skill hugs and kisses!";
   }
+
+  if (get_location_monsters($location[hippy camp]) contains foe) return "skill hugs and kisses!";
 
   return "";
 }
