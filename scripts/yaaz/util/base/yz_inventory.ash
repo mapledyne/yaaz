@@ -477,16 +477,17 @@ void stock_coin_item(item it, int qty)
 
 void stock_item(item it, int qty)
 {
-  if (is_coinmaster_item(it))
+  if (is_coinmaster_item(it)
+      && (it != $item[red zeppelin ticket]
+          || have($item[priceless diamond])))
   {
     stock_coin_item(it, qty);
     return;
   }
-
   int total = qty - (item_amount(it) + equipped_amount(it));
 
   int price = npc_price(it);
-  int meat_buffer = 5;
+  int meat_buffer = 2;
 
   if (price == 0 && can_interact())
   {
@@ -522,14 +523,24 @@ int grind(int qty, item it)
   if (!it.tradeable) return qty;
   if (!it.discardable) return qty;
   if (it.gift) return qty;
+
+  // things that can't be ground, but we don't know how to programatically determine this:
+  if ($items[fat stacks of cash] contains it) return qty;
+
   int current = to_int(get_property("_sausageGrinderUnits"));
 
-  if (current > to_int(setting("max_sausage_units", "50000"))) return qty;
+  if (current > to_int(setting("max_sausage_units", "10000"))) return qty;
 
   log("Off to grind " + qty + " " + wrap(it, qty));
   visit_url('inventory.php?action=grind');
   visit_url("choice.php?whichchoice=1339&option=1&qty=" + qty + "&iid=" + to_int(it));
-  log("You just gained " + wrap(to_int(get_property("_sausageGrinderUnits")) - current, COLOR_ITEM) + " grinder units (you now have " + wrap(get_property("_sausageGrinderUnits"), COLOR_ITEM) + ")");
+  int gained = to_int(get_property("_sausageGrinderUnits")) - current;
+  log("You just gained " + wrap(gained, COLOR_ITEM) + " grinder units (you now have " + wrap(get_property("_sausageGrinderUnits"), COLOR_ITEM) + ")");
+  if (gained == 0)
+  {
+    debug("It looks like we tried to grind a " + wrap(it) + ", but since we didn't gain any grinder units, maybe it can't be used by this?");
+    wait(5);
+  }
   return 0;
 }
 

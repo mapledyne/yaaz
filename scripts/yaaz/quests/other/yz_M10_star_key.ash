@@ -56,6 +56,7 @@ boolean M10_star_key()
   familiar fam = $familiar[none];
   if (can_adventure_with_familiar($familiar[space jellyfish]))
     fam = $familiar[space jellyfish];
+
   maximize("items", fam);
 
   if (!have($item[star chart]) && my_familiar() == $familiar[space jellyfish])

@@ -50,7 +50,13 @@ boolean L12_SQ_lighthouse(string side)
     return false;
   }
 
+  if (dangerous($monster[lobsterfrogman]))
+  {
+    debug("The " + wrap($monster[lobsterfrogman]) + " is a bit dangerous right now. Will come back to " + wrap($location[sonofa beach]) + " later.");
+    return false;
+  }
   if (time_combat($monster[lobsterfrogman], $location[sonofa beach])) return true;
+  if (bottle_wish($monster[lobsterfrogman])) return true;
 
   yz_adventure($location[sonofa beach], "combat");
   return true;

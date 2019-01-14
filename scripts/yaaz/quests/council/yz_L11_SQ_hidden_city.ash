@@ -132,6 +132,8 @@ boolean bowling()
   if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
   {
     monster_attract = $monsters[pygmy bowler];
+    monster_banish = $monsters[drunk pygmy, pygmy janitor];
+
     yz_adventure($location[the hidden bowling alley], "items");
     return true;
   }
@@ -275,6 +277,8 @@ boolean apartment()
   {
     monster_attract = $monsters[pygmy shaman];
   }
+
+  monster_banish = $monsters[pygmy janitor, pygmy witch lawyer];
 
   if (to_int(get_property("hiddenTavernUnlock")) < my_ascensions())
   {

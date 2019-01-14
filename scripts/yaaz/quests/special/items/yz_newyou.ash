@@ -47,7 +47,7 @@ boolean newyou()
   skill attack = to_skill(get_property("_newYouQuestSkill"));
   location loc = where_monster(mob);
 
-  yz_adventure(loc, "");
+  yz_adventure(loc, "combat, -equip [8128]"); // 8128 == fiberglass foil which can auto-kill targets
   return true;
 }
 

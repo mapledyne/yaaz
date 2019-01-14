@@ -162,7 +162,8 @@ string maybe_banish(monster foe)
   {
     banish = "item tennis ball";
   }
-  else if (have_skill($skill[throw latte on opponent]))
+  else if (have_skill($skill[throw latte on opponent])
+           && get_property("_latteBanishUsed") == "false")
   {
     banish = "skill throw latte on opponent";
   }
@@ -176,7 +177,7 @@ string maybe_banish(monster foe)
 
   if (monster_banish contains foe)
   {
-    log("Trying to banish the " + wrap(foe) + ".");
+    log("Trying to banish the " + wrap(foe) + " with " + wrap(banish, COLOR_MONSTER) + ".");
     return banish;
   }
 
@@ -223,6 +224,7 @@ string maybe_run(monster foe)
 
 string maybe_latte(monster foe)
 {
+  if (!have_skill($skill[gulp latte])) return "";
   if (get_property("_latteBanishUsed") == "false") return "";
   if (get_property("_latteCopyUsed") == "false") return "";
 
@@ -244,7 +246,12 @@ string maybe_hug(monster foe)
       break;
     case $monster[toothy sklelton]:
     case $monster[spiny skelelton]:
+    case $monster[pygmy witch surgeon]:
       return "skill hugs and kisses!";
+    case $monster[pygmy bowler]:
+      if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
+        return "skill hugs and kisses!";
+      break;
   }
 
   if (get_location_monsters($location[hippy camp]) contains foe) return "skill hugs and kisses!";
