@@ -42,6 +42,7 @@ import 'quests/special/locations/yz_deep_machine_tunnels.ash';
 import 'quests/special/locations/yz_gingerbread.ash';
 import 'quests/special/locations/yz_lovetunnel.ash';
 import 'quests/special/locations/yz_ltt.ash';
+import 'quests/special/locations/yz_neverending.ash';
 import 'quests/special/locations/yz_snojo.ash';
 import 'quests/special/locations/yz_spacegate.ash';
 import 'quests/special/locations/yz_witchess.ash';
@@ -60,6 +61,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       lovetunnel,
                                       witchess,
                                       chateau,
+                                      neverending,
                                       M_lights_out,
                                       M_toot,
                                       M_super_villain_lair,
