@@ -529,7 +529,7 @@ int grind(int qty, item it)
 
   int current = to_int(get_property("_sausageGrinderUnits"));
 
-  if (current > to_int(setting("max_sausage_units", "10000"))) return qty;
+  if (current > to_int(setting("max_sausage_units", "5000"))) return qty;
 
   log("Off to grind " + qty + " " + wrap(it, qty));
   visit_url('inventory.php?action=grind');
@@ -561,7 +561,7 @@ void sell_all(item it, int keep)
 
   int qty = item_amount(it) - keep;
 
-  if (my_meat() > 1000) qty = grind(qty, it);
+  if (my_meat() > 5000) qty = grind(qty, it);
 
   if (qty <= 0) return;
 
