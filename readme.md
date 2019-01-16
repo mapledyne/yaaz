@@ -105,3 +105,46 @@ Note that files that begin with 'yaaz-' are primarily meant to be run this way. 
 ## Options
 
 Lots of options available for Yaaz:
+
+To change any of these flags, set the variable in the gCLI like so: `set yz_100familiar=mosquito`.
+
+If you want to see what a flag is set to, use something like: `prefref yz_100familiar`. If nothing comes back, the script will use the default.
+
+## Primary options
+These options will change the various behaviors of how yaaz works.
+
+| Option                 | Default | Notes |
+| ---------------------- | ------- | ----- |
+|  yz_100familiar        |         | Familiar to use for 100% run, versus trying to find the right familiar for a given task.  |
+| yz_war_side            | fratboy | Fight Island War as fratboy or hippy. (fratboy generally recommended) |
+|  yz_do_heart           |         | Do heart-y thing like using up your Smile of Mr. Accessory. Set to false to not be a heart while playing.  |
+| yz_aggressive_optimize | false   | If true, skip all side actions that aren't solely about ascending (ex: Evoke Eldritch Horror, Portscan, Lights Out quest, etc) |
+| yz_pvp                 | true    | 'false': don't PvP and don't talk about it. 'true': do PvP if the hippy stone is broken (will warn if it's not). 'always': Break the stone if it's not, then do PvP. |
+
+## Secondary options
+Usually you shouldn't need to change these, but if you're interested in some deeper tweaking, you can.
+
+| Option                  | Default | Notes |
+| ----------------------- | ------- | ----- |
+| yz_no_pulls             | false   | If true, don't make any pulls when in Softcore. |
+| yz_pool_skill           | *       | If true, try to raise pool skill via the semi-rare. Defaults to true if you aren't already maxed and if yz_aggressive_optimize is false, otherwise it defaults to false. |
+| yz_use_stash            | false   | If true, will put some items in the clan stash when it seems appropriate. Items moved are in the yz_clan.txt data file. |
+| yz_no_heart             |         | A comma-separated list of people to never do heart-things to. Good for ignoring bots and such. |
+| yz_do_jerk              | true    | If false things like warm milk, bricks, and toilet paper won't be used at people when doing 'heart' things." |
+| yz_adventure_floor      |  10     |   Adventures left to start consuming food/booze |
+| yz_do_collectors        | true    | Give things to certain well-known collectors, particularly devs of KoLMafia. Set to false to not give to these collectors. |
+| yz_use_avatar_potions   | true    | Use avatar potions when you have them to stay constantly dressed up. |
+| yz_log_level            |         | Set to 'info' or 'debug' to have more detailed messaging. |
+| yz_no_dispose           | false   | If true, the script will be blocked from disposing of any item (selling, pulverizing, clan stash, etc. You'll need to do all inventory management manually. |
+| yz_always_daily_dungeon | false   | After picking up the hero keys, if true it'll still get the daily dungeon rewards each day. |
+| yz_shower_temp          | mainstat | Use this temp when taking VIP showers. Can use a stat (or 'mainstat') or the actual temp ('hot', etc) |
+
+## Action flags
+You can add some additional actions from the script with these options. Most of these will add additional turns to your run, but if you're wanting to do some additional things besides simply ascending, you can ask the script to.
+
+| Option          | Default | Notes |
+| --------------- | ------- | ----- |
+| yz_do_bounty    | false   | `never` (never take a bounty, or act on any), `false` (take bounties when easy, but don't spend any extra turns to complete them), `true` (complete active bounties, but don't take additional ones), `aggressive` (complete all available bounties), `aftercore` ('false' if in-run, 'aggressive' if in aftercore) |
+| yz_do_batfellow | false   | Once per day, try to do a batfellow special edition comic, if you have one. (requires Cheesecookie's Batfellow script) |
+| yz_far_future   | true    | If true, go to the future with your time-spinner and try to replicate something (requires Ezandora's Far Future script) |
+| yz_do_lovetunnel        | true    | If true, and if you have the LOVE Tunnel, will try to get things and fight folks. Set to false if you're trying to get the password. |
