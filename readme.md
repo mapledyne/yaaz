@@ -6,6 +6,9 @@ doing. It also isn't intended to be specifically for speed ascensions (though
 it tries to be efficient) and has the option in several places to complete
 side quests along the way.
 
+Please, please, please reach out to me if you find bugs/problems/improvements!
+I'm `Degrassi` in KoL.
+
 ## Installation
 
 First, install it by running this command in KoLmafia's graphical CLI:
@@ -19,6 +22,24 @@ To update the script itself, run this command in the graphical CLI:
 ```
 svn update
 ```
+
+## Purpose
+
+This script (yaaz) was built as an experiment to build a new automated ascension script, but built with a few different goals than prior scripts.
+
+Accordingly, if these goals don't fit what you're interested in, this will be a poor choice of a script on your part.
+
+#### Goals:
+
+
+* More clear output (quickly see what's being done and progress towards goals)
+
+* Ability to run automation on individual quests or goals
+
+* Work at any level of skill and IotM ownership
+
+* Automatically send gifts and nice things to people
+
 
 ## Usage
 
@@ -55,6 +76,31 @@ done, and get the best outfit for rollover.
 
 Generally speaking, if you want to do other things during the day, you'd want
 to do them before running this script.
+
+### yaaz-begin
+
+This command runs any "start of day" tasks that should be done early in a day
+but has little cost (once a day things with a greater cost are attempted later
+as appropriate resources are available). It's analogous to KolMafia's breakfast
+system in many respects. This never needs to be run directly (the main yaaz
+script runs this itself) but if you want to kick a day off, then do some manual
+tasks first, this is an easy option.
+
+
+### Other scripts
+
+If you browse the script directory from the 'Scripts' menu, the majority of
+scripts there can each be run individually as well. Run 'yz_prep' and it'll
+do it's bit of cleanup for you, for instance.
+
+This is most useful in the 'quests' directory where you can, instead of using
+yaaz to attempt the whole ascension, have yaaz automate individual quests. Run
+L06_Q_friar.ash and the Friar's quest will be done but nothing else. Quest
+files have breakpoints in them, so manually running a quest file may have
+to be done multiple times to get it to complete a quest.
+
+Note that files that begin with 'yaaz-' are primarily meant to be run this way. Scripts starting with 'yz_' can be run, but are designed to primarily be run from the 'yaaz-' scripts, so you may get sub-optimal performance.
+
 
 ## Options
 
