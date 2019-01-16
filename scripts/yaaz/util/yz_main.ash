@@ -10,7 +10,8 @@ import "util/yaaz-pvp.ash";
 import "util/base/yz_util.ash";
 import "util/base/yz_monsters.ash";
 
-string version = "1.5: Fitness Giant"; // Getting back into it. Sorting out some out-of-standard items.
+string version = "2019.01.16: Giant Giant Moth"; // switching versioning styles.
+#string version = "1.5: Fitness Giant"; // Getting back into it. Sorting out some out-of-standard items.
 #string version = "1.4.1: Ed the Undying"; // Special item refactor. April shower support.
 #string version = "1.4: Ed the Undying"; // Pirate season for PvP, better banish.
 #string version = "1.3: Demoninja"; // do_lovetunnel, don't override mood

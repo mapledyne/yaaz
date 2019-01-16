@@ -26,6 +26,19 @@ string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 
+int compare_date(string date, string format)
+{
+  int year = to_int(format_date_time(format, date, 'y'));
+  int day = to_int(format_date_time(format, date, 'D'));
+  return year * 365 + day;
+}
+
+int version_diff(string v)
+{
+  int current = compare_date(today_to_string(), 'yyyyMMdd');
+  int ver = compare_date(v, 'yyyy.MM.dd');
+  return current - ver;
+}
 
 void skill_recommendation()
 {

@@ -78,15 +78,19 @@ void settings_warning()
 
   if (get_property("currentMood") != mood)
   {
-    warning("This script doesn't use KoLMafia's mood system.");
-    if (mood == 'default')
+    if (setting("mood_wanring", "false") == "false")
     {
-      warning("If you want to add custom mood handling while running this script, create a 'yaaz'");
-      warning("mood and I'll try using that instead.");
-    } else {
-      warning("You've created a 'yaaz' mood to add your custom mood interested. Setting your mood to that.");
+      warning("This script doesn't use KoLMafia's mood system.");
+      if (mood == 'default')
+      {
+        warning("If you want to add custom mood handling while running this script, create a 'yaaz'");
+        warning("mood and I'll try using that instead.");
+      } else {
+        warning("You've created a 'yaaz' mood to add your custom mood interested. Setting your mood to that.");
+      }
+      wait(10);
+      save_daily_setting("mood_warning", "true");
     }
-    wait(10);
     if (mood == 'yaaz')
       set_property("currentMood", mood);
   }
@@ -161,6 +165,14 @@ void settings_warning()
 void intro()
 {
   print("Version: " + version);
+
+  int diff = version_diff(version);
+  if (diff > 30)
+  {
+    warning("This version of yaaz is pretty old. Try running " + wrap("svn update", COLOR_ITEM) + " to see if there's a new version.");
+    wait(5);
+  }
+
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>, <a href='showplayer.php?who=1566270'>" + wrap("LeaChim (#1566270)", 'blue') + "</a>.");
@@ -178,9 +190,8 @@ void intro()
   }
 
   log("This is an automated ascension script, but has some additional features.");
-  log("To get more information, run the " + SCRIPT + "-help script.");
-  log("There are several flags available to adjust how the script works. See the available options on github: <a href='https://github.com/mapledyne/yaaz/wiki/yaaz-options'>" + wrap("yaaz-options", 'blue') + "</a>.");
-  log("Go to " + wrap("<a href='https://github.com/mapledyne/yaaz'>https://github.com/mapledyne/yaaz</a>", "blue") + " to see known issues, submit bugs, request features, etc.");
+  log("To get more information, visit <a href='https://github.com/mapledyne/yaaz/'>" + wrap("https://github.com/mapledyne/yaaz/", 'blue') + "</a>.");
+  log("There are several flags available to adjust how the script works listed there. Please let me know here via kmail (Degrassi) about any issues you find with the script.");
   wait(10);
 
   if (my_ascensions() == 0)
