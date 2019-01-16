@@ -16,6 +16,7 @@ void neverending_progress()
   {
     progress(free, 10, "free adventures in " + wrap($location[the neverending party]));
   }
+  if (quest_status("_questPartyFair") == FINISHED) return;
 
   string progress = get_property("_questPartyFairProgress");
 
@@ -24,6 +25,17 @@ void neverending_progress()
     default:
       error("I don't know the neverending quest.");
       abort();
+    case "":
+      task("Start the party at " + wrap($location[the neverending party]));
+      break;
+    case "trash":
+      int trash_left = to_int(progress);
+      float item_bonus = item_drop_modifier() - 100;
+      int per_adv = min(200, 45 + (item_bonus / 3));
+      int remaining = trash_left / per_adv;
+      string approx = "(approx " + remaining + " adv remaining with +" + to_int(item_bonus) + "% item bonus)";
+      task(wrap(trash_left, COLOR_ITEM) + " party trash to clean up. " + approx);
+      break;
     case "booze":
       if (progress == "")
       {
@@ -33,6 +45,7 @@ void neverending_progress()
         item toy = to_item(wanted[1]);
         progress(item_amount(toy), to_int(wanted[0]), wrap(toy) + " for Gerald's party.");
       }
+      break;
   }
 
   /*
@@ -65,11 +78,32 @@ void neverending_cleanup()
   }
 }
 
-void start_party()
+boolean neverending_trash()
 {
-  error("We can't start the party");
-  abort();
+  string progress = get_property("_questPartyFairProgress");
+
+  set_property("choiceAdventure1324", "2");
+
+  if (have($item[gas can]))
+  {
+    set_property("choiceAdventure1326", "5");
+  }
+  else if (my_primestat() == $stat[muscle])
+  {
+    set_property("choiceAdventure1326", "2");
+  }
+  else
+  {
+    set_property("choiceAdventure1326", "1");
+  }
+
+  monster_attract = $monsters[biker];
+
+  yz_adventure($location[the neverending party], "items");
+
+  return true;
 }
+
 
 boolean neverending_booze()
 {
@@ -112,7 +146,9 @@ boolean neverending()
 
   if (desire == "false") return false;
 
-  if (!in_aftercore() && desire == "aftercore") desire == "free";
+  if (!in_aftercore() && desire == "aftercore") desire = "free";
+
+
 
   if (desire == "free"
       && to_int(get_property("_neverendingPartyFreeTurns")) >= 10)
@@ -122,7 +158,16 @@ boolean neverending()
 
   if (quest_status("_questPartyFair") == UNSTARTED)
   {
-    start_party();
+    if (desire == "free")
+    {
+      // reject quest
+      set_property("choiceAdventure1322", "2");
+    } else {
+      // accpet quest
+      set_property("choiceAdventure1322", "1");
+    }
+
+    yz_adventure($location[the neverending party]);
     return true;
   }
 
@@ -133,6 +178,8 @@ boolean neverending()
       abort();
     case "booze":
       return neverending_booze();
+    case "trash":
+      return neverending_trash();
 
   }
 

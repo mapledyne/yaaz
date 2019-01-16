@@ -545,6 +545,7 @@ void max_effects(string target, boolean aggressive)
       uneffect($effect[The Sonata of Sneakiness]);
       break;
     case "ml":
+      // MCD handled by prep()
       effect_maintain($effect[ashen burps]);
       effect_maintain($effect[Drescher's Annoying Noise]);
       effect_maintain($effect[tortious]);
@@ -556,7 +557,6 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[red lettered]);
       effect_maintain($effect[2092]); //[Sweetbreads Flambé]
       effect_maintain($effect[Ur-Kel's Aria of Annoyance]);
-      change_mcd(10);
       if (aggressive)
       {
         effect_maintain($effect[Too Noir For Snoir]);
