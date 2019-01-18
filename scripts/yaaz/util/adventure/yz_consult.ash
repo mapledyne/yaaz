@@ -237,7 +237,9 @@ string maybe_latte(monster foe)
 string maybe_hug(monster foe)
 {
   if (!have_skill($skill[hugs and kisses!])) return "";
+  if (to_int(get_property("_xoHugsUsed")) >= 11) return "";
 
+  if (monster_banish contains foe) return "skill hugs and kisses";
   switch(foe)
   {
     case $monster[blooper]:

@@ -19,6 +19,7 @@ boolean[monster] ghosts = $monsters[the ghost of ebenoozer screege,
 
 boolean[monster] monster_attract;
 boolean[monster] monster_banish;
+boolean[monster] monster_grab;
 
 // Note: These dangerous() functions I think are key to optimizing this script overall.
 // Once it can ascend fully, making this function smarter on when we should skip a

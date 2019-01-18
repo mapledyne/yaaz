@@ -1,5 +1,7 @@
 import "util/base/yz_inventory.ash";
 import "util/base/yz_settings.ash";
+import "util/base/yz_monsters.ash";
+
 import <zlib.ash>
 
 boolean add_familiar_weight = false;
@@ -152,6 +154,14 @@ familiar choose_familiar(string fam)
       newbie = choose_familiar_from_list($familiars[Happy Medium, Xiblaxian Holo-Companion, Oily Woim]);
       break;
     case "items":
+      if (have_familiar($familiar[xo skeleton])
+          && be_good($familiar[xo skeleton])
+          && to_int(get_property("_xoHugsUsed")) < 11
+          && count(monster_banish) > 0)
+      {
+        newbie = $familiar[xo skeleton];
+        break;
+      }
       if (have_familiar($familiar[trick-or-treating tot]) && have($item[li'l ninja costume]))
       {
         newbie = $familiar[trick-or-treating tot];

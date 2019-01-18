@@ -215,6 +215,56 @@ boolean get_getup()
 	if (dangerous($location[The Obligatory Pirate's Cove])) return false;
 
   log("Get the swashbuckling getup...");
+  if (!have($item[stuffed shoulder parrot])) monster_grab[$monster[swarthy pirate]] = true;
+  if (!have($item[swashbuckling pants])) monster_grab[$monster[sassy pirate]] = true;
+  if (!have($item[eyepatch])) monster_grab[$monster[smarmy pirate]] = true;
+
+  //Amatearrr Night
+  if (!have($item[stuffed shoulder parrot]))
+  {
+    set_property("choiceAdventure24", "1");
+  }
+  else if (!have($item[eyepatch]))
+  {
+    set_property("choiceAdventure24", "3");
+  }
+  else
+  {
+    set_property("choiceAdventure24", "2");
+  }
+
+  //The Arrrbitrator
+  if (!have($item[eyepatch]))
+  {
+    set_property("choiceAdventure22", "1");
+  }
+  else if (!have($item[swashbuckling pants]))
+  {
+    set_property("choiceAdventure22", "2");
+  }
+  else
+  {
+    set_property("choiceAdventure22", "3");
+  }
+
+  // Barrie Me at Sea
+  if (!have($item[stuffed shoulder parrot]))
+  {
+    set_property("choiceAdventure23", "1");
+  }
+  else if (!have($item[swashbuckling pants]))
+  {
+    set_property("choiceAdventure23", "2");
+  }
+  else
+  {
+    set_property("choiceAdventure23", "3");
+  }
+
+/// for troublshooting:
+  set_property("choiceAdventure22", "0");
+  set_property("choiceAdventure23", "0");
+  set_property("choiceAdventure24", "0");
 
   boolean b = yz_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
   return true;

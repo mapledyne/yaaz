@@ -44,6 +44,7 @@ boolean ascend_loop()
     current_quest = quest;
     monster_banish = $monsters[none];
     monster_attract = $monsters[none];
+    monster_grab = $monsters[none];
     boolean b = call boolean quest();
     if (b) return true;
   }
