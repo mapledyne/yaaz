@@ -102,7 +102,9 @@ void do_maximize(string target, string outfit, item it)
 
   foreach nope in $items[hilarious comedy prop,
                          training legwarmers,
-                         actual reality goggles]
+                         actual reality goggles,
+                         red shirt,
+                         dorky glasses]
   {
     if (have(nope))
     {

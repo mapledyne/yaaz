@@ -19,33 +19,58 @@ void neverending_progress()
   if (quest_status("_questPartyFair") == FINISHED) return;
 
   string progress = get_property("_questPartyFairProgress");
+  int per_adv;
+  int remaining;
+  string approx;
+  string[int] wanted;
 
   switch(get_property("_questPartyFairQuest"))
   {
     default:
-      error("I don't know the neverending quest.");
-      abort();
+      error("I don't know the neverending quest: " + get_property("_questPartyFairQuest"));
+      break;
     case "":
       task("Start the party at " + wrap($location[the neverending party]));
+      break;
+    case "dj":
+      int meat_left = to_int(progress);
+      float meat_bonus = meat_drop_modifier() / 100;
+      per_adv = 100 * (meat_bonus + 1);  // avg meat/fight is roughly 100
+      remaining = meat_left / per_adv;
+      approx = "(approx " + remaining + " adv remaining with +" + to_int((meat_bonus * 100)) + "% meat bonus)";
+      task(wrap(meat_left, COLOR_ITEM) + " meat to claim for the dj. " + approx);
       break;
     case "trash":
       int trash_left = to_int(progress);
       float item_bonus = item_drop_modifier() - 100;
-      int per_adv = min(200, 45 + (item_bonus / 3));
-      int remaining = trash_left / per_adv;
-      string approx = "(approx " + remaining + " adv remaining with +" + to_int(item_bonus) + "% item bonus)";
+      per_adv = min(200, 45 + (item_bonus / 3));
+      remaining = trash_left / per_adv;
+      approx = "(approx " + remaining + " adv remaining with +" + to_int(item_bonus) + "% item bonus)";
       task(wrap(trash_left, COLOR_ITEM) + " party trash to clean up. " + approx);
+      break;
+    case "food":
+      if (progress == "")
+      {
+        task("Find Geraldine and see what food she wants for the party.");
+      } else {
+        wanted = split_string(progress, " ");
+        item snack = to_item(wanted[1]);
+        progress(item_amount(snack), to_int(wanted[0]), wrap(snack) + " for Geraldine's party.");
+      }
       break;
     case "booze":
       if (progress == "")
       {
         task("Find Gerald and see what booze he wants for the party.");
       } else {
-        string[int] wanted = split_string(progress, " ");
+        wanted = split_string(progress, " ");
         item toy = to_item(wanted[1]);
         progress(item_amount(toy), to_int(wanted[0]), wrap(toy) + " for Gerald's party.");
       }
       break;
+    case "woots":
+      int woot_total = to_int(progress);
+      progress(woot_total, 100, "Megawoots to amp up " + wrap($location[the neverending party]));
   }
 
   /*
@@ -72,10 +97,90 @@ void neverending_progress()
 
 void neverending_cleanup()
 {
-  while(have($item[Unremarkable duffel bag]))
+  use_all($item[Unremarkable duffel bag]);
+  use_all($item[van key]);
+
+}
+
+boolean neverending_dj()
+{
+
+  maximize("meat, moxie");
+  if (my_buffedstat($stat[moxie]) >= 300)
   {
-    use(1, $item[Unremarkable duffel bag]);
+    set_property("choiceAdventure1324", "1");
+    set_property("choiceAdventure1325", "4");
+  } else {
+    set_property("choiceAdventure1324", "5");
   }
+
+  monster_banish = $monsters[burnout];
+  yz_adventure($location[the neverending party]);
+  return true;
+}
+
+boolean neverending_woots()
+{
+/*
+Amp up the party
+You start with 10 Megawoots.
+You need to reach 100 Megawoots.
+Each monster killed will add 3-4 Megawoots, or 1-2 in hard mode.
+Having a cosmetic football equipped sets Megawoot gain to 5-6 per fight, in both normal and hard mode.
+Throwing a very small red dress on a lamp adds 20 Megawoots. Occurs Upstairs.
+Modifying the living room lights with an electronics kit adds 20 Megawoots. Occurs in the Basement.
+*/
+
+  if (have($item[very small red dress]))
+  {
+    set_property("choiceAdventure1324", "1"); // upstairs
+    set_property("choiceAdventure1325", "5"); // dress
+  }
+  else if (have($item[electronics kit]))
+  {
+    set_property("choiceAdventure1324", "4"); // downstairs
+    set_property("choiceAdventure1325", "4"); // electronics kit
+  }
+  else
+  {
+    set_property("choiceAdventure1324", "5"); // fight.
+  }
+  maximize("items", $item[cosmetic football]);
+
+  yz_adventure($location[the neverending party]);
+
+  return true;
+}
+
+boolean neverending_food()
+{
+
+  string progress = get_property("_questPartyFairProgress");
+
+  if (progress == "")
+  {
+    set_property("choiceAdventure1324", "2");
+    set_property("choiceAdventure1326", "3");
+    yz_adventure($location[The Neverending Party]);
+    return true;
+  }
+
+  string[int] wanted = split_string(progress, " ");
+  item toy = to_item(wanted[1]);
+
+  if (to_int(wanted[0]) > item_amount(toy))
+  {
+    monster_attract = $monsters[burnout];
+    set_property("choiceAdventure1324", "5");
+    yz_adventure($location[the neverending party], "items");
+    return true;
+  }
+
+  set_property("choiceAdventure1324", "2");
+  set_property("choiceAdventure1326", "4");
+  yz_adventure($location[The Neverending Party]);
+  return true;
+
 }
 
 boolean neverending_trash()
@@ -175,11 +280,18 @@ boolean neverending()
   {
     default:
       error("I don't know the neverending quest.");
-      abort();
+      wait(5);
+      return false;
     case "booze":
       return neverending_booze();
     case "trash":
       return neverending_trash();
+    case "dj":
+      return neverending_dj();
+    case "woots":
+      return neverending_woots();
+    case "food":
+      return neverending_food();
 
   }
 

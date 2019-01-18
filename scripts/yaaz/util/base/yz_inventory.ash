@@ -525,7 +525,7 @@ int grind(int qty, item it)
   if (it.gift) return qty;
 
   // things that can't be ground, but we don't know how to programatically determine this:
-  if ($items[fat stacks of cash] contains it) return qty;
+  if ($items[fat stacks of cash, powdered organs] contains it) return qty;
 
   int current = to_int(get_property("_sausageGrinderUnits"));
 
