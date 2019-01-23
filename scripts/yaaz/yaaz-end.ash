@@ -63,6 +63,8 @@ void day_end()
 
   prep();
 
+  consume_bottle_wishes();
+
   if (hippy_stone_broken())
   {
     boolean attempt = true;

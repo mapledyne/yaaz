@@ -339,7 +339,7 @@ void spirits()
 void royalty()
 {
 
-	if (to_int(get_property("royalty")) > 0)
+	if (prop_int("royalty") > 0)
 	{
 
 		int max = to_int(setting("royalty_max", "0"));
@@ -360,9 +360,9 @@ void royalty()
 			save_daily_setting("royalty_max", max);
 
 		}
-		progress(to_int(get_property("royalty")), max, "royalty", "blue");
+		progress(prop_int("royalty"), max, "royalty", "blue");
 		int price = historical_price($item[cuppa royal tea]);
-		int total = (max - to_int(get_property("royalty"))) * price;
+		int total = (max - prop_int("royalty") * price;
 		log("Price of one " + wrap($item[cuppa royal tea]) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
 
 	}
@@ -514,7 +514,7 @@ void trophy()
 	basic_consumption_trophy($item[white chocolate and tomato pizza], 5, 15);
 	basic_trophy(familiar_weight_total(), 500, 16);
 	basic_consumption_trophy($item[lucky surprise egg], 50, 17);
-	basic_trophy(to_int(get_property("sexChanges")), 30, 33);
+	basic_trophy(prop_int("sexChanges"), 30, 33);
 	if (in_hardcore()) basic_trophy(my_meat(), 1000000, 34);
 	if (my_class() == $class[seal clubber]) basic_trophy(my_level(), 30, 40);
 	if (my_class() == $class[turtle tamer]) basic_trophy(my_level(), 30, 41);
@@ -524,14 +524,14 @@ void trophy()
 	if (my_class() == $class[accordion thief]) basic_trophy(my_level(), 30, 44);
 	basic_consumption_trophy($item[black pudding], 446, 60, "very approx");
 	basic_consumption_trophy($item[around the world], 80, 61);
-	basic_trophy(to_int(get_property("camerasUsed")), 40, 90);
-	if (my_path() == "Way of the Surprising Fist") basic_trophy(to_int(get_property("totalCharitableDonations")), 1000000, 100);
+	basic_trophy(prop_int("camerasUsed"), 40, 90);
+	if (my_path() == "Way of the Surprising Fist") basic_trophy(prop_int("totalCharitableDonations"), 1000000, 100);
 	if (my_path() == "Avatar of Boris") basic_trophy(my_level(), 30, 104);
 	spirits(); // 105
 	if (my_path() == "Avatar of Jarlsberg") basic_trophy(my_level(), 30, 113);
 	basic_consumption_trophy($item[bottle of bloodweiser], 50, 117, "need Blood Porder effect, also");
 	basic_consumption_trophy($item[electric Kool-Aid], 50, 118, "need Electric, Kool effect, also");
-	basic_trophy(to_int(get_property("boneAbacusVictories")), 1000, 124);
+	basic_trophy(prop_int("boneAbacusVictories"), 1000, 124);
 	basic_consumption_trophy($item[warbear gyro], 108, 129);
 	if (my_path() == "Avatar of Sneaky Pete") basic_trophy(my_level(), 30, 136);
 	basic_consumption_trophy($item[mini-martini], 11, 139);

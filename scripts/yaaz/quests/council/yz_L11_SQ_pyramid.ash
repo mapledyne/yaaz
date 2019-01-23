@@ -25,7 +25,7 @@ void get_turner()
 
 void turn_wheel_until(int position)
 {
-  int current = to_int(get_property("pyramidPosition"));
+  int current = prop_int("pyramidPosition");
   while (position != current)
   {
     get_turner();
@@ -39,7 +39,7 @@ void turn_wheel_until(int position)
     {
       string v = visit_url("choice.php?whichchoice=929&option=2&pwd");
     }
-    current = to_int(get_property("pyramidPosition"));
+    current = prop_int("pyramidPosition");
   }
 }
 

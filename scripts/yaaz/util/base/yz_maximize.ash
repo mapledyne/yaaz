@@ -449,7 +449,7 @@ void max_effects(string target, boolean aggressive)
 
       if (have($item[SongBoom&trade; BoomBox]))
       {
-        int booms = to_int(get_property("_boomBoxSongsLeft"));
+        int booms = prop_int("_boomBoxSongsLeft");
         if (booms > 0 && get_property("boomBoxSong") != "Total Eclipse of Your Meat")
         {
           cli_execute("boombox meat");
@@ -536,6 +536,8 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[Shelter of Shed]);
       effect_maintain($effect[obscuri tea]);
       uneffect($effect[Carlweather's Cantata of Confrontation]);
+
+      effect_maintain($effect[Become Superficially interested]);
       break;
     case "combat":
       effect_maintain($effect[musk of the moose]);
@@ -545,6 +547,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[High Colognic]);
       effect_maintain($effect[lion in ambush]);
       uneffect($effect[The Sonata of Sneakiness]);
+      effect_maintain($effect[Become Intensely interested]);
       break;
     case "ml":
       // MCD handled by prep()

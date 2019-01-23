@@ -17,6 +17,7 @@ import "quests/other/yz_M06_pandemonium.ash";
 import "quests/other/yz_M09_leaflet.ash";
 import "quests/other/yz_M10_star_key.ash";
 import "quests/other/yz_M20_necklace.ash";
+import "quests/other/yz_S01_sea.ash";
 
 import "quests/council/yz_L02_Q_larva.ash";
 import "quests/council/yz_L03_Q_rats.ash";
@@ -69,6 +70,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       newyou,
                                       M_bounty,
                                       gingerbread,
+                                      S01_sea,
                                       M_guild,
                                       M_untinker,
                                       M_desert_beach,

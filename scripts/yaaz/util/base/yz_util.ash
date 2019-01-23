@@ -26,6 +26,19 @@ string DATA_DIR = "scripts/" + SCRIPT + "/util/data/";
 
 int abort_on_advs_left = 3;
 
+int prop_int(string prop, int def)
+{
+  string whatisit = get_property(prop);
+
+  if (whatisit == "") return def;
+  return to_int(whatisit);
+}
+
+int prop_int(string prop)
+{
+  return prop_int(prop, 0);
+}
+
 int compare_date(string date, string format)
 {
   int year = to_int(format_date_time(format, date, 'y'));
@@ -159,7 +172,7 @@ int approx_pool_skill()
     pool += 10 - (my_inebriety() - 10) * 2;
   }
 
-  pool += to_int(get_property("poolSkill"));
+  pool += prop_int("poolSkill");
 
   pool += numeric_modifier("pool skill");
 
@@ -171,15 +184,15 @@ int approx_pool_skill()
 int smiles_remaining()
 {
 
-  int total_casts_available = to_int(get_property("goldenMrAccessories")) * 5;
-  int casts_used = to_int(get_property("_smilesOfMrA"));
+  int total_casts_available = prop_int("goldenMrAccessories") * 5;
+  int casts_used = prop_int("_smilesOfMrA");
 
   return total_casts_available - casts_used;
 }
 
 int total_smiles()
 {
-	return to_int(get_property("goldenMrAccessories")) * 5;
+	return prop_int("goldenMrAccessories") * 5;
 }
 
 int elemental_resitance(element goal)

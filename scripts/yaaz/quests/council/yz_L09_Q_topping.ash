@@ -26,7 +26,7 @@ void L09_Q_topping_progress()
 {
   if (!quest_active("questL09Topping")) return;
 
-  int bridge = to_int(get_property("chasmBridgeProgress"));
+  int bridge = prop_int("chasmBridgeProgress");
   if (bridge < 30)
   {
     progress(bridge, 30, "bridge progress");
@@ -37,7 +37,7 @@ void L09_Q_topping_progress()
   if (oil > 0)
     progress(310.66 - oil, 310.66, wrap($location[oil peak]) + " pressure");
 
-  int boo = to_int(get_property("booPeakProgress"));
+  int boo = prop_int("booPeakProgress");
   if (boo > 0)
     progress(100 - boo, 100, wrap($location[a-boo peak]) + " hauntedness cleared");
   int twin = twinpeak_progress();
@@ -71,13 +71,13 @@ boolean L09_Q_topping()
   if (L09_SQ_twin()) return true;
   if (L09_SQ_aboo()) return true;
 
-  if (to_int(get_property("booPeakProgress")) > 0)
+  if (prop_int("booPeakProgress") > 0)
     return false;
 
-  if (to_int(get_property("oilPeakProgress")) > 0)
+  if (prop_int("oilPeakProgress") > 0)
     return false;
 
-  if (to_int(get_property("twinPeakProgress")) < 15)
+  if (prop_int("twinPeakProgress") < 15)
     return false;
 
   log("The peaks are lit. Going to the Highland Lord.");

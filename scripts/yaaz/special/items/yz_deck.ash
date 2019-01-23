@@ -9,7 +9,7 @@ void deck_progress()
   if (!have($item[deck of every card])) return;
   if (!be_good($item[deck of every card])) return;
 
-  int drawn = to_int(get_property("_deckCardsDrawn"));
+  int drawn = prop_int("_deckCardsDrawn");
   if (drawn >= 15) return;
 
   progress(drawn, 15, wrap($item[Deck of Every Card]) + " cards drawn", "blue");
@@ -20,7 +20,7 @@ boolean can_deck()
 {
   if (can_adventure()
       && have($item[deck of every card])
-      && to_int(get_property("_deckCardsDrawn")) < 15
+      && prop_int("_deckCardsDrawn") < 15
       && be_good($item[deck of every card]))
     return true;
   return false;
@@ -137,7 +137,7 @@ void consume_cards()
   cheat_deck("ancestral recall", "more adventures");
   cheat_deck("island", "more adventures");
 
-  int left = 15 - to_int(get_property("_deckCardsDrawn"));
+  int left = 15 - prop_int("_deckCardsDrawn");
 
   if (left < 5 && can_adventure())
   {

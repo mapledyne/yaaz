@@ -44,7 +44,7 @@ void L08_Q_trapper_progress()
       {
         task("Get the " + wrap("eXtreme Cold-Weather Gear", COLOR_ITEM));
       } else {
-        int extremity = to_int(get_property("currentExtremity"));
+        int extremity = prop_int("currentExtremity");
         progress(extremity, 3, "eXtremity to reach the peak");
       }
     }
@@ -109,7 +109,7 @@ boolean get_cheese()
 boolean jump_peak()
 {
   string outfit = "";
-  if (to_int(get_property("currentExtremity")) >= 3)
+  if (prop_int("currentExtremity") >= 3)
   {
     outfit = "eXtreme Cold-Weather Gear";
   }
@@ -148,7 +148,7 @@ boolean peak_extreme()
     return false;
   }
 
-  if (to_int(get_property("currentExtremity")) < 3)
+  if (prop_int("currentExtremity") < 3)
   {
     maximize("-combat", "eXtreme Cold-Weather Gear");
     yz_adventure($location[the extreme slope]);

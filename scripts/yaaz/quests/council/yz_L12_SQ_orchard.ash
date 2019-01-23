@@ -44,7 +44,7 @@ boolean L12_SQ_orchard()
 
   if (get_property("sidequestOrchardCompleted") != "none")
     return false;
-  if (to_int(get_property("hippiesDefeated")) < 64 && side == "fratboy")
+  if (prop_int("hippiesDefeated") < 64 && side == "fratboy")
     return false;
 
   outfit(war_outfit());
@@ -60,6 +60,8 @@ boolean L12_SQ_orchard()
   if (!have($item[heart of the filthworm queen]))
   {
     check_orchard_effects();
+
+    monster_grab = $monsters[filthworm drone, larval filthworm,filthworm royal guard];
     yz_adventure(pick_orchard_location(), "items");
     return true;
   }

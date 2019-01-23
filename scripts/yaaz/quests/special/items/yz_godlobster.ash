@@ -9,7 +9,7 @@ void godlobster_progress()
 {
   if (!have_familiar($familiar[god lobster])) return;
   if (to_familiar(setting("100_familiar")) != $familiar[none]) return;
-  int fights = to_int(get_property("_godLobsterFights"));
+  int fights = prop_int("_godLobsterFights");
   if (fights >= 3) return;
 
   progress(fights, 3, "Free fights with the " + wrap($familiar[god lobster]));
@@ -29,7 +29,7 @@ item pick_lobster_item()
 boolean godlobster()
 {
   if (!have_familiar($familiar[god lobster])) return false;
-  if (to_int(get_property("_godLobsterFights")) >= 3) return false;
+  if (prop_int("_godLobsterFights") >= 3) return false;
   if (to_familiar(setting("100_familiar")) != $familiar[none]) return false;
   if (dangerous($monster[god lobster])) return false;
 

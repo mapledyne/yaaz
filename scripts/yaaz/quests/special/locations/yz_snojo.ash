@@ -8,9 +8,9 @@ void snojo_progress()
   if (!be_good($item[X-32-F snowman crate])) return;
 
   if (to_boolean(get_property("snojoAvailable"))
-      && to_int(get_property("_snojoFreeFights")) < 10)
+      && prop_int("_snojoFreeFights") < 10)
   {
-    int fights = to_int(get_property("_snojoFreeFights"));
+    int fights = prop_int("_snojoFreeFights");
     progress(fights, 10, "free " + wrap("snojo", COLOR_LOCATION) + " fights", "blue");
   }
 
@@ -28,7 +28,7 @@ boolean snojo_too_risky()
 
   // really, this should take a ton more into account like HP and other attack options.
 
-  int fights = to_int(get_property("_snojoFreeFights"));
+  int fights = prop_int("_snojoFreeFights");
   int buff = my_buffedstat(my_primestat());
 
   return (25*fights) > buff;

@@ -118,7 +118,7 @@ void progress_sheet(boolean detailed)
 
   item votedsticker = $item[9990]; // "I Voted" sticker
 
-  if (have(votedsticker) && to_int(get_property("_voteFreeFights")) < 2)
+  if (have(votedsticker) && prop_int("_voteFreeFights") < 2)
   {
     int wait_time = voting_counter();
     if (wait_time < 4)

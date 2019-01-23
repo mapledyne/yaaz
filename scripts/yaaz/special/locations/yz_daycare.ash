@@ -9,7 +9,7 @@ void daycare_progress()
 void maybe_recruit()
 {
   int max_recruits = to_int(setting("daycare_recruits", 1));
-  int current_recruits = to_int(get_property("_daycareRecruits"));
+  int current_recruits = prop_int("_daycareRecruits");
   if (current_recruits >= max_recruits) return;
 
   int max_cost = 10;

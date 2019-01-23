@@ -103,8 +103,8 @@ boolean L11_SQ_desert()
 
   if (my_level() < 11) return false;
 
-  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return false;
-  
+  if (prop_int("lastDesertUnlock") < my_ascensions()) return false;
+
   if (get_property("desertExploration").to_int() >= 100)
     return false;
 
@@ -126,7 +126,7 @@ boolean L11_SQ_desert()
 
   string html;
 
-  int progress = to_int(get_property("gnasirProgress"));
+  int progress = prop_int("gnasirProgress");
 	if (!bit_flag(progress, 1)
       && my_path() != "Nuclear Autumn")
   {

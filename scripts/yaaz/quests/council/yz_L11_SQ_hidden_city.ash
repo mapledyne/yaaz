@@ -108,9 +108,9 @@ boolean do_liana()
 
 boolean bowling()
 {
-  if (to_int(get_property("hiddenBowlingAlleyProgress")) < 1) return false;
+  if (prop_int("hiddenBowlingAlleyProgress") < 1) return false;
 
-  if (to_int(get_property("hiddenBowlingAlleyProgress")) > 6) return false;
+  if (prop_int("hiddenBowlingAlleyProgress") > 6) return false;
 
   if (dangerous($location[the hidden bowling alley]))
   {
@@ -123,13 +123,13 @@ boolean bowling()
   set_property("choiceAdventure788", 1); // bowl, and eventually fight spectre
 
   if (!have($item[Bowl Of Scorpions])
-     && my_ascensions() <= to_int(get_property("hiddenTavernUnlock")))
+     && my_ascensions() <= prop_int("hiddenTavernUnlock"))
   {
     log("Buying a " + wrap($item[Bowl Of Scorpions]) + " to get away from a " + wrap($monster[drunk pygmy]) + ".");
     buy(1, $item[Bowl Of Scorpions]);
   }
 
-  if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
+  if (prop_int("hiddenBowlingAlleyProgress") < 6)
   {
     monster_attract = $monsters[pygmy bowler];
     monster_banish = $monsters[drunk pygmy, pygmy janitor];
@@ -157,9 +157,9 @@ boolean bowling()
 
 boolean hospital()
 {
-  if (to_int(get_property("hiddenHospitalProgress")) < 1) return false;
+  if (prop_int("hiddenHospitalProgress") < 1) return false;
 
-  if (to_int(get_property("hiddenHospitalProgress")) > 6) return false;
+  if (prop_int("hiddenHospitalProgress") > 6) return false;
 
   if (dangerous($location[the hidden hospital]))
   {
@@ -173,7 +173,7 @@ boolean hospital()
   maximize("mainstat, hot dmg, stench dmg, cold dmg, sleaze dmg, 50 surgeonosity");
   yz_adventure($location[the hidden hospital]);
 
-  if (to_int(get_property("hiddenHospitalProgress")) > 6)
+  if (prop_int("hiddenHospitalProgress") > 6)
   {
     log(wrap($location[the hidden hospital]) + " cleared.");
   }
@@ -182,9 +182,9 @@ boolean hospital()
 
 boolean office()
 {
-  if (to_int(get_property("hiddenOfficeProgress")) < 1) return false;
+  if (prop_int("hiddenOfficeProgress") < 1) return false;
 
-  if (to_int(get_property("hiddenOfficeProgress")) > 6) return false;
+  if (prop_int("hiddenOfficeProgress") > 6) return false;
 
   if (dangerous($location[the hidden office building]))
   {
@@ -235,7 +235,7 @@ boolean office()
 
   yz_adventure($location[the hidden office building], max);
 
-  if (to_int(get_property("hiddenOfficeProgress")) > 6)
+  if (prop_int("hiddenOfficeProgress") > 6)
   {
     log(wrap($location[the hidden office building]) + " cleared.");
   }
@@ -245,16 +245,19 @@ boolean office()
 
 boolean apartment()
 {
-  if (to_int(get_property("hiddenApartmentProgress")) < 1) return false;
+  if (prop_int("hiddenApartmentProgress") < 1) return false;
 
-  if (to_int(get_property("hiddenApartmentProgress")) > 6)
+  if (prop_int("hiddenApartmentProgress") > 6)
   {
     // we have the sphere, so remove the curse if hottub available
     if (have_effect($effect[thrice-cursed]) > 0) vip_hottub();
     return false;
   }
 
-  if (dangerous($monster[ancient protector spirit]))
+  if (dangerous($monster[ancient protector spirit])
+      && have_effect($effect[once-cursed]) == 0
+      && have_effect($effect[twice-cursed]) == 0
+      && have_effect($effect[thrice-cursed]) == 0)
   {
     info("Waiting a bit on " + wrap($location[the hidden apartment building]) + " until it's less dangerous.");
     return false;
@@ -280,13 +283,13 @@ boolean apartment()
 
   monster_banish = $monsters[pygmy janitor, pygmy witch lawyer];
 
-  if (to_int(get_property("hiddenTavernUnlock")) < my_ascensions())
+  if (prop_int("hiddenTavernUnlock") < my_ascensions())
   {
     maybe_pull($item[book of matches]);
   }
 
   if (have_effect($effect[twice-cursed]) > 0
-      && to_int(get_property("hiddenTavernUnlock")) == my_ascensions())
+      && prop_int("hiddenTavernUnlock") == my_ascensions())
   {
     log("Trying to drink a " + wrap($item[cursed punch]) + " for the extra curse.");
     try_consume($item[cursed punch]);
@@ -299,7 +302,7 @@ boolean apartment()
   }
   yz_adventure($location[the hidden apartment building], max);
 
-  if (to_int(get_property("hiddenApartmentProgress")) > 6)
+  if (prop_int("hiddenApartmentProgress") > 6)
   {
     log(wrap($location[the hidden apartment building]) + " cleared.");
   }

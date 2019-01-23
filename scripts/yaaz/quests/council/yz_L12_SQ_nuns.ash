@@ -7,7 +7,7 @@ boolean do_nuns_quest(string side)
   boolean doing_trick = false;
 
   if (side == "hippy" && war_side() == "fratboy") doing_trick = true;
-  int meat_recovered = to_int(get_property("currentNunneryMeat"));
+  int meat_recovered = prop_int("currentNunneryMeat");
 
   boolean about_to_finish = (meat_recovered + max_expected_nuns_meat() > 100000);
 

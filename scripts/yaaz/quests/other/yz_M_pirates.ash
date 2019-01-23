@@ -9,7 +9,7 @@ void M_pirates_progress()
     progress(item_amount($item[hot wing]), 3, wrap($item[hot wing], 3) + " for use with the " + wrap($item[orcish frat house blueprints]));
   }
 
-  if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return;
+  if (prop_int("lastIslandUnlock") < my_ascensions()) return;
 
   if (!have_outfit("swashbuckling getup") && !have($item[pirate fledges]))
   {
@@ -215,9 +215,18 @@ boolean get_getup()
 	if (dangerous($location[The Obligatory Pirate's Cove])) return false;
 
   log("Get the swashbuckling getup...");
-  if (!have($item[stuffed shoulder parrot])) monster_grab[$monster[swarthy pirate]] = true;
-  if (!have($item[swashbuckling pants])) monster_grab[$monster[sassy pirate]] = true;
-  if (!have($item[eyepatch])) monster_grab[$monster[smarmy pirate]] = true;
+  if (!have($item[stuffed shoulder parrot]))
+  {
+    monster_grab[$monster[swarthy pirate]] = true;
+  }
+  if (!have($item[swashbuckling pants]))
+  {
+    monster_grab[$monster[sassy pirate]] = true;
+  }
+  if (!have($item[eyepatch]))
+  {
+    monster_grab[$monster[smarmy pirate]] = true;
+  }
 
   //Amatearrr Night
   if (!have($item[stuffed shoulder parrot]))
@@ -260,11 +269,6 @@ boolean get_getup()
   {
     set_property("choiceAdventure23", "3");
   }
-
-/// for troublshooting:
-  set_property("choiceAdventure22", "0");
-  set_property("choiceAdventure23", "0");
-  set_property("choiceAdventure24", "0");
 
   boolean b = yz_adventure($location[The Obligatory Pirate's Cove], "items, -combat");
   return true;
@@ -392,7 +396,7 @@ boolean fcle()
 boolean M_pirates()
 {
 
-  if (to_int(get_property("lastIslandUnlock")) < my_ascensions()) return false;
+  if (prop_int("lastIslandUnlock") < my_ascensions()) return false;
 
   if (have($item[pirate fledges])) return false;
 

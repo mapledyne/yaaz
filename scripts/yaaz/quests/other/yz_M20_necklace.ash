@@ -4,7 +4,7 @@ void M20_necklace_progress()
 {
   if (!quest_active("questM20Necklace")) return;
 
-  int desks = to_int(get_property("writingDesksDefeated"));
+  int desks = prop_int("writingDesksDefeated");
 
   if (desks < 5 && have($item[ghost of a necklace]))
   {
@@ -23,7 +23,7 @@ void M20_necklace_progress()
         int hot_drawers = min(4, 1 + floor(numeric_modifier("hot resistance")/3));
         int stench_drawers = min(4, 1 + floor(numeric_modifier("stench resistance")/3));
         string drawers = " (" + wrap(hot_drawers, "red") + " or " + wrap(stench_drawers, "green") + " drawers/turn)";
-        progress(to_int(get_property("manorDrawerCount")), 21, "drawers searched in " + wrap($location[the haunted kitchen]) + drawers);
+        progress(prop_int("manorDrawerCount"), 21, "drawers searched in " + wrap($location[the haunted kitchen]) + drawers);
         break;
       case 1:
       case 2:

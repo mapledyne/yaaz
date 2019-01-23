@@ -71,7 +71,7 @@ boolean do_twin_stench()
     return false;
   }
 
-  int status = to_int(get_property("twinPeakProgress"));
+  int status = prop_int("twinPeakProgress");
 
   if(elemental_resistance($element[stench]) < 4)
   {
@@ -114,7 +114,7 @@ boolean do_twin_food()
     log("Couldn't get enough food bonus for the " + wrap($location[twin peak]) + ". Trying later.");
     return false;
   }
-  int status = to_int(get_property("twinPeakProgress"));
+  int status = prop_int("twinPeakProgress");
 
   twin_adventure("items");
   return true;
@@ -124,9 +124,9 @@ boolean L09_SQ_twin()
 {
   L09_SQ_twin_cleanup();
 
-	if(to_int(get_property("twinPeakProgress")) >= 15) return false;
+	if(prop_int("twinPeakProgress") >= 15) return false;
 
-  int peak = to_int(get_property("twinPeakProgress"));
+  int peak = prop_int("twinPeakProgress");
 
 	boolean need_stench = !bit_flag(peak, 0);
 	boolean need_food = !bit_flag(peak, 1);

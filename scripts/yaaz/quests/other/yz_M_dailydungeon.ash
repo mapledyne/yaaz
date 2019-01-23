@@ -10,7 +10,7 @@ void M_dailydungeon_progress()
     if (!to_boolean(setting("always_daily_dungeon", "false"))) return;
   }
 
-  progress(to_int(get_property("_lastDailyDungeonRoom")), 15, "daily dungeon rooms");
+  progress(prop_int("_lastDailyDungeonRoom"), 15, "daily dungeon rooms");
 }
 
 void M_dailydungeon_cleanup()

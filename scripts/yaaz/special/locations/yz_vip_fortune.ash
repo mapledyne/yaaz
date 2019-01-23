@@ -5,34 +5,70 @@ void vip_fortune_progress()
 
 }
 
-void vip_fortune_clan()
+string pick_fortune_clanmate()
 {
-  if (to_int(get_property("_clanFortuneConsultUses")) >= 3) return;
-
-  if (setting("fortune_clan_used") == "true") return;
-
   string targets = setting("fortune_clannies");
-
-  string[int] target_list = split_string(targets, ",");
-  if (count(target_list) < 3)
+  if (targets == "")
   {
     if (setting("fortune_warn") != "true")
     {
       warning("You have a Fortune Teller in your Clan VIP basement.");
-      warning("If you set " + wrap("yz_fortune_clannies", COLOR_LOCATION) + " to a list of three clanmates");
+      warning("If you set " + wrap("yz_fortune_clannies", COLOR_LOCATION) + " to a list of clanmates");
       warning("separated by commas, I'll ask them their fortunes with you.");
       warning("example: set " + wrap("yz_fortune_clannies=bob,sue,degrassi", COLOR_LOCATION) + ")");
       wait(5);
       save_daily_setting("fortune_warn", "true");
     }
+    return "";
+  }
+
+  string[int] target_list = split_string(targets, ",");
+
+  boolean[string] clannies = who_clan();
+
+  string fave = "";
+
+  foreach k, v in target_list
+  {
+    if (clannies contains v)
+    {
+      if (fave == "")
+      {
+        fave = v;
+      }
+      else
+      {
+        if (!clannies[fave] && clannies[v]) fave = v;
+      }
+    }
+  }
+
+  return fave;
+}
+
+void vip_fortune_clan()
+{
+  if (prop_int("_clanFortuneConsultUses") >= 3) return;
+
+  if (to_int(setting("fortune_last", "0")) + 25 > (my_turncount())) return;
+
+  save_daily_setting("fortune_last", my_turncount());
+
+  if (to_int(setting("fortune_asks", "0")) >= prop_int("_clanFortuneConsultUses")
+      && to_int(setting("fortune_asks", "0")) > 0)
+  {
+    info("We've asked " + wrap(setting("fortune_target", "someone"), COLOR_MONSTER) + " for their fortune and are waiting for a reply.");
     return;
   }
-  for x from to_int(get_property("_clanFortuneConsultUses")) to 2
-  {
-    log("About to ask our fortune with: " + wrap(target_list[x], COLOR_MONSTER));
-    cli_execute("fortune " + target_list[x]);
-  }
-  save_daily_setting("fortune_clan_used", "true");
+
+  string target = pick_fortune_clanmate();
+  if (target == "") return;
+
+  save_daily_setting("fortune_asks", get_property("_clanFortuneConsultUses"));
+  save_daily_setting("fortune_target", target);
+
+  log("About to ask our fortune with: " + wrap(target, COLOR_MONSTER));
+  cli_execute("fortune " + target);
 
 }
 

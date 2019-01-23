@@ -5,7 +5,7 @@ boolean L09_SQ_aboo()
   if (quest_status("questL09Topping") != 2)
     return false;
 
-  if (to_int(get_property("booPeakProgress")) <= 0)
+  if (prop_int("booPeakProgress") <= 0)
   {
     if ($location[a-boo peak].noncombat_queue.contains_text("Come On Ghosty, Light My Pyre"))
       return false;
@@ -16,7 +16,7 @@ boolean L09_SQ_aboo()
   }
 
   if (item_amount($item[disassembled clover]) > 0
-      && to_int(get_property("booPeakProgress")) == 100
+      && prop_int("booPeakProgress") == 100
       && item_amount($item[a-boo clue]) == 0)
   {
     if (yz_clover($location[a-boo peak])) return true;

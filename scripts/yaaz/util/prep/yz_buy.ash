@@ -44,7 +44,7 @@ void buy_things()
 
   stock_item($item[anti-anti-antidote], 3);
 
-  if (to_int(get_property("lastIslandUnlock")) == my_ascensions())
+  if (prop_int("lastIslandUnlock") == my_ascensions())
   {
     stock_item($item[the big book of pirate insults]);
     if ((item_amount($item[dictionary]) + item_amount($item[abridged dictionary])) == 0)
@@ -89,7 +89,7 @@ void buy_things()
     cli_execute("acquire print screen button");
   }
 
-  if (to_int(get_property("lastGoofballBuy")) < my_ascensions()
+  if (prop_int("lastGoofballBuy") < my_ascensions()
       && quest_status("questL03Rat") == FINISHED)
   {
     // once per ascension

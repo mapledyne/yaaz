@@ -10,7 +10,7 @@ void sausage_progress()
 
 int sausage_cost()
 {
-  int made = to_int(get_property("_sausagesMade"));
+  int made = prop_int("_sausagesMade");
 
   return (made + 1) * 111;
 }
@@ -22,8 +22,8 @@ void make_sausage()
   if (!have($item[magical sausage casing])) return;
 
   int cost = sausage_cost();
-  int own = to_int(get_property("_sausageGrinderUnits"));
-  int made = to_int(get_property("_sausagesMade"));
+  int own = prop_int("_sausageGrinderUnits");
+  int made = prop_int("_sausagesMade");
 
   if (to_int(setting("max_daily_sausage", "5")) <= made) return;
 

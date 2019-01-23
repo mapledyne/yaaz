@@ -135,7 +135,7 @@ void make_things()
 
   // rainbow summons:
   while (have_skill($skill[rainbow gravitation])
-         && to_int(get_property("prismaticSummons")) < 3)
+         && prop_int("prismaticSummons") < 3)
   {
     if (!have_or_get_all_wads()) break;
     log("Summoning a " + wrap($item[prismatic wad]) + ".");

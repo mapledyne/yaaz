@@ -46,7 +46,7 @@ void cast_things(location loc)
   effect_maintain($effect[flexibili Tea]);
   effect_maintain($effect[Physicali Tea]);
 
-  while (have_skill($skill[ancestral recall]) && to_int(get_property("_ancestralRecallCasts")) < 10 && have($item[blue mana]))
+  while (have_skill($skill[ancestral recall]) && prop_int("_ancestralRecallCasts") < 10 && have($item[blue mana]))
   {
     log("Casting " + wrap($skill[ancestral recall]) + " to get us a few more adventures.");
     use_skill(1, $skill[ancestral recall]);
@@ -83,13 +83,13 @@ void cast_if(skill sk, boolean doit)
 
 void cast_one_time_things()
 {
-  cast_if($skill[Advanced Cocktailcrafting], to_int(get_property("cocktailSummons")) == 0);
-  cast_if($skill[Advanced Saucecrafting], to_int(get_property("reagentSummons")) == 0);
-  cast_if($skill[Pastamastery], to_int(get_property("noodleSummons")) == 0);
-  cast_if($skill[summon crimbo candy], to_int(get_property("_candySummons")) == 0);
+  cast_if($skill[Advanced Cocktailcrafting], prop_int("cocktailSummons") == 0);
+  cast_if($skill[Advanced Saucecrafting], prop_int("reagentSummons") == 0);
+  cast_if($skill[Pastamastery], prop_int("noodleSummons") == 0);
+  cast_if($skill[summon crimbo candy], prop_int("_candySummons") == 0);
   cast_if($skill[Summon Holiday Fun!], !to_boolean(get_property("_holidayFunUsed")));
-  cast_if($skill[summon snowcones], to_int(get_property("_snowconeSummons")) < 3);
-  cast_if($skill[summon stickers], to_int(get_property("_stickerSummons")) < 3);
+  cast_if($skill[summon snowcones], prop_int("_snowconeSummons") < 3);
+  cast_if($skill[summon stickers], prop_int("_stickerSummons") < 3);
   cast_if($skill[summon carrot], !to_boolean(get_property("_summonCarrotUsed")));
 }
 
@@ -97,7 +97,7 @@ void clip_art()
 {
   if (!have_skill($skill[summon clip art])) return;
   if (!be_good($skill[summon clip art])) return;
-  int summons = to_int(get_property("_clipartSummons"));
+  int summons = prop_int("_clipartSummons");
 
   while (summons < 3 && my_mp() > 10)
   {
@@ -125,7 +125,7 @@ void clip_art()
     }
     create(1, toy);
 
-    summons = to_int(get_property("_clipartSummons"));
+    summons = prop_int("_clipartSummons");
   }
 }
 
@@ -156,7 +156,7 @@ void prep(location loc)
    {
     if (have($item[magical sausage])
         && be_good($item[magical sausage])
-        && to_int(get_property("_sausagesEaten")) < 23)
+        && prop_int("_sausagesEaten") < 23)
         {
           eat(1, $item[magical sausage]);
         }
@@ -294,7 +294,7 @@ void prep(location loc)
 
   if (have($item[SongBoom&trade; BoomBox]))
   {
-    int booms = to_int(get_property("_boomBoxSongsLeft"));
+    int booms = prop_int("_boomBoxSongsLeft");
     string song = get_property("boomBoxSong");
 
     if (booms > 0)

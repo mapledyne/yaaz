@@ -73,7 +73,7 @@ boolean market_loop()
           buy(1, $item[forged identification documents]);
         }
       } else {
-        if (to_int(get_property("lastDesertUnlock")) < my_ascensions())
+        if (prop_int("lastDesertUnlock") < my_ascensions())
         {
           info("Can't get your father's diary until you access the desert.");
           return false;

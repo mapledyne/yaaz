@@ -114,7 +114,7 @@ void pulverize_things()
   pulverize_keep_if($item[half-size scalpel], quest_status("questL11Doctor") < 10 || my_primestat() == $stat[muscle]);
 
   // some more aggressive work if we aren't flush in wads:
-  if (to_int(get_property("lastGuildStoreOpen")) == my_ascensions()
+  if (prop_int("lastGuildStoreOpen") == my_ascensions()
       && my_primestat() == $stat[muscle]
       && wad_total() < spleen_limit())
   {

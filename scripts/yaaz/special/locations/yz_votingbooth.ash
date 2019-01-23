@@ -25,7 +25,7 @@ void votingbooth_progress()
     task("Vote!");
     return;
   }
-  int free_fights = to_int(get_property("_voteFreeFights"));
+  int free_fights = prop_int("_voteFreeFights");
   int max_free = 3;
   if (free_fights < max_free)
   {

@@ -17,7 +17,7 @@ void L09_SQ_bridge_cleanup()
       && quest_status("questL09Topping") == STARTED)
   {
     use_all($item[smut orc keepsake box]);
-    visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
+    visit_url("place.php?whichplace=orc_chasm&action=bridge"+(prop_int("chasmBridgeProgress")));
   }
 
   // bridge built
@@ -30,7 +30,7 @@ void L09_SQ_bridge_cleanup()
 void do_one_bridge_adv()
 {
 
-  visit_url("place.php?whichplace=orc_chasm&action=bridge"+(to_int(get_property("chasmBridgeProgress"))));
+  visit_url("place.php?whichplace=orc_chasm&action=bridge"+(prop_int("chasmBridgeProgress")));
 
   if(get_property("chasmBridgeProgress").to_int() >= 30)
   {

@@ -13,8 +13,8 @@ void newyou_progress()
 
   monster mob = to_monster(get_property("_newYouQuestMonster"));
   skill attack = to_skill(get_property("_newYouQuestSkill"));
-  int todo = to_int(get_property("_newYouQuestSharpensToDo"));
-  int done = to_int(get_property("_newYouQuestSharpensDone"));
+  int todo = prop_int("_newYouQuestSharpensToDo");
+  int done = prop_int("_newYouQuestSharpensDone");
 
   progress(done, todo, "Saw sharpening complete. (Use " + wrap(attack) + " on " + wrap(mob) + ")");
 

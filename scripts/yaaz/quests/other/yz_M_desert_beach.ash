@@ -2,7 +2,7 @@ import "util/yz_main.ash";
 
 void M_desert_beach_progress()
 {
-  if (to_int(get_property("lastDesertUnlock")) >= my_ascensions()) return;
+  if (prop_int("lastDesertUnlock") >= my_ascensions()) return;
 
   if (knoll_available())
   {
@@ -19,7 +19,7 @@ void M_desert_beach_cleanup()
 
 boolean M_desert_beach()
 {
-  if (to_int(get_property("lastDesertUnlock")) >= my_ascensions()) return false;
+  if (prop_int("lastDesertUnlock") >= my_ascensions()) return false;
 
   if (knoll_available())
   {

@@ -61,7 +61,8 @@ boolean L05_Q_goblin()
 {
   L05_Q_goblin_cleanup();
 
-  if (to_int(get_property("lastDispensaryOpen")) < my_ascensions() && have_outfit("knob goblin elite guard uniform"))
+  if (prop_int("lastDispensaryOpen") < my_ascensions()
+      && have_outfit("knob goblin elite guard uniform"))
   {
     log("Opening the Knob Goblin dispensary.");
     maximize("", "knob goblin elite guard uniform");

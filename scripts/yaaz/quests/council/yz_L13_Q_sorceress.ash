@@ -67,15 +67,15 @@ void L13_Q_sorceress_progress()
 
   if (!quest_active("questL13Final")) return;
 
-  int contest = to_int(get_property("nsContestants1"));
+  int contest = prop_int("nsContestants1");
   if (contest > 0)
     progress(10 - contest, 10, "contestants (init)");
 
-  contest = to_int(get_property("nsContestants2"));
+  contest = prop_int("nsContestants2");
   if (contest > 0)
     progress(10 - contest, 10, "contestants (" + get_property("nsChallenge1") + ")");
 
-  contest = to_int(get_property("nsContestants3"));
+  contest = prop_int("nsContestants3");
   if (contest > 0)
     progress(10 - contest, 10, "contestants (" + get_property("nsChallenge2") + ")");
 
@@ -256,7 +256,7 @@ location get_challenge_loc(string challenge)
 
 void max_contest(string max, int num)
 {
-  int baddies = to_int(get_property("nsContestants" + num));
+  int baddies = prop_int("nsContestants" + num);
   if (baddies >= 0)
     return;
 
@@ -320,7 +320,7 @@ void max_contest(string max, int num)
   visit_url("place.php?whichplace=nstower&action=ns_01_contestbooth");
   visit_url("choice.php?pwd=&whichchoice=1003&option=" + num, true);
   visit_url("main.php");
-  baddies = to_int(get_property("nsContestants" + num));
+  baddies = prop_int("nsContestants" + num);
   if (baddies > 0)
     log("There are " + wrap(baddies, COLOR_MONSTER) + " contestants ahead of you.");
 }

@@ -3,7 +3,7 @@ import "util/yz_main.ash";
 
 int spacegate_turns_remaining()
 {
-  return to_int(get_property("_spacegateTurnsLeft"));
+  return prop_int("_spacegateTurnsLeft");
 }
 
 boolean can_spacegate()
@@ -37,7 +37,7 @@ void spacegate_progress()
 {
 
   if (!can_spacegate()) return;
-  int left = to_int(get_property("_spacegateTurnsLeft"));
+  int left = prop_int("_spacegateTurnsLeft");
   if (left == 0) return;
   progress(20 - left, 20, wrap("Spacegate", COLOR_LOCATION) + " energy used.");
 

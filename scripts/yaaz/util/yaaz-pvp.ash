@@ -225,7 +225,7 @@ void pvp()
   }
   visit_url("peevpee.php?place=shop");
   log(CLUB + " PVP swagger: " + get_property("availableSwagger"));
-  int totalSwag = to_int(get_property(pvp_swagger()));
+  int totalSwag = prop_int(pvp_swagger());
   log(CLUB + " " + pvp_season() + " swagger: " + totalSwag);
   wait(5);
 }

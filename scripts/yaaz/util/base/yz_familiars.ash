@@ -57,7 +57,7 @@ familiar choose_familiar_from_list(boolean[familiar] fams)
         return f;
       }
       if (f == $familiar[XO Skeleton]
-          && to_int(get_property("_xoHugsUsed")) < 11)
+          && prop_int("_xoHugsUsed") < 11)
       {
         return f;
       }
@@ -156,8 +156,8 @@ familiar choose_familiar(string fam)
     case "items":
       if (have_familiar($familiar[xo skeleton])
           && be_good($familiar[xo skeleton])
-          && to_int(get_property("_xoHugsUsed")) < 11
-          && count(monster_banish) > 0)
+          && prop_int("_xoHugsUsed") < 11
+          && count(monster_grab) > 0)
       {
         newbie = $familiar[xo skeleton];
         break;

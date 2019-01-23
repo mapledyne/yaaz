@@ -7,7 +7,7 @@ void witchess_progress()
 {
   if (get_campground() contains $item[Witchess Set] && be_good($item[witchess set]))
   {
-    int fights = to_int(get_property("_witchessFights"));
+    int fights = prop_int("_witchessFights");
     if (fights < 5)
     {
       progress(fights, 5, "Witchess fights", "blue");
@@ -23,7 +23,7 @@ void witchess_cleanup()
 int witchess_left()
 {
   if (get_campground() contains $item[Witchess Set])
-    return 5 - to_int(get_property("_witchessFights"));
+    return 5 - prop_int("_witchessFights");
   return 0;
 }
 
@@ -38,7 +38,7 @@ void witchess(item it)
 {
   if(get_campground() contains $item[Witchess Set]
      && be_good($item[witchess set])
-     && get_property("_witchessFights").to_int() < 5)
+     && prop_int("_witchessFights") < 5)
   {
     int choice = 0;
     switch(it)

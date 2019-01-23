@@ -156,7 +156,7 @@ void lattemug_progress()
 {
   if (!have($item[latte lovers member's mug])) return;
   if (!be_good($item[latte lovers member's mug])) return;
-  int refills = to_int(get_property("_latteRefillsUsed"));
+  int refills = prop_int("_latteRefillsUsed");
 
   string drink = UNCHECKED;
   string copy = UNCHECKED;
@@ -310,7 +310,7 @@ void latte_refill(boolean[string] yum)
 {
   if (!have($item[latte lovers member's mug])) return;
   if (!be_good($item[latte lovers member's mug])) return;
-  int refills = to_int(get_property("_latteRefillsUsed"));
+  int refills = prop_int("_latteRefillsUsed");
   if (refills >= 3) return;
 
   string ingred = latte_ingredients(yum);

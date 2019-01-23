@@ -39,13 +39,13 @@ void L12_Q_war_progress()
         float drop = 1 + (numeric_modifier("meat drop") / 100);
         float min_meat = $monster[dirty thieving brigand].min_meat * drop;
         float max_meat = $monster[dirty thieving brigand].max_meat * drop;
-        int remaining = 100000 - to_int(get_property("currentNunneryMeat"));
+        int remaining = 100000 - prop_int("currentNunneryMeat");
 
         int max_turns = round(remaining / min_meat);
         int min_turns = round(remaining / max_meat);
 
         nuns_msg += " (est remaining turns: " + min_turns + "-" + max_turns + ")";
-        progress(to_int(get_property("currentNunneryMeat")), 100000, nuns_msg);
+        progress(prop_int("currentNunneryMeat"), 100000, nuns_msg);
       }
 
       if (war_orchard()
@@ -321,7 +321,7 @@ boolean start_the_war(string side)
 boolean L12_Q_war(string side)
 {
 
-  if (to_int(get_property("lastIslandUnlock")) >= my_ascensions())
+  if (prop_int("lastIslandUnlock") >= my_ascensions())
     if (get_hippy_disguise()) return true;
 
   if (!have($item[Talisman o' Namsilat]))

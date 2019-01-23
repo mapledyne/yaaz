@@ -8,7 +8,7 @@ import "util/base/yz_quests.ash";
 boolean attracted(monster foe)
 {
   monster digitized = to_monster(get_property("_sourceTerminalDigitizeMonster"));
-  int copiesmade = to_int(get_property("_sourceTerminalDigitizeMonsterCount"));
+  int copiesmade = prop_int("_sourceTerminalDigitizeMonsterCount");
   if (digitized == foe && copiesmade <= 2) return true;
   if (to_monster(get_property("enamorangMonster")) == foe) return true;
   if (to_monster(get_property("_latteMonster")) == foe) return true;
@@ -68,7 +68,7 @@ string maybe_attract(monster foe)
 string maybe_duplicate(monster foe)
 {
   if (!have_skill($skill[duplicate])) return "";
-  int dupes = to_int(get_property("_sourceTerminalDuplicateUses"));
+  int dupes = prop_int("_sourceTerminalDuplicateUses");
   int max_dupes = 1;
   if (my_path() == "The Source") max_dupes = 5;
 
@@ -158,6 +158,10 @@ string maybe_banish(monster foe)
   {
     banish = "skill snokebomb";
   }
+  else if (my_fury() >= 5 && have_skill($skill[batter up!]))
+  {
+    banish = "skill batter up!";
+  }
   else if (have($item[tennis ball]))
   {
     banish = "item tennis ball";
@@ -167,10 +171,19 @@ string maybe_banish(monster foe)
   {
     banish = "skill throw latte on opponent";
   }
+  else if (have($item[Daily Affirmation: Be a Mind Master]))
+  {
+    banish = "item Daily Affirmation: Be a Mind Master";
+  }
   else if (have_skill($skill[Macrometeorite]))
   {
     // not exactly a banish, but similar.
     banish = "skill Macrometeorite";
+  }
+  else if (have($item[Daily Affirmation: Adapt to Change Eventually]))
+  {
+    // not exactly a banish, but similar.
+    banish = "item Daily Affirmation: Adapt to Change Eventually";
   }
 
   if (banish == "") return "";
@@ -234,29 +247,41 @@ string maybe_latte(monster foe)
   return "";
 }
 
-string maybe_hug(monster foe)
+string maybe_grab(monster foe)
 {
-  if (!have_skill($skill[hugs and kisses!])) return "";
-  if (to_int(get_property("_xoHugsUsed")) >= 11) return "";
+  string grab = "";
 
-  if (monster_banish contains foe) return "skill hugs and kisses";
+  if (my_familiar() == $familiar[xo skeleton]
+      && prop_int("_xoHugsUsed") < 11)
+  {
+    grab = "skill hugs and kisses!";
+  }
+  else if (have($item[Daily Affirmation: Always be Collecting]))
+  {
+    grab = "item Daily Affirmation: Always be Collecting";
+  }
+
+  if (grab == "") return "";
+
+  if (monster_grab contains foe) return grab;
+
   switch(foe)
   {
     case $monster[blooper]:
       if (!have($item[digital key]))
-        return "skill hugs and kisses!";
+        return grab;
       break;
     case $monster[toothy sklelton]:
     case $monster[spiny skelelton]:
     case $monster[pygmy witch surgeon]:
-      return "skill hugs and kisses!";
+      return grab;
     case $monster[pygmy bowler]:
-      if (to_int(get_property("hiddenBowlingAlleyProgress")) < 6)
-        return "skill hugs and kisses!";
+      if (prop_int("hiddenBowlingAlleyProgress") < 6)
+        return grab;
       break;
   }
 
-  if (get_location_monsters($location[hippy camp]) contains foe) return "skill hugs and kisses!";
+  if (get_location_monsters($location[hippy camp]) contains foe) return grab;
 
   return "";
 }
@@ -310,7 +335,7 @@ string yz_consult(int round, string mob, string text)
 
   if (round == 1)
   {
-    maybe = maybe_hug(foe);
+    maybe = maybe_grab(foe);
     if (maybe != "") return maybe;
   }
 
@@ -344,5 +369,13 @@ string yz_consult(int round, string mob, string text)
   maybe = maybe_latte(foe);
   if (maybe != "") return maybe;
 
+  if (hippy_stone_broken())
+  {
+    if (have($item[Daily Affirmation: Keep Free Hate in your Heart]))
+    {
+      log("Throwing a " + wrap($item[Daily Affirmation: Keep Free Hate in your Heart]) + " for more PvP fun.");
+      return "item Daily Affirmation: Keep Free Hate in your Heart";
+    }
+  }
   return "consult WHAM.ash";
 }

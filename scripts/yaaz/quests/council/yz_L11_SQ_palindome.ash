@@ -8,7 +8,7 @@ import "quests/other/yz_M_pirates.ash";
 boolean get_photographs()
 {
   if (palindome_items() == 5
-      && to_int(get_property("palindomeDudesDefeated")) >= 5
+      && prop_int("palindomeDudesDefeated") >= 5
       && have($item[stunt nuts]))
     return false;
 
@@ -24,7 +24,7 @@ boolean get_photographs()
   log("Getting the photographs for " + wrap($monster[Dr. Awkward]) + "'s office.");
 
 
-  if (to_int(get_property("palindomeDudesDefeated")) < 4)
+  if (prop_int("palindomeDudesDefeated") < 4)
   {
     monster_attract = $monsters[racecar bob, bob racecar, drab bard];
   }

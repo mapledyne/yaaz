@@ -50,7 +50,7 @@ monster copied_monster_next()
 boolean digitized_monster_counter()
 {
   if (get_property("sidequestNunsCompleted") == "none"
-      && to_int(get_property("currentNunneryMeat")) < 100000
+      && prop_int("currentNunneryMeat") < 100000
       && copied_monster_next() == $monster[dirty thieving brigand])
   {
     maximize("meat");
@@ -63,7 +63,7 @@ boolean voting_monster_counter()
 {
   item voting_sticker = $item[9990]; // "I voted" sticker
   if (!have(voting_sticker)) return false;
-  if (to_int(get_property("_voteFreeFights")) > 2) return false;
+  if (prop_int("_voteFreeFights") > 2) return false;
   if (total_turns_played() % 11 != 1) return false;
   log("Voting monster is upon us. Let's go fight it.");
 

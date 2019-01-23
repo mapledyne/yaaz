@@ -10,7 +10,7 @@ void neverending_progress()
   {
     return;
   }
-  int free = to_int(get_property("_neverendingPartyFreeTurns"));
+  int free = prop_int("_neverendingPartyFreeTurns");
 
   if (free < 10)
   {
@@ -256,7 +256,7 @@ boolean neverending()
 
 
   if (desire == "free"
-      && to_int(get_property("_neverendingPartyFreeTurns")) >= 10)
+      && prop_int("_neverendingPartyFreeTurns") >= 10)
   {
     return false;
   }

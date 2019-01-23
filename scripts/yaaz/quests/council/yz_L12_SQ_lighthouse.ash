@@ -55,6 +55,8 @@ boolean L12_SQ_lighthouse(string side)
     debug("The " + wrap($monster[lobsterfrogman]) + " is a bit dangerous right now. Will come back to " + wrap($location[sonofa beach]) + " later.");
     return false;
   }
+
+  monster_attract = $monsters[lobsterfrogman];
   if (time_combat($monster[lobsterfrogman], $location[sonofa beach])) return true;
   if (bottle_wish($monster[lobsterfrogman])) return true;
 

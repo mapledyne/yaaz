@@ -73,7 +73,7 @@ int duplicates_remaining()
 {
   if (!have_educate('duplicate.edu')) return 0;
 
-  int used = to_int(get_property("_sourceTerminalDuplicateUses"));
+  int used = prop_int("_sourceTerminalDuplicateUses");
   int max = 1;
   if (my_path() == "The Source") max = 5;
 
@@ -83,7 +83,7 @@ int duplicates_remaining()
 int portscans_remaining()
 {
   if (!have_educate('portscan.edu')) return 0;
-  int used = to_int(get_property("_sourceTerminalPortscanUses"));
+  int used = prop_int("_sourceTerminalPortscanUses");
   return 3 - used;
 }
 
@@ -260,7 +260,7 @@ int enhances_remaining()
   if (list_contains(get_property("sourceTerminalChips"), "CRAM", ","))
     max += 1;
 
-  return max - to_int(get_property("_sourceTerminalEnhanceUses"));
+  return max - prop_int("_sourceTerminalEnhanceUses");
 }
 
 int digitize_remaining()
@@ -270,7 +270,7 @@ int digitize_remaining()
     max += 1;
   if (list_contains(get_property("sourceTerminalChips"), "TRAM", ","))
     max += 1;
-  return max - to_int(get_property("_sourceTerminalDigitizeUses"));
+  return max - prop_int("_sourceTerminalDigitizeUses");
 }
 
 monster digitized_monster()
@@ -394,19 +394,19 @@ item pick_extrude_item()
     {
       ext = $item[Source terminal TRAM chip];
     }
-    else if (to_int(get_property("sourceTerminalGram")) < 10
+    else if (prop_int("sourceTerminalGram") < 10
              && item_amount($item[source essence]) > 100
              && have_terminal_file("gram.ext"))
     {
       ext = $item[Source terminal GRAM chip];
     }
-    else if (to_int(get_property("sourceTerminalPram")) < 10
+    else if (prop_int("sourceTerminalPram") < 10
              && item_amount($item[source essence]) > 100
              && have_terminal_file("pram.ext"))
     {
       ext = $item[Source terminal PRAM chip];
     }
-    else if (to_int(get_property("sourceTerminalSpam")) < 10
+    else if (prop_int("sourceTerminalSpam") < 10
              && item_amount($item[source essence]) > 100
              && have_terminal_file("spam.ext"))
     {

@@ -34,10 +34,10 @@ void summon_annoyance()
   if (to_boolean(get_property("_summonAnnoyanceUsed"))) return;
   if (!to_boolean(setting("do_heart"))) return;
 
-  int annoy_cost = to_int(get_property("summonAnnoyanceCost"));
+  int annoy_cost = prop_int("summonAnnoyanceCost");
 
   // make sure we have plenty of surplus swagger.
-  if (to_int(get_property("availableSwagger")) < annoy_cost * 100) return;
+  if (prop_int("availableSwagger") < annoy_cost * 100) return;
 
 
   // if we have plenty of annoyances, let's skip for now.

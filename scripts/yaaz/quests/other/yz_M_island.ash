@@ -8,8 +8,8 @@ void M_island_cleanup()
 void M_island_progress()
 {
 
-  if (to_int(get_property("lastIslandUnlock")) >= my_ascensions()
-      || to_int(get_property("lastDesertUnlock")) < my_ascensions())
+  if (prop_int("lastIslandUnlock") >= my_ascensions()
+      || prop_int("lastDesertUnlock") < my_ascensions())
   {
     return;
   }
@@ -26,7 +26,7 @@ void M_island_progress()
 boolean M_island()
 {
   if (have($item[Dingy dinghy])) return false;
-  if (to_int(get_property("lastDesertUnlock")) < my_ascensions()) return false;
+  if (prop_int("lastDesertUnlock") < my_ascensions()) return false;
 
   if (my_adventures() < 20) return false;
 

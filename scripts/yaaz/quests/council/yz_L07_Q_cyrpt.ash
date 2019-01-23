@@ -10,7 +10,7 @@ void L07_Q_cyrpt_progress()
 {
 	if (!quest_active("questL07Cyrptic")) return;
 
-	int evil = 200 - to_int(get_property("cyrptTotalEvilness"));
+	int evil = 200 - prop_int("cyrptTotalEvilness");
 	progress(evil, 200, "Cyrpt progress");
 	if (get_property("cyrptAlcoveEvilness").to_int() > 0 && get_property("cyrptAlcoveEvilness").to_int() < 50)
 		progress(evil_progress(get_property("cyrptAlcoveEvilness").to_int()), 25, "evilness cleared in " + wrap($location[the defiled alcove]));
@@ -122,7 +122,7 @@ boolean L07_Q_cyrpt()
 
 	if (get_property("cyrptTotalEvilness").to_int() > 0
 	    && have($item[nightmare fuel])
-			&& to_int(get_property("_nightmareFuelCharges")) == 0)
+			&& prop_int("_nightmareFuelCharges") == 0)
 	{
 		use(1, $item[nightmare fuel]);
 	}

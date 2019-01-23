@@ -71,7 +71,7 @@ boolean can_vip()
 
 boolean can_vip_drink()
 {
-  return can_vip() && to_int(get_property("_speakeasyDrinksDrunk")) < 3;
+  return can_vip() && prop_int("_speakeasyDrinksDrunk") < 3;
 }
 
 boolean can_vip_drink(item it)

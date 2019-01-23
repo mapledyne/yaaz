@@ -2,12 +2,31 @@ import "util/yz_main.ash";
 
 void L11_SQ_zeppelin_cleanup()
 {
+  if (have($item[lynyrd skin]))
+  {
+    foreach l in $items[lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches]
+    {
+      if (!have(l))
+      {
+        create(1, l);
+      }
+    }
+  }
+}
 
+int lynyrd_clothing()
+{
+  int count = 0;
+  foreach l in $items[lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches]
+  {
+    if (have(l)) count++;
+  }
+  return count;
 }
 
 int protestors()
 {
-  return to_int(get_property("zeppelinProtestors"));
+  return prop_int("zeppelinProtestors");
 }
 
 boolean L11_SQ_zeppelin()
@@ -33,6 +52,17 @@ boolean L11_SQ_zeppelin()
         set_property("choiceAdventure858", 2);
       }
 
+      if (have($item[lynyrd snare])
+          && prop_int("_lynyrdSnareUses") < 3
+          && lynyrd_clothing() < 3)
+      {
+        maximize();
+        log("Using a " + wrap($item[lynyrd snare]) + " to get a " + wrap($item[lynyrd skin]) + ".");
+        use(1, $item[lynyrd snare]);
+        run_combat();
+        return true;
+      }
+
       // Using lynyrd musk gives you 3 lynyrd.
       // Each piece of lynyrdskin clothing (lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches) gives you 5 lynyrd.
       effect_maintain($effect[musky]);
@@ -40,7 +70,7 @@ boolean L11_SQ_zeppelin()
 
       foreach l in $items[lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches]
       {
-        if(have(l)) stuff += ", +equip [" + to_int(l) + "]";
+        if (have(l)) stuff += ", +equip [" + to_int(l) + "]";
       }
 
       yz_adventure($location[A Mob of Zeppelin Protesters], "-combat, sleaze damage" + stuff);

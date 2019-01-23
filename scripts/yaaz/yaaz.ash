@@ -42,9 +42,9 @@ boolean ascend_loop()
   foreach quest in QUEST_LIST
   {
     current_quest = quest;
-    monster_banish = $monsters[none];
-    monster_attract = $monsters[none];
-    monster_grab = $monsters[none];
+    clear(monster_banish);
+    clear(monster_attract);
+    clear(monster_grab);
     boolean b = call boolean quest();
     if (b) return true;
   }

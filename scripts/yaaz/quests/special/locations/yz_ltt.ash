@@ -14,7 +14,7 @@ void ltt_progress()
 
   string msg = wrap("LT&T Telegram", COLOR_LOCATION) + " quest (" + wrap(get_property("lttQuestName"), COLOR_LOCATION) + "), stage " + wrap(ltt_stage(), COLOR_LOCATION);
 
-  progress(to_int(get_property("lttQuestStageCount")), 9, msg);
+  progress(prop_int("lttQuestStageCount"), 9, msg);
 
 }
 
@@ -96,7 +96,7 @@ void ltt_cleanup()
 
 string ltt_maximizer()
 {
-  if (quest_status("questLTTQuestByWire") != 3 || to_int(get_property("lttQuestStageCount")) != 9)
+  if (quest_status("questLTTQuestByWire") != 3 || prop_int("lttQuestStageCount") != 9)
     return "";
 
   // only maximize differently for the last boss
@@ -157,7 +157,7 @@ boolean attempt_ltt()
   maximize(ltt_maximizer());
 
   if (quest_status("questLTTQuestByWire") == 3
-      && to_int(get_property("lttQuestStageCount")) == 9)
+      && prop_int("lttQuestStageCount") == 9)
   {
     log("The LT&T bosses are complicated enough, I don't know how to defeat them.");
     log("Exiting so you can handle them manually before continuing.");

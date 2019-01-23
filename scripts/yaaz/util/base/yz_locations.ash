@@ -7,6 +7,35 @@ import "util/base/yz_inventory.ash";
 boolean open_location(location loc);
 location pick_semi_rare_location();
 
+boolean can_access_sea()
+{
+  switch (my_path())
+  {
+    case "":
+    case "None":
+    case "Standard":
+    case "Teetotaler":
+    case "Boozetafarian":
+    case "Oxygenarian":
+    case "Bees Hate You":
+    case "Trendy":
+    case "Pocket Familiars":
+    case "Live. Ascend. Repeat.":
+    case "License to Adventure":
+    case "Nuclear Autumn":
+    case "Avatar of West of Loathing":
+    case "One Crazy Random Summer":
+    case "Picky":
+    case "Heavy Rains":
+    case "Slow and Steady":
+    case "Class Act":
+    case "BIG!":
+    case "Bugbear Invasion":
+      return true;
+  }
+  return false;
+
+}
 
 location pick_semi_rare_location()
 {
@@ -14,7 +43,7 @@ location pick_semi_rare_location()
 
   boolean maybe_pool = !to_boolean(setting("aggressive_optimize", "false"));
   maybe_pool = to_boolean(setting("pool_skill", maybe_pool));
-  int shark_visits = to_int(get_property("poolSharkCount"));
+  int shark_visits = prop_int("poolSharkCount");
 
   if (last != $location[the haunted billiards room]
       && maybe_pool
@@ -93,7 +122,7 @@ boolean location_open(location l)
     case $location[the beanbat chamber]:
       return quest_status("questL04Bat") >= 1;
     case $location[south of the border]:
-      return to_int(get_property("lastDesertUnlock")) >= my_ascensions();
+      return prop_int("lastDesertUnlock") >= my_ascensions();
     case $location[cobb's knob harem]:
     case $location[cobb's knob treasury]:
     case $location[cobb's knob kitchens]:
@@ -131,7 +160,7 @@ boolean location_open(location l)
     case $location[the haunted laundry room]:
       return quest_status("questL11Manor") >= 1;
     case $location[the hidden office building]:
-      return to_int(get_property("hiddenOfficeProgress")) > 0;
+      return prop_int("hiddenOfficeProgress") > 0;
     case $location[lair of the ninja snowmen]:
       return quest_status("questL08Trapper") >= 2;
     default:

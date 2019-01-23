@@ -16,7 +16,7 @@ int figurines_max()
 
 int figurines_summoned()
 {
-  return to_int(get_property("_sealsSummoned"));
+  return prop_int("_sealsSummoned");
 }
 
 int figurines_remaining()

@@ -8,7 +8,7 @@ void timespinner_progress()
 {
   if (!have($item[time-spinner]) || !be_good($item[time-spinner])) return;
 
-  int used = to_int(get_property("_timeSpinnerMinutesUsed"));
+  int used = prop_int("_timeSpinnerMinutesUsed");
 
   if (used < 10)
   {
@@ -25,7 +25,7 @@ int time_minutes()
   if (item_amount($item[time-spinner]) == 0)
     return 0;
 
-  return 10 - to_int(get_property("_timeSpinnerMinutesUsed"));
+  return 10 - prop_int("_timeSpinnerMinutesUsed");
 }
 
 boolean is_spinner_food(item yum)
