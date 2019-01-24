@@ -54,17 +54,9 @@ void vip_fortune_clan()
 
   save_daily_setting("fortune_last", my_turncount());
 
-  if (to_int(setting("fortune_asks", "0")) >= prop_int("_clanFortuneConsultUses")
-      && to_int(setting("fortune_asks", "0")) > 0)
-  {
-    info("We've asked " + wrap(setting("fortune_target", "someone"), COLOR_MONSTER) + " for their fortune and are waiting for a reply.");
-    return;
-  }
-
   string target = pick_fortune_clanmate();
   if (target == "") return;
 
-  save_daily_setting("fortune_asks", get_property("_clanFortuneConsultUses"));
   save_daily_setting("fortune_target", target);
 
   log("About to ask our fortune with: " + wrap(target, COLOR_MONSTER));

@@ -3,9 +3,15 @@ import "util/base/yz_consume.ash";
 
 boolean have_staff_of_ed()
 {
-  if (2286.to_item().available_amount() > 0 && 2268.to_item().available_amount() > 0 && 2180.to_item().available_amount() > 0)
-    return true;
-
+  foreach staff in $items[[2325]Staff of Ed, [7961]Staff of Ed]
+  {
+    if (have(staff)) return true;
+    if (creatable_amount(staff) > 0)
+    {
+      create(1, staff);
+      return true;
+    }
+  }
   return false;
 }
 
@@ -78,6 +84,7 @@ boolean L11_SQ_pyramid()
     && (quest_status("questL11Pyramid") < 3 || turners() < 10))
   {
     monster_attract = $monsters[tomb rat];
+    monster_grab = $monsters[tomb rat];
     yz_adventure($location[The Middle Chamber], "items");
     return true;
   }

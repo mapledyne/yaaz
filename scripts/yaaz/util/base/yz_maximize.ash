@@ -380,7 +380,7 @@ void max_effects(string target, boolean aggressive)
         log("Going to the spa for a treatment.");
         cli_execute("daycare moxie");
       }
-
+      use_all($item[rhinestone]);
       break;
     case "mysticality":
       max_effects("stats");
