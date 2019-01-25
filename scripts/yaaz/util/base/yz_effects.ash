@@ -153,14 +153,14 @@ void effect_maintain(effect ef, boolean use_turns)
     {
       log("Toggling " + wrap($effect[Become Superficially interested]));
       cli_execute("toggle Become Superficially interested");
-      return;
     }
-    if (have($item[Daily Affirmation: Be Superficially interested]))
+    else if (have($item[Daily Affirmation: Be Superficially interested]))
     {
       log("Adding effect " + wrap(ef) + " by using " + wrap($item[Daily Affirmation: Be Superficially interested]) + " and toggling it.");
       use(1, $item[Daily Affirmation: Be Superficially interested]);
       cli_execute("toggle Become Superficially interested");
     }
+    return;
   }
 
   if (demon_effect(ef))
