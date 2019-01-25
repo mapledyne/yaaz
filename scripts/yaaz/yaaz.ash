@@ -59,8 +59,8 @@ void settings_warning()
     warning("Your auto restore MP settings seems to not be set.");
     warning("Setting this to something I think is reasonable, but you may want to skip out here and change yourself if desired.");
     wait(10);
-    set_property("mpAutoRecoveryTarget", 0.6);
-    set_property("mpAutoRecovery", 0.45);
+    set_property("mpAutoRecoveryTarget", 0.25);
+    set_property("mpAutoRecovery", 0.2);
   }
   if (to_float(get_property("hpAutoRecovery")) < 0.1)
   {
