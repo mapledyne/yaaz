@@ -175,9 +175,10 @@ void main()
   string empty_locs;
   string juicy_locs;
 
+  int location_count = to_int(setting("manuel_location_count", "4"));
   location[int] empty_list = empty_locations();
-  location[int] juicy_list = juicy_locations(4);
-  for x from 0 to 3
+  location[int] juicy_list = juicy_locations(location_count);
+  for x from 0 to (location_count - 1)
   {
     if (count(empty_list) > x)
       empty_locs = list_add(empty_locs, wrap(empty_list[x]));
