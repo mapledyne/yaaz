@@ -152,7 +152,8 @@ void prep(location loc)
    float mpTarget = to_float(get_property("mpAutoRecoveryTarget"));
    float mpRecovery = to_float(get_property("mpAutoRecovery"));
 
-   if (my_mp() < (my_maxmp() / 2))
+   if (my_mp() < (my_maxmp() / 2)
+       && fullness_limit() > 0)
    {
     if (have($item[magical sausage])
         && be_good($item[magical sausage])
