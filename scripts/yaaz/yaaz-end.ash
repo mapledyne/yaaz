@@ -91,7 +91,7 @@ void day_end()
     visit_url("campground.php?action=spinningwheel");
   }
 
-  consider_chrome_item();
+
 
   kgb_enchant("adventures");
 

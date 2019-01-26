@@ -3,59 +3,6 @@ import "util/base/yz_quests.ash";
 
 import <zlib.ash>
 
-void consider_chrome_item()
-{
-  // bail if we don't have the chrome ore
-  if (!have($item[chrome ore])) return;
-
-  item chrome_weapon;
-
-  if (my_primestat() == $stat[mysticality])
-    chrome_weapon = $item[chrome staff];
-  if (my_primestat() == $stat[muscle])
-    chrome_weapon = $item[chrome sword];
-  if (my_primestat() == $stat[moxie])
-    chrome_weapon = $item[chrome crossbow];
-
-  if (!can_equip(chrome_weapon))
-  {
-    // sad, but these items aren't that useful outside of rollover, so
-    // using the "wrong" one isn't that big a penalty. This will help us
-    // occasionally since the staff is Mus 40 requirement and the sword
-    // is Mus 35. (crossbow is Mox 45, but that's for Mox classes, so likely
-    // won't get hit as often since that's their prime stat).
-
-    if (can_equip($item[chrome sword]))
-      chrome_weapon = $item[chrome sword];
-  }
-  // bail if we have any of them. This is to protect me since I have a habit
-  // of making the wrong one when doing it manually, but that'll still
-  // give us adventures:
-  if (count_set($items[chrome staff,
-                       chrome sword,
-                       chrome crossbow,
-                       carob cannon]) > 0) return;
-
-  if (get_property("questL08Trapper") == "unstarted"
-      || (get_property("questL08Trapper") == "step1"
-          && get_property("trapperOre") == "chrome ore"))
-  {
-    // bail if we don't have surplus ore: trapper wants (or may want) chrome ore and we haven't turned it in yet.
-    if (item_amount($item[chrome ore]) < 4)
-    {
-      return;
-    }
-  }
-
-  if (creatable_amount(chrome_weapon) == 0)
-    return;
-
-  if (my_meat() < 5000)
-    return;
-
-  log("Making a " + wrap(chrome_weapon) + " for more rollover adventures.");
-  create(1, chrome_weapon);
-}
 
 void make_things()
 {
