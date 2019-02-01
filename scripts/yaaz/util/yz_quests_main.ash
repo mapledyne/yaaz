@@ -29,6 +29,7 @@ import "quests/council/yz_L08_Q_trapper.ash";
 import "quests/council/yz_L09_Q_topping.ash";
 import "quests/council/yz_L10_Q_garbage.ash";
 import "quests/council/yz_L11_Q_macguffin.ash";
+import "quests/council/yz_L11_SQ_hidden_city.ash";
 import "quests/council/yz_L12_Q_war.ash";
 import "quests/council/yz_L13_Q_sorceress.ash";
 
@@ -46,13 +47,15 @@ import 'quests/special/locations/yz_ltt.ash';
 import 'quests/special/locations/yz_neverending.ash';
 import 'quests/special/locations/yz_snojo.ash';
 import 'quests/special/locations/yz_spacegate.ash';
+import 'quests/special/locations/yz_votingbooth.ash';
 import 'quests/special/locations/yz_witchess.ash';
 
 // Important: The ordering of the quests in this lists is the order that the
 // loop will try the quests. If you want to order quests differently, change it here.
 // Note that some quests will skip themselves and let a later quest do work if it's
 // waiting on something (arena quests waiting for flyers, for instance).
-boolean[string] QUEST_LIST = $strings[M_invisiblestring,
+boolean[string] QUEST_LIST = $strings[votingbooth,
+                                      M_invisiblestring,
                                       tuxedo_shirt,
                                       snojo,
                                       godlobster,
@@ -94,6 +97,7 @@ boolean[string] QUEST_LIST = $strings[M_invisiblestring,
                                       L09_Q_topping,
                                       L10_Q_garbage,
                                       L11_Q_macguffin,
+                                      L11_SQ_hidden_city,
                                       M_8bit,
                                       M10_star_key,
                                       L13_Q_sorceress,

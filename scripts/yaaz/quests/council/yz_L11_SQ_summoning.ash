@@ -23,7 +23,6 @@ boolean get_wine_bomb()
   log("Going after the " + wrap($monster[monstrous boiler]) + " to make the " + wrap($item[wine bomb]));
 
   maximize("ml", $item[unstable fulminate]);
-  if (bottle_wish($monster[monstrous boiler])) return true;
 
   yz_adventure($location[the haunted boiler room]);
 

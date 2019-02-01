@@ -59,19 +59,6 @@ boolean digitized_monster_counter()
   return false;
 }
 
-boolean voting_monster_counter()
-{
-  item voting_sticker = $item[9990]; // "I voted" sticker
-  if (!have(voting_sticker)) return false;
-  if (prop_int("_voteFreeFights") > 2) return false;
-  if (total_turns_played() % 11 != 1) return false;
-  log("Voting monster is upon us. Let's go fight it.");
-
-  maximize("", voting_sticker);
-  return adv1($location[the haunted pantry], -1, "yz_consult");
-
-}
-
 boolean semi_rare_window()
 {
   if ((get_counters("Semirare window begin", 0, 0) == ""
@@ -96,7 +83,6 @@ boolean counters()
     wait(3);
   }
 
-  if (voting_monster_counter()) return true;
   if (semi_rare_window()) return true;
   if (semi_rare()) return true;
   if (dance_card()) return true;

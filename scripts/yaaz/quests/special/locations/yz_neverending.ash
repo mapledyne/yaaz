@@ -30,7 +30,10 @@ void neverending_progress()
       error("I don't know the neverending quest: " + get_property("_questPartyFairQuest"));
       break;
     case "":
-      task("Start the party at " + wrap($location[the neverending party]));
+      if (quest_status("_questPartyFair") == UNSTARTED)
+      {
+        task("Start the party at " + wrap($location[the neverending party]));
+      }
       break;
     case "dj":
       int meat_left = to_int(progress);
@@ -150,6 +153,14 @@ Modifying the living room lights with an electronics kit adds 20 Megawoots. Occu
   yz_adventure($location[the neverending party]);
 
   return true;
+}
+
+boolean neverending_free()
+{
+  // TODO: we should sort out choice adventures
+  yz_adventure($location[The Neverending Party], "");
+  return true;
+
 }
 
 boolean neverending_food()
@@ -292,6 +303,8 @@ boolean neverending()
       return neverending_woots();
     case "food":
       return neverending_food();
+    case "":
+      return neverending_free();
 
   }
 

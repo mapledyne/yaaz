@@ -356,6 +356,70 @@ boolean get_nose()
 	return true;
 }
 
+void L11_SQ_hidden_city_progress()
+{
+
+  if (quest_status("questL11Worship") >= 3 && quest_status("questL11Worship") < FINISHED)
+  {
+    if (!have($item[antique machete])) task("Find an " + wrap($item[antique machete]));
+    progress(item_amount($item[stone triangle]), 4, "stone triangles from the Hidden City");
+
+    if (quest_status("questL11Doctor") == UNSTARTED)
+      progress($location[An Overgrown Shrine (Southwest)].turns_spent, 3, "defeated southwest/hospital " + wrap($monster[dense liana]));
+    if (quest_status("questL11Spare") == UNSTARTED)
+      progress($location[An Overgrown Shrine (Southeast)].turns_spent, 3, "defeated southeast/bowling " + wrap($monster[dense liana]));
+    if (quest_status("questL11Business") == UNSTARTED)
+      progress($location[An Overgrown Shrine (Northeast)].turns_spent, 3, "defeated northeast/office " + wrap($monster[dense liana]));
+    if (quest_status("questL11Curses") == UNSTARTED)
+      progress($location[An Overgrown Shrine (Northwest)].turns_spent, 3, "defeated northwest/apartment " + wrap($monster[dense liana]));
+
+    int surgeon = prop_int("hiddenHospitalProgress");
+    if (quest_active("questL11Doctor"))
+    {
+      int s = numeric_modifier("surgeonosity");
+      progress(s, 5, "surgeonosity (" + (s * 10) + "% to find protector spirit)");
+    }
+
+    if (quest_active("questL11Spare"))
+    {
+      progress(prop_int("hiddenBowlingAlleyProgress"), 5, "bowling balls rolled");
+    }
+
+    if (quest_active("questL11Business"))
+    {
+      if (!have($item[McClusky file (complete)]))
+      {
+        if (!have($item[boring binder clip]))
+        {
+          task("get boring binder clip");
+        }
+        progress(mcclusky_items(), 5, "McClusky file pages");
+      } else {
+        task("fight the Protector Spirit in the Office Building");
+      }
+    }
+
+    if (quest_active("questL11Curses"))
+    {
+      int curse = 0;
+      if (have_effect($effect[once-cursed]) > 0)
+        curse = 1;
+      if (have_effect($effect[twice-cursed]) > 0)
+        curse = 2;
+      if (have_effect($effect[thrice-cursed]) > 0)
+        curse = 3;
+      progress(curse, 3, "curses for the penthouse");
+    }
+
+  }
+
+}
+
+void L11_SQ_hidden_city_cleanup()
+{
+
+}
+
 boolean L11_SQ_hidden_city()
 {
   if (my_level() < 11) return false;
@@ -422,5 +486,5 @@ boolean L11_SQ_hidden_city()
 
 void main()
 {
-  while (L11_SQ_hidden_city());
+   L11_SQ_hidden_city();
 }

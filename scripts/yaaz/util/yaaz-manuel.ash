@@ -106,6 +106,50 @@ location[int] juicy_locations(int max)
   return ret;
 }
 
+monster[int] empty_monsters(int max)
+{
+  boolean[monster] mon_list = manuel_monster_list();
+  int count = 0;
+  monster[int] empty;
+
+  foreach l in $locations[]
+  {
+    foreach m in get_location_monsters(l)
+    {
+      if (mon_list contains m)
+      {
+        mon_list[m] = false;
+      }
+    }
+  }
+
+  foreach m in mon_list
+  {
+    if (mon_list[m] && monster_factoids_available(m, true) < 3)
+    {
+      empty[count] = m;
+      count++;
+    }
+  }
+  sort empty by -monster_factoids_available(value, true);
+
+  monster[int] ret;
+  int idx = 0;
+  foreach mon in empty
+  {
+    ret[idx] = empty[mon];
+    idx++;
+    if (idx >= max) return ret;
+  }
+  return ret;
+}
+
+void progress_manuel_monster(monster mon)
+{
+  int facts = monster_factoids_available(mon, true);
+  progress(facts, 3, "Progress on factiods for " + wrap(mon));
+}
+
 void progress_manuel_location(location loc)
 {
   boolean[monster] mon_list = manuel_monster_list();
@@ -131,7 +175,12 @@ void progress_manuel_location(location loc)
       }
     }
   }
-  progress(cur, max, "Progress on factiods in " + wrap(loc) + " (consider fighting " + wrap(target) + ")");
+  string rare = "";
+  if (index_of(target.attributes, "SEMIRARE") >= 0)
+  {
+    rare = " (semirare)";
+  }
+  progress(cur, max, "Progress on factiods in " + wrap(loc) + ". Consider fighting " + wrap(target) + rare + ".");
 }
 
 void progress_manuel()
@@ -175,7 +224,7 @@ void main()
   string empty_locs;
   string juicy_locs;
 
-  int location_count = to_int(setting("manuel_location_count", "4"));
+  int location_count = to_int(setting("manuel_location_count", "5"));
   location[int] empty_list = empty_locations();
   location[int] juicy_list = juicy_locations(location_count);
   for x from 0 to (location_count - 1)
@@ -188,6 +237,14 @@ void main()
   foreach idx, loc in juicy_list
   {
     progress_manuel_location(loc);
+  }
+
+  log("Some monsters you could consider looking for that don't have obvious");
+  log("locations on file:");
+  monster[int] empty_mons = empty_monsters(location_count);
+  foreach idx, mon in empty_mons
+  {
+    progress_manuel_monster(mon);
   }
 
   log("");
