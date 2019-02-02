@@ -362,7 +362,7 @@ void royalty()
 		}
 		progress(prop_int("royalty"), max, "royalty", "blue");
 		int price = historical_price($item[cuppa royal tea]);
-		int total = (max - prop_int("royalty") * price;
+		int total = (max - prop_int("royalty")) * price;
 		log("Price of one " + wrap($item[cuppa royal tea]) + ": " + comma_format(price) + ". Total est. cost remaining: " + comma_format(total) + ".");
 
 	}

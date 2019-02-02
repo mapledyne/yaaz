@@ -3,6 +3,11 @@ import "special/items/yz_deck.ash";
 
 void L13_Q_sorceress_progress()
 {
+  if (quest_status("questL13Final") == 13)
+  {
+    task("The " + wrap($monster[naughty sorceress]) + " has been defeated, but Ralph hasn't been freed. Free him?");
+    return;
+  }
 
   if (quest_status("questL06Friar") > UNSTARTED
       && !have($item[wand of nagamar])
@@ -508,6 +513,9 @@ boolean loop_tower(int level)
       log("Sorceress defeated - going off to tell the council.");
       council();
       return true;
+    case 13:
+      // Sorceress defeated, but Ralph not free
+      return false;
     case FINISHED:
       return false;
     default:

@@ -1,7 +1,4 @@
-import 'util/base/yz_print.ash';
-import 'util/base/yz_settings.ash';
-import 'util/prep/yz_prep.ash';
-import 'util/base/yz_maximize.ash';
+import "util/yz_main.ash";
 
 void neverending_progress()
 {
@@ -100,15 +97,21 @@ void neverending_progress()
 
 void neverending_cleanup()
 {
+  string progress = get_property("_questPartyFairProgress");
+  if (progress == "") return;
+
+  // only doing these when a quest is going prevents us from using
+  // them before we know what we want (so we won't get quest specific
+  // items)
   use_all($item[Unremarkable duffel bag]);
   use_all($item[van key]);
 
 }
 
-boolean neverending_dj()
+boolean neverending_dj(item shirt)
 {
 
-  maximize("meat, moxie");
+  maximize("meat, moxie", shirt);
   if (my_buffedstat($stat[moxie]) >= 300)
   {
     set_property("choiceAdventure1324", "1");
@@ -122,7 +125,7 @@ boolean neverending_dj()
   return true;
 }
 
-boolean neverending_woots()
+boolean neverending_woots(item shirt)
 {
 /*
 Amp up the party
@@ -148,22 +151,30 @@ Modifying the living room lights with an electronics kit adds 20 Megawoots. Occu
   {
     set_property("choiceAdventure1324", "5"); // fight.
   }
-  maximize("items", $item[cosmetic football]);
+  string max = "items";
+  if (shirt != $item[none])
+  {
+    max += ", equip [" + to_int(shirt) + "]";
+  }
+  maximize(max, $item[cosmetic football]);
 
   yz_adventure($location[the neverending party]);
 
   return true;
 }
 
-boolean neverending_free()
+boolean neverending_free(item shirt)
 {
-  // TODO: we should sort out choice adventures
-  yz_adventure($location[The Neverending Party], "");
+  // IMPROVE: do something besides fight?
+  set_property("choiceAdventure1324", "5");
+
+  maximize("", shirt);
+  yz_adventure($location[The Neverending Party]);
   return true;
 
 }
 
-boolean neverending_food()
+boolean neverending_food(item shirt)
 {
 
   string progress = get_property("_questPartyFairProgress");
@@ -172,29 +183,42 @@ boolean neverending_food()
   {
     set_property("choiceAdventure1324", "2");
     set_property("choiceAdventure1326", "3");
+    maximize("", shirt);
     yz_adventure($location[The Neverending Party]);
     return true;
   }
 
   string[int] wanted = split_string(progress, " ");
   item toy = to_item(wanted[1]);
+  int want = to_int(wanted[0]);
 
-  if (to_int(wanted[0]) > item_amount(toy))
+  if (want > item_amount(toy) && can_interact())
+  {
+      int qty = want - item_amount(toy);
+      log("Trying to buy " + qty + " " + wrap(toy, qty) + " for the Neverending Party.");
+      stock_item(toy, qty);
+      if (want >= item_amount(toy)) return true;
+  }
+
+  if (want > item_amount(toy))
   {
     monster_attract = $monsters[burnout];
     set_property("choiceAdventure1324", "5");
-    yz_adventure($location[the neverending party], "items");
+    maximize("items", shirt);
+    yz_adventure($location[the neverending party]);
     return true;
   }
 
   set_property("choiceAdventure1324", "2");
   set_property("choiceAdventure1326", "4");
+
+  maximize("", shirt);
   yz_adventure($location[The Neverending Party]);
   return true;
 
 }
 
-boolean neverending_trash()
+boolean neverending_trash(item shirt)
 {
   string progress = get_property("_questPartyFairProgress");
 
@@ -215,13 +239,14 @@ boolean neverending_trash()
 
   monster_attract = $monsters[biker];
 
-  yz_adventure($location[the neverending party], "items");
+  maximize("items", shirt);
+  yz_adventure($location[the neverending party]);
 
   return true;
 }
 
 
-boolean neverending_booze()
+boolean neverending_booze(item shirt)
 {
 
   string progress = get_property("_questPartyFairProgress");
@@ -236,16 +261,27 @@ boolean neverending_booze()
 
   string[int] wanted = split_string(progress, " ");
   item toy = to_item(wanted[1]);
+  int want = to_int(wanted[0]);
 
-  if (to_int(wanted[0]) > item_amount(toy))
+  if (want > item_amount(toy) && can_interact())
+  {
+      int qty = want - item_amount(toy);
+      log("Trying to buy " + qty + " " + wrap(toy, qty) + " for the Neverending Party.");
+      stock_item(toy, qty);
+      if (want >= item_amount(toy)) return true;
+  }
+
+  if (want > item_amount(toy))
   {
     monster_attract = $monsters[jock];
-    yz_adventure($location[the neverending party], "items");
+    maximize("items", shirt);
+    yz_adventure($location[the neverending party]);
     return true;
   }
 
   set_property("choiceAdventure1324", "3");
   set_property("choiceAdventure1327", "4");
+  maximize("", shirt);
   yz_adventure($location[The Neverending Party]);
   return true;
 }
@@ -264,13 +300,24 @@ boolean neverending()
 
   if (!in_aftercore() && desire == "aftercore") desire = "free";
 
-
-
   if (desire == "free"
       && prop_int("_neverendingPartyFreeTurns") >= 10)
   {
     return false;
   }
+
+  if (get_property("_questPartyFair") == ""
+      && prop_int("_neverendingPartyFreeTurns") >= 10)
+  {
+    return false;
+  }
+
+  boolean partyhard = to_boolean(setting("partyhard", "true"));
+  if (!in_aftercore()) partyhard = false;
+  if (!have($item[PARTY HARD T-shirt])) partyhard = false;
+  if (!have_skill($skill[Torso Awaregness])) partyhard = false;
+  item shirt = $item[none];
+  if (partyhard) shirt = $item[PARTY HARD T-shirt];
 
   if (quest_status("_questPartyFair") == UNSTARTED)
   {
@@ -283,6 +330,11 @@ boolean neverending()
       set_property("choiceAdventure1322", "1");
     }
 
+    maximize("", shirt);
+    if (shirt != $item[none])
+    {
+      log("Starting the " + wrap("Neverending Party", COLOR_LOCATION) + " in hard mode.");
+    }
     yz_adventure($location[the neverending party]);
     return true;
   }
@@ -294,17 +346,17 @@ boolean neverending()
       wait(5);
       return false;
     case "booze":
-      return neverending_booze();
+      return neverending_booze(shirt);
     case "trash":
-      return neverending_trash();
+      return neverending_trash(shirt);
     case "dj":
-      return neverending_dj();
+      return neverending_dj(shirt);
     case "woots":
-      return neverending_woots();
+      return neverending_woots(shirt);
     case "food":
-      return neverending_food();
+      return neverending_food(shirt);
     case "":
-      return neverending_free();
+      return neverending_free(shirt);
 
   }
 
