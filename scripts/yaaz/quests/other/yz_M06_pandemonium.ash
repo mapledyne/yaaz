@@ -88,7 +88,6 @@ boolean backstage_loop()
 
 boolean M06_pandemonium()
 {
-  M06_pandemonium_cleanup();
 
   if (have_skill($skill[liver of steel])) return false;
   if (have_skill($skill[stomach of steel])) return false;

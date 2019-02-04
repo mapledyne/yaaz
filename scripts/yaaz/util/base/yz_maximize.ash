@@ -104,7 +104,8 @@ void do_maximize(string target, string outfit, item it)
                          training legwarmers,
                          actual reality goggles,
                          red shirt,
-                         dorky glasses]
+                         dorky glasses,
+                         ponytail clip]
   {
     if (have(nope))
     {

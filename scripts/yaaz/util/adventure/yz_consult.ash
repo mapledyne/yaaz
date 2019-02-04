@@ -24,8 +24,10 @@ string attract_action(monster foe)
     return "skill digitize";
   }
 
-  if (have_skill($skill[offer latte to Opponent]))
+  if (have_skill($skill[offer latte to Opponent])
+      && !to_boolean(get_property("_latteCopyUsed")))
   {
+
     return "skill offer latte to opponent";
   }
 
@@ -346,7 +348,11 @@ string yz_consult(int round, string mob, string text)
   if (maybe != "") return maybe;
 
   maybe = maybe_attract(foe);
-  if (maybe != "") return maybe;
+  if (maybe != "")
+  {
+    info("Going to try to attract " + wrap(foe) + " with " + wrap(maybe, COLOR_MONSTER));
+    return maybe;
+  }
 
   maybe = maybe_duplicate(foe);
   if (maybe != "") return maybe;

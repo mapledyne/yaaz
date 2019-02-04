@@ -121,6 +121,8 @@ boolean neverending_dj(item shirt)
   }
 
   monster_banish = $monsters[burnout];
+  log("Heading to " + wrap($location[The Neverending Party]) + " to help pay the DJ");
+
   yz_adventure($location[the neverending party]);
   return true;
 }
@@ -157,6 +159,7 @@ Modifying the living room lights with an electronics kit adds 20 Megawoots. Occu
     max += ", equip [" + to_int(shirt) + "]";
   }
   maximize(max, $item[cosmetic football]);
+  log("Heading to " + wrap($location[The Neverending Party]) + " to woot it up. Woot!");
 
   yz_adventure($location[the neverending party]);
 
@@ -169,6 +172,7 @@ boolean neverending_free(item shirt)
   set_property("choiceAdventure1324", "5");
 
   maximize("", shirt);
+  log("Heading to " + wrap($location[The Neverending Party]) + " since the adventures are free");
   yz_adventure($location[The Neverending Party]);
   return true;
 
@@ -213,6 +217,7 @@ boolean neverending_food(item shirt)
   set_property("choiceAdventure1326", "4");
 
   maximize("", shirt);
+  log("Heading to " + wrap($location[The Neverending Party]) + " to get some food (" + wrap(toy) + ")");
   yz_adventure($location[The Neverending Party]);
   return true;
 
@@ -240,6 +245,8 @@ boolean neverending_trash(item shirt)
   monster_attract = $monsters[biker];
 
   maximize("items", shirt);
+  log("Heading to " + wrap($location[The Neverending Party]) + " to pick up some trash.");
+
   yz_adventure($location[the neverending party]);
 
   return true;
@@ -282,6 +289,7 @@ boolean neverending_booze(item shirt)
   set_property("choiceAdventure1324", "3");
   set_property("choiceAdventure1327", "4");
   maximize("", shirt);
+  log("Heading to " + wrap($location[The Neverending Party]) + " to find some booze (" + wrap(toy) + ")");
   yz_adventure($location[The Neverending Party]);
   return true;
 }
@@ -357,7 +365,6 @@ boolean neverending()
       return neverending_food(shirt);
     case "":
       return neverending_free(shirt);
-
   }
 
   return true;

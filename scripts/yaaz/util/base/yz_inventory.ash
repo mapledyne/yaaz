@@ -87,7 +87,7 @@ int maybe_pull(item it, int qty)
 {
 
   if (to_boolean(setting("no_pulls", "false"))) return 0;
-
+  if (!be_good(it)) return 0;
   int want = qty - i_a(it);
   if (want <= 0) return 0;
 
