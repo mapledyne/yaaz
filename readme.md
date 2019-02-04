@@ -62,6 +62,11 @@ completionist sorts of goals. This includes royalty, recipes you may not have
 made yet, food/booze you haven't consumed, monsters with missing factoids in
 Manuel, etc.
 
+### yaaz-manuel
+
+If you have a Monster Manuel, this script will try to give you some ideas on
+what you might do to help complete your Manuel.
+
 ### yaaz
 
 This command is the core of yaaz and will attempt to run you through a full
@@ -127,6 +132,7 @@ Usually you shouldn't need to change these, but if you're interested in some dee
 | Option                  | Default | Notes |
 | ----------------------- | ------- | ----- |
 | yz_no_pulls             | false   | If true, don't make any pulls when in Softcore. |
+| yz_no_clovers           | false   | If true, don't use any clovers. |
 | yz_pool_skill           | *       | If true, try to raise pool skill via the semi-rare. Defaults to true if you aren't already maxed and if yz_aggressive_optimize is false, otherwise it defaults to false. |
 | yz_use_stash            | false   | If true, will put some items in the clan stash when it seems appropriate. Items moved are in the yz_clan.txt data file. |
 | yz_no_heart             |         | A comma-separated list of people to never do heart-things to. Good for ignoring bots and such. |
@@ -137,7 +143,32 @@ Usually you shouldn't need to change these, but if you're interested in some dee
 | yz_log_level            |         | Set to 'info' or 'debug' to have more detailed messaging. |
 | yz_no_dispose           | false   | If true, the script will be blocked from disposing of any item (selling, pulverizing, clan stash, etc. You'll need to do all inventory management manually. |
 | yz_always_daily_dungeon | false   | After picking up the hero keys, if true it'll still get the daily dungeon rewards each day. |
-| yz_shower_temp          | mainstat | Use this temp when taking VIP showers. Can use a stat (or 'mainstat') or the actual temp ('hot', etc) |
+| yz_use_stash            | false   | Dispose of some items in the clan stash instead of auto-selling. |
+| yz_abort_on_no_tasks    | false   | If true, when there are no obvious quests to do, abort. If false, instead try spending some time leveling up. |
+| yz_war_nuns             | false   | Complete the nuns sidequest in the island war. |
+| yz_war_junkyard         | true    | Complete the junkyard sidequest in the island war. |
+| yz_war_orchard          | true    | Complete the orchard sidequest in the island war. |
+| yz_war_arena            | true    | Complete the arena sidequest in the island war. |
+| yz_war_lighthouse       | true    | Complete the lighthouse (Sonofa beach) sidequest in the island war. |
+
+## Item of the Month flags
+
+This will set how a few IotM and similar items are acted upon:
+
+| Option          | Default | Notes |
+| --------------- | ------- | ----- |
+| yz_shower_temp           | mainstat | Use this temp when taking VIP showers. Can use a stat (or 'mainstat') or the actual temp ('hot', etc) |
+| yz_max_daily_sausage     | 5        | Max sausages to grind each day. |
+| yz_max_sausage_units     | 5000     | Grind auto-sellable things up to this many sausage units instead of simply selling them. |
+| yz_manuel_location_count | 5        | For use with `yaaz-manuel`, how many locations/monsters to display. |
+| yz_royal_tea_threshold   | 0        | If > 0, will buy a cuppa royal tea each day if the price is below this threshold. Used to help gradually build up your royalty, if interested. |
+| yz_stuffing_max          | 1        | Max turkey stuffing to throw in the battlefield. |
+| yz_fortune_clannies      |          | Comma separated list of clanmates to use with the Fortune Teller. (will try this list in order, based on who is online) |
+| yz_manuel_always_show_progress | false | If false, when displaying progress of Monster Manuel factoids omit any locations where you already have 100%. |
+| yz_daycare_recuits | 1 | Number of times to recruit toddlers at the Boxing Daycare |
+
+
+
 
 ## Action flags
 You can add some additional actions from the script with these options. Most of these will add additional turns to your run, but if you're wanting to do some additional things besides simply ascending, you can ask the script to.
@@ -148,3 +179,10 @@ You can add some additional actions from the script with these options. Most of 
 | yz_do_batfellow | false   | Once per day, try to do a batfellow special edition comic, if you have one. (requires Cheesecookie's Batfellow script) |
 | yz_far_future   | true    | If true, go to the future with your time-spinner and try to replicate something (requires Ezandora's Far Future script) |
 | yz_do_lovetunnel        | true    | If true, and if you have the LOVE Tunnel, will try to get things and fight folks. Set to false if you're trying to get the password. |
+| yz_do_newyou    | aftercore | Do the New You quest (Sharpen your Saw). (set to `true`, `false`, or `aftercore`) |
+| do_gingerbread  | aftercore | Do the Gingerbread City.  (set to `true`, `false`, or `aftercore`) |
+| far_future      | true      | Use the Time Spinner to go into the far future  (set to `true` or `false`) |
+| yz_do_ltt       |           | Automate the LT&T telegram. (set to `true`, `false`, or `aftercore`). Note: This script aborts when you're at the LT&T boss since automating those fights hasn't been solved yet. Do that manually. |
+| yz_partyfair    | aftercore | Automate the Neverending Party. Set to aftercore and the script will still adventure here for the free adventures, but will decline the quest. (set to `true`, `false`, or `aftercore`) |
+| yz_partyhard    | true      | Do the hard mode quest in the Neverending Party when possible. |
+| yz_do_spacegate |           | Automate the Spacegate adventures. (set to `true`, `false`, or `aftercore`) |
