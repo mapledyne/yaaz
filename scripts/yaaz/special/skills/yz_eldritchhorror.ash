@@ -21,7 +21,8 @@ void eldritchhorror_progress()
 void eldritchhorror()
 {
   if (!to_boolean(get_property("_eldritchTentacleFought"))
-      && !dangerous($monster[eldritch tentacle]))
+      && !dangerous($monster[eldritch tentacle])
+      && quest_status("questL02Larva") > UNSTARTED)
   {
     maximize();
     log("Off to fight an " + wrap($monster[eldritch tentacle]) + ", for science.");
