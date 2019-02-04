@@ -33,27 +33,6 @@ void maybe_recruit()
 
 }
 
-void maybe_instruct()
-{
-  int max_instruct = to_int(setting("daycare_instruct_max"));
-  string instructorpage = visit_url('place.php?whichplace=town_wrong&action=townwrong_boxingdaycare');
-  instructorpage = run_choice(3);
-  matcher instructormatcher = create_matcher('\\[(\\d+) ([^]]+)',instructorpage);
-  item it;
-  int qty;
-  while (find(instructormatcher))
-  {
-    string found = group(instructormatcher, 2);
-    it = to_item(found, 2);
-    if (it != $item[none])
-    {
-      qty = to_int(group(instructormatcher, 1));
-    }
-    if (it != $item[none]) break;
-  }
-  log("I want " + qty + " " + it);
-}
-
 void daycare()
 {
   if (get_property("daycareOpen") != "true") return;
