@@ -5,6 +5,8 @@ import "util/base/yz_monsters.ash";
 import "util/base/yz_war_support.ash";
 import "util/base/yz_quests.ash";
 
+import <SmartStasis.ash>;
+
 boolean attracted(monster foe)
 {
   monster digitized = to_monster(get_property("_sourceTerminalDigitizeMonster"));
@@ -323,6 +325,104 @@ string maybe_sharpen(monster foe)
   return "skill " + get_property("_newYouQuestSkill");
 }
 
+/*
+string consult_fight() {
+	string result;
+
+	if(monster_stat("hp") <= 0)
+  {
+    error("I can't determine the monster's HP. Please finish this fight manually and rerun yaaz to continue.");
+    quit();
+  }
+
+	if(finished())
+		return "";
+
+	kill_it = Calculate_Options(monster_stat("hp")); //Set up the damage dealt
+
+	if((count(kill_it) > 0))
+		Perform_Actions();
+	else {
+		if(to_int(vars["verbosity"]) >= 3) {
+			vprint("WHAM: Unable to determine a valid combat strategy. For your benefit here are the numbers for your combat options.", "purple", 3);
+
+			allMyOptions(-1);
+			sort iterateoptions by -dmg_dealt(get_action(value).dmg);
+			foreach num,sk in iterateoptions {
+				matcher aid = create_matcher("(skill |use |attack|jiggle)(?:(\\d+),?(\\d+)?)?",sk);
+				if(find(aid)) {
+					switch(aid.group(1)) {
+						case "skill ":	vprint("WHAM: " + to_string(to_skill(to_int(excise(sk,"skill ","")))) + ": " + to_string(dmg_dealt(get_action(sk).dmg), "%.2f") + " potential damage (raw damage: " + spread_to_string(get_action(sk).dmg) + ") and a hitchance of " + to_string(hitchance(sk)*100, "%.2f") + "%.", (hitchance(sk) > hitchance ? "blue" : "red"), 3); break;
+						case "use ":	vprint("WHAM: " + to_string(to_item(to_int(excise(sk,"use ","")))) + ": " + to_string(dmg_dealt(get_action(sk).dmg), "%.2f") + " potential damage (raw damage: " + spread_to_string(get_action(sk).dmg) + ") and a hitchance of " + to_string(hitchance(sk)*100, "%.2f") + "%.", (hitchance(sk) > hitchance && vars["WHAM_noitemsplease"] == "false" ? "blue" : "red"), 3); break;
+						case "attack":	vprint("WHAM: Attack with your weapon: " + to_string(dmg_dealt(get_action(sk).dmg), "%.2f") + " potential damage (raw damage: " + spread_to_string(get_action(sk).dmg) + ") and a hitchance of " + to_string(hitchance(sk)*100, "%.2f") + "%.", (hitchance(sk) > hitchance ? "blue" : "red"), 3); break;
+						case "jiggle":	vprint("WHAM: Jiggle your chefstaff: " + to_string(dmg_dealt(get_action(sk).dmg), "%.2f") + " potential damage (raw damage: " + spread_to_string(get_action(sk).dmg) + ") and a hitchance of " + to_string(hitchance(sk)*100, "%.2f") + "%.", (hitchance(sk) > hitchance ? "blue" : "red"), 3); break;
+					}
+				}
+			}
+			vprint("WHAM: You now have the knowledge needed to go forward and be victorious","purple",3);
+			quit("Unable to figure out a combat strategy. Helpful information regarding your skills have been printed to the CLI");
+		} else
+			quit("WHAM: Unable to figure out a valid combat strategy. Try it yourself instead. If you set verbosity to 3 or more you will get a nice output of your available skills next time.");
+	}
+	return page;
+}
+
+
+string yz_consult_2(int round, string mob, string text)
+{
+  // replacement consult script to more fully take over combat control
+  act(pg);
+//  vprint_html("Profit per round: "+to_html(baseround()),5);
+  // custom actions
+
+  build_custom();
+  switch (m) {    // add boss monster items here since BatMan is not being consulted
+     case $monster[conjoined zmombie]: for i from 1 upto item_amount($item[half-rotten brain])
+        custom[count(custom)] = get_action("use 2562"); break;
+     case $monster[giant skeelton]: for i from 1 upto item_amount($item[rusty bonesaw])
+        custom[count(custom)] = get_action("use 2563"); break;
+     case $monster[huge ghuol]: for i from 1 upto item_amount($item[can of Ghuol-B-Gone&trade;])
+        custom[count(custom)] = get_action("use 2565"); break;
+  }
+
+  if (count(queue) > 0 && queue[0].id == "pickpocket" && my_class() == $class[disco bandit]) try_custom();
+   else enqueue_custom();
+
+  // combos
+  build_combos();
+  if (($familiars[hobo monkey, gluttonous green ghost, slimeling] contains my_fam() && !happened("famspent")) || have_equipped($item[crown of thrones])) try_combos();
+   else enqueue_combos();
+
+  // stasis loop
+  stasis();
+  if (round < mdata.maxround && !is_our_huckleberry() && adj.stun < 1 && stun_action(false).stun > to_int(dmg_dealt(buytime.dmg) == 0) &&
+      kill_rounds(smack) > 1 && min(buytime.stun-1, kill_rounds(smack)-1)*m_dpr(0,0)*meatperhp > buytime.profit) enqueue(buytime);
+
+  macro();
+  info("SmartStasis complete.");
+
+  info("Starting evaluation and performing of attack");
+
+//  page = Evaluate_Options();
+
+  repeat
+  {
+    if(!(contains_text(page, "WINWINWIN") || page == "" || my_hp() == 0 || have_effect($effect[Beaten Up]) == 3))
+      info("Current " + wrap(foe) + " HP: " + wrap(monster_stat("hp"), COLOR_MONSTER));
+
+    consult_fight()
+
+    int max_rounds = to_int(setting("max_combat_rounds"));
+    if(round >= min(mdata.maxround, max_rounds) && !finished())
+    {
+      error("The fight has gone on longer than we expecte and we're not sure what to do next. Finish this fight then rereun yaaz to continue.");
+      quit();
+    }
+
+  } until(finished() || die_rounds() <= 1 || round >= min(mdata.maxround, WHAM_maxround));
+
+}
+*/
 string yz_consult(int round, string mob, string text)
 {
   // do something like this if we want to consider stealing, but WHAM should take care of this for us generally.

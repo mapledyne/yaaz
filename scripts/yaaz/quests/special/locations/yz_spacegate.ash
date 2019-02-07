@@ -97,6 +97,7 @@ boolean spacegate()
   string goal = spacegate_goal();
   log("About to head to the spacegate to attept to get: " + wrap(goal, COLOR_ITEM));
   save_daily_setting("did_spacegate", "true");
+  visit_url("place.php?whichplace=spacegate&action=sg_Terminal");
   cli_execute("call VeracitySpacegate.ash visit " + goal);
   return true;
 

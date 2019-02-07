@@ -71,6 +71,14 @@ void neverending_progress()
     case "woots":
       int woot_total = to_int(progress);
       progress(woot_total, 100, "Megawoots to amp up " + wrap($location[the neverending party]));
+      break;
+    case "partiers":
+      int partiers = to_int(progress);
+      boolean hard = to_boolean(get_property("_partyHard"));
+      int max = 50;
+      if (hard) max = 100;
+      progress(max - partiers, max, "Partiers cleared in the " + wrap($location[the neverending party]));
+      break;
   }
 
   /*
@@ -107,6 +115,51 @@ void neverending_cleanup()
   use_all($item[van key]);
 
 }
+
+boolean neverending_partiers(item shirt)
+{
+
+  if (!have($item[intimidating chainsaw]))
+  {
+    set_property("choiceAdventure1324", "4");
+    set_property("choiceAdventure1328", "3");
+  }
+  else if (have($item[jam band bootleg]) && !to_boolean(setting("bootleg_used", "false")))
+  {
+    set_property("choiceAdventure1324", "1");
+    set_property("choiceAdventure1325", "3");
+  }
+  else if (have($item[Purple Beast energy drink]) && !to_boolean(setting("purple_used", "false")))
+  {
+    set_property("choiceAdventure1324", "3");
+    set_property("choiceAdventure1327", "5");
+  }
+  else
+  {
+    set_property("choiceAdventure1324", "5");
+  }
+
+  int bootleg = item_amount($item[jam band bootleg]);
+  int purple = item_amount($item[Purple Beast energy drink]);
+
+  string max = "items";
+  if (shirt != $item[none])
+  {
+    max += ", equip [" + to_int(shirt) + "]";
+  }
+  maximize(max, $item[intimidating chainsaw]);
+
+  log("Heading to " + wrap($location[The Neverending Party]) + " to help clear the partiers");
+
+  yz_adventure($location[the neverending party]);
+
+  if (bootleg > item_amount($item[jam band bootleg])) save_daily_setting("booleg_used", "true");
+
+  if (purple > item_amount($item[Purple Beast energy drink])) save_daily_setting("purple_used", "true");
+
+  return true;
+}
+
 
 boolean neverending_dj(item shirt)
 {
@@ -363,6 +416,8 @@ boolean neverending()
       return neverending_woots(shirt);
     case "food":
       return neverending_food(shirt);
+    case "partiers":
+      return neverending_partiers(shirt);
     case "":
       return neverending_free(shirt);
   }

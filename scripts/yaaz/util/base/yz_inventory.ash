@@ -525,17 +525,19 @@ int grind(int qty, item it)
   if (it.gift) return qty;
 
   // things that can't be ground, but we don't know how to programatically determine this:
-  if ($items[fat stacks of cash, powdered organs, procrastination potion] contains it) return qty;
+  if ($items[fat stacks of cash,
+             powdered organs,
+             procrastination potion] contains it) return qty;
 
-  int current = prop_int("_sausageGrinderUnits");
+  int current = prop_int("sausageGrinderUnits");
 
   if (current > to_int(setting("max_sausage_units", "5000"))) return qty;
 
   log("Off to grind " + qty + " " + wrap(it, qty));
   visit_url('inventory.php?action=grind');
   visit_url("choice.php?whichchoice=1339&option=1&qty=" + qty + "&iid=" + to_int(it));
-  int gained = prop_int("_sausageGrinderUnits") - current;
-  log("You just gained " + wrap(gained, COLOR_ITEM) + " grinder units (you now have " + wrap(get_property("_sausageGrinderUnits"), COLOR_ITEM) + ")");
+  int gained = prop_int("sausageGrinderUnits") - current;
+  log("You just gained " + wrap(gained, COLOR_ITEM) + " grinder units (you now have " + wrap(get_property("sausageGrinderUnits"), COLOR_ITEM) + ")");
   if (gained == 0)
   {
     debug("It looks like we tried to grind a " + wrap(it) + ", but since we didn't gain any grinder units, maybe it can't be used by this?");
