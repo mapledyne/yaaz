@@ -48,7 +48,7 @@ boolean stunt_nut_stew()
       create(1, $item[wet stunt nut stew]);
       return true;
     }
-    if (!to_boolean(get_property("friarsBlessingReceived")))
+    if (!prop_bool("friarsBlessingReceived"))
     {
       log("Going to get a blessing from the Friars.");
       visit_url("friars.php?pwd&action=buffs&bro=1&button='Blessed Be'");

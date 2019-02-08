@@ -2,14 +2,14 @@ import 'util/base/yz_settings.ash';
 
 void eldritchhorror_progress()
 {
-  if (!to_boolean(get_property("_eldritchTentacleFought"))
+  if (!prop_bool("_eldritchTentacleFought")
       && !dangerous($monster[eldritch tentacle]))
   {
     task("Fight an " + wrap($monster[eldritch tentacle]) + ", for science.");
   }
 
   if (!have_skill($skill[evoke eldritch horror])) return;
-  if (to_boolean(get_property("_eldritchHorrorEvoked"))) return;
+  if (prop_bool("_eldritchHorrorEvoked")) return;
 
   if (to_boolean(setting("aggressive_optimize", "false"))) return;
 
@@ -20,7 +20,7 @@ void eldritchhorror_progress()
 
 void eldritchhorror()
 {
-  if (!to_boolean(get_property("_eldritchTentacleFought"))
+  if (!prop_bool("_eldritchTentacleFought")
       && !dangerous($monster[eldritch tentacle])
       && quest_status("questL02Larva") > UNSTARTED)
   {
@@ -33,7 +33,7 @@ void eldritchhorror()
   }
 
   if (!have_skill($skill[evoke eldritch horror])) return;
-  if (to_boolean(get_property("_eldritchHorrorEvoked"))) return;
+  if (prop_bool("_eldritchHorrorEvoked")) return;
 
   if (to_boolean(setting("aggressive_optimize", "false"))) return;
 

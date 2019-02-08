@@ -13,7 +13,7 @@ void timespinner_progress()
   if (used < 10)
   {
     progress(used, 10, wrap($item[time-spinner]) + " minutes used", "blue");
-    if (!to_boolean(get_property("_timeSpinnerReplicatorUsed")))
+    if (!prop_bool("_timeSpinnerReplicatorUsed"))
     {
       task("use Time Spinner replicator");
     }

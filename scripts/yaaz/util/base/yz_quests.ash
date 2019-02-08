@@ -66,7 +66,7 @@ int pirate_insults()
   for x from 1 to 8
   {
     string insult = 'lastPirateInsult' + x;
-    if (to_boolean(get_property(insult)))
+    if (to_boolean(get_property((insult))))
     {
       count += 1;
     }

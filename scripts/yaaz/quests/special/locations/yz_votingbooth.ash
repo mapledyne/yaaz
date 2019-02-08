@@ -22,7 +22,7 @@ void votingbooth_cleanup()
 
 void votingbooth_progress()
 {
-  if (!to_boolean(get_property("voteAlways"))) return;
+  if (!prop_bool("voteAlways")) return;
 
   item voted_sticker = $item[9990]; // "I Voted" sticker
   if (!have(voted_sticker))
@@ -76,7 +76,7 @@ int get_vote_choice()
 
 boolean votingbooth()
 {
-  if (!to_boolean(get_property("voteAlways"))) return false;
+  if (!prop_bool("voteAlways")) return false;
 
   item voted_sticker = $item[9990]; // "I Voted" sticker
   if (!have(voted_sticker))

@@ -12,14 +12,14 @@ void day_end()
 
   cross_streams();
 
-  if (!to_boolean(get_property("telescopeLookedHigh"))
+  if (!prop_bool("telescopeLookedHigh")
       && get_campground() contains $item[Discount Telescope Warehouse gift certificate])
   {
     log("Looking in the telescope to get " + wrap($effect[starry-eyed]));
     cli_execute("telescope look high");
   }
 
-  if (!to_boolean(get_property("concertVisited"))
+  if (!prop_bool("concertVisited")
       && get_property("sidequestArenaCompleted") == "fratboy")
   {
     log("We haven't visited a concert today, let's do it.");
@@ -84,7 +84,7 @@ void day_end()
   pvp();
 
   if (get_campground() contains $item[spinning wheel]
-      && !to_boolean(get_property("_spinningWheel"))
+      && !prop_bool("_spinningWheel")
       && be_good($item[spinning wheel]))
   {
     log("Spinning some meat from the " + wrap($item[spinning wheel]) + ".");

@@ -63,13 +63,13 @@ boolean do_leveling_thing()
 
   // not optimal, but if we're leveling this early "optimal" isn't really
   // a driving force yet.
-  if (to_boolean(get_property("_treasuryEliteMeatCollected"))
+  if (prop_bool("_treasuryEliteMeatCollected")
       && is_wearing_outfit("Knob Goblin Elite Guard Uniform"))
   {
     equip($slot[pants], $item[none]);
   }
 
-  if (to_boolean(get_property("_treasuryHaremMeatCollected"))
+  if (prop_bool("_treasuryHaremMeatCollected")
       && is_wearing_outfit("Knob Goblin Harem Girl Disguise"))
   {
     equip($slot[hat], $item[none]);

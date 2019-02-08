@@ -7,7 +7,7 @@ void snojo_progress()
 
   if (!be_good($item[X-32-F snowman crate])) return;
 
-  if (to_boolean(get_property("snojoAvailable"))
+  if (prop_bool("snojoAvailable")
       && prop_int("_snojoFreeFights") < 10)
   {
     int fights = prop_int("_snojoFreeFights");
@@ -47,7 +47,7 @@ boolean can_snojo()
 
   if (!be_good($item[X-32-F snowman crate])) return false;
 
-  if (to_boolean(get_property("snojoAvailable")) && get_property("snojoSetting") == "NONE")
+  if (prop_bool("snojoAvailable") && get_property("snojoSetting") == "NONE")
   {
     log("Turning the " + wrap($location[The X-32-F Combat Training Snowman]) + " on.");
     int lever;
@@ -67,7 +67,7 @@ boolean can_snojo()
     visit_url("choice.php?pwd=&whichchoice=1118&option=" + lever);
   }
 
-  if (to_boolean(get_property("snojoAvailable")) && get_property("_snojoFreeFights").to_int() < 10)
+  if (prop_bool("snojoAvailable") && get_property("_snojoFreeFights").to_int() < 10)
     return true;
 
   return false;

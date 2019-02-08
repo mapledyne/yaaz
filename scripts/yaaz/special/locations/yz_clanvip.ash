@@ -27,7 +27,7 @@ void vip_hottub()
 boolean can_vip_shower()
 {
   if (!have($item[clan vip lounge key])) return false;
-  if (to_boolean(get_property("_aprilShower"))) return false;
+  if (prop_bool("_aprilShower")) return false;
   if (!is_unrestricted($item[clan shower])) return false;
 
   return get_clan_lounge() contains $item[clan shower];

@@ -8,7 +8,7 @@ void newyou_cleanup()
 void newyou_progress()
 {
   if (quest_status("questL13Final") != FINISHED) return;
-  if (to_boolean(get_property("_newYouQuestCompleted"))) return;
+  if (prop_bool("_newYouQuestCompleted")) return;
   if (to_monster(get_property("_newYouQuestMonster")) == $monster[none]) return;
 
   monster mob = to_monster(get_property("_newYouQuestMonster"));
@@ -40,7 +40,7 @@ boolean newyou()
 
   if (flag == "false") return false;
   if (quest_status("questL13Final") != FINISHED) return false;
-  if (to_boolean(get_property("_newYouQuestCompleted"))) return false;
+  if (prop_bool("_newYouQuestCompleted")) return false;
   if (to_monster(get_property("_newYouQuestMonster")) == $monster[none]) return false;
 
   monster mob = to_monster(get_property("_newYouQuestMonster"));

@@ -247,7 +247,7 @@ boolean try_eat(item it)
 
   log("Eating a " + wrap(it) + ". Expected adventures: " + it.adventures + ".");
 
-  if (is_npc_item(it) && to_boolean(get_property("autoSatisfyWithNPCs")))
+  if (is_npc_item(it) && prop_bool("autoSatisfyWithNPCs"))
   {
     if (npc_price(it) == 0 || npc_price(it) > (my_meat() / 2))
     {

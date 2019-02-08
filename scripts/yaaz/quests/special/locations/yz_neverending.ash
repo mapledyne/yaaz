@@ -2,7 +2,7 @@ import "util/yz_main.ash";
 
 void neverending_progress()
 {
-  if (!to_boolean(get_property("neverendingPartyAlways"))
+  if (!prop_bool("neverendingPartyAlways")
       || !be_good($item[Neverending Party invitation envelope]))
   {
     return;
@@ -74,7 +74,7 @@ void neverending_progress()
       break;
     case "partiers":
       int partiers = to_int(progress);
-      boolean hard = to_boolean(get_property("_partyHard"));
+      boolean hard = prop_bool("_partyHard");
       int max = 50;
       if (hard) max = 100;
       progress(max - partiers, max, "Partiers cleared in the " + wrap($location[the neverending party]));
@@ -349,7 +349,7 @@ boolean neverending_booze(item shirt)
 
 boolean neverending()
 {
-  if (!to_boolean(get_property("neverendingPartyAlways"))) return false;
+  if (!prop_bool("neverendingPartyAlways")) return false;
 
   if (!be_good($item[Neverending Party invitation envelope])) return false;
 

@@ -12,7 +12,7 @@ void gingerbread_cleanup()
 
 boolean can_gingerbread()
 {
-  if (!to_boolean(get_property("gingerbreadCityAvailable"))) return false;
+  if (!prop_bool("gingerbreadCityAvailable")) return false;
 
   string doit = setting("do_gingerbread", "unk");
   switch(doit)

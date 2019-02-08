@@ -70,63 +70,14 @@ void cast_things(location loc)
   }
 }
 
-void cast_if(skill sk, boolean doit)
-{
-  if (!doit) return;
-  if (!have_skill(sk)) return;
-  if (!be_good(sk)) return;
-
-  if (my_mp() < (mp_cost(sk) * 5)) return; // wait until we have an MP buffer
-
-  use_skill(1, sk);
-}
-
 void cast_one_time_things()
 {
   cast_if($skill[Advanced Cocktailcrafting], prop_int("cocktailSummons") == 0);
   cast_if($skill[Advanced Saucecrafting], prop_int("reagentSummons") == 0);
   cast_if($skill[Pastamastery], prop_int("noodleSummons") == 0);
   cast_if($skill[summon crimbo candy], prop_int("_candySummons") == 0);
-  cast_if($skill[Summon Holiday Fun!], !to_boolean(get_property("_holidayFunUsed")));
-  cast_if($skill[summon snowcones], prop_int("_snowconeSummons") < 3);
-  cast_if($skill[summon stickers], prop_int("_stickerSummons") < 3);
-  cast_if($skill[summon carrot], !to_boolean(get_property("_summonCarrotUsed")));
-}
-
-void clip_art()
-{
-  if (!have_skill($skill[summon clip art])) return;
-  if (!be_good($skill[summon clip art])) return;
-  int summons = prop_int("_clipartSummons");
-
-  while (summons < 3 && my_mp() > 10)
-  {
-    item toy = $item[none];
-    int qty = 1000000;
-
-    for clip from 5224 to 5283
-    {
-      item art = to_item(clip);
-      int current = item_amount(art) + closet_amount(art);
-
-      // give preference to consumables once we have the equipment
-      if (can_equip(art))
-      {
-        current = current * 1000;
-      } else {
-        current += 1;
-      }
-
-      if (current < qty)
-      {
-        toy = art;
-        qty = current;
-      }
-    }
-    create(1, toy);
-
-    summons = prop_int("_clipartSummons");
-  }
+  cast_if($skill[Summon Holiday Fun!], !prop_bool("_holidayFunUsed"));
+  cast_if($skill[summon carrot], !prop_bool("_summonCarrotUsed"));
 }
 
 void prep(location loc)
@@ -230,9 +181,6 @@ void prep(location loc)
   heart();
 
   cast_things(loc);
-
-  // have to handle clipart differently than other summon skills
-  clip_art();
 
   pulverize_things();
   sell_things();

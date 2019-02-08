@@ -100,7 +100,7 @@ boolean demon_effect(effect ef)
 
 void try_summon_demon(effect ef)
 {
-  if (to_boolean(get_property("demonSummoned"))) return;
+  if (prop_bool("demonSummoned")) return;
   if (quest_status("questL11Manor") != FINISHED) return;
 
   if (item_amount($item[thin black candle]) < 3) return;

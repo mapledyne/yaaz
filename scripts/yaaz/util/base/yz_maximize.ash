@@ -42,7 +42,7 @@ boolean spacegate_vaccine(effect vaccine)
     return false;
   }
 
-  if (to_boolean(get_property("_spacegateVaccine"))) return false;
+  if (prop_bool("_spacegateVaccine")) return false;
 
   return cli_execute('spacegate vaccine ' + vaccines[vaccine]);
 }
@@ -52,7 +52,7 @@ void cross_streams(string player)
 {
   if (!have($item[protonic accelerator pack])) return;
   if (!be_good($item[protonic accelerator pack])) return;
-  if (to_boolean(get_property("_streamsCrossed"))) return;
+  if (prop_bool("_streamsCrossed")) return;
 
   if (player == 'ProtonicBot')
   {
@@ -297,13 +297,13 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[slightly larger than usual]);
       effect_maintain($effect[tomato power]);
 
-      if (!to_boolean(get_property("concertVisited"))
+      if (!prop_bool("concertVisited")
           && get_property("sidequestArenaCompleted") == "fratboy")
       {
         cli_execute("concert elvish");
       }
       cross_streams();
-      if (!to_boolean(get_property("telescopeLookedHigh"))
+      if (!prop_bool("telescopeLookedHigh")
           && get_campground() contains $item[Discount Telescope Warehouse gift certificate])
       {
         log("Looking in the telescope to get " + wrap($effect[starry-eyed]));
@@ -432,7 +432,7 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[black tongue]);
       if (!have_love_song())
         effect_maintain($effect[sweet heart]);
-      if (!to_boolean(get_property("concertVisited"))
+      if (!prop_bool("concertVisited")
           && get_property("sidequestArenaCompleted") == "fratboy")
       {
         cli_execute("checkpoint");
@@ -486,7 +486,7 @@ void max_effects(string target, boolean aggressive)
         effect_maintain($effect[blue tongue]);
       if (!have_colored_tongue())
         effect_maintain($effect[black tongue]);
-      if (!to_boolean(get_property("concertVisited"))
+      if (!prop_bool("concertVisited")
           && get_property("sidequestArenaCompleted") == "hippy")
       {
         cli_execute("concert dilated pupils");
@@ -513,7 +513,7 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[The Inquisitor's Unknown Effect]);
 
       terminal_enhance($effect[init.enh]);
-      if (!to_boolean(get_property("concertVisited"))
+      if (!prop_bool("concertVisited")
           && get_property("sidequestArenaCompleted") == "fratboy")
       {
         cli_execute("concert white-boy angst");

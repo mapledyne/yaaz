@@ -31,7 +31,7 @@ int total_annoyances()
 void summon_annoyance()
 {
   if (!have_skill($skill[summon annoyance])) return;
-  if (to_boolean(get_property("_summonAnnoyanceUsed"))) return;
+  if (prop_bool("_summonAnnoyanceUsed")) return;
   if (!to_boolean(setting("do_heart"))) return;
 
   int annoy_cost = prop_int("summonAnnoyanceCost");

@@ -18,12 +18,12 @@ void chateau_cleanup()
 
 boolean can_chateau()
 {
-  return to_boolean(get_property("chateauAvailable")) && be_good($item[Chateau Mantegna room key]);
+  return prop_bool("chateauAvailable") && be_good($item[Chateau Mantegna room key]);
 }
 
 boolean can_chateau_fight()
 {
-  if (to_boolean(get_property("_chateauMonsterFought")))
+  if (prop_bool("_chateauMonsterFought"))
     return false;
   return true;
 }
@@ -40,7 +40,7 @@ boolean chateau()
     return false;
   }
 
-  if (!to_boolean(get_property("_chateauDeskHarvested")))
+  if (!prop_bool("_chateauDeskHarvested"))
   {
     log("Collecting items from the " + wrap("Chateau Mantegna", COLOR_LOCATION) + " desk.");
     int desk = 0;

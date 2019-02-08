@@ -13,7 +13,7 @@ void vip_floundry_progress()
 {
 	if (!be_good($item[fishin' pole])) return;
 
-	if (have($item[fishin' pole]) && !to_boolean(get_property("_floundryItemUsed")))
+	if (have($item[fishin' pole]) && !prop_bool("_floundryItemUsed"))
 	{
 		task("get item from the floundry");
 	}
@@ -41,7 +41,7 @@ boolean can_get_floundry_item()
 	if (to_boolean(setting("floundry_skip", "false")))
 		return false;
 	// TODO: This parameter doesn't seem 100% reliable:
-  if (to_boolean(get_property("_floundryItemUsed")))
+  if (prop_bool("_floundryItemUsed"))
     return false;
 
   return true;

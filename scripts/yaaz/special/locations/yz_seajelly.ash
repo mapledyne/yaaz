@@ -10,7 +10,7 @@ void seajelly()
 {
   if (my_level() < 11) return;
   if (!can_access_sea()) return;
-  if (to_boolean(get_property("_seaJellyHarvested"))) return;
+  if (prop_bool("_seaJellyHarvested")) return;
   if (!have_familiar($familiar[Space Jellyfish])) return;
   if (!be_good($familiar[Space Jellyfish])) return;
 

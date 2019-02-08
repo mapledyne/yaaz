@@ -97,14 +97,14 @@ void settings_warning()
   }
 
 
-  if (!to_boolean(get_property("autoSatisfyWithNPCs")))
+  if (!prop_bool("autoSatisfyWithNPCs"))
   {
     warning("In KoLMafia's preferences (General/Item Aquisition), you've set " + wrap("Buy items from NPC stores whenever needed", COLOR_ITEM) + " off.");
     warning("I'll try to work with this, but it's highly advised you set this on so I can buy things from NPCs.");
     wait(10);
   }
 
-  if (!to_boolean(get_property("autoSatisfyWithCoinmasters")))
+  if (!prop_bool("autoSatisfyWithCoinmasters"))
   {
     warning("In KoLMafia's preferences (General/Item Aquisition), you've set " + wrap("Buy items with tokens at coin masters whenever needed", COLOR_ITEM) + " off.");
     warning("I'll try to work with this, but it's highly advised you set this on so I can buy things from NPCs.");

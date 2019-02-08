@@ -162,9 +162,9 @@ void lattemug_progress()
   string copy = UNCHECKED;
   string banish = UNCHECKED;
 
-  if (to_boolean(get_property("_latteCopyUsed"))) copy = CHECKED;
-  if (to_boolean(get_property("_latteDrinkUsed"))) drink = CHECKED;
-  if (to_boolean(get_property("_latteBanishUsed"))) banish = CHECKED;
+  if (prop_bool("_latteCopyUsed")) copy = CHECKED;
+  if (prop_bool("_latteDrinkUsed")) drink = CHECKED;
+  if (prop_bool("_latteBanishUsed")) banish = CHECKED;
 
   progress(refills, 3, "Refills on your " + wrap($item[latte lovers member's mug]) + " (" + banish + " banish, " + copy + " copy, " + drink + " drink)", "blue");
 
@@ -336,9 +336,9 @@ void lattemug()
   if (!have($item[latte lovers member's mug])) return;
   if (!be_good($item[latte lovers member's mug])) return;
 
-  if (!to_boolean(get_property("_latteCopyUsed"))) return;
-  if (!to_boolean(get_property("_latteDrinkUsed"))) return;
-  if (!to_boolean(get_property("_latteBanishUsed"))) return;
+  if (!prop_bool("_latteCopyUsed")) return;
+  if (!prop_bool("_latteDrinkUsed")) return;
+  if (!prop_bool("_latteBanishUsed")) return;
 
   latte_refill();
 }

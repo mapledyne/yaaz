@@ -11,6 +11,7 @@ float average_range(string avg);
 boolean can_adventure();
 boolean[skill] perm_skills();
 void skill_recommendation();
+void cast_if(skill sk, boolean doit);
 
 // these really should be in effects.ash, but are here to avoid an import loop.
 // Need to sort this sort of problem out sometime...
@@ -39,6 +40,11 @@ int prop_int(string prop)
   return prop_int(prop, 0);
 }
 
+boolean prop_bool(string prop)
+{
+  return to_boolean(get_property(prop));
+}
+
 int compare_date(string date, string format)
 {
   int year = to_int(format_date_time(format, date, 'y'));
@@ -52,6 +58,18 @@ int version_diff(string v)
   int ver = compare_date(v, 'yyyy.MM.dd');
   return current - ver;
 }
+
+void cast_if(skill sk, boolean doit)
+{
+  if (!doit) return;
+  if (!have_skill(sk)) return;
+  if (!be_good(sk)) return;
+
+  if (my_mp() < (mp_cost(sk) * 5)) return; // wait until we have an MP buffer
+
+  use_skill(1, sk);
+}
+
 
 void skill_recommendation()
 {

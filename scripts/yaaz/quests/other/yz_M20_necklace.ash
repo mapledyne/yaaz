@@ -52,7 +52,7 @@ void M20_necklace_cleanup()
 
 boolean writing_desk_trick()
 {
-  if (!to_boolean(get_property("chateauAvailable"))) return false;
+  if (!prop_bool("chateauAvailable")) return false;
   if (!(to_monster(get_property("chateauMonster")) == $monster[writing desk])) return false;
   if (!(get_campground() contains $item[source terminal])) return false;
 

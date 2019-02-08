@@ -9,7 +9,7 @@ void teatree()
 {
   if (!(get_campground() contains $item[potted tea tree]))
     return;
-  if (to_boolean(get_property("_pottedTeaTreeUsed")))
+  if (prop_bool("_pottedTeaTreeUsed"))
     return;
   log("Shaking your " + wrap($item[potted tea tree]) + ".");
   set_property("choiceAdventure1104", 1);

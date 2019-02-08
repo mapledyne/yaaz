@@ -16,8 +16,8 @@ boolean lovetunnel();
 
 void lovetunnel_progress()
 {
-  if (!to_boolean(get_property("loveTunnelAvailable"))
-      || to_boolean(get_property("_loveTunnelUsed")))
+  if (!prop_bool("loveTunnelAvailable")
+      || prop_bool("_loveTunnelUsed"))
   {
     return;
   }
@@ -143,9 +143,9 @@ int tunnel_giftitem()
 
 boolean lovetunnel()
 {
-  if (!to_boolean(get_property("loveTunnelAvailable")))
+  if (!prop_bool("loveTunnelAvailable"))
     return false;
-  if (to_boolean(get_property("_loveTunnelUsed")))
+  if (prop_bool("_loveTunnelUsed"))
     return false;
   if (!to_boolean(setting("do_lovetunnel", "true")))
     return false;

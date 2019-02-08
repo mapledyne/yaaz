@@ -14,7 +14,7 @@ void precinct_progress()
 boolean can_precinct()
 {
   if (!be_good($item[detective school application])) return false;
-  return (prop_int("_detectiveCasesCompleted")) < 3 && to_boolean(get_property("hasDetectiveSchool"));
+  return (prop_int("_detectiveCasesCompleted")) < 3 && prop_bool("hasDetectiveSchool");
 }
 
 void precinct()

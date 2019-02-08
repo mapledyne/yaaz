@@ -27,7 +27,7 @@ string attract_action(monster foe)
   }
 
   if (have_skill($skill[offer latte to Opponent])
-      && !to_boolean(get_property("_latteCopyUsed")))
+      && !prop_bool("_latteCopyUsed"))
   {
 
     return "skill offer latte to opponent";
@@ -316,7 +316,7 @@ string maybe_sharpen(monster foe)
 {
   monster sharp = to_monster(get_property("_newYouQuestMonster"));
   if (sharp != foe) return "";
-  if (to_boolean(get_property("_newYouQuestCompleted"))) return "";
+  if (prop_bool("_newYouQuestCompleted")) return "";
 
   int last_sharp = to_int(setting("newyou_last_sharp", "0"));
   if (last_sharp == turns_played()) return "";
