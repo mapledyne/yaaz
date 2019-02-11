@@ -189,6 +189,10 @@ string maybe_banish(monster foe)
     // not exactly a banish, but similar.
     banish = "item Daily Affirmation: Adapt to Change Eventually";
   }
+  else if (have_skill($skill[reflex hammer]) && prop_int("_reflexHammerUsed") < 3)
+  {
+    banish = "skill reflex hammer";
+  }
 
   if (banish == "") return "";
 
