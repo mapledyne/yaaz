@@ -1,10 +1,5 @@
 import "util/yz_main.ash";
 
-void L11_SQ_copperhead_cleanup()
-{
-
-}
-
 void visit_shen()
 {
   // talk to Shen.
@@ -43,6 +38,20 @@ location shen_to_location(item toy)
 location shen_to_location()
 {
   return shen_to_location(shen_item());
+}
+
+void L11_SQ_copperhead_cleanup()
+{
+
+}
+
+void L11_SQ_copperhead_progress()
+{
+  if (quest_active("questL11Shen"))
+  {
+    task("Find the " + wrap(shen_item()) + " in " + wrap(shen_to_location()) + " for Shen.");
+  }
+
 }
 
 boolean L11_SQ_copperhead()

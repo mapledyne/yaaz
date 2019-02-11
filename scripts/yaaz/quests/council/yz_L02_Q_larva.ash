@@ -29,6 +29,7 @@ boolean L02_Q_larva()
     case STARTED:
       set_property("choiceAdventure502", 2);
       set_property("choiceAdventure505", 1);
+      log("Adventuring in " + wrap($location[The spooky forest]) + " to find the " + wrap($item[mosquito larva]));
       yz_adventure($location[The spooky forest], "-combat");
       break;
     case 1:

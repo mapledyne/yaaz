@@ -54,23 +54,7 @@ boolean ascend_loop()
 
 void settings_warning()
 {
-  if (to_float(get_property("mpAutoRecovery")) < 0.1)
-  {
-    warning("Your auto restore MP settings seems to not be set.");
-    warning("Setting this to something I think is reasonable, but you may want to skip out here and change yourself if desired.");
-    wait(10);
-    set_property("mpAutoRecoveryTarget", 0.25);
-    set_property("mpAutoRecovery", 0.2);
-  }
-  if (to_float(get_property("hpAutoRecovery")) < 0.1)
-  {
-    warning("Your auto restore HP settings seem to not be set.");
-    warning("Setting this to something I think is reasonable, but you may want to skip out here and change yourself if desired.");
-    wait(10);
-    set_property("hpAutoRecoveryTarget", 0.9);
-    set_property("hpAutoRecovery", 0.6);
-  }
-
+  
   string mood = 'default';
   foreach x, m in get_moods()
   {
@@ -178,7 +162,10 @@ void intro()
   log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>, <a href='showplayer.php?who=1566270'>" + wrap("LeaChim (#1566270)", 'blue') + "</a>.");
   log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2355952'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
-
+  log("");
+  log("Consider these support commands as well to take specific actions: " + wrap("yaaz-progress", 'blue') + ", " + wrap("yaaz-trophy", "blue") + ", and " + wrap("yaaz-manuel", "blue"));
+  log("");
+ 
   // Check to see if we have a familiar - if the path allows familiars
   choose_familiar("");
 

@@ -27,7 +27,7 @@ void neverending_progress()
       error("I don't know the neverending quest: " + get_property("_questPartyFairQuest"));
       break;
     case "":
-      if (quest_status("_questPartyFair") == UNSTARTED)
+      if (prop_int("_neverendingPartyFreeTurns") == 0)
       {
         task("Start the party at " + wrap($location[the neverending party]));
       }

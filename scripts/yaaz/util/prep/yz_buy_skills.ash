@@ -24,7 +24,10 @@ boolean [skill] skills_wanted = $skills[Torso Awaregness,
                                         Cannelloni Cannon,
                                         Pastamastery,
                                         Bind Vermincelli,
-                                        Weapon of the Pastalord];
+                                        Weapon of the Pastalord,
+                                        Disco State of Mind,
+                                        Accordion Bash,
+                                        Stream of Sauce];
 
 int trainer_skillid(skill sk)
 {

@@ -176,6 +176,17 @@ void do_heart_thing(string player)
     return;
   }
 */
+
+  if (item_amount($item[rubber spider]) > 0
+      && random_heart_picker()
+      && do_jerk_things())
+  {
+    // free fight - is this jerk-ish?
+    heart_msg(player, "throwing a " + wrap($item[rubber spider]) + " at them. ?");
+    cli_execute("throw rubber spider at " + player);
+    return;
+  }
+
   if (random_heart_picker()) if (mail_heart_item(player, $item[almost-dead walkie-talkie], "Go get yourself a ghost. Somewhere. Or pass it on to someone else. :)")) return;
   if (random_heart_picker()) if (mail_heart_item(player, $item[gift card], "I wonder what it'll be... :)")) return;
 

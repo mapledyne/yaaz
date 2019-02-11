@@ -68,6 +68,16 @@ boolean yz_adventure_bypass(location loc)
     run_combat("yz_consult");
   }
 
+  if ($monsters[The Unknown Turtle Tamer] contains last_monster())
+  {
+    string s = visit_url('campground.php');
+    while (index_of(s, 'Tomb of the Unknown Your Class Here') > -1)
+    {
+      visit_url('choice.php?whichchoice=1049&option=1');
+      s = visit_url('campground.php');
+    }
+  }
+
   return adv;
 }
 

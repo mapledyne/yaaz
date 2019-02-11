@@ -111,7 +111,6 @@ boolean M_8bit()
     {
       log("Because you don't have " + wrap($skill[Ambidextrous Funkslinging]) + ", I'm going to collect some " + wrap($item[red pixel potion], 2) + ".");
       log("Consider making this skill permanent as soon as you can to improve your experience with " + wrap($monster[your shadow]) + ".");
-      debug("Todo: check to see if a scented massage oil would be better than these potions.");
       maximize("items", $item[continuum transfunctioner]);
       yz_adventure($location[8-bit realm]);
       return true;
@@ -128,6 +127,7 @@ boolean M_8bit()
   if (bottle_wish($monster[ghost])) return true;
   monster_attract = $monsters[blooper];
 
+  log("Off to the " + wrap($location[8-bit realm]) + " to get the parts for a " + wrap($item[digital key]));
   yz_adventure($location[8-bit realm]);
 
   return true;

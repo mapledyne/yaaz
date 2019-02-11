@@ -2,9 +2,6 @@ import "util/yz_main.ash";
 import "quests/other/yz_M_pirates.ash";
 
 
-
-//palindomeDudesDefeated
-
 boolean get_photographs()
 {
   if (palindome_items() == 5
@@ -61,6 +58,25 @@ boolean stunt_nut_stew()
   visit_url("place.php?whichplace=palindome&action=pal_mrlabel");
   cli_execute("refresh inv");
   return true;
+}
+
+void L11_SQ_palindome_progress()
+{
+  
+  if (quest_active("questL11Palindome"))
+  {
+    if (quest_status("questL11Palindome") < 1)
+    {
+      progress(prop_int("palindomeDudesDefeated"), 5, "Palindome dudes defeated");
+      progress(palindome_items(), 5, "Palindome items found");
+    }
+  }
+
+}
+
+void L11_SQ_palindome_cleanup()
+{
+  
 }
 
 boolean L11_SQ_palindome()

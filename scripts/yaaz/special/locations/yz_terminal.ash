@@ -291,7 +291,7 @@ int extrudes_remaining()
 
 boolean can_terminal()
 {
-  return get_campground() contains $item[source terminal];
+  return (get_campground() contains $item[source terminal] && be_good($item[source terminal]));
 }
 
 boolean terminal_extrude(item it)
@@ -443,8 +443,13 @@ item pick_extrude_item()
 
 void terminal()
 {
-  if (!can_terminal())
-    return;
+  if (!can_terminal())  return;
+
+  if (!prop_bool("_baconMachineUsed") && have($item[infinite bacon machine]))
+  {
+    log("Getting some " + wrap($item[bacon]) + " from your " + wrap($item[infinite bacon machine]));
+    use(1, $item[infinite bacon machine]);
+  }
 
   while(can_extrude() && item_amount($item[source essence]) > 10)
   {

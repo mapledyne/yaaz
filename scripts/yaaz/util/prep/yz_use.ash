@@ -13,6 +13,15 @@ void use_things()
     use_all(it, i);
   }
 
+  if (have($item[cheap toaster]) && !prop_bool("_toastSummoned"))
+  {
+    use(1, $item[cheap toaster]);
+  }
+  if (have($item[burrowgrub hive]) && be_good($item[burrowgrub hive]) && !prop_bool("burrowgrubHiveUsed"))
+  {
+    use(1, $item[burrowgrub hive]);
+  }
+
   if (item_amount($item[orcish meat locker]) > 0
       && item_amount($item[rusty metal key]) > 0)
   {

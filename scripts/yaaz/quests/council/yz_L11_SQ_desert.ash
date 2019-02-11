@@ -98,6 +98,22 @@ boolean open_gnasir()
   return true;
 }
 
+void L11_SQ_desert_cleanup()
+{
+
+}
+
+void L11_SQ_desert_progress()
+{
+    if (quest_active("questL11Desert"))
+  {
+    int desert = prop_int("desertExploration");
+    progress(desert, "desert explored");
+  }
+
+}
+
+
 boolean L11_SQ_desert()
 {
 

@@ -28,7 +28,7 @@ location next_lights_out_location()
   string one = "nextSpookyravenElizabethRoom";
   string other = "nextSpookyravenStephenRoom";
 
-  if (i_a($item[Elizabeth's Dollie]) + storage_amount($item[Elizabeth's Dollie]) < i_a($item[Stephen's lab coat]) + storage_amount($item[Stephen's lab coat]))
+  if (i_a($item[Elizabeth's Dollie]) + storage_amount($item[Elizabeth's Dollie]) > i_a($item[Stephen's lab coat]) + storage_amount($item[Stephen's lab coat]))
   {
     one = "nextSpookyravenStephenRoom";
     other = "nextSpookyravenElizabethRoom";
@@ -42,7 +42,7 @@ location next_lights_out_location()
   {
     dark = to_location(get_property(other));
   }
-  if (!location_open(dark))
+  if (dark != $location[none] && !location_open(dark))
   {
     return $location[none];
   }

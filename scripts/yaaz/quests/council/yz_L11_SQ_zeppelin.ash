@@ -29,6 +29,19 @@ int protestors()
   return prop_int("zeppelinProtestors");
 }
 
+void L11_SQ_zeppelin_progress()
+{
+  if (quest_active("questL11Ron"))
+  {
+    if (quest_status("questL11Ron") == 1)
+    {
+      int prot = prop_int("zeppelinProtestors");
+      progress(prot, 80, "Protestors defeated from " + wrap($location[A Mob of Zeppelin Protesters]));
+    }
+
+  }
+}
+
 boolean L11_SQ_zeppelin()
 {
   if (!quest_active("questL11Ron")) return false;

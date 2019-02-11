@@ -22,7 +22,6 @@ import 'special/locations/yz_thanksgarden.ash';
 import 'special/locations/yz_vip_floundry.ash';
 import 'special/locations/yz_vip_fortune.ash';
 import 'special/skills/yz_communism.ash';
-import 'special/skills/yz_eldritchhorror.ash';
 import 'special/skills/yz_numberology.ash';
 import 'special/skills/yz_perfect_freeze.ash';
 import 'special/skills/yz_rethinkcandy.ash';
@@ -50,7 +49,6 @@ boolean[string] SPECIAL_LIST = $strings[january_garbage,
                                         timespinner,
                                         kgb,
                                         geniebottle,
-                                        eldritchhorror,
                                         daycare,
                                         batfellow_comic,
                                         manuel];

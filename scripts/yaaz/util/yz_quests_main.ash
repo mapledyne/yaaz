@@ -4,6 +4,7 @@ import "quests/other/yz_M_guild.ash";
 import "quests/other/yz_M_hidden_temple.ash";
 import "quests/other/yz_M_8bit.ash";
 import "quests/other/yz_M_desert_beach.ash";
+import "quests/other/yz_M_epic_weapon.ash";
 import "quests/other/yz_M_island.ash";
 import "quests/other/yz_M_invisiblestring.ash";
 import "quests/other/yz_M_lights_out.ash";
@@ -29,18 +30,28 @@ import "quests/council/yz_L08_Q_trapper.ash";
 import "quests/council/yz_L09_Q_topping.ash";
 import "quests/council/yz_L10_Q_garbage.ash";
 import "quests/council/yz_L11_Q_macguffin.ash";
+import "quests/council/yz_L11_SQ_black_market.ash";
+import "quests/council/yz_L11_SQ_copperhead.ash";
+import "quests/council/yz_L11_SQ_desert.ash";
 import "quests/council/yz_L11_SQ_hidden_city.ash";
+import "quests/council/yz_L11_SQ_palindome.ash";
+import "quests/council/yz_L11_SQ_pyramid.ash";
+import "quests/council/yz_L11_SQ_summoning.ash";
+import "quests/council/yz_L11_SQ_zeppelin.ash";
 import "quests/council/yz_L12_Q_war.ash";
 import "quests/council/yz_L13_Q_sorceress.ash";
 
 import "quests/other/yz_M_level_up.ash";
 
+import 'quests/special/clan/yz_hobopolis.ash';
+import 'quests/special/items/yz_doctorbag.ash';
 import 'quests/special/items/yz_godlobster.ash';
 import 'quests/special/items/yz_newyou.ash';
 import 'quests/special/items/yz_protonic.ash';
 import 'quests/special/items/yz_tuxedo_shirt.ash';
 import 'quests/special/locations/yz_chateau.ash';
 import 'quests/special/locations/yz_deep_machine_tunnels.ash';
+import 'quests/special/locations/yz_eldritchhorror.ash';
 import 'quests/special/locations/yz_gingerbread.ash';
 import 'quests/special/locations/yz_lovetunnel.ash';
 import 'quests/special/locations/yz_ltt.ash';
@@ -59,6 +70,7 @@ boolean[string] QUEST_LIST = $strings[votingbooth,
                                       tuxedo_shirt,
                                       snojo,
                                       godlobster,
+                                      doctorbag,
                                       ltt,
                                       dmt,
                                       protonic,
@@ -72,6 +84,7 @@ boolean[string] QUEST_LIST = $strings[votingbooth,
                                       M_nemesis,
                                       newyou,
                                       M_bounty,
+                                      eldritchhorror,
                                       gingerbread,
                                       S01_sea,
                                       M_guild,
@@ -79,6 +92,7 @@ boolean[string] QUEST_LIST = $strings[votingbooth,
                                       M_desert_beach,
                                       M_island,
                                       M06_pandemonium,
+                                      M_epic_weapon,
                                       L06_Q_friar,
                                       M09_leaflet,
                                       M_dailydungeon,
@@ -97,8 +111,16 @@ boolean[string] QUEST_LIST = $strings[votingbooth,
                                       L09_Q_topping,
                                       L10_Q_garbage,
                                       L11_Q_macguffin,
+                                      L11_SQ_copperhead,
+                                      L11_SQ_palindome,
+                                      L11_SQ_summoning,
                                       L11_SQ_hidden_city,
+                                      L11_SQ_black_market,
+                                      L11_SQ_zeppelin,
+                                      L11_SQ_desert,
+                                      L11_SQ_pyramid,
                                       M_8bit,
                                       M10_star_key,
                                       L13_Q_sorceress,
+                                      hobopolis,
                                       M_level_up];

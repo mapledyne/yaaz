@@ -8,6 +8,7 @@ void godlobster_cleanup()
 void godlobster_progress()
 {
   if (!have_familiar($familiar[god lobster])) return;
+  if (!be_good($familiar[god lobster])) return;
   if (to_familiar(setting("100_familiar")) != $familiar[none]) return;
   int fights = prop_int("_godLobsterFights");
   if (fights >= 3) return;
@@ -33,6 +34,7 @@ boolean godlobster()
   if (to_familiar(setting("100_familiar")) != $familiar[none]) return false;
   if (dangerous($monster[god lobster])) return false;
 
+  use_familiar($familiar[god lobster]);
   item toy = pick_lobster_item();
   maximize("", "", toy, $familiar[god lobster]);
   log("Off to fight a " + wrap($monster[god lobster]));

@@ -98,6 +98,24 @@ boolean market_loop()
   }
 }
 
+void L11_SQ_black_market_progress()
+{
+  if (quest_active("questL11Black"))
+    progress(get_property("blackForestProgress").to_int(), 5, "progress through " + wrap($location[the black forest]));
+
+  if (quest_active("questL11Black")
+      && !have($item[beehive]))
+  {
+    task("Find a " + wrap($item[beehive]));
+  }
+
+}
+
+void L11_SQ_black_market_cleanup()
+{
+
+}
+
 boolean L11_SQ_black_market()
 {
 

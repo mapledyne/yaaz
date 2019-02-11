@@ -60,7 +60,13 @@ void day_end()
     cli_execute("daycare " + to_lower_case(to_string(my_primestat())));
   }
 
-
+  if (!prop_bool("_incredibleSelfEsteemCast")
+      && have_skill($skill[incredible Self-Esteem])
+      && be_good($skill[incredible self-esteem]))
+  {
+    log("Going to cast " + wrap($skill[incredible self-esteem]) + " to get some affirmations.");
+    use_skill($skill[incredible self-esteem]);
+  }
   prep();
 
   consume_bottle_wishes();
@@ -110,6 +116,12 @@ void day_end()
     cli_execute("rest");
   }
 
+  if (setting("pvp_protection", "true") == "true")
+  {
+      log("Checking your inventory to see if we should closet things to protect you from PvP thefts.");
+      pvp_protection();
+  }
+  mall_update();
   progress_sheet(true);
   manuel_progress();
 

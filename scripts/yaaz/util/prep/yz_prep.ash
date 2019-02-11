@@ -88,37 +88,91 @@ void prep(location loc)
 
  if (my_path() != "Actually Ed the Undying")
  {
-   if (have_effect($effect[beaten up]) > 0)
-     uneffect($effect[beaten up]);
+  if (have_effect($effect[beaten up]) > 0)
+    uneffect($effect[beaten up]);
 
-   float hpTarget = to_float(get_property("hpAutoRecoveryTarget"));
-   float hpRecovery = to_float(get_property("hpAutoRecovery"));
-   if (my_hp() < (my_maxhp() * hpRecovery))
-   {
-     log("Restoring health...");
-     restore_hp(my_maxhp() * hpTarget);
-   }
+  float hpTarget = to_float(get_property("hpAutoRecoveryTarget"));
+  float hpRecovery = to_float(get_property("hpAutoRecovery"));
 
-   // should put more finesse here to just recover what we need...
-   float mpTarget = to_float(get_property("mpAutoRecoveryTarget"));
-   float mpRecovery = to_float(get_property("mpAutoRecovery"));
+  if (my_meat() < 100)
+  {
+    hpTarget = 0.5;
+    hpRecovery = 0.5;
+  }
+  else if (my_meat() < 1000)
+  {
+    hpTarget = 0.5;
+    hpRecovery = 0.7;
+  }
+  else if (my_meat() < 10000)
+  {
+    hpTarget = 0.6;
+    hpRecovery = 0.7;
+  } else {
+    hpTarget = 0.6;
+    hpRecovery = 0.9;
+  }
 
-   if (my_mp() < (my_maxmp() / 2)
-       && fullness_limit() > 0)
-   {
-    if (have($item[magical sausage])
-        && be_good($item[magical sausage])
-        && prop_int("_sausagesEaten") < 23)
-        {
-          eat(1, $item[magical sausage]);
-        }
-   }
 
-   if (my_mp() < (my_maxmp() * mpRecovery))
-   {
-       log("Restoring MP...");
-       restore_mp(my_maxmp() * mpTarget);
-   }
+
+  if (my_hp() < (my_maxhp() * hpRecovery))
+  {
+    log("Restoring health...");
+    restore_hp(my_maxhp() * hpTarget);
+  }
+
+  // should put more finesse here to just recover what we need...
+  float mpTarget = to_float(get_property("mpAutoRecoveryTarget"));
+  float mpRecovery = to_float(get_property("mpAutoRecovery"));
+
+  if (my_meat() < 100)
+  {
+    mpTarget = 0;
+    mpRecovery = 0;
+  }
+  else if (my_meat() < 1000)
+  {
+    mpTarget = 0.2;
+    mpRecovery = 0.1;
+  }
+  else if (my_meat() < 10000)
+  {
+    mpTarget = 0.5;
+    mpRecovery = 0.4;
+
+    if (have_skill($skill[the ode to booze])
+        && my_maxmp() > mp_cost($skill[the ode to booze]))
+    {
+      float ode_level = to_float(mp_cost($skill[the ode to booze])) / my_maxmp();
+      mpTarget = max(mpTarget, ode_level);
+    }
+
+  } else {
+    mpTarget = 0.8;
+    mpRecovery = 0.7;
+
+    if (my_maxmp() > 100)
+    {
+      mpTarget = max(mpTarget, 100.0 / my_maxmp());
+    }
+  }
+
+  if (my_mp() < (my_maxmp() / 2)
+      && fullness_limit() > 0)
+  {
+  if (have($item[magical sausage])
+      && be_good($item[magical sausage])
+      && prop_int("_sausagesEaten") < 23)
+      {
+        eat(1, $item[magical sausage]);
+      }
+  }
+
+  if (my_mp() < (my_maxmp() * mpRecovery))
+  {
+      log("Restoring MP...");
+      restore_mp(my_maxmp() * mpTarget);
+  }
 
  }
 
@@ -147,7 +201,7 @@ void prep(location loc)
       && get_property("daycareOpen") == "true")
   {
     log("Have a boxing daydream...");
-    visit_url('place.php?whichplace=town_wrong&action=townwrong_boxingdaycare');
+    visit_url("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
     run_choice(1);
   }
 

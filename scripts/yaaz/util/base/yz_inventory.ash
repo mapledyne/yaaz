@@ -15,6 +15,11 @@ item spooky_quest_item();
 void make_if_needed(item it, string msg);
 void make_if_needed(item it);
 
+boolean is_stealable(item it)
+{ 
+  return is_tradeable(it) && autosell_price(it) > 0;
+}
+
 int count_set(boolean[item] things)
 {
   int counter = 0;
@@ -130,6 +135,16 @@ void stash(item it, int keep)
 void pulverize_all(item it, int keep)
 {
   if (to_boolean(setting("no_dispose", "false"))) return;
+  int max_wads = to_int(setting("max_wads", "50"));
+  
+  int wad_count = 0;
+  foreach w in $items[twinkly wad, cold wad, hot wad, spooky wad, stench wad, sleaze wad]
+  {
+    wad_count += item_amount(w);
+  }
+  // would be nice to be able to check in advance if the smash would return a wad we want, vs
+  // clumping them all together for this count...
+  if (wad_count >= max_wads) return;
 
   int num = item_amount(it) - keep;
   if (num <= 0) return;
@@ -518,16 +533,13 @@ int grind(int qty, item it)
 
   if (!have($item[Kramco Sausage-o-Matic&trade;])) return qty;
   if (!be_good($item[Kramco Sausage-o-Matic&trade;])) return qty;
-  int price = autosell_price(it);
-  if (price == 0) return qty;
-  if (!it.tradeable) return qty;
+  if (!is_stealable(it)) return qty;
   if (!it.discardable) return qty;
   if (it.gift) return qty;
 
   // things that can't be ground, but we don't know how to programatically determine this:
   if ($items[fat stacks of cash,
-             powdered organs,
-             procrastination potion] contains it) return qty;
+             powdered organs] contains it) return qty;
 
   int current = prop_int("sausageGrinderUnits");
 
@@ -567,9 +579,17 @@ void sell_all(item it, int keep)
 
   if (qty <= 0) return;
 
-  log("Selling " + qty + " " + wrap(pluralize(item_amount(it), it), COLOR_ITEM));
   int old_qty = item_amount(it);
-  autosell(qty, it);
+  if (have_shop()
+      && can_interact()
+      && historical_price(it) > max(200, autosell_price(it) * 2))
+  {
+    log("Putting " + qty + " " + wrap(pluralize(item_amount(it), it), COLOR_ITEM) + " in the mall");
+    cli_execute("mallsell " + qty + " " + it);
+  } else {
+    log("Selling " + qty + " " + wrap(pluralize(item_amount(it), it), COLOR_ITEM));
+    autosell(qty, it);
+  }
 
   if (item_amount(it) != old_qty - qty)
   {
@@ -634,4 +654,96 @@ int palindome_items()
 int total_shadow_helpers()
 {
   return item_amount($item[gauze garter]) + item_amount($item[filthy poultice]);
+}
+
+item[class] STARTER_WEAPON;
+STARTER_WEAPON[$class[seal clubber]] = $item[seal-clubbing club];
+STARTER_WEAPON[$class[turtle tamer]] = $item[turtle totem];
+STARTER_WEAPON[$class[pastamancer]] = $item[pasta spoon];
+STARTER_WEAPON[$class[sauceror]] = $item[saucepan];
+STARTER_WEAPON[$class[disco bandit]] = $item[disco ball];
+STARTER_WEAPON[$class[accordion thief]] = $item[stolen accordion];
+
+item my_starter_weapon()
+{
+  return STARTER_WEAPON[my_class()];
+}
+
+item[class] EPIC_WEAPON;
+EPIC_WEAPON[$class[seal clubber]] = $item[Bjorn's Hammer];
+EPIC_WEAPON[$class[turtle tamer]] = $item[Mace of the Tortoise];
+EPIC_WEAPON[$class[pastamancer]] = $item[Pasta Spoon of Peril];
+EPIC_WEAPON[$class[sauceror]] = $item[5-Alarm Saucepan];
+EPIC_WEAPON[$class[disco bandit]] = $item[Disco Banjo];
+EPIC_WEAPON[$class[accordion thief]] = $item[Rock and Roll Legend];
+
+item my_epic_weapon()
+{
+  return EPIC_WEAPON[my_class()];
+}
+
+item[class] LEG_EPIC_WEAPON;
+LEG_EPIC_WEAPON[$class[seal clubber]] = $item[Hammer of Smiting];
+LEG_EPIC_WEAPON[$class[turtle tamer]] = $item[Chelonian Morningstar];
+LEG_EPIC_WEAPON[$class[pastamancer]] = $item[Greek Pasta Spoon of Peril];
+LEG_EPIC_WEAPON[$class[sauceror]] = $item[17-alarm Saucepan];
+LEG_EPIC_WEAPON[$class[disco bandit]] = $item[Shagadelic Disco Banjo];
+LEG_EPIC_WEAPON[$class[accordion thief]] = $item[Squeezebox of the Ages];
+
+item my_legendary_epic_weapon()
+{
+  return LEG_EPIC_WEAPON[my_class()];
+}
+
+
+void pvp_protection()
+{
+  int minimum_value = to_int(setting("pvp_min_value", "1000"));
+
+  // don't protect when we don't need to:
+  if (!can_interact()) return;
+
+	int count_closet;
+  int qty_closet;
+	int [item] inv = get_inventory();
+	boolean [item] pvp_unimportant = $items[tenderizing hammer, Dramatic&trade; range, Queue Du Coq cocktailcrafting kit];
+	foreach it, qty in inv {
+		int price = -1;
+		if (is_stealable(it) && !(pvp_unimportant contains it)) price = historical_price(it);
+		
+    if (price >= minimum_value)
+    {
+			count_closet += 1;
+      qty_closet += qty;
+			log("Putting " + qty + " " + wrap(it, qty) + " in the closet so it can't be stolen via PvP."); 
+ 			put_closet(qty, it);
+		}
+
+	}
+  if (qty_closet > 0)
+  {
+    log(count_closet + " distinct items (" + qty_closet + " total items) moved to the closet for PvP protection.");
+  }
+}
+
+void mall_update()
+{
+  if (!have_shop()) return;
+
+  int MAX_PRICE=999999999;
+  // reprice mall items as desired.
+  boolean reprice = to_boolean(setting("mall_reprice", "false") != "true");
+
+  int[item] shop = get_shop();
+
+  log("Evaluating your shop to see if it needs maintenance...");
+  foreach toy in shop
+  {
+    if (shop_price(toy) == MAX_PRICE)
+    {
+      log("* " + wrap(toy) + " has not been priced. You should go in and set a price.");
+    }
+//    log("Mall price for " + wrap(toy) + ": " + shop_price(toy) + " yours, " + mall_price(toy) + " lowest");
+
+   }
 }

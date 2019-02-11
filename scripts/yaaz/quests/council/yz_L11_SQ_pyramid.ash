@@ -49,14 +49,22 @@ void turn_wheel_until(int position)
   }
 }
 
+void L11_SQ_pyramid_cleanup()
+{
+
+}
+
+void L11_SQ_pyramid_progress()
+{
+  if (quest_active("questL11Pyramid") && !get_property("pyramidBombUsed").to_boolean())
+  {
+    progress(turners(), 10, "wheel turning things");
+  }
+}
+
 boolean L11_SQ_pyramid()
 {
-  if (item_amount($item[[7965]Holy MacGuffin]) > 0)
-  {
-    log("Visiting the council to turn in the " + wrap($item[[7965]Holy MacGuffin]) + ".");
-    council();
-    return true;
-  }
+
 
   if (quest_status("questL11Pyramid") < 0)
   {
@@ -133,8 +141,6 @@ boolean L11_SQ_pyramid()
   {
     if (!yz_adventure_bypass($location[the lower chambers])) return true;
   }
-  log("Visiting the council to turn in the " + wrap($item[[2334]Holy MacGuffin]) + ".");
-  council();
   return true;
 
 }

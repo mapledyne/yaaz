@@ -136,6 +136,7 @@ boolean M_dailydungeon()
   }
 
   maximize("", $item[ring of detect boring doors]);
+  log("Heading to " + wrap($location[the daily dungeon]) + " to get some " + wrap("hero keys", COLOR_ITEM));
   yz_adventure($location[the daily dungeon]);
   return true;
 }

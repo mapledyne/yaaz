@@ -1,10 +1,6 @@
 import "util/yz_main.ash";
 
-void L11_SQ_summoning_cleanup()
-{
-  if (creatable_amount($item[unstable fulminate]) > 0)
-    create(1, $item[unstable fulminate]);
-}
+
 
 boolean get_wine_bomb()
 {
@@ -192,6 +188,34 @@ boolean do_spookyraven()
       yz_adventure($location[summoning chamber], "all res");
       return true;
   }
+}
+
+void L11_SQ_summoning_progress()
+{
+
+  if (quest_active("questL11Manor"))
+  {
+    if (quest_status("questL11Manor") == 2)
+    {
+      if (!can_make_wine_bomb())
+      {
+        progress(scavenger_hunt_items(), 6, "manor scavenger hunt items");
+      } else {
+        if (!have($item[unstable fulminate]))
+        {
+          task("make unstable fulminate");
+        } else {
+          task("make wine bomb");
+        }
+      }
+    }
+  }
+}
+
+void L11_SQ_summoning_cleanup()
+{
+  if (creatable_amount($item[unstable fulminate]) > 0)
+    create(1, $item[unstable fulminate]);
 }
 
 boolean L11_SQ_summoning()
