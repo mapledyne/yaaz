@@ -150,6 +150,20 @@ Usually you shouldn't need to change these, but if you're interested in some dee
 | yz_war_orchard          | true    | Complete the orchard sidequest in the island war. |
 | yz_war_arena            | true    | Complete the arena sidequest in the island war. |
 | yz_war_lighthouse       | true    | Complete the lighthouse (Sonofa beach) sidequest in the island war. |
+| yz_max_wads             | 50      | Max wads to have in inventory before stopping pulverizing anything. |
+| yz_pvp_protection       | true    | If true, move things over pvp_min_value in value to your closet, if they're at risk of being pvp stolen. |
+| pvp_min_value           | 1000    | Anything selling for more than this in the mall should be closetted at the end of the day, if yz_pvp_protection is set to true. |
+
+
+
+## Action flags
+You can add some additional actions from the script with these options. Most of these will add additional turns to your run, but if you're wanting to do some additional things besides simply ascending, you can ask the script to.
+
+| Option          | Default | Notes |
+| --------------- | ------- | ----- |
+| yz_do_bounty    | false   | `never` (never take a bounty, or act on any), `false` (take bounties when easy, but don't spend any extra turns to complete them), `true` (complete active bounties, but don't take additional ones), `aggressive` (complete all available bounties), `aftercore` ('false' if in-run, 'aggressive' if in aftercore) |
+| yz_do_nemesis   | false   | `true`, `false`, `aftercore`, `weapon`, or `aftercore-weapon`. `weapon` will stop at getting the legendary epic weapon, and `aftercore` will only work the quest during aftercore.
+
 
 ## Item of the Month flags
 
@@ -166,16 +180,6 @@ This will set how a few IotM and similar items are acted upon:
 | yz_fortune_clannies      |          | Comma separated list of clanmates to use with the Fortune Teller. (will try this list in order, based on who is online) |
 | yz_manuel_always_show_progress | false | If false, when displaying progress of Monster Manuel factoids omit any locations where you already have 100%. |
 | yz_daycare_recuits | 1 | Number of times to recruit toddlers at the Boxing Daycare |
-
-
-
-
-## Action flags
-You can add some additional actions from the script with these options. Most of these will add additional turns to your run, but if you're wanting to do some additional things besides simply ascending, you can ask the script to.
-
-| Option          | Default | Notes |
-| --------------- | ------- | ----- |
-| yz_do_bounty    | false   | `never` (never take a bounty, or act on any), `false` (take bounties when easy, but don't spend any extra turns to complete them), `true` (complete active bounties, but don't take additional ones), `aggressive` (complete all available bounties), `aftercore` ('false' if in-run, 'aggressive' if in aftercore) |
 | yz_do_batfellow | false   | Once per day, try to do a batfellow special edition comic, if you have one. (requires Cheesecookie's Batfellow script) |
 | yz_far_future   | true    | If true, go to the future with your time-spinner and try to replicate something (requires Ezandora's Far Future script) |
 | yz_do_lovetunnel        | true    | If true, and if you have the LOVE Tunnel, will try to get things and fight folks. Set to false if you're trying to get the password. |
