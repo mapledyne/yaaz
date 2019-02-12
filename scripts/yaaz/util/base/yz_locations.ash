@@ -7,6 +7,87 @@ import "util/base/yz_inventory.ash";
 boolean open_location(location loc);
 location pick_semi_rare_location();
 
+
+
+boolean location_open(location l)
+{
+  switch (l)
+  {
+    case $location[the spooky forest]:
+      return quest_status("questL02Larva") >= STARTED;
+    case $location[the old landfill]:
+      return (quest_status("questM19Hippy") != UNSTARTED);
+    case $location[madness bakery]:
+      return (quest_status("questM25Armory") != UNSTARTED);
+    case $location[the overgrown lot]:
+      if (quest_status("questM24Doc") != UNSTARTED)
+        return true;
+      if (setting("overgrown_lot") == "true")
+        return true;
+      string lot = visit_url("place.php?whichplace=town_wrong");
+      if (contains_text(lot, "The Overgrown Lot"))
+      {
+        save_daily_setting("overgrown_lot", "true");
+        return true;
+      } else {
+        return open_location(l);
+      }
+    case $location[the "fun" house]:
+      return quest_status("questG04Nemesis") >= 5;
+    case $location[a barroom brawl]:
+      return quest_status("questL03Rat") >= 1;
+    case $location[the beanbat chamber]:
+      return quest_status("questL04Bat") >= 1;
+    case $location[south of the border]:
+      return prop_int("lastDesertUnlock") >= my_ascensions();
+    case $location[cobb's knob harem]:
+    case $location[cobb's knob treasury]:
+    case $location[cobb's knob kitchens]:
+    case $location[Cobb's Knob Barracks]:
+      return quest_status("questL05Goblin") >= 1;
+    case $location[cobb's knob laboratory]:
+      return item_amount($item[cobb's knob lab key]) > 0;
+    case $location[Cobb's Knob Menagerie, Level 1]:
+    case $location[Cobb's Knob Menagerie, Level 2]:
+    case $location[Cobb's Knob Menagerie, Level 3]:
+      return item_amount($item[Cobb's Knob Menagerie key]) > 0;
+    case $location[the degrassi knoll restroom]:
+    case $location[the degrassi knoll gym]:
+      return !knoll_available();
+    case $location[8-bit realm]:
+      return have($item[continuum transfunctioner]);
+    case $location[the haunted kitchen]:
+    case $location[the haunted conservatory]:
+      return quest_status("questM20Necklace") != UNSTARTED;
+    case $location[the haunted billiards room]:
+      return have($item[Spookyraven billiards room key]);
+    case $location[the haunted library]:
+      return have($item[[7302]Spookyraven library key]);
+    case $location[the haunted bathroom]:
+    case $location[the haunted bedroom]:
+    case $location[the haunted gallery]:
+      return quest_status("questM21Dance") >= 1;
+    case $location[the haunted ballroom]:
+      return quest_status("questM21Dance") >= 3;
+    case $location[the haunted storage room]:
+    case $location[the haunted laboratory]:
+    case $location[the haunted nursery]:
+      return quest_status("questM17Babies") != UNSTARTED;
+    case $location[the haunted wine cellar]:
+    case $location[the haunted boiler room]:
+    case $location[the haunted laundry room]:
+      return quest_status("questL11Manor") >= 1;
+    case $location[the hidden office building]:
+      return prop_int("hiddenOfficeProgress") > 0;
+    case $location[lair of the ninja snowmen]:
+      return quest_status("questL08Trapper") >= 2;
+    default:
+      debug("Checking location_open(" + wrap(l) + ") and returning the default: " + wrap('true', COLOR_LOCATION));
+      return true;
+  }
+}
+
+
 boolean can_access_sea()
 {
   switch (my_path())
@@ -71,7 +152,8 @@ location pick_semi_rare_location()
 
   // if we don't have the KGE outfit, get it for dispensary access.
   if (!have_outfit("Knob Goblin Elite Guard Uniform")
-      && last != $location[Cobb's Knob Barracks])
+      && last != $location[Cobb's Knob Barracks]
+      && location_open($location[Cobb's Knob Barracks]))
   {
     return $location[Cobb's Knob Barracks];
   }
@@ -92,82 +174,6 @@ location pick_semi_rare_location()
 
 
 
-boolean location_open(location l)
-{
-  switch (l)
-  {
-    case $location[the spooky forest]:
-      return quest_status("questL02Larva") >= STARTED;
-    case $location[the old landfill]:
-      return (quest_status("questM19Hippy") != UNSTARTED);
-    case $location[madness bakery]:
-      return (quest_status("questM25Armory") != UNSTARTED);
-    case $location[the overgrown lot]:
-      if (quest_status("questM24Doc") != UNSTARTED)
-        return true;
-      if (setting("overgrown_lot") == "true")
-        return true;
-      string lot = visit_url("place.php?whichplace=town_wrong");
-      if (contains_text(lot, "The Overgrown Lot"))
-      {
-        save_daily_setting("overgrown_lot", "true");
-        return true;
-      } else {
-        return open_location(l);
-      }
-    case $location[the "fun" house]:
-      return quest_status("questG04Nemesis") >= 5;
-    case $location[a barroom brawl]:
-      return quest_status("questL03Rat") >= 1;
-    case $location[the beanbat chamber]:
-      return quest_status("questL04Bat") >= 1;
-    case $location[south of the border]:
-      return prop_int("lastDesertUnlock") >= my_ascensions();
-    case $location[cobb's knob harem]:
-    case $location[cobb's knob treasury]:
-    case $location[cobb's knob kitchens]:
-      return quest_status("questL05Goblin") >= 1;
-    case $location[cobb's knob laboratory]:
-      return item_amount($item[cobb's knob lab key]) > 0;
-    case $location[Cobb's Knob Menagerie, Level 1]:
-    case $location[Cobb's Knob Menagerie, Level 2]:
-    case $location[Cobb's Knob Menagerie, Level 3]:
-      return item_amount($item[Cobb's Knob Menagerie key]) > 0;
-    case $location[the degrassi knoll restroom]:
-    case $location[the degrassi knoll gym]:
-      return !knoll_available();
-    case $location[8-bit realm]:
-      return have($item[continuum transfunctioner]);
-    case $location[the haunted kitchen]:
-    case $location[the haunted conservatory]:
-      return quest_status("questM20Necklace") != UNSTARTED;
-    case $location[the haunted billiards room]:
-      return have($item[Spookyraven billiards room key]);
-    case $location[the haunted library]:
-      return have($item[[7302]Spookyraven library key]);
-    case $location[the haunted bathroom]:
-    case $location[the haunted bedroom]:
-    case $location[the haunted gallery]:
-      return quest_status("questM21Dance") >= 1;
-    case $location[the haunted ballroom]:
-      return quest_status("questM21Dance") >= 3;
-    case $location[the haunted storage room]:
-    case $location[the haunted laboratory]:
-    case $location[the haunted nursery]:
-      return quest_status("questM17Babies") != UNSTARTED;
-    case $location[the haunted wine cellar]:
-    case $location[the haunted boiler room]:
-    case $location[the haunted laundry room]:
-      return quest_status("questL11Manor") >= 1;
-    case $location[the hidden office building]:
-      return prop_int("hiddenOfficeProgress") > 0;
-    case $location[lair of the ninja snowmen]:
-      return quest_status("questL08Trapper") >= 2;
-    default:
-      debug("Checking location_open(" + wrap(l) + ") and returning the default: " + wrap('true', COLOR_LOCATION));
-      return true;
-  }
-}
 
 boolean open_location(location loc)
 {
