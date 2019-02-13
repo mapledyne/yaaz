@@ -72,7 +72,7 @@ boolean L11_SQ_zeppelin()
         maximize();
         log("Using a " + wrap($item[lynyrd snare]) + " to get a " + wrap($item[lynyrd skin]) + ".");
         use(1, $item[lynyrd snare]);
-        run_combat();
+        run_combat('yz_consult');
         return true;
       }
 

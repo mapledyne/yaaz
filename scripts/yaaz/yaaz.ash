@@ -54,7 +54,7 @@ boolean ascend_loop()
 
 void settings_warning()
 {
-  
+  /*
   string mood = 'default';
   foreach x, m in get_moods()
   {
@@ -63,7 +63,7 @@ void settings_warning()
 
   if (get_property("currentMood") != mood)
   {
-    if (setting("mood_wanring", "false") == "false")
+    if (setting("mood_warning", "false") == "false")
     {
       warning("This script doesn't use KoLMafia's mood system.");
       if (mood == 'default')
@@ -79,7 +79,7 @@ void settings_warning()
     if (mood == 'yaaz')
       set_property("currentMood", mood);
   }
-
+*/
 
   if (!prop_bool("autoSatisfyWithNPCs"))
   {
@@ -159,8 +159,7 @@ void intro()
   }
 
   log("Welcome to " + wrap(SCRIPT, COLOR_LOCATION) + ", 'Yet Another Ascension Zcript.'");
-  log("Original author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
-  log("Additional wonderful contributors: <a href='showplayer.php?who=2866791'>" + wrap("Gaikotsu (#2866791)", 'blue') + "</a>, <a href='showplayer.php?who=1566270'>" + wrap("LeaChim (#1566270)", 'blue') + "</a>.");
+  log("Author and maintainer: <a href='showplayer.php?who=1063113'>" + wrap("Degrassi (#1063113)", 'blue') + "</a>.");
   log("This script takes inspiration, and bits of code, from <a href='showplayer.php?who=2355952'>" + wrap("Cheesecookie (#2355952)", 'blue') + "</a>'s ascension script.");
   log("");
   log("Consider these support commands as well to take specific actions: " + wrap("yaaz-progress", 'blue') + ", " + wrap("yaaz-trophy", "blue") + ", and " + wrap("yaaz-manuel", "blue"));
@@ -169,6 +168,8 @@ void intro()
   // Check to see if we have a familiar - if the path allows familiars
   choose_familiar("");
 
+/*
+// no longer being required (default to ccs setting in mafia)
   if (!svn_exists("winterbay-mafia-wham"))
   {
     warning("While this script tries to not require other scripts, and just skips functionality in those cases,");
@@ -176,6 +177,7 @@ void intro()
     warning("then rerun this script.");
     abort();
   }
+*/
 
   log("This is an automated ascension script, but has some additional features.");
   log("To get more information, visit <a href='https://github.com/mapledyne/yaaz/'>" + wrap("https://github.com/mapledyne/yaaz/", 'blue') + "</a>.");
@@ -250,6 +252,16 @@ void intro()
     warning("Today is a holiday! If you want to celebrate " + wrap(holiday(), COLOR_LOCATION) + ", hit ESC and enjoy! Otherwise we'll continue as normal.");
     wait(10);
   }
+
+  warning("");
+  warning("Temporary notice due to a substantial change:");
+  warning("Yaaz now no longer relies on the WHAM script and instead tries to do some combat");
+  warning("logic on its own (to help with quest related actions: olfaction, etc). Once yaaz has");
+  warning("done that, it hands off to your custom combat actions you've set in KoLMafia.");
+  warning("You appear to have this set: " + wrap(get_ccs_action(1), COLOR_MONSTER));
+  warning("If you want a different action to help complete fights, please set your ccs in mafia");
+  warning("and yaaz will utilize whatever combat script you'd like.");
+  wait(10);
 }
 
 void ascend()

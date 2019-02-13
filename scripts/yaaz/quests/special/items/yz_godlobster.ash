@@ -39,7 +39,7 @@ boolean godlobster()
   maximize("", "", toy, $familiar[god lobster]);
   log("Off to fight a " + wrap($monster[god lobster]));
   visit_url("main.php?fightgodlobster=1");
-  run_combat();
+  run_combat('yz_consult');
 
   visit_url('choice.php');
   int choice = 2;

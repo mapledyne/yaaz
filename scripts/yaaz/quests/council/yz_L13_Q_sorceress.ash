@@ -89,7 +89,12 @@ void L13_Q_sorceress_progress()
 
 void L13_Q_sorceress_cleanup()
 {
-
+  if (quest_status("questL13Final") < 5)
+  {
+    string msg = "for the perplexing door.";
+    make_if_needed($item[skeleton key], msg);
+    make_if_needed($item[richard's star key], msg);
+  }
 }
 
 boolean nagamar()
@@ -100,6 +105,20 @@ boolean nagamar()
   if (!can_adventure()) return false;
   if (my_path() == "Nuclear Autumn") return false;
   if (my_path() == "License to Adventure") return false;
+
+  if (!have($item[WA]))
+  {
+    maybe_pull($item[ruby W]);
+    maybe_pull($item[metallic a]);
+  }
+  if (!have($item[ND]))
+  {
+    maybe_pull($item[lowercase n]);
+    maybe_pull($item[heavy D]);
+  }
+  
+  make_if_needed($item[wand of nagamar]);
+  if (have($item[wand of nagamar])) return true;
 
   log("Going to get the pieces of the " + wrap($item[wand of nagamar]) + ".");
   boolean clove = yz_clover($location[The Castle in the Clouds in the Sky (Basement)]);

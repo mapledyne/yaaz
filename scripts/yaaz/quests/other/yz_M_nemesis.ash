@@ -193,7 +193,7 @@ boolean M_nemesis()
       maximize();
       log("Off to defeat your nemesis (" + wrap(my_nemesis()) + ") in " + wrap("The Final (?) Showdown", COLOR_LOCATION));
       visit_url('place.php?whichplace=nemesiscave&action=nmcave_boss');
-      run_combat();
+      run_combat('yz_consult');
       return true;
     case 16:
       log("Going to tell the guild you defeated your nemesis, " + wrap(my_nemesis()));

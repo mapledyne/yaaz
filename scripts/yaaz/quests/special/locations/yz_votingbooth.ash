@@ -79,6 +79,8 @@ boolean votingbooth()
   if (!prop_bool("voteAlways")) return false;
 
   item voted_sticker = $item[9990]; // "I Voted" sticker
+  if (!be_good(voted_sticker)) return false;
+ 
   if (!have(voted_sticker))
   {
     log('Seeing what the choices are for voting.');
@@ -116,7 +118,9 @@ boolean votingbooth()
       log("Equipping our " + wrap($item[mutant legs]) + " in hopes of a " + wrap($item[mutant crown]));
       equip = "+equip [10008]";
     }
-    if (have($item[mutant arm]) && !have($item[mutant legs]))
+    if (have($item[mutant arm])
+        && !have($item[mutant legs])
+        && can_equip($item[mutant arm]))
     {
       log("Equipping our " + wrap($item[mutant arm]) + " in hopes of a " + wrap($item[mutant legs]));
       equip = "+equip [10007]";

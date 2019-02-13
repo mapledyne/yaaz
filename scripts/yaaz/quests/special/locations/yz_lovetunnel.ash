@@ -64,7 +64,7 @@ int tunnel_effect(effect ef)
 
 int tunnel_effect()
 {
-  return tunnel_effect($effect[lovebotamy]);
+  return tunnel_effect($effect[Wandering Eye Surgery]);
 }
 
 int tunnel_statitem(stat st)
@@ -159,6 +159,25 @@ boolean lovetunnel()
     maximize();
   }
 
+  set_property("choiceAdventure1221", "1");
+  set_property("choiceAdventure1224", tunnel_statitem());
+  set_property("choiceAdventure1226", tunnel_effect());
+  set_property("choiceAdventure1228", tunnel_giftitem());
+
+  if (fight_fight_fight)
+  {
+    set_property("choiceAdventure1223", "1");
+    set_property("choiceAdventure1225", "1");
+    set_property("choiceAdventure1227", "1");
+    
+  } else {
+    set_property("choiceAdventure1223", "2");
+    set_property("choiceAdventure1225", "2");
+    set_property("choiceAdventure1227", "2");
+    
+  }
+
+
   string tun = visit_url("place.php?whichplace=town_wrong&action=townwrong_tunnel");
 	if (contains_text(tun, "Come back tomorrow!"))
 	{
@@ -167,45 +186,6 @@ boolean lovetunnel()
     set_property("_loveTunnelUsed", "true");
 		return false;
 	}
-
-  tun = visit_url("choice.php?pwd=&whichchoice=1222&option=1");
-
-
-  if(fight_fight_fight)
-  {
-    tun = visit_url("choice.php?pwd=&whichchoice=1223&option=1");
-    run_combat('yz_consult');
-  }
-  else
-  {
-    tun = visit_url("choice.php?pwd=&whichchoice=1223&option=2");
-  }
-
-  tun = visit_url("choice.php?pwd=&whichchoice=1224&option=" + tunnel_statitem());
-
-  if(fight_fight_fight)
-	{
-		tun = visit_url("choice.php?pwd=&whichchoice=1225&option=1");
-    run_combat('yz_consult');
-	}
-	else
-	{
-		tun = visit_url("choice.php?pwd=&whichchoice=1225&option=2");
-	}
-
-  tun = visit_url("choice.php?pwd=&whichchoice=1226&option=" + tunnel_effect());
-
-  if(fight_fight_fight)
-	{
-		tun = visit_url("choice.php?pwd=&whichchoice=1227&option=1");
-    run_combat('yz_consult');
-	}
-	else
-	{
-		tun = visit_url("choice.php?pwd=&whichchoice=1227&option=2");
-	}
-
-	tun = visit_url("choice.php?pwd=&whichchoice=1228&option=" + tunnel_giftitem());
 
   return true;
 }

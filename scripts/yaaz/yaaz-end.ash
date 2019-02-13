@@ -6,7 +6,25 @@ void day_end()
   log("Wrapping up for the end of the day.");
   wait(5);
 
-  // if there are any source terminal enhances left
+ if (hippy_stone_broken())
+  {
+    boolean attempt = true;
+
+    repeat
+    {
+      attempt = try_consume($item[cuppa cruel tea]);
+    } until (!attempt || spleen_remaining() < 4);
+
+    repeat
+    {
+      attempt = try_consume($item[hatorade]);
+    } until (!attempt || spleen_remaining() < 5);
+
+  }
+  pvp();
+
+  consume_bottle_wishes();
+
   consume_enhances();
   consume_cards();
 
@@ -69,26 +87,6 @@ void day_end()
   }
   prep();
 
-  consume_bottle_wishes();
-
-  if (hippy_stone_broken())
-  {
-    boolean attempt = true;
-
-    repeat
-    {
-      attempt = try_consume($item[cuppa cruel tea]);
-    } until (!attempt || spleen_remaining() < 4);
-
-    repeat
-    {
-      attempt = try_consume($item[hatorade]);
-    } until (!attempt || spleen_remaining() < 5);
-
-  }
-
-  pvp();
-
   if (get_campground() contains $item[spinning wheel]
       && !prop_bool("_spinningWheel")
       && be_good($item[spinning wheel]))
@@ -96,8 +94,6 @@ void day_end()
     log("Spinning some meat from the " + wrap($item[spinning wheel]) + ".");
     visit_url("campground.php?action=spinningwheel");
   }
-
-
 
   kgb_enchant("adventures");
 

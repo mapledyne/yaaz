@@ -10,29 +10,9 @@ void make_things()
   // General requirements for future quests and such
 
 
-  if (quest_status("questL13Final") < 5)
-  {
-    string msg = "for the perplexing door.";
-    make_if_needed($item[skeleton key], msg);
-    make_if_needed($item[richard's star key], msg);
-  }
+
 
   make_if_needed($item[rusty metal key], "to open an orcish meat locker.");
-
-  if (my_path() != "License to Adventure")
-  {
-    make_if_needed($item[wand of nagamar]);
-  }
-
-  if (my_path() != "Nuclear Autumn")
-  {
-    make_if_needed($item[unstable fulminate]);
-  }
-  if (my_path() == "Nuclear Autumn" && creatable_amount($item[unstable fulminate]) > 0 && quest_active("questL11Manor"))
-  {
-    warning("You collected the pieces for the " + wrap($item[unstable fulminate]) + ", but I don't know how to make that since I can't buy a " + wrap($item[Dramatic&trade; range]) + ". If you can get one somehow, you'll need to make this yourself.");
-    wait(5);
-  }
 
   if (get_property("questL11Palindome") != "finished")
   {

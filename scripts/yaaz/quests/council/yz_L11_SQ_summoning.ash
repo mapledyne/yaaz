@@ -9,6 +9,19 @@ boolean get_wine_bomb()
     return false;
   }
 
+  if (my_path() != "Nuclear Autumn")
+  {
+    make_if_needed($item[unstable fulminate]);
+  }
+  if (my_path() == "Nuclear Autumn"
+      && creatable_amount($item[unstable fulminate]) > 0
+      && quest_active("questL11Manor")
+      && !have($item[unstable fulminate]))
+  {
+    warning("You collected the pieces for the " + wrap($item[unstable fulminate]) + ", but I don't know how to make that since I can't buy a " + wrap($item[Dramatic&trade; range]) + ". If you can get one somehow, you'll need to make this yourself.");
+    wait(5);
+  }
+
   if (!have($item[unstable fulminate]))
   {
     warning("You don't have the " + wrap($item[unstable fulminate]) + " or the ingredients to make it.");
