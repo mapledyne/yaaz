@@ -104,6 +104,8 @@ string pvp_equip_letter(int threshold)
   if(letter.find())
   {
     current = letter.group(1);
+  } else {
+    return "";
   }
 
   letter = create_matcher("Changing to <b>([A-Z])<\/b>", info);
@@ -134,13 +136,92 @@ string pvp_equip_letter()
   return pvp_equip_letter(0);
 }
 
-void dress_for_pvp()
+int gear_letter_count(item gear, string letter)
 {
-  cli_execute("UberPvPOptimizer.ash");
+	if (gear == $item[none])
+		return 0;
+	matcher entity = create_matcher("&[^ ;]+;", gear);
+	string output = replace_all(entity, "");
+	matcher htmltag = create_matcher("\<[^\>]*\>", output);
+	output = replace_all(htmltag, "");
+	int letters_counted = 0;
+	for i from 0 to length(output) - 1 {
+		if (char_at(output,i).to_lower_case()==letter.to_lower_case()) letters_counted+=1;  
+	}
+	return letters_counted;
 }
 
-void effects_for_pvp()
+void dress_for_letter(string letter)
 {
+  item[int] choices;
+  foreach s in $slots[hat, weapon, off-hand, shirt, back, pants]
+  {
+    clear(choices);
+    foreach i in get_inventory()
+    {
+      if (to_slot(i) != s) continue;
+      if (!be_good(i)) continue;
+      if (!can_equip(i)) continue;
+      choices[count(choices)] = i;
+    }
+    sort choices by -gear_letter_count(value, letter);
+    item want = choices[0];
+    if (gear_letter_count(want, letter) == 0) want = $item[none];
+    if (want == $item[none])
+    {
+      log("Removing our " + wrap(s) + " item since nothing there will help with PvP.");
+    } else {
+      log("Equipping for " + letter + ": " + wrap(want));
+    }
+    equip(s, want);
+  }
+
+  clear(choices);
+
+  foreach i in get_inventory()
+  {
+    if (to_slot(i) != $slot[acc1]) continue;
+    if (!be_good(i)) continue;
+    if (!can_equip(i)) continue;
+    choices[count(choices)] = i;
+  }
+  sort choices by -gear_letter_count(value, letter);
+
+  int count = 1;
+  slot[int] accs;
+  accs[1] = $slot[acc1];
+  accs[2] = $slot[acc2];
+  accs[3] = $slot[acc3];
+  
+  foreach s in $slots[acc1, acc2, acc3] { equip(s, $item[none]); }
+  foreach toy in choices
+  {
+    log("Equipping for " + letter + ": " + wrap(choices[toy]));
+    equip(accs[count], choices[toy]);
+    count++;
+    if (count > 3) break;
+  }
+
+}
+
+void dress_for_letter()
+{
+  dress_for_letter(pvp_equip_letter());
+}
+
+void pvp_prep()
+{
+  log("Getting equipped and adding effects for PvP");
+
+  string letter = pvp_equip_letter();
+  if (letter != "")
+  {
+    log("Letter of the moment: " + wrap(letter, 'blue'));
+    dress_for_letter();
+  } else {
+    outfit("birthday suit");
+  }
+
   switch(pvp_season())
   {
     default:
@@ -152,12 +233,10 @@ void effects_for_pvp()
     case "Holiday":
       max_effects("cold res");
       max_effects("-combat");
-      // should we add to booze or to familiar exp? Unsure.
-      if((friars_available()) && (!get_property("friarsBlessingReceived").to_boolean()))
-      {
-        cli_execute("friars booze");
-      }
       max_effects("familiar exp");
+
+      // should we add to booze or to familiar exp (re: friars)? Unsure.
+      max_effects("booze");
       break;
     case "Bear":
       max_effects("damage");
@@ -181,29 +260,10 @@ void effects_for_pvp()
   }
 }
 
-void pvp_rollover()
-{
-  dress_for_pvp();
-  effects_for_pvp();
-}
-
 void pvp()
 {
 
   if (!hippy_stone_broken()) return;
-
-  if (!svn_exists("uberpvpoptimizer"))
-  {
-    if (!to_boolean(setting("uberpvpoptimizer_svn_warning", "false")))
-    {
-      save_daily_setting("uberpvpoptimizer_svn_warning", "true");
-      warning("You want to run PVP but I don't know how to automate dessing up.");
-      warning("If you install the " + wrap("UberPvPOptimizer", COLOR_ITEM) + " script, I'll call it to automatically do this for you.");
-      warning("In the meantime, you'll have to do this yourself, if interested.");
-      wait(10);
-    }
-    return;
-  }
 
   if (can_deck("clubs"))
     cheat_deck("clubs", "more PVP fights");
@@ -216,8 +276,7 @@ void pvp()
     log("About to get dressed and set up effects for PVP (" + pvp_season() + " Season).");
     wait(5);
     cli_execute("checkpoint");
-    dress_for_pvp();
-    effects_for_pvp();
+    pvp_prep();
     string fame = "fame";
     if (can_interact()) fame = "loot";
     cli_execute("pvp " + fame + " " + pvp_fight());

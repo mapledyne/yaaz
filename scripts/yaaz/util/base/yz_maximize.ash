@@ -192,11 +192,13 @@ void maximize(string target, string outfit, item it, familiar fam)
 
   if (contains_text(target, 'rollover'))
   {
-    target = 'adv, pvp fights, -tie';
+    target = 'adv, -tie';
+    if (hippy_stone_broken()) target += ", pvp fights";
     familiar pet = to_familiar(setting("100familiar"));
     if (pet != $familiar[none]
         && pet != $familiar[Trick-or-Treating Tot]
-        && have_familiar($familiar[Trick-or-Treating Tot]))
+        && have_familiar($familiar[Trick-or-Treating Tot])
+        && be_good($familiar[Trick-or-Treating Tot]))
     {
       warning("You're trying to do a 100% familiar run (" + wrap(pet) + ").");
       warning("But if you switch to a " + wrap($familiar[Trick-or-Treating Tot]) + " for rollover, you'll get some extra adventures (equip the " + wrap($item[li'l unicorn costume]) + ").");

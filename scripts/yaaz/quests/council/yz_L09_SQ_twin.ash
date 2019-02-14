@@ -154,6 +154,7 @@ boolean L09_SQ_twin()
 
 	if (need_jar && have($item[Jar of Oil]))
 	{
+    if (get_property("choiceAdventure606") != "3") log("Setting the Overlook lodge to use the " + wrap($item[jar of oil]));
     set_property("choiceAdventure606", "3");
     set_property("choiceAdventure609", "1");
     set_property("choiceAdventure616", "1");
@@ -162,6 +163,7 @@ boolean L09_SQ_twin()
 
 	if (need_food)
 	{
+    if (get_property("choiceAdventure606") != "2") log("Setting the Overlook lodge to the food option.");
     set_property("choiceAdventure606", "2");
     set_property("choiceAdventure608", "1");
     if (do_twin_food()) return true;
@@ -169,6 +171,7 @@ boolean L09_SQ_twin()
 
 	if (need_stench)
 	{
+    if (get_property("choiceAdventure606") != "1") log("Setting the Overlook lodge to the stench option.");
     set_property("choiceAdventure606", "1");
     set_property("choiceAdventure607", "1");
 
@@ -177,6 +180,7 @@ boolean L09_SQ_twin()
 
   if (need_init)
 	{
+    if (get_property("choiceAdventure606") != "4") log("Setting the Overlook lodge to the init option.");
     set_property("choiceAdventure606", "4");
     set_property("choiceAdventure610", "1");
     set_property("choiceAdventure1056", "1");

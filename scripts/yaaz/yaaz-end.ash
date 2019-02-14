@@ -101,7 +101,7 @@ void day_end()
   if (hippy_stone_broken())
   {
     log("Starting nighttime outfit for better PvP.");
-    pvp_rollover();
+    pvp_prep();
   }
   maximize("rollover");
 

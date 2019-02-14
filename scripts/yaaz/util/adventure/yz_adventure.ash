@@ -33,7 +33,7 @@ boolean yz_adventure_bypass(location loc)
 {
 
   boolean adv;
-
+  int dead = have_effect($effect[beaten up]);
   if (get_property("cloverProtectActive") != "true")
     set_property("cloverProtectActive", "true");
 
@@ -78,6 +78,12 @@ boolean yz_adventure_bypass(location loc)
     }
   }
 
+  if (dead < have_effect($effect[beaten up]))
+  {
+    warning("It looks like you lost this fight and are " + wrap($effect[beaten up]));
+    debug("We should check to see if we could have prevented this.");
+    wait(3);
+  }
   return adv;
 }
 

@@ -143,13 +143,7 @@ void make_things()
     log("Turning " + wrap($item[shard of double-ice]) + " into a " + wrap($item[double-ice box]) + ".");
     create(1, $item[double-ice box]);
   }
-
-  foreach l in $items[lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches]
-  {
-    make_if_needed(l, "to help scare away protestors");
-  }
-
-
+  
   if (setting("long_aftercore", "false") == "true"
       && setting("do_heart", "false") == "true"
       && quest_status("questL13Final") == FINISHED)

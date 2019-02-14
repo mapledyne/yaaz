@@ -87,6 +87,11 @@ string wrap(skill s)
   return wrap(add_link(s), COLOR_SKILL);
 }
 
+string wrap(slot s)
+{
+  return wrap(s, COLOR_STAT);
+}
+
 string wrap(class c)
 {
   return wrap(c, COLOR_CLASS);

@@ -401,6 +401,7 @@ string yz_consult(int round, string mob, string text)
     }
   }
 
-  debug("Handing off to your default CCS script to decide what to do.");
-  return get_ccs_action(round);
+  string ccs = get_ccs_action(round);
+  debug("Handing off to your default CCS script to decide what to do: " + wrap(ccs, COLOR_MONSTER));
+  return ccs;
 }

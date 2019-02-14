@@ -2,15 +2,9 @@ import "util/yz_main.ash";
 
 void L11_SQ_zeppelin_cleanup()
 {
-  if (have($item[lynyrd skin]))
+  foreach l in $items[lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches]
   {
-    foreach l in $items[lynyrdskin cap, lynyrdskin tunic, lynyrdskin breeches]
-    {
-      if (!have(l))
-      {
-        create(1, l);
-      }
-    }
+    make_if_needed(l, "to look more like a lynrd");
   }
 }
 
