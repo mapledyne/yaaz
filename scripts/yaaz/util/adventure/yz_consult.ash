@@ -158,7 +158,7 @@ string maybe_banish(monster foe)
   {
     banish = "skill breathe out";
   }
-  else if (have_skill($skill[snokebomb]) && my_mp() > mp_cost($skill[snokebomb]))
+  else if (have_skill($skill[snokebomb]) && my_mp() > mp_cost($skill[snokebomb]) && get_property("_snokebombUsed") < 3  )
   {
     banish = "skill snokebomb";
   }
