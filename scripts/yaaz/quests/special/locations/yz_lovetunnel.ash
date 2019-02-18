@@ -186,6 +186,12 @@ boolean lovetunnel()
     set_property("_loveTunnelUsed", "true");
 		return false;
 	}
+  
+  if (contains_text(tun, 'Enter the Tunnel'))
+  {
+    // for some reason this isn't sticking anymore?
+    tun = visit_url("choice.php?pwd=&whichchoice=1222&option=1");
+  }
 
   return true;
 }

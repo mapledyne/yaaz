@@ -38,6 +38,11 @@ boolean ascend_loop()
     return true;
   }
 
+  // this is typically a prep() job, but we prep only once we know the location we're going to,
+  // and sometimes if we're beaten up, this will affect what location we choose, so... doing it earlier:
+  if (have_effect($effect[beaten up]) > 0)
+    uneffect($effect[beaten up]);
+
   quest_cleanup();
   foreach quest in QUEST_LIST
   {

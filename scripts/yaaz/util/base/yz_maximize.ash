@@ -122,8 +122,7 @@ string default_maximize_string()
 {
   string def = "mainstat, mp regen";
 
-  if (my_primestat() != $stat[mysticality]) def += ", 0.5 hp";
-  return def;
+  return setting("default_maximize", def);
 }
 
 void maximize(string target, string outfit, item it, familiar fam)
@@ -149,6 +148,10 @@ void maximize(string target, string outfit, item it, familiar fam)
   if (target == '')
     target = default_maximize_string();
 
+  string add_max = setting("always_maximize");
+  if (add_max != "") add_max = ", " + add_max;
+  target += add_max;
+  
 // check slot on item since 'effective' can sometimes override explicit "equip" demands of the maximizer.
   if (my_primestat() != $stat[mysticality]
       && to_slot(it) != $slot[weapon])

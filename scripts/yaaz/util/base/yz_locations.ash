@@ -7,8 +7,6 @@ import "util/base/yz_inventory.ash";
 boolean open_location(location loc);
 location pick_semi_rare_location();
 
-
-
 boolean location_open(location l)
 {
   switch (l)

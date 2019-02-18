@@ -57,7 +57,7 @@ boolean do_liana()
     return false;
   }
 
-  if ($location[A Massive Ziggurat].turns_spent < 3)
+  if (!contains_text($location[a massive ziggurat].noncombat_queue, "Legend of the Temple in the Hidden City"))
   {
     log("Clearing out the " + wrap($monster[dense liana]) + " from " + wrap($location[A massive Ziggurat]) + ".");
     maximize("", $item[antique machete]);
