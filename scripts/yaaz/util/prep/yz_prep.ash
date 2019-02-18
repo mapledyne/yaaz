@@ -282,8 +282,14 @@ void prep(location loc)
                    Throne Room] contains loc)
       && (have($item[detuned radio]) || canadia_available()))
   {
+    int max_ml = to_int(setting("max_ml", 10000));
+
+    int want_ml = max_ml - numeric_modifier("monster level");
     int annoy = 10;
     if (canadia_available()) annoy = 11;
+
+    annoy = min(want_ml, annoy);
+    if (annoy < 0) annoy = 0;
     if (current_mcd() != annoy)
       change_mcd(annoy);
   }

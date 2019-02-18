@@ -151,7 +151,7 @@ void maximize(string target, string outfit, item it, familiar fam)
   string add_max = setting("always_maximize");
   if (add_max != "") add_max = ", " + add_max;
   target += add_max;
-  
+
 // check slot on item since 'effective' can sometimes override explicit "equip" demands of the maximizer.
   if (my_primestat() != $stat[mysticality]
       && to_slot(it) != $slot[weapon])
@@ -556,21 +556,46 @@ void max_effects(string target, boolean aggressive)
       effect_maintain($effect[Become Intensely interested]);
       break;
     case "ml":
+      int max_ml = to_int(setting("max_ml", 10000));
+
       // MCD handled by prep()
-      effect_maintain($effect[ashen burps]);
-      effect_maintain($effect[Drescher's Annoying Noise]);
-      effect_maintain($effect[tortious]);
-      effect_maintain($effect[eau d'enmity]);
-      effect_maintain($effect[high colognic]);
-      effect_maintain($effect[mediocri tea]);
-      effect_maintain($effect[Mysteriously Handsome]);
-      effect_maintain($effect[pride of the puffin]);
-      effect_maintain($effect[red lettered]);
-      effect_maintain($effect[2092]); //[Sweetbreads Flambé]
-      effect_maintain($effect[Ur-Kel's Aria of Annoyance]);
+
+      if (numeric_modifier("monster level") + 15 <= max_ml)
+        effect_maintain($effect[ashen burps]);
+
+      if (numeric_modifier("monster level") + 10 <= max_ml)
+        effect_maintain($effect[Drescher's Annoying Noise]);
+
+      if (numeric_modifier("monster level") + 10 <= max_ml)
+        effect_maintain($effect[tortious]);
+
+      if (numeric_modifier("monster level") + 5 <= max_ml)
+        effect_maintain($effect[eau d'enmity]);
+
+      if (numeric_modifier("monster level") + 30 <= max_ml)
+        effect_maintain($effect[mediocri tea]);
+
+      int hand = 3;
+      if (modifier_eval("X") == 1) hand = 6;
+      if (numeric_modifier("monster level") + hand <= max_ml)
+        effect_maintain($effect[Mysteriously Handsome]);
+
+      if (numeric_modifier("monster level") + 10 <= max_ml)
+        effect_maintain($effect[pride of the puffin]);
+
+      if (numeric_modifier("monster level") + 15 <= max_ml)
+        effect_maintain($effect[red lettered]);
+
+      if (numeric_modifier("monster level") + 25 <= max_ml)
+        effect_maintain($effect[2092]); //[Sweetbreads Flambé]
+
+      int urk = min(60, my_level() * 2);
+      if (numeric_modifier("monster level") + urk <= max_ml)
+        effect_maintain($effect[Ur-Kel's Aria of Annoyance]);
       if (aggressive)
       {
-        effect_maintain($effect[Too Noir For Snoir]);
+        if (numeric_modifier("monster level") + 50 <= max_ml)
+          effect_maintain($effect[Too Noir For Snoir]);
       }
       break;
     case "familiar exp":
