@@ -64,7 +64,7 @@ void L11_SQ_pyramid_progress()
 
 boolean L11_SQ_pyramid()
 {
-
+  if (prop_int("desertExploration") < 100) return false;
 
   if (quest_status("questL11Pyramid") < 0)
   {

@@ -12,8 +12,22 @@ void batfellow_comic_progress()
 
 item batfellow_item()
 {
-  debug("Todo: improve logic in batfellow_item() to pick an item from the " + wrap($item[special edition Batfellow comic]) + ".");
-  return $item[The Inquisitor's unidentifiable object];
+
+  item[int] batfellow_items;
+  batfellow_items[0] = $item[Kudzu salad];
+  batfellow_items[1] = $item[Mansquito Serum];
+  batfellow_items[2] = $item[Miss Graves' vermouth];
+  batfellow_items[3] = $item[The Plumber's mushroom stew];
+  batfellow_items[4] = $item[The Author's ink];
+  batfellow_items[5] = $item[The Mad Liquor];
+  batfellow_items[6] = $item[Doc Clock's thyme cocktail];
+  batfellow_items[7] = $item[Mr. Burnsger];
+  batfellow_items[8] = $item[The Inquisitor's unidentifiable object];
+
+  sort batfellow_items by item_amount(value) + closet_amount(value) + storage_amount(value);
+
+  return batfellow_items[0];
+  
 }
 
 void batfellow_comic()

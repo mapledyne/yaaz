@@ -2,7 +2,7 @@ import "util/base/yz_print.ash";
 
 boolean can_kgb() {
   if (!have($item[Kremlin's Greatest Briefcase])) return false;
-
+  if (!be_good($item[Kremlin's Greatest Briefcase])) return false;
   return true;
 }
 
@@ -42,6 +42,7 @@ void kgb() {
   log("Briefcase unlocked.");
   cli_execute("call Briefcase.ash drink");
   log("Briefcase drinks obtained.");
+  debug("Pick kgb enchantments more deliberately");
   kgb_enchant("prismatic init -combat");
   save_daily_setting("kgb_complete", "true");
 }

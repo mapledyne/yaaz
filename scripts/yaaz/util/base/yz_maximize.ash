@@ -114,6 +114,12 @@ void do_maximize(string target, string outfit, item it)
     }
   }
 
+
+  int max_ml = to_int(setting("max_ml", 10000));
+  if (max_ml < 10000)
+  {
+    max = replace_string(max, "ml,", "ml " + max_ml + " max,");
+  }
   info("Maximizing equipment based on: " + max);
   maximize(max, false);
 }
